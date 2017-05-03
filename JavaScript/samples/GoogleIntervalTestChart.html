@@ -1,0 +1,88 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="data/intervalData2.js" ></script>
+    <script src="data/intervalData3.js" ></script>
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'x');
+        data.addColumn('number', 'SimpleRMHC');
+        data.addColumn({type:'number', role:'interval'});
+        data.addColumn({type:'number', role:'interval'});
+
+        data.addColumn('number', 'NTupleBanditEA');
+        data.addColumn({type:'number', role:'interval'});
+        data.addColumn({type:'number', role:'interval'});
+
+        data.addRows(fileData2);
+
+        // The intervals data as narrow lines (useful for showing raw source data)
+        var options_lines = {
+            title: 'Line intervals, default',
+            curveType: 'function',
+            lineWidth: 4,
+            intervals: { 'style':'line' },
+            legend: 'none'
+        };
+
+        var options_bars = {
+        title: 'Performance versus Resampling Rate',
+        curveType: 'function',
+        series: [{'color': '#D9544C'}, {'color': '#095400'}, ],
+        intervals: { 'lineWidth':3, 'barWidth': 0.0},
+        legend: { position: 'bottom' },
+
+         //'i0': { 'style':'line', 'color':'#D3362D', 'lineWidth': 0.5 },
+         // 'i1': { 'style':'line', 'color':'#F1CA3A', 'lineWidth': 1 },
+
+
+        hAxis: {
+          title: 'Resampling rate',
+          ticks: [0, 5,10,15,20],
+          textStyle: {
+            color: '#01579b',
+            fontSize: 20,
+            fontName: 'Arial',
+            bold: true,
+            italic: true
+          },
+          titleTextStyle: {
+            color: '#01579b',
+            fontSize: 16,
+            fontName: 'Arial',
+            bold: false,
+            italic: true
+          }
+        },
+        vAxis: {
+          title: 'P(win)',
+          ticks: [0.6, 0.7, 0.8, 0.9, 1.0],
+          textStyle: {
+            color: '#1a237e',
+            fontSize: 24,
+            bold: true
+          },
+          titleTextStyle: {
+            color: '#1a237e',
+            fontSize: 24,
+            bold: true
+          }
+        },
+
+
+    };
+
+        var chart_lines = new google.visualization.LineChart(document.getElementById('chart_lines'));
+        chart_lines.draw(data, options_bars);
+      }
+    </script>
+</head>
+<body>
+<div id="chart_lines" style="width: 900px; height: 500px;"></div>
+</body>
+</html>

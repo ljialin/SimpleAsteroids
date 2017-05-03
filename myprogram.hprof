@@ -1,0 +1,483 @@
+JAVA PROFILE 1.0.1, created Sun Mar 12 13:20:24 2017
+
+Copyright (c) 2003, 2005, Oracle and/or its affiliates. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+  - Neither the name of Oracle nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Header for -agentlib:hprof (or -Xrunhprof) ASCII Output (JDK 5.0 JVMTI based)
+
+WARNING!  This file format is under development, and is subject to
+change without notice.
+
+This file contains the following types of records:
+
+THREAD START
+THREAD END      mark the lifetime of Java threads
+
+TRACE           represents a Java stack trace.  Each trace consists
+                of a series of stack frames.  Other records refer to
+                TRACEs to identify (1) where object allocations have
+                taken place, (2) the frames in which GC roots were
+                found, and (3) frequently executed methods.
+
+HEAP DUMP       is a complete snapshot of all live objects in the Java
+                heap.  Following distinctions are made:
+
+                ROOT    root set as determined by GC
+                CLS     classes 
+                OBJ     instances
+                ARR     arrays
+
+SITES           is a sorted list of allocation sites.  This identifies
+                the most heavily allocated object types, and the TRACE
+                at which those allocations occurred.
+
+CPU SAMPLES     is a statistical profile of program execution.  The VM
+                periodically samples all running threads, and assigns
+                a quantum to active TRACEs in those threads.  Entries
+                in this record are TRACEs ranked by the percentage of
+                total quanta they consumed; top-ranked TRACEs are
+                typically hot spots in the program.
+
+CPU TIME        is a profile of program execution obtained by measuring
+                the time spent in individual methods (excluding the time
+                spent in callees), as well as by counting the number of
+                times each method is called. Entries in this record are
+                TRACEs ranked by the percentage of total CPU time. The
+                "count" field indicates the number of times each TRACE 
+                is invoked.
+
+MONITOR TIME    is a profile of monitor contention obtained by measuring
+                the time spent by a thread waiting to enter a monitor.
+                Entries in this record are TRACEs ranked by the percentage
+                of total monitor contention time and a brief description
+                of the monitor.  The "count" field indicates the number of 
+                times the monitor was contended at that TRACE.
+
+MONITOR DUMP    is a complete snapshot of all the monitors and threads in 
+                the System.
+
+HEAP DUMP, SITES, CPU SAMPLES|TIME and MONITOR DUMP|TIME records are generated 
+at program exit.  They can also be obtained during program execution by typing 
+Ctrl-\ (on Solaris) or by typing Ctrl-Break (on Win32).
+
+--------
+
+THREAD START (obj=50000189, id = 200001, name="main", group="main")
+THREAD START (obj=500001f9, id = 200004, name="Monitor Ctrl-Break", group="main")
+THREAD END (id = 200001)
+THREAD START (obj=50000189, id = 200005, name="DestroyJavaVM", group="main")
+THREAD END (id = 200005)
+TRACE 300126:
+	java.net.PlainSocketImpl.socketAccept(PlainSocketImpl.java:Unknown line)
+	java.net.AbstractPlainSocketImpl.accept(AbstractPlainSocketImpl.java:404)
+	java.net.ServerSocket.implAccept(ServerSocket.java:545)
+	java.net.ServerSocket.accept(ServerSocket.java:513)
+TRACE 300154:
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:89)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+	gvglink.TestDiffGame.main(TestDiffGame.java:33)
+TRACE 300261:
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+	gvglink.TestDiffGame.main(TestDiffGame.java:33)
+TRACE 300159:
+	java.lang.StrictMath.log(StrictMath.java:Unknown line)
+	java.util.Random.nextGaussian(Random.java:595)
+	evodef.GameActionSpaceAdapterMulti.evaluate(GameActionSpaceAdapterMulti.java:124)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:77)
+TRACE 300151:
+	java.util.HashMap.resize(HashMap.java:734)
+	java.util.HashMap.putVal(HashMap.java:662)
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+TRACE 300146:
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:34)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300152:
+	java.util.HashMap.hash(HashMap.java:338)
+	java.util.HashMap.containsKey(HashMap.java:595)
+	java.util.HashSet.contains(HashSet.java:203)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:32)
+TRACE 300265:
+	evodef.GameActionSpaceAdapterMulti.evaluate(GameActionSpaceAdapterMulti.java:95)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:77)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300158:
+	java.util.Random.next(Random.java:204)
+	java.util.Random.nextDouble(Random.java:532)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:39)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+TRACE 300267:
+	ntuple.NTupleSystem.getBestOfSampled(NTupleSystem.java:80)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:101)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300150:
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:33)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+TRACE 300257:
+	java.util.HashMap.resize(HashMap.java:706)
+	java.util.HashMap.putVal(HashMap.java:662)
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+TRACE 300149:
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:91)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+	gvglink.TestDiffGame.main(TestDiffGame.java:33)
+TRACE 300155:
+	ntuple.EvaluateChoices.n(EvaluateChoices.java:47)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:88)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300156:
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:35)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300157:
+	evogame.Mutator.randMut(Mutator.java:50)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:89)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300274:
+	ntuple.NTupleSystem.getExplorationVector(NTupleSystem.java:163)
+	ntuple.NTupleSystem.getExplorationEstimate(NTupleSystem.java:151)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:35)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+TRACE 300266:
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:78)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+	gvglink.TestDiffGame.main(TestDiffGame.java:33)
+TRACE 300258:
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:31)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300262:
+	java.util.HashMap.putVal(HashMap.java:662)
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:33)
+TRACE 300081:
+	java.security.PermissionCollection.<init>(PermissionCollection.java:94)
+	java.security.Permissions.<init>(Permissions.java:101)
+	java.security.SecureClassLoader.getPermissions(SecureClassLoader.java:192)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:654)
+TRACE 300090:
+	java.lang.ClassLoader.defineClass1(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.defineClass(ClassLoader.java:760)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:467)
+TRACE 300255:
+	java.util.Formatter.format(Formatter.java:2504)
+	java.util.Formatter.format(Formatter.java:2455)
+	java.lang.String.format(String.java:2928)
+	numbergame.DiffGame.toString(DiffGame.java:53)
+TRACE 300256:
+	ntuple.NTupleSystem.getSimple(NTupleSystem.java:131)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:34)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+TRACE 300259:
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:98)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+	gvglink.TestDiffGame.main(TestDiffGame.java:33)
+TRACE 300260:
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:42)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300263:
+	java.lang.Double.valueOf(Double.java:519)
+	ntuple.NTupleSystem.getSimple(NTupleSystem.java:144)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:34)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+TRACE 300264:
+	java.util.regex.Pattern$BmpCharProperty.match(Pattern.java:3796)
+	java.util.regex.Pattern$Start.match(Pattern.java:3461)
+	java.util.regex.Matcher.search(Matcher.java:1248)
+	java.util.regex.Matcher.find(Matcher.java:664)
+TRACE 300268:
+	java.util.regex.Pattern$Curly.match(Pattern.java:4226)
+	java.util.regex.Pattern$GroupHead.match(Pattern.java:4658)
+	java.util.regex.Pattern$Branch.match(Pattern.java:4604)
+	java.util.regex.Pattern$Branch.match(Pattern.java:4602)
+TRACE 300269:
+	ntuple.NTupleSystem.getBestOfSampled(NTupleSystem.java:82)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:101)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+TRACE 300270:
+	java.util.HashMap.putVal(HashMap.java:628)
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:33)
+TRACE 300271:
+	java.util.HashMap.newNode(HashMap.java:1734)
+	java.util.HashMap.putVal(HashMap.java:630)
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+TRACE 300272:
+	java.util.HashMap.getNode(HashMap.java:580)
+	java.util.HashMap.containsKey(HashMap.java:595)
+	java.util.HashSet.contains(HashSet.java:203)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:32)
+TRACE 300273:
+	java.util.regex.Matcher.<init>(Matcher.java:225)
+	java.util.regex.Pattern.matcher(Pattern.java:1093)
+	java.util.Formatter.parse(Formatter.java:2547)
+	java.util.Formatter.format(Formatter.java:2501)
+TRACE 300275:
+	java.util.HashMap.newNode(HashMap.java:1734)
+	java.util.HashMap.putVal(HashMap.java:641)
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+TRACE 300276:
+	java.util.Formatter$Conversion.isGeneral(Formatter.java:4534)
+	java.util.Formatter$FormatSpecifier.<init>(Formatter.java:2724)
+	java.util.Formatter.parse(Formatter.java:2560)
+	java.util.Formatter.format(Formatter.java:2501)
+TRACE 300277:
+	java.util.regex.Pattern$Curly.match0(Pattern.java:4244)
+	java.util.regex.Pattern$Curly.match(Pattern.java:4234)
+	java.util.regex.Pattern$GroupHead.match(Pattern.java:4658)
+	java.util.regex.Pattern$Branch.match(Pattern.java:4604)
+TRACE 300278:
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:456)
+	java.lang.StringBuilder.append(StringBuilder.java:166)
+	java.lang.StringBuilder.append(StringBuilder.java:76)
+	java.util.Formatter$FixedString.print(Formatter.java:2595)
+TRACE 300140:
+	java.util.ArrayList$Itr.<init>(ArrayList.java:842)
+	java.util.ArrayList$Itr.<init>(ArrayList.java:840)
+	java.util.ArrayList.iterator(ArrayList.java:834)
+	ntuple.NTupleSystem.getSimple(NTupleSystem.java:125)
+TRACE 300141:
+	ntuple.NTupleSystem.getExplorationVector(NTupleSystem.java:164)
+	ntuple.NTupleSystem.getExplorationEstimate(NTupleSystem.java:151)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:35)
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:90)
+TRACE 300142:
+	java.util.HashMap.getNode(HashMap.java:571)
+	java.util.HashMap.containsKey(HashMap.java:595)
+	java.util.HashSet.contains(HashSet.java:203)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:32)
+TRACE 300143:
+	java.lang.Integer.equals(Integer.java:974)
+	java.util.HashMap.getNode(HashMap.java:571)
+	java.util.HashMap.containsKey(HashMap.java:595)
+	java.util.HashSet.contains(HashSet.java:203)
+TRACE 300144:
+	ntuple.NTupleBanditEA.runTrial(NTupleBanditEA.java:89)
+	controllers.multiPlayer.ea.Agent.act(Agent.java:137)
+	gvglink.TestDiffGame.runTrial(TestDiffGame.java:126)
+	gvglink.TestDiffGame.main(TestDiffGame.java:33)
+TRACE 300220:
+	java.lang.ClassLoader$NativeLibrary.find(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.findNative(ClassLoader.java:1959)
+	java.security.AccessController.doPrivileged(AccessController.java:Unknown line)
+	java.net.URLClassLoader$3.next(URLClassLoader.java:598)
+TRACE 300145:
+	java.util.AbstractCollection.<init>(AbstractCollection.java:66)
+	java.util.AbstractSet.<init>(AbstractSet.java:63)
+	java.util.HashSet.<init>(HashSet.java:104)
+	ntuple.EvaluateChoices.<init>(EvaluateChoices.java:28)
+TRACE 300032:
+	java.lang.Class.getClassLoader(Class.java:678)
+	java.lang.Class.desiredAssertionStatus(Class.java:3208)
+	java.nio.DirectByteBuffer.<clinit>(DirectByteBuffer.java:37)
+	sun.misc.Perf.createLong(Perf.java:Unknown line)
+TRACE 300148:
+	java.util.HashMap.putVal(HashMap.java:641)
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+	ntuple.EvaluateChoices.add(EvaluateChoices.java:33)
+TRACE 300153:
+	java.util.HashMap.resize(HashMap.java:677)
+	java.util.HashMap.putVal(HashMap.java:662)
+	java.util.HashMap.put(HashMap.java:611)
+	java.util.HashSet.add(HashSet.java:219)
+TRACE 300195:
+	java.util.Collections.emptyIterator(Collections.java:4181)
+	java.util.Collections$EmptyList.iterator(Collections.java:4433)
+	java.util.Locale.toLanguageTag(Locale.java:1416)
+	sun.util.locale.provider.LocaleProviderAdapter.isSupportedLocale(LocaleProviderAdapter.java:310)
+TRACE 300061:
+	java.security.AccessController.doPrivileged(AccessController.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:519)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:492)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:457)
+TRACE 300161:
+	java.util.Formatter.<clinit>(Formatter.java:2540)
+	java.lang.String.format(String.java:2928)
+	numbergame.DiffGame.toString(DiffGame.java:53)
+	java.lang.String.valueOf(String.java:2982)
+TRACE 300125:
+	java.net.URLStreamHandler.getHostAddress(URLStreamHandler.java:432)
+	java.net.URLStreamHandler.hostsEqual(URLStreamHandler.java:455)
+	sun.net.www.protocol.file.Handler.hostsEqual(Handler.java:134)
+	java.net.URLStreamHandler.sameFile(URLStreamHandler.java:412)
+TRACE 300062:
+	sun.util.calendar.BaseCalendar$Date.hit(BaseCalendar.java:173)
+	sun.util.calendar.BaseCalendar.getCalendarDateFromFixedDate(BaseCalendar.java:424)
+	sun.util.calendar.AbstractCalendar.getCalendarDate(AbstractCalendar.java:165)
+	sun.util.calendar.Gregorian.getCalendarDate(Gregorian.java:73)
+TRACE 300016:
+	sun.misc.SharedSecrets.getJavaUtilZipFileAccess(SharedSecrets.java:158)
+	sun.misc.URLClassPath$JarLoader.<clinit>(URLClassPath.java:765)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:530)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:520)
+TRACE 300044:
+	sun.util.calendar.ZoneInfoFile$1.run(ZoneInfoFile.java:255)
+	java.security.AccessController.doPrivileged(AccessController.java:Unknown line)
+	sun.util.calendar.ZoneInfoFile.<clinit>(ZoneInfoFile.java:251)
+	sun.util.calendar.ZoneInfo.getTimeZone(ZoneInfo.java:589)
+TRACE 300244:
+	sun.util.locale.provider.SPILocaleProviderAdapter.findInstalledProvider(SPILocaleProviderAdapter.java:74)
+	sun.util.locale.provider.AuxLocaleProviderAdapter.getLocaleServiceProvider(AuxLocaleProviderAdapter.java:70)
+	sun.util.locale.provider.LocaleServiceProviderPool.<init>(LocaleServiceProviderPool.java:133)
+	sun.util.locale.provider.LocaleServiceProviderPool.getPool(LocaleServiceProviderPool.java:111)
+TRACE 300116:
+	java.nio.Buffer.checkIndex(Buffer.java:539)
+	java.nio.DirectLongBufferU.get(DirectLongBufferU.java:253)
+	sun.misc.PerfCounter.get(PerfCounter.java:83)
+	sun.misc.PerfCounter.add(PerfCounter.java:97)
+TRACE 300131:
+	sun.misc.Resource.getBytes(Resource.java:117)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:462)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:73)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:368)
+TRACE 300117:
+	java.lang.ClassLoader$NativeLibrary.find(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.findNative(ClassLoader.java:1959)
+	java.net.PlainSocketImpl.socketBind(PlainSocketImpl.java:Unknown line)
+	java.net.AbstractPlainSocketImpl.bind(AbstractPlainSocketImpl.java:382)
+TRACE 300096:
+	java.net.URL.<init>(URL.java:511)
+	java.net.URL.<init>(URL.java:483)
+	sun.misc.URLClassPath$FileLoader.getResource(URLClassPath.java:1222)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:212)
+TRACE 300045:
+	java.security.AccessController.doPrivileged(AccessController.java:Unknown line)
+	sun.util.calendar.ZoneInfoFile.<clinit>(ZoneInfoFile.java:251)
+	sun.util.calendar.ZoneInfo.getTimeZone(ZoneInfo.java:589)
+	java.util.TimeZone.getTimeZone(TimeZone.java:560)
+TRACE 300054:
+	java.util.zip.Inflater.initIDs(Inflater.java:Unknown line)
+	java.util.zip.Inflater.<clinit>(Inflater.java:88)
+	java.util.zip.ZipFile.getInflater(ZipFile.java:455)
+	java.util.zip.ZipFile.getInputStream(ZipFile.java:374)
+TRACE 300136:
+	java.lang.System.nanoTime(System.java:Unknown line)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:444)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:73)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:368)
+TRACE 300137:
+	java.io.FileInputStream.readBytes(FileInputStream.java:Unknown line)
+	java.io.FileInputStream.read(FileInputStream.java:255)
+	sun.misc.Resource.getBytes(Resource.java:124)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:462)
+CPU SAMPLES BEGIN (total = 1573) Sun Mar 12 13:20:33 2017
+rank   self  accum   count trace method
+   1 49.65% 49.65%     781 300126 java.net.PlainSocketImpl.socketAccept
+   2 23.08% 72.73%     363 300154 ntuple.NTupleBanditEA.runTrial
+   3 18.31% 91.04%     288 300261 ntuple.NTupleBanditEA.runTrial
+   4  1.84% 92.88%      29 300159 java.lang.StrictMath.log
+   5  1.27% 94.15%      20 300151 java.util.HashMap.resize
+   6  0.64% 94.79%      10 300146 ntuple.EvaluateChoices.add
+   7  0.32% 95.10%       5 300152 java.util.HashMap.hash
+   8  0.32% 95.42%       5 300265 evodef.GameActionSpaceAdapterMulti.evaluate
+   9  0.25% 95.68%       4 300158 java.util.Random.next
+  10  0.19% 95.87%       3 300267 ntuple.NTupleSystem.getBestOfSampled
+  11  0.19% 96.06%       3 300150 java.util.HashMap.put
+  12  0.13% 96.19%       2 300257 java.util.HashMap.resize
+  13  0.13% 96.31%       2 300149 ntuple.NTupleBanditEA.runTrial
+  14  0.13% 96.44%       2 300155 ntuple.EvaluateChoices.n
+  15  0.13% 96.57%       2 300156 ntuple.EvaluateChoices.add
+  16  0.13% 96.69%       2 300157 evogame.Mutator.randMut
+  17  0.13% 96.82%       2 300274 ntuple.NTupleSystem.getExplorationVector
+  18  0.13% 96.95%       2 300266 ntuple.NTupleBanditEA.runTrial
+  19  0.13% 97.08%       2 300258 ntuple.EvaluateChoices.add
+  20  0.13% 97.20%       2 300262 java.util.HashMap.putVal
+  21  0.06% 97.27%       1 300081 java.security.PermissionCollection.<init>
+  22  0.06% 97.33%       1 300090 java.lang.ClassLoader.defineClass1
+  23  0.06% 97.39%       1 300255 java.util.Formatter.format
+  24  0.06% 97.46%       1 300256 ntuple.NTupleSystem.getSimple
+  25  0.06% 97.52%       1 300259 ntuple.NTupleBanditEA.runTrial
+  26  0.06% 97.58%       1 300260 ntuple.EvaluateChoices.add
+  27  0.06% 97.65%       1 300263 java.lang.Double.valueOf
+  28  0.06% 97.71%       1 300264 java.util.regex.Pattern$BmpCharProperty.match
+  29  0.06% 97.77%       1 300268 java.util.regex.Pattern$Curly.match
+  30  0.06% 97.84%       1 300269 ntuple.NTupleSystem.getBestOfSampled
+  31  0.06% 97.90%       1 300270 java.util.HashMap.putVal
+  32  0.06% 97.97%       1 300271 java.util.HashMap.newNode
+  33  0.06% 98.03%       1 300272 java.util.HashMap.getNode
+  34  0.06% 98.09%       1 300273 java.util.regex.Matcher.<init>
+  35  0.06% 98.16%       1 300275 java.util.HashMap.newNode
+  36  0.06% 98.22%       1 300276 java.util.Formatter$Conversion.isGeneral
+  37  0.06% 98.28%       1 300277 java.util.regex.Pattern$Curly.match0
+  38  0.06% 98.35%       1 300278 java.lang.AbstractStringBuilder.append
+  39  0.06% 98.41%       1 300140 java.util.ArrayList$Itr.<init>
+  40  0.06% 98.47%       1 300141 ntuple.NTupleSystem.getExplorationVector
+  41  0.06% 98.54%       1 300142 java.util.HashMap.getNode
+  42  0.06% 98.60%       1 300143 java.lang.Integer.equals
+  43  0.06% 98.66%       1 300144 ntuple.NTupleBanditEA.runTrial
+  44  0.06% 98.73%       1 300220 java.lang.ClassLoader$NativeLibrary.find
+  45  0.06% 98.79%       1 300145 java.util.AbstractCollection.<init>
+  46  0.06% 98.86%       1 300032 java.lang.Class.getClassLoader
+  47  0.06% 98.92%       1 300148 java.util.HashMap.putVal
+  48  0.06% 98.98%       1 300153 java.util.HashMap.resize
+  49  0.06% 99.05%       1 300195 java.util.Collections.emptyIterator
+  50  0.06% 99.11%       1 300061 java.security.AccessController.doPrivileged
+  51  0.06% 99.17%       1 300161 java.util.Formatter.<clinit>
+  52  0.06% 99.24%       1 300125 java.net.URLStreamHandler.getHostAddress
+  53  0.06% 99.30%       1 300062 sun.util.calendar.BaseCalendar$Date.hit
+  54  0.06% 99.36%       1 300016 sun.misc.SharedSecrets.getJavaUtilZipFileAccess
+  55  0.06% 99.43%       1 300044 sun.util.calendar.ZoneInfoFile$1.run
+  56  0.06% 99.49%       1 300244 sun.util.locale.provider.SPILocaleProviderAdapter.findInstalledProvider
+  57  0.06% 99.55%       1 300116 java.nio.Buffer.checkIndex
+  58  0.06% 99.62%       1 300131 sun.misc.Resource.getBytes
+  59  0.06% 99.68%       1 300117 java.lang.ClassLoader$NativeLibrary.find
+  60  0.06% 99.75%       1 300096 java.net.URL.<init>
+  61  0.06% 99.81%       1 300045 java.security.AccessController.doPrivileged
+  62  0.06% 99.87%       1 300054 java.util.zip.Inflater.initIDs
+  63  0.06% 99.94%       1 300136 java.lang.System.nanoTime
+  64  0.06% 100.00%       1 300137 java.io.FileInputStream.readBytes
+CPU SAMPLES END
