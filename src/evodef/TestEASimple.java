@@ -1,6 +1,7 @@
 package evodef;
 
 import bandits.MBanditEA;
+import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
 import ntuple.NTupleSystem;
@@ -20,39 +21,57 @@ public class TestEASimple {
     static int nDims = 10;
     static int mValues = 2;
 
-    static int nTrialsRMHC = 1000;
+    static int nTrialsRMHC = 10000;
     static int nTrialsNTupleBanditEA = 30;
 
-    static int nFitnessEvals = 100;
+    static int nFitnessEvals = 500;
+
+    static boolean useFirstHit = false;
 
     public static void main(String[] args) {
 
         ElapsedTimer t = new ElapsedTimer();
 
 
-        StatSummary nt = testNTupleBanditEA(nTrialsNTupleBanditEA);
-        System.out.println(t);
+//        StatSummary nt = testNTupleBanditEA(nTrialsNTupleBanditEA);
+//        System.out.println(t);
 
-        testRMHC(nt);
+        // Mutator.totalRandomChaosMutation = true;
+
+        testRMHCAlone();
         System.out.println(t);
 
 
     }
 
     static StatSummary testNTupleBanditEA(int nTrials) {
-        StatSummary ss = runTrials(new NTupleBanditEA(), nTrials);
+        StatSummary ss = runTrials(new NTupleBanditEA(), nTrials, 0);
         System.out.println(ss);
         return ss;
     }
+
+    static void testRMHCAlone() {
+        // simpler version does not compare performance with NT
+        ArrayList<StatSummary> results = new ArrayList<>();
+        for (int i = 1; i <= 20; i++) {
+            // System.out.println("Resampling rate: " + i);
+            StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC, i);
+            results.add(ss2);
+            // System.out.println(ss2);
+            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
+        }
+
+    }
+
 
     static void testRMHC(StatSummary nt) {
         ArrayList<StatSummary> results = new ArrayList<>();
         for (int i = 1; i <= 20; i++) {
             // System.out.println("Resampling rate: " + i);
-            StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC);
+            StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC, i);
             results.add(ss2);
             // System.out.println(ss2);
-            System.out.format("Resample rate: %d\t %.3f\t %.3f   \n", i, ss2.mean(), ss2.stdErr());
+            System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
         }
 
         printJS(results, nt);
@@ -75,18 +94,20 @@ public class TestEASimple {
     }
 
 
-    public static StatSummary runTrials(EvoAlg ea, int nTrials) {
+    public static StatSummary runTrials(EvoAlg ea, int nTrials, int nResamples) {
         StatSummary ss = new StatSummary();
+        StatSummary nTrueOpt = new StatSummary("N True Opt Hits");
 
         for (int i = 0; i < nTrials; i++) {
-            ss.add(runTrial(ea));
+            ss.add(runTrial(ea, nTrueOpt));
         }
 
         // System.out.println(ss);
+
+        System.out.format("N Resamples: \t %2d ;\t n True Opt %s: %d\n",nResamples, useFirstHit ? "hits" : "returns", nTrueOpt.n());
         return ss;
     }
-
-    static double runTrial(EvoAlg ea) {
+    static double runTrial(EvoAlg ea, StatSummary nTrueOpt) {
 
 //        SolutionEvaluator evaluator = new EvalMaxM(nDims, mValues, 1.0);
 //        SolutionEvaluator trueEvaluator = new EvalMaxM(nDims, mValues, 0.0);
@@ -99,6 +120,15 @@ public class TestEASimple {
         evaluator.reset();
 
         int[] solution = ea.runTrial(evaluator, nFitnessEvals);
+
+        if (useFirstHit && evaluator.logger().firstHit != null) {
+            // System.out.println("Optimal first hit?: " + evaluator.logger().firstHit);
+            nTrueOpt.add(evaluator.logger().firstHit);
+        } else if (trueEvaluator.evaluate(solution) == 1.0) {
+            nTrueOpt.add(1);
+        }
+
+
 
 //        System.out.println();
 //        System.out.println("Returned solution: " + Arrays.toString(solution));
