@@ -29,15 +29,21 @@ public class Mutator {
         System.out.println(Arrays.toString(mutator.randMut(new int[mutator.searchSpace.nDims()])));
     }
 
-    public double pointProb = 1.0;
+
+
+    // this will be set each time a Mutator is created
+    public double pointProb;
     static Random random = new Random();
 
     public static boolean totalRandomChaosMutation = false;
+    public static double defaultPointProb = 1.0;
+    public static boolean flipAtLeastOneValue = true;
 
     SearchSpace searchSpace;
 
     public Mutator(SearchSpace searchSpace) {
         this.searchSpace = searchSpace;
+        pointProb = defaultPointProb;
     }
 
     public int[] randMut(int[] v) {
@@ -52,6 +58,11 @@ public class Mutator {
         double mutProb = pointProb / n;
         // choose element of vector to mutate
         int ix = random.nextInt(n);
+        if (!flipAtLeastOneValue) {
+            // setting this to -1 means it will never match the first clause in the if statement in the loop
+            // leaving it at the randomly chosen value ensures that at least one bit (or more generally value) is always flipped
+            ix = -1;
+        }
         // copy all the values fauthfully apart from the chosen one
         for (int i=0; i<n; i++) {
             if (i == ix || random.nextDouble() < mutProb) {

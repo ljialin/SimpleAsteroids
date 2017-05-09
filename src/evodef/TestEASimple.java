@@ -30,8 +30,18 @@ public class TestEASimple {
 
     public static void main(String[] args) {
 
-        ElapsedTimer t = new ElapsedTimer();
+        // run configuration for an experiment
 
+        useFirstHit = false;
+        Mutator.flipAtLeastOneValue = false;
+        Mutator.defaultPointProb = 1.0;
+
+        System.out.println("Running experiment with following settings:");
+        System.out.format("Use first hitting time    :\t %s\n" , useFirstHit );
+        System.out.format("RMHC: (flip at least one) :\t %s\n" , Mutator.flipAtLeastOneValue );
+        System.out.format("Point mutation probability:\t %.4f\n" , Mutator.defaultPointProb / nDims );
+
+        ElapsedTimer t = new ElapsedTimer();
 
 //        StatSummary nt = testNTupleBanditEA(nTrialsNTupleBanditEA);
 //        System.out.println(t);
