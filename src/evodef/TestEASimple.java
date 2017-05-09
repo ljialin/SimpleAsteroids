@@ -26,14 +26,15 @@ public class TestEASimple {
 
     static int nFitnessEvals = 500;
 
-    static boolean useFirstHit = false;
+    static boolean useFirstHit = true;
+    static int maxResamples = 60;
 
     public static void main(String[] args) {
 
         // run configuration for an experiment
 
-        useFirstHit = false;
-        Mutator.flipAtLeastOneValue = false;
+        useFirstHit = true;
+        Mutator.flipAtLeastOneValue = true;
         Mutator.defaultPointProb = 1.0;
 
         System.out.println("Running experiment with following settings:");
@@ -63,7 +64,7 @@ public class TestEASimple {
     static void testRMHCAlone() {
         // simpler version does not compare performance with NT
         ArrayList<StatSummary> results = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= maxResamples; i++) {
             // System.out.println("Resampling rate: " + i);
             StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC, i);
             results.add(ss2);
@@ -131,6 +132,9 @@ public class TestEASimple {
 
         int[] solution = ea.runTrial(evaluator, nFitnessEvals);
 
+
+
+        //  horrible mess at the moment - changing to a different evaluator
         if (useFirstHit && evaluator.logger().firstHit != null) {
             // System.out.println("Optimal first hit?: " + evaluator.logger().firstHit);
             nTrueOpt.add(evaluator.logger().firstHit);
@@ -138,6 +142,13 @@ public class TestEASimple {
             nTrueOpt.add(1);
         }
 
+//        if (useFirstHit && evaluator.logger().firstHit != null) {
+//            // System.out.println("Optimal first hit?: " + evaluator.logger().firstHit);
+//            nTrueOpt.add(evaluator.logger().firstHit);
+//        } else if (trueEvaluator.evaluate(solution) == nDims) {
+//            nTrueOpt.add(1);
+//        }
+//
 
 
 //        System.out.println();
