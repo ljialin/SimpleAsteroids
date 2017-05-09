@@ -25,6 +25,7 @@ public class EvolutionLogger {
     int[] finalSolution;
     double finalFitness;
     int nOptimal = 0;
+    Integer firstHit;
 
     public EvolutionLogger() {
         reset();
@@ -39,6 +40,8 @@ public class EvolutionLogger {
         }
         if (isOptimal) {
             nOptimal++;
+            if (firstHit == null)
+                firstHit = fa.size();
         }
         fa.add(fitness);
         solutions.add(solution);
@@ -91,6 +94,7 @@ public class EvolutionLogger {
         bestYet = null;
         bestGen = 0;
         nOptimal = 0;
+        firstHit = null;
     }
 }
 
