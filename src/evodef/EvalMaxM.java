@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by simonmarklucas on 14/08/2016.
  */
-public class EvalMaxM implements SolutionEvaluator, SearchSpace {
+public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
 
     int nDims;
     int m;
@@ -43,15 +43,9 @@ public class EvalMaxM implements SolutionEvaluator, SearchSpace {
 
     @Override
     public double evaluate(int[] a) {
-        double tot = 0;
-        for (int i=0; i<a.length; i++) {
-            if (a[i] <0 || a[i] >= m) {
-                throw new RuntimeException("Value out of bounds: " + a[i]);
-            }
-            tot += a[i];
-        }
         // keep track of whether it is truly optimal
-        boolean isOptimal = tot == a.length * (m-1);
+        double tot = trueFitness(a);
+        boolean isOptimal = isOptimal(a);
         tot += noise * random.nextGaussian();
 
         logger.log(tot, a, isOptimal);
@@ -59,7 +53,21 @@ public class EvalMaxM implements SolutionEvaluator, SearchSpace {
     }
 
     @Override
+    public double trueFitness(int[] a) {
+        double tot = 0;
+        for (int i=0; i<a.length; i++) {
+            if (a[i] <0 || a[i] >= m) {
+                throw new RuntimeException("Value out of bounds: " + a[i]);
+            }
+            tot += a[i];
+        }
+        return tot;
+    }
+
+    @Override
     public boolean optimalFound() {
+        // return false for the noisy optimisation experiments in order
+        // to prevent the optimiser from cheating
         return false;
     }
 
@@ -88,4 +96,10 @@ public class EvalMaxM implements SolutionEvaluator, SearchSpace {
     public int nValues(int i) {
         return m;
     }
+
+    @Override
+    public Boolean isOptimal(int[] solution) {
+        return trueFitness(solution) == solution.length * (m-1);
+    }
+
 }

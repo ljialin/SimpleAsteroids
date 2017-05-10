@@ -22,7 +22,7 @@ import java.util.Random;
  *
  *
  */
-public class EvalNoisyWinRate implements SolutionEvaluator, SearchSpace, FitnessSpace {
+public class EvalNoisyWinRate implements NoisySolutionEvaluator, SearchSpace, FitnessSpace {
 
 
     // setting to true aims for a 50% win rate
@@ -101,6 +101,22 @@ public class EvalNoisyWinRate implements SolutionEvaluator, SearchSpace, Fitness
 
     @Override
     public double evaluate(int[] a) {
+        boolean isOptimal = isOptimal(a);
+        double pVal = pVal(a);
+
+        double fitnessValue;
+
+        if (noise == 0) {
+            fitnessValue = pVal;
+        } else {
+            fitnessValue = random.nextDouble() <= pVal ? 1 : 0;
+        }
+
+        logger.log(fitnessValue, a, isOptimal);
+        return fitnessValue;
+    }
+
+    public double pVal(int[] a) {
         double tot = 0;
         int pow = 1;
         for (int i=0; i<a.length; i++) {
@@ -117,17 +133,8 @@ public class EvalNoisyWinRate implements SolutionEvaluator, SearchSpace, Fitness
         // System.out.println(tot + " : " + maxVal + " : " + isOptimal);
 
         double pVal = tot / maxVal;
+        return pVal;
 
-        double fitnessValue;
-
-        if (noise == 0) {
-            fitnessValue = pVal;
-        } else {
-            fitnessValue = random.nextDouble() <= pVal ? 1 : 0;
-        }
-
-        logger.log(fitnessValue, a, isOptimal);
-        return fitnessValue;
     }
 
     @Override
@@ -159,5 +166,19 @@ public class EvalNoisyWinRate implements SolutionEvaluator, SearchSpace, Fitness
     @Override
     public int nValues(int i) {
         return m;
+    }
+
+    @Override
+    public Boolean isOptimal(int[] solution) {
+        for (int i : solution) {
+            if (i != m-1) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public double trueFitness(int[] solution) {
+        // true fitness is the proprtion of the max value
+        return pVal(solution);
     }
 }
