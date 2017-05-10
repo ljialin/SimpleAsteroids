@@ -27,17 +27,24 @@ public class TestEASimple {
     static int nFitnessEvals = 500;
 
     static boolean useFirstHit = true;
-    static int maxResamples = 60;
+    static int maxResamples = 50;
+    static NoisySolutionEvaluator solutionEvaluator;
+
 
     public static void main(String[] args) {
 
         // run configuration for an experiment
 
-        useFirstHit = true;
+        useFirstHit = false;
         Mutator.flipAtLeastOneValue = true;
         Mutator.defaultPointProb = 1.0;
 
+        // select which one to use
+        solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
+        // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
+
         System.out.println("Running experiment with following settings:");
+        System.out.println("Solution evaluator: " + solutionEvaluator.getClass());
         System.out.format("Use first hitting time    :\t %s\n" , useFirstHit );
         System.out.format("RMHC: (flip at least one) :\t %s\n" , Mutator.flipAtLeastOneValue );
         System.out.format("Point mutation probability:\t %.4f\n" , Mutator.defaultPointProb / nDims );
@@ -72,6 +79,15 @@ public class TestEASimple {
             // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
         }
 
+        // now suppose we may just want to track the number of successes
+        // in this case we just take the number of samples out of each StatSummary
+
+        ArrayList<Double> successRate = new ArrayList<>();
+        for (StatSummary ss : results) {
+            successRate.add(ss.n() * 100.0 / nTrialsRMHC);
+        }
+        System.out.println("Results array:");
+        System.out.println(successRate);
     }
 
 
@@ -84,9 +100,7 @@ public class TestEASimple {
             // System.out.println(ss2);
             System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
         }
-
         printJS(results, nt);
-
         //
     }
 
@@ -106,57 +120,52 @@ public class TestEASimple {
 
 
     public static StatSummary runTrials(EvoAlg ea, int nTrials, int nResamples) {
+        // summary of fitness stats
         StatSummary ss = new StatSummary();
+
+        // summary of optima found
         StatSummary nTrueOpt = new StatSummary("N True Opt Hits");
 
         for (int i = 0; i < nTrials; i++) {
             ss.add(runTrial(ea, nTrueOpt));
         }
 
+        // the ss summary shows the average level of fitness reached
+        // but instead we may be looking at the percentage of times the optimum is found
         // System.out.println(ss);
 
-        System.out.format("N Resamples: \t %2d ;\t n True Opt %s: %d\n",nResamples, useFirstHit ? "hits" : "returns", nTrueOpt.n());
-        return ss;
+        System.out.format("N Resamples: \t %2d ;\t n True Opt %s: %.2f\n",nResamples, useFirstHit ? "hits" : "returns", nTrueOpt.n() * 100.0 / nTrials);
+
+        // commented version prints out absolute of successes instead of percentage
+        // System.out.format("N Resamples: \t %2d ;\t n True Opt %s: %3d\n",nResamples, useFirstHit ? "hits" : "returns", nTrueOpt.n()  );
+        return nTrueOpt;
     }
+
+
     static double runTrial(EvoAlg ea, StatSummary nTrueOpt) {
 
-//        SolutionEvaluator evaluator = new EvalMaxM(nDims, mValues, 1.0);
-//        SolutionEvaluator trueEvaluator = new EvalMaxM(nDims, mValues, 0.0);
-
-        SolutionEvaluator evaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
-        SolutionEvaluator trueEvaluator = new EvalNoisyWinRate(nDims, mValues, 0.0);
-
-        // just remember how best to do this !!!
-
+        // grab from static var for now
+        NoisySolutionEvaluator evaluator = solutionEvaluator;
         evaluator.reset();
 
         int[] solution = ea.runTrial(evaluator, nFitnessEvals);
 
-
-
         //  horrible mess at the moment - changing to a different evaluator
-        if (useFirstHit && evaluator.logger().firstHit != null) {
-            // System.out.println("Optimal first hit?: " + evaluator.logger().firstHit);
-            nTrueOpt.add(evaluator.logger().firstHit);
-        } else if (trueEvaluator.evaluate(solution) == 1.0) {
-            nTrueOpt.add(1);
-        }
-
 //        if (useFirstHit && evaluator.logger().firstHit != null) {
 //            // System.out.println("Optimal first hit?: " + evaluator.logger().firstHit);
 //            nTrueOpt.add(evaluator.logger().firstHit);
-//        } else if (trueEvaluator.evaluate(solution) == nDims) {
+//        } else if (trueEvaluator.evaluate(solution) == 1.0) {
 //            nTrueOpt.add(1);
 //        }
-//
 
+        if (useFirstHit && evaluator.logger().firstHit != null) {
+            // System.out.println("Optimal first hit?: " + evaluator.logger().firstHit);
+            nTrueOpt.add(evaluator.logger().firstHit);
+        } else if (evaluator.isOptimal(solution)) {
+            nTrueOpt.add(1);
+        }
 
-//        System.out.println();
-//        System.out.println("Returned solution: " + Arrays.toString(solution));
-//        System.out.println("Fitness = " + trueEvaluator.evaluate(solution));
-
-        return trueEvaluator.evaluate(solution);
-
+        return solutionEvaluator.trueFitness(solution);
 
     }
 }

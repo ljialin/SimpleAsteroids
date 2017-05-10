@@ -12,6 +12,7 @@ public interface SolutionEvaluator {
     public void reset();
     double evaluate(int[] bits);
 
+    // has the algorithm found the optimal solution?
     boolean optimalFound();
     SearchSpace searchSpace();
     int nEvals();
@@ -22,4 +23,5 @@ public interface SolutionEvaluator {
 
     // return null if unknown
     public Double optimalIfKnown();
+
 }
