@@ -27,7 +27,7 @@ public class TestEASimple {
     static int nFitnessEvals = 500;
 
     static boolean useFirstHit = true;
-    static int maxResamples = 20;
+    static int maxResamples = 50;
     static NoisySolutionEvaluator solutionEvaluator;
 
 
@@ -37,7 +37,7 @@ public class TestEASimple {
 
         useFirstHit = false;
         Mutator.flipAtLeastOneValue = true;
-        Mutator.defaultPointProb = 0.0;
+        Mutator.defaultPointProb = 1.0;
 
         // select which one to use
         solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
@@ -79,6 +79,15 @@ public class TestEASimple {
             // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
         }
 
+        // now suppose we may just want to track the number of successes
+        // in this case we just take the number of samples out of each StatSummary
+
+        ArrayList<Double> successRate = new ArrayList<>();
+        for (StatSummary ss : results) {
+            successRate.add(ss.n() * 100.0 / nTrialsRMHC);
+        }
+        System.out.println("Results array:");
+        System.out.println(successRate);
     }
 
 
@@ -91,9 +100,7 @@ public class TestEASimple {
             // System.out.println(ss2);
             System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
         }
-
         printJS(results, nt);
-
         //
     }
 
@@ -113,17 +120,25 @@ public class TestEASimple {
 
 
     public static StatSummary runTrials(EvoAlg ea, int nTrials, int nResamples) {
+        // summary of fitness stats
         StatSummary ss = new StatSummary();
+
+        // summary of optima found
         StatSummary nTrueOpt = new StatSummary("N True Opt Hits");
 
         for (int i = 0; i < nTrials; i++) {
             ss.add(runTrial(ea, nTrueOpt));
         }
 
+        // the ss summary shows the average level of fitness reached
+        // but instead we may be looking at the percentage of times the optimum is found
         // System.out.println(ss);
 
         System.out.format("N Resamples: \t %2d ;\t n True Opt %s: %.2f\n",nResamples, useFirstHit ? "hits" : "returns", nTrueOpt.n() * 100.0 / nTrials);
-        return ss;
+
+        // commented version prints out absolute of successes instead of percentage
+        // System.out.format("N Resamples: \t %2d ;\t n True Opt %s: %3d\n",nResamples, useFirstHit ? "hits" : "returns", nTrueOpt.n()  );
+        return nTrueOpt;
     }
 
 
