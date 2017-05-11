@@ -62,6 +62,10 @@ public class SimpleRMHC implements EvoAlg {
 
 
 
+        // TODO: MCTS/RHEA Lab
+        // Play with the stopping condition
+        // (1) use first hit
+        // (2) use maximal number of evaluations
         while (evaluator.nEvals() < maxEvals && !evaluator.optimalFound()) {
             // System.out.println("nEvals: " + evaluator.nEvals());
             int[] mut = mutator.randMut(bestYet);

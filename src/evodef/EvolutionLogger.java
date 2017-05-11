@@ -25,7 +25,7 @@ public class EvolutionLogger {
     int[] finalSolution;
     double finalFitness;
     int nOptimal = 0;
-    Integer firstHit;
+    public Integer firstHit;
 
     public EvolutionLogger() {
         reset();

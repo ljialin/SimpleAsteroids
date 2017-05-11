@@ -168,7 +168,7 @@ public class Agent extends AbstractMultiPlayer {
 ////        {
 ////            actions[i] = act.get(i);
 ////        }
-////        num_actions = actions.length;
+////        numActions = actions.length;
 //
 //        System.out.println(Arrays.toString(actions));
 //
