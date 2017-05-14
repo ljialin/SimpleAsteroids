@@ -59,7 +59,6 @@ public class TestEASimple {
         testRMHCAlone();
         System.out.println(t);
 
-
     }
 
     static StatSummary testNTupleBanditEA(int nTrials) {

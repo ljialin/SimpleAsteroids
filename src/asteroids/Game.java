@@ -27,7 +27,8 @@ public class Game {
         int startLevel = 1;
         int nLives = 3;
         GameParameters params = new GameParameters();
-        GameState gameState = new GameState(params, startLevel, nLives);
+        // GameState gameState = new GameState(params, startLevel, nLives);
+        GameState gameState = new GameState(startLevel, nLives);
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();
@@ -43,8 +44,6 @@ public class Game {
 //        }
 
     }
-
-
 
 
     public Game(boolean visible) {
