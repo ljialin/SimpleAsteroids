@@ -94,11 +94,17 @@ public class SpaceBattleLinkTest {
         double kExplore = 10;
         int nNeighbours = 100;
 
-        int nEvals = 500;
-        evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
+        int nEvals = 200;
+        // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
         player = new controllers.singlePlayer.ea.Agent(linkState, timer, evoAlg, nEvals);
 
+        controllers.singlePlayer.nestedMC.Agent nestedMC =
+                new controllers.singlePlayer.nestedMC.Agent(linkState, timer);
+
+
+        // todo fix silly bug that makes nestedMC crash on Space Battle
+        player = nestedMC;
 
 
         int thinkingTime = 50; // in milliseconds

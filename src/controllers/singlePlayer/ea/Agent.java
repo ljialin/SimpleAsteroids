@@ -48,7 +48,7 @@ public class Agent extends AbstractPlayer {
         }
         num_actions = actions.length;
 
-        System.out.println(Arrays.toString(actions));
+        System.out.println("RHEA: " + Arrays.toString(actions));
 
         //Create the player.
 

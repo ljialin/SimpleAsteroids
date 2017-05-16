@@ -49,7 +49,7 @@ public class Agent extends AbstractPlayer {
         }
         num_actions = actions.length;
 
-        System.out.println(Arrays.toString(actions));
+        System.out.println("NestedMC: " + Arrays.toString(actions));
 
         //Create the player.
 
@@ -99,7 +99,7 @@ public class Agent extends AbstractPlayer {
         //nested(obs, nestDepth, moveSeq, 0);
         double bestScore = Double.MIN_VALUE;
         Types.ACTIONS bestAction = actions [0];
-        for (int i = 0; i < maxLegalMoves; i++) {
+        for (int i = 0; i < num_actions; i++) {
             StateObservation state = obs.copy();
             Types.ACTIONS[] moveSeqCopy = new Types.ACTIONS[maxRolloutLength];
             int nActionsPlayed = 0;
@@ -124,7 +124,6 @@ public class Agent extends AbstractPlayer {
     int[] lengthBestRollout;
     double[] scoreBestRollout;
     Types.ACTIONS[][] bestRollout;
-    static int maxLegalMoves = Types.ACTIONS.values().length;
 
     double bestScoreNested = Double.MIN_VALUE;
     // Board bestBoard;
@@ -134,7 +133,7 @@ public class Agent extends AbstractPlayer {
     void playout(StateObservation stateObservation, Types.ACTIONS[] moveSeq, int nActionsPlayed) {
         // Types.ACTIONS[] moveSeq = new Types.ACTIONS[maxRolloutLength];
         while (!stateObservation.isGameOver() && nActionsPlayed < maxRolloutLength) {
-            int move = random.nextInt(maxLegalMoves);
+            int move = random.nextInt(num_actions);
             stateObservation.advance(actions[move]);
             moveSeq[nActionsPlayed] = actions[move];
             nActionsPlayed++;
@@ -154,8 +153,7 @@ public class Agent extends AbstractPlayer {
             if (nActionsPlayed >= maxRolloutLength)
                 return;
             //return board.score ();
-            nbMoves = maxLegalMoves;
-            for (int i = 0; i < maxLegalMoves; i++) {
+            for (int i = 0; i < num_actions; i++) {
                 StateObservation state = stateObservation.copy();
                 Types.ACTIONS[] moveSeqCopy = new Types.ACTIONS[maxRolloutLength];
                 int nActionsCopy = nActionsPlayed;
