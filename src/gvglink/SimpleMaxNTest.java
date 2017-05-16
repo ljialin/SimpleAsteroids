@@ -37,7 +37,7 @@ public class SimpleMaxNTest {
 
 
         StateObservation noiseFree = new SimpleMaxGame();
-        StateObservation stateObs = new NoisyMaxGame();
+        StateObservation stateObs = new SimpleMaxGame(); // new NoisyMaxGame();
 
         System.out.println(stateObs.getGameScore());
         System.out.println(stateObs.copy().getGameScore());
@@ -52,6 +52,11 @@ public class SimpleMaxNTest {
 
         controllers.singlePlayer.discountOLMCTS.Agent discountOlmcts =
                 new controllers.singlePlayer.discountOLMCTS.Agent(stateObs, timer);
+
+        controllers.singlePlayer.nestedMC.Agent nestedMC =
+                new controllers.singlePlayer.nestedMC.Agent(stateObs, timer);
+
+
 
         player = olmcts;
 
@@ -76,6 +81,11 @@ public class SimpleMaxNTest {
         controllers.singlePlayer.ea.Agent.SEQUENCE_LENGTH = 100;
         player = new controllers.singlePlayer.ea.Agent(stateObs, timer, evoAlg, nEvals);
 
+
+        nestedMC.maxRolloutLength = 5;
+        nestedMC.nestDepth = 5;
+
+        player = nestedMC;
 
         int thinkingTime = 50; // in milliseconds
         int delay = 30;
