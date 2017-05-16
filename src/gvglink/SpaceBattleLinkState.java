@@ -58,16 +58,12 @@ public class SpaceBattleLinkState
 
     // static int[] scores = new int[Types.ACTIONS]
 
-
     public void advance(Types.ACTIONS action) {
-
         int[] a = new int[]{action.ordinal(), random.nextInt(actions.size())};
         state.next(a);
         score = state.score[0] - state.score[1];
         tick++;
-
     }
-
 
     static Random random = new Random();
     /**

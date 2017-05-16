@@ -28,7 +28,7 @@ import java.util.Random;
  */
 public class SpaceBattleLinkTest {
 
-    public static boolean runVisible = false;
+    public static boolean runVisible = true;
 
     public static void main(String[] args) {
         StatSummary ss = new StatSummary();
@@ -95,15 +95,17 @@ public class SpaceBattleLinkTest {
         int nNeighbours = 100;
 
         int nEvals = 200;
-        // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
+        evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        player = new controllers.singlePlayer.ea.Agent(linkState, timer, evoAlg, nEvals);
+        // player = new controllers.singlePlayer.ea.Agent(linkState, timer, evoAlg, nEvals);
 
         controllers.singlePlayer.nestedMC.Agent nestedMC =
                 new controllers.singlePlayer.nestedMC.Agent(linkState, timer);
 
+        nestedMC.maxRolloutLength = 10;
+        nestedMC.nestDepth = 2;
 
-        // todo fix silly bug that makes nestedMC crash on Space Battle
+
         player = nestedMC;
 
 
@@ -135,6 +137,8 @@ public class SpaceBattleLinkTest {
             timer = new ElapsedCpuTimer();
             timer.setMaxTimeMillis(thinkingTime);
             Types.ACTIONS action = player.act(linkState.copy(), timer);
+
+            // Types.ACTIONS action = actions.get(2);
 
             // use this for a random action
             // action = actions.get(random.nextInt(actions.size()));

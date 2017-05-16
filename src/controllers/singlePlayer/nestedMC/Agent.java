@@ -84,20 +84,17 @@ public class Agent extends AbstractPlayer {
         // we'll set up a game adapter and run the algorithm independently each
         // time at least to being with
 
-        int action;
-        GameActionSpaceAdapter game = new GameActionSpaceAdapter(stateObs, SEQUENCE_LENGTH);
-
 
         StateObservation obs = stateObs.copy();
 
-        Types.ACTIONS[] moveSeq = new Types.ACTIONS[maxRolloutLength];
+        // Types.ACTIONS[] moveSeq = new Types.ACTIONS[maxRolloutLength];
 
         bestRollout = new Types.ACTIONS[maxNestingDepth][maxRolloutLength];
         lengthBestRollout = new int[maxNestingDepth];
         scoreBestRollout = new double[maxNestingDepth];
 
         //nested(obs, nestDepth, moveSeq, 0);
-        double bestScore = Double.MIN_VALUE;
+        double bestScore = Double.NEGATIVE_INFINITY;
         Types.ACTIONS bestAction = actions [0];
         for (int i = 0; i < num_actions; i++) {
             StateObservation state = obs.copy();
@@ -125,7 +122,7 @@ public class Agent extends AbstractPlayer {
     double[] scoreBestRollout;
     Types.ACTIONS[][] bestRollout;
 
-    double bestScoreNested = Double.MIN_VALUE;
+    // double bestScoreNested = Double.NEGATIVE_INFINITY;
     // Board bestBoard;
 
 
@@ -138,6 +135,7 @@ public class Agent extends AbstractPlayer {
             moveSeq[nActionsPlayed] = actions[move];
             nActionsPlayed++;
         }
+        // System.out.println("Rollout score: " + stateObservation.getGameScore());
     }
 
     void nested(StateObservation stateObservation, int nestingLevel, Types.ACTIONS[] moveSeq, int nActionsPlayed) {
@@ -145,7 +143,7 @@ public class Agent extends AbstractPlayer {
         // Types.ACTIONS[] moves = new Types.ACTIONS[maxLegalMoves];
 
         lengthBestRollout[nestingLevel] = -1;
-        scoreBestRollout[nestingLevel] = Double.MIN_VALUE;
+        scoreBestRollout[nestingLevel] = Double.NEGATIVE_INFINITY;
         float res;
         while (true) {
             if (stateObservation.isGameOver())
@@ -171,14 +169,24 @@ public class Agent extends AbstractPlayer {
                     nested(state, nestingLevel - 1, moveSeqCopy, nActionsCopy);
                 }
                 double score = state.getGameScore();
+                // System.out.println("Move Seq Copy: " + Arrays.toString(moveSeqCopy));
                 if (score > scoreBestRollout[nestingLevel]) {
                     //System.out.println ("level " + nestingLevel + "score " + score);
                     scoreBestRollout[nestingLevel] = score;
                     lengthBestRollout[nestingLevel] = maxRolloutLength;
                     for (int j = 0; j < maxRolloutLength; j++)
                        bestRollout[nestingLevel] [j] = moveSeqCopy [j];
+                } else {
+                    // this was to find a bug
+                    // System.out.println("score comparison: " + score + " : " + scoreBestRollout[nestingLevel] );
                 }
             }
+            // System.out.println(nestingLevel + " : " + nActionsPlayed);
+
+
+//            for (Types.ACTIONS[] a : bestRollout) {
+//                System.out.println(Arrays.toString(a));
+//            }
             stateObservation.advance(bestRollout[nestingLevel][nActionsPlayed]);
             moveSeq[nActionsPlayed] = bestRollout[nestingLevel][nActionsPlayed];
             nActionsPlayed++;
