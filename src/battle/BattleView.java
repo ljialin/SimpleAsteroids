@@ -4,6 +4,7 @@ import asteroids.GameState;
 import asteroids.Ship;
 import evodef.EvoAlg;
 import evodef.EvolutionLogger;
+import evodef.GameActionSpaceAdapterMulti;
 import evodef.SearchSpaceUtil;
 import math.Vector2d;
 import ntuple.TenSpace;
@@ -123,6 +124,7 @@ public class BattleView extends JComponent {
     // break it down - draw a vector for each ship...
 
     static Stroke stroke = new BasicStroke(5);
+
     private void drawShipRollout(Graphics2D g, SimpleShip ship, int[] seq) {
 
         g.setStroke(stroke);
@@ -130,7 +132,9 @@ public class BattleView extends JComponent {
         path.moveTo(ship.s.x, ship.s.y);
 
         for (int a : seq) {
-            ship.update(SimpleBattleState.actions[a]);
+            for (int i=0; i< GameActionSpaceAdapterMulti.actionRepeat; i++) {
+                ship.update(SimpleBattleState.actions[a]);
+            }
             path.lineTo(ship.s.x, ship.s.y);
         }
         g.draw(path);

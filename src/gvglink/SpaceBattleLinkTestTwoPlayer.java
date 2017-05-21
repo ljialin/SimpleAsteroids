@@ -100,7 +100,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         int nNeighbours = 100;
 
         int nEvals = 200;
-        evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
+        // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
@@ -108,9 +108,9 @@ public class SpaceBattleLinkTestTwoPlayer {
 
         // player1  = new controllers.multiPlayer.smlrand.Agent();
 
-        EvoAlg evoAlg2 = new SimpleRMHC(1);
+        EvoAlg evoAlg2 = new SimpleRMHC(2);
 
-        // player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer1, nEvals / 5);
+        // player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer1, nEvals);
 
         int thinkingTime = 50; // in milliseconds
         int delay = 10;
@@ -120,7 +120,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         // check that we can play the game
 
         Random random = new Random();
-        int nSteps = 500;
+        int nSteps = 100;
 
         ElapsedTimer t = new ElapsedTimer();
         BattleView view = new BattleView(linkState.state);

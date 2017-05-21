@@ -22,6 +22,8 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
     static Random random = new Random();
     static double noiseLevel = 0;
 
+    public static int actionRepeat = 10;
+
     public int numActions;
     public Types.ACTIONS[] gvgaiActions;
 
@@ -102,7 +104,9 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
             acts[playerID] = gvgaiActions[myAction];
             acts[opponentID] = gvgaiActions[opAction];
 
-            obs.advance(acts);
+            for (int k=0; k< actionRepeat; k++) {
+                obs.advance(acts);
+            }
 
             discountedTot += discount * (obs.getGameScore(playerID) - initScore);
 

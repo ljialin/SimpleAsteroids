@@ -22,7 +22,7 @@ public class Agent extends AbstractMultiPlayer {
     // these used to be static, but have made them instance variables
     // to allow experiments between multiple instances of the agent
     // with different values
-    public int sequenceLength = 30;
+    public int sequenceLength = 40;
     public boolean useShiftBuffer = true;
 
     int nEvals;

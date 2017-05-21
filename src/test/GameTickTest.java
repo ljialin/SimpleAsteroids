@@ -2,6 +2,8 @@ package test;
 
 import battle.SimpleBattleState;
 import core.game.StateObservationMulti;
+import gvglink.SpaceBattleLinkState;
+import gvglink.SpaceBattleLinkStateTwoPlayer;
 import ontology.Types;
 import utilities.ElapsedTimer;
 
@@ -10,8 +12,11 @@ import java.util.Random;
 /**
  * Created by Simon Lucas on 21/05/2017.
  *
- *  On my desktop it can make around 4 million game ticks per second
+ *  On my desktop it can make around 4 million game ticks per second when using the SimpleBattleState
+ *
+ *  and around 3 million game ticks per second when using the SpaceBattleLinkStateTwoPlayer GVGAI Wrapper class
  */
+
 public class GameTickTest {
 
     public static void main(String[] args) {
@@ -26,11 +31,11 @@ public class GameTickTest {
 
         for (int i = 0; i < nTrials; i++) {
 
-            // StateObservationMulti game = new StateObservationMulti(false);
+            StateObservationMulti game = new SpaceBattleLinkStateTwoPlayer();
 
-            SimpleBattleState game = new SimpleBattleState();
+            // SimpleBattleState game = new SimpleBattleState();
 
-            // controllers.multiPlayer.sampleRandom.Agent randomAgent = new controllers.multiPlayer.sampleRandom.Agent(game, null, 0);
+            controllers.multiPlayer.sampleRandom.Agent randomAgent = new controllers.multiPlayer.sampleRandom.Agent(game, null, 0);
 
             // do not need separate agents for player one and plater 2
             // since actions are simply random
@@ -39,14 +44,15 @@ public class GameTickTest {
 
 
             for (int j=0; j<nTicks; j++) {
-//                Types.ACTIONS a1 = randomAgent.act(game, null);
-//                Types.ACTIONS a2 = randomAgent.act(game, null);
-//
-//                Types.ACTIONS[] actions = new Types.ACTIONS[]{a1, a2};
+                Types.ACTIONS a1 = randomAgent.act(game, null);
+                Types.ACTIONS a2 = randomAgent.act(game, null);
 
-                int[] actions = new int[]{random.nextInt(game.nActions()), random.nextInt(game.nActions())};
+                Types.ACTIONS[] actions = new Types.ACTIONS[]{a1, a2};
+                game.advance(actions);
 
-                game.next(actions);
+//                 int[] actions = new int[]{random.nextInt(game.nActions()), random.nextInt(game.nActions())};
+
+   //              game.next(actions);
 
             }
             // System.out.println(i + "\t " + game.getGameTick());
