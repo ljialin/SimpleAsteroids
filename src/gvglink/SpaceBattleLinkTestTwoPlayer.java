@@ -120,7 +120,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         // check that we can play the game
 
         Random random = new Random();
-        int nSteps = 100;
+        int nSteps = 500;
 
         ElapsedTimer t = new ElapsedTimer();
         BattleView view = new BattleView(linkState.state);
