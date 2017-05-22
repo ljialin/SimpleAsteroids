@@ -15,7 +15,7 @@ import java.awt.*;
 public class MonkeyBall extends GameObject {
 
     static double gravity = 0.1; // units are in pixels per tick^2
-    static double hooke = 0.005;
+    static double hooke = 0.15;
 
     public Vector2d anchor;
 
