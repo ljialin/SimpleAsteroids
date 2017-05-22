@@ -188,6 +188,5 @@ public class SpaceBattleLinkTestTwoPlayer {
         System.out.println(ssTicks1);
         System.out.println(ssTicks2);
         return multi.getGameScore(0);
-
     }
 }

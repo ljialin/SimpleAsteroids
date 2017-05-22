@@ -20,7 +20,7 @@ public class ShortestPathTest implements SolutionEvaluator, SearchSpace {
     public static void main(String[] args) {
         int n = 64;
 
-        int nReps = 1;
+        int nReps = 5;
 
         StatSummary ssTimes = new StatSummary();
         StatSummary ssResults = new StatSummary();

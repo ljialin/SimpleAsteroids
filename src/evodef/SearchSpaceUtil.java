@@ -64,12 +64,17 @@ public class SearchSpaceUtil {
         return p;
     }
 
+    static Double pRepeat = 1.0;
     public static int[] shiftLeftAndRandomAppend(int[] v, SearchSpace searchSpace) {
         int[] p = new int[v.length];
         for (int i=0; i<p.length-1; i++) {
             p[i] = v[i+1];
         }
-        p[p.length-1] = random.nextInt(searchSpace.nValues(p.length-1));
+        if (pRepeat != null && random.nextDouble() < pRepeat) {
+            p[p.length - 1] = p[p.length-2]; //  random.nextInt(searchSpace.nValues(p.length - 1));
+        } else {
+            p[p.length - 1] = random.nextInt(searchSpace.nValues(p.length - 1));
+        }
         return p;
     }
 
