@@ -100,7 +100,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         int nNeighbours = 100;
 
         int nEvals = 200;
-        evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
+        // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
@@ -188,6 +188,5 @@ public class SpaceBattleLinkTestTwoPlayer {
         System.out.println(ssTicks1);
         System.out.println(ssTicks2);
         return multi.getGameScore(0);
-
     }
 }

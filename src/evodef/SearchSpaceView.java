@@ -40,6 +40,9 @@ public class SearchSpaceView extends JComponent {
         return size;
     }
 
+    public SearchSpaceView() {
+
+    }
 
     static Color bg = Color.BLACK;
     public void paintComponent(Graphics gx) {
@@ -82,7 +85,7 @@ public class SearchSpaceView extends JComponent {
             //
             String paramName = searchSpace.params.get(i).name;
             int yString = (int) (y + yStep/2 + inset * 2);
-            g.drawString(paramName, (int)inset * 2, yString);
+            g.drawString(paramName, (int) inset * 2, yString);
 
             // now iterate over all the values there
 
@@ -99,16 +102,28 @@ public class SearchSpaceView extends JComponent {
                 String sVal = String.format("%.1f", val);
                 rect = fontMetrics.getStringBounds(sVal, g);
 
+                rect.setRect( x, yString - rect.getHeight(), rect.getWidth(), rect.getHeight() );
+
                 if (j == randPoint[i]) {
                     g.setColor(Color.white);
 
                     // need to move the rect to the correct place
                     g.fill(rect);
-                    System.out.println("Filled: " + rect);
+//                    g.setColor(Color.red);
+//                    g.draw(rect);
+                    // System.out.println("Filled: " + rect);
                 }
                 g.setColor(Color.black);
                 g.drawString(sVal, x, yString);
+
+                // todo can do this easily
+
+                // rect.add(x, yString);
+
+
                 x += rect.getWidth() + inset*2;
+
+
             }
 
 
