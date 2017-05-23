@@ -25,6 +25,7 @@ public class TestMonkeyBall {
         monkeyBall.setAnchor(10, 0);
 
         System.out.println("Anchor at: " + monkeyBall.anchor);
+
         for (int i=0; i<nTicks; i++) {
             monkeyBall.update();
             System.out.println(i + "\t " + monkeyBall.s);

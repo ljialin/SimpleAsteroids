@@ -44,12 +44,12 @@ public class BattleView extends JComponent {
         return color;
     }
 
-    static Color bg = randColor();
-
     public BattleView(SimpleBattleState game) {
         this.game = game;
         scale = size.width - 2 * offset;
     }
+
+    static Color bg = randColor();
 
     public void paintComponent(Graphics gx) {
         Graphics2D g = (Graphics2D) gx;
