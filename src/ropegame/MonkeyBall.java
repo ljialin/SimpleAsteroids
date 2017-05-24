@@ -14,9 +14,9 @@ import java.awt.*;
  */
 public class MonkeyBall extends GameObject {
 
-    static double loss = 0.95;
-    static double gravity = 0.1; // units are in pixels per tick^2
-    static double hooke = 0.05;
+    static double loss = 0.99;
+    static double gravity = 0.2; // units are in pixels per tick^2
+    static double hooke = 0.005;
 
     static int radius = 20;
 
