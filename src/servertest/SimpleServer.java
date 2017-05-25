@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class SimpleServer extends Thread {
 
-    static int defaultPort = 3000;
+    public static int defaultPort = 3000;
 
 
     Socket socket;
@@ -26,18 +26,18 @@ public class SimpleServer extends Thread {
 
         System.out.println("Started a new Socket: " + socket);
 
-        //
-
         // decide how much work to do each time
         // for now just read and write a single message
         try {
-            DataInputStream in = new DataInputStream(socket.getInputStream());
+            Scanner in = new Scanner(socket.getInputStream());
             PrintStream out = new PrintStream(socket.getOutputStream());
-
-            // need a nnon-depracated line reader
-            String received = in.readLine();
+            String received = in.nextLine();
             out.format("Sending back: " + received);
 
+            // may want to close this client side instead
+            socket.close();
+            System.out.println("Closed socket");
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
         }
