@@ -16,14 +16,11 @@ public class UrnModel {
         //System.out.println(t);
         // System.exit(0);
 
-        int nBalls = 50;
-        int nPicks = 170;
+        int nBalls = 20;
+        int nPicks = 30;
 
 
         UrnModel ut = new UrnModel(nBalls, nPicks);
-
-
-
 
         ut.pWin(3);
 
