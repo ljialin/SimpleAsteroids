@@ -26,7 +26,7 @@ public class TestEASimple {
 
     static int nFitnessEvals = 500;
 
-    static boolean useFirstHit = true;
+    static boolean useFirstHit;
     static int maxResamples = 50;
     static NoisySolutionEvaluator solutionEvaluator;
 
@@ -36,12 +36,12 @@ public class TestEASimple {
         // run configuration for an experiment
 
         useFirstHit = false;
-        Mutator.flipAtLeastOneValue = true;
+        Mutator.flipAtLeastOneValue = false;
         Mutator.defaultPointProb = 1.0;
 
         // select which one to use
-        solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
-        // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
+        // solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
+        solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
 
         System.out.println("Running experiment with following settings:");
         System.out.println("Solution evaluator: " + solutionEvaluator.getClass());
