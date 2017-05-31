@@ -39,7 +39,7 @@ public class SimpleRMHC implements EvoAlg {
     static boolean accumulateBestYetStats = false;
 
     // this is only checked if not resampling parent
-    static boolean resampleParent = false;
+    static boolean resampleParent = true;
 
 
     public void setInitialSeed(int[] seed) {

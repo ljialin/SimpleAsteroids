@@ -36,7 +36,7 @@ public class TestEASimple {
         // run configuration for an experiment
 
         useFirstHit = false;
-        Mutator.flipAtLeastOneValue = true;
+        Mutator.flipAtLeastOneValue = false;
         Mutator.defaultPointProb = 1.0;
 
         // select which one to use
