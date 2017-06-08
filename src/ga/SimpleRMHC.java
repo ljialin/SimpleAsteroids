@@ -33,13 +33,16 @@ public class SimpleRMHC implements EvoAlg {
 
     // should not be a static, just did it quick and dirty
 
+    // this just adds a noisy test within the algorithm
+    // normally set to false
     static boolean noisy = false;
+
     static double epsilon = 1.0;
 
     static boolean accumulateBestYetStats = false;
 
     // this is only checked if not resampling parent
-    static boolean resampleParent = false;
+    static boolean resampleParent = true;
 
 
     public void setInitialSeed(int[] seed) {
@@ -86,6 +89,7 @@ public class SimpleRMHC implements EvoAlg {
 
                 // now check whether it is better than optimal by epsilon
                 // this is for noisy optimisation only
+
                 if (noisy) {
                     Double opt = evaluator.optimalIfKnown();
                     if (opt != null) {
