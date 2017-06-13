@@ -18,16 +18,16 @@ import java.util.List;
 
 public class TestEASimple {
 
-    static int nDims = 10;
+    static int nDims = 50;
     static int mValues = 2;
 
-    static int nTrialsRMHC = 10000;
+    static int nTrialsRMHC = 1000;
     static int nTrialsNTupleBanditEA = 30;
 
-    static int nFitnessEvals = 500;
+    static int nFitnessEvals = 2000;
 
     static boolean useFirstHit;
-    static int maxResamples = 50;
+    static int maxResamples = 30;
     static NoisySolutionEvaluator solutionEvaluator;
 
 
@@ -36,8 +36,8 @@ public class TestEASimple {
         // run configuration for an experiment
 
         useFirstHit = false;
-        Mutator.flipAtLeastOneValue = false;
-        Mutator.defaultPointProb = 1.0;
+        Mutator.flipAtLeastOneValue = true;
+        Mutator.defaultPointProb = 0.0;
 
         // select which one to use
         solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
