@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class NTupleBanditEA  implements EvoAlg {
 
-    NTupleSystem nTupleSystem;
+    public NTupleSystem nTupleSystem;
 
     // the exploration rate normally called K or C - called kExplore here for clarity
     double kExplore = 1.0;
