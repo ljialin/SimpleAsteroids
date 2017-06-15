@@ -21,7 +21,7 @@ public class NTupleBanditEA  implements EvoAlg {
     public NTupleSystem nTupleSystem;
 
     // the exploration rate normally called K or C - called kExplore here for clarity
-    double kExplore = 1.0;
+    double kExplore = Math.sqrt(0.4);
     // the number of neighbours to explore around the current point each time
     // they are only explored IN THE FITNESS LANDSCAPE MODEL, not by sampling the fitness function
     int nNeighbours = 100;
@@ -111,7 +111,7 @@ public class NTupleBanditEA  implements EvoAlg {
             // now set the next point to explore
             p = evc.picker.getBest();
 //            logger.keepBest(picker.getBest(), picker.getBestScore());
-            System.out.println("Best solution: " + Arrays.toString(evc.picker.getBest()) + "\t: " + evc.picker.getBestScore());
+            // System.out.println("Best solution: " + Arrays.toString(evc.picker.getBest()) + "\t: " + evc.picker.getBestScore());
 
         }
 

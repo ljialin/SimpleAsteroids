@@ -5,9 +5,14 @@ import java.util.Random;
 /**
  * Created by simonmarklucas on 14/08/2016.
  */
-public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
+public class Eval2DNonLinear implements NoisySolutionEvaluator, SearchSpace {
 
-    int nDims;
+    public static void main(String[] args) {
+        Eval2DNonLinear problem = new Eval2DNonLinear(5, 0);
+        System.out.println(problem.optimalIfKnown());
+    }
+
+    int nDims = 2;
     int m;
 
     double noise = 0.0;
@@ -17,12 +22,11 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
     int nOptimal;
 
 
-    public EvalMaxM(int nDims, int m) {
-        this(nDims, m, 0);
+    public Eval2DNonLinear(int m) {
+        this(m, 0);
     }
 
-    public EvalMaxM(int nDims, int m, double noise) {
-        this.nDims = nDims;
+    public Eval2DNonLinear(int m, double noise) {
         this.m = m;
         this.noise = noise;
         logger = new EvolutionLogger();
@@ -35,7 +39,7 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
 
     @Override
     public Double optimalIfKnown() {
-        return (double) nDims * (m-1);
+        return f(0, m-1);
     }
 
 
@@ -52,14 +56,13 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
 
     @Override
     public double trueFitness(int[] a) {
-        double tot = 0;
-        for (int i=0; i<a.length; i++) {
-            if (a[i] <0 || a[i] >= m) {
-                throw new RuntimeException("Value out of bounds: " + a[i]);
-            }
-            tot += a[i];
-        }
-        return tot / optimalIfKnown();
+        double x = a[0];
+        double y = a[1];
+        return f(x,y) / optimalIfKnown();
+    }
+
+    public double f(double x, double y) {
+        return x + 2 * y - x * y;
     }
 
     @Override

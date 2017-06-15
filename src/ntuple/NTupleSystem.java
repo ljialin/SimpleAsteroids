@@ -145,6 +145,17 @@ public class NTupleSystem implements FitnessLandscapeModel {
         }
     }
 
+    public void report(int[] p) {
+        for (NTuple nTuple : tuples) {
+            StatSummary ss = nTuple.getStats(p);
+            if (ss != null) {
+                System.out.format("NTuple Lut Size: %5d\t n: %d,\t mean: %.3f\n", nTuple.spaceSize(), ss.n(), ss.mean());
+            } else {
+                System.out.println("No data yet");
+            }
+        }
+    }
+
     public double getExplorationEstimate(int[] x) {
         // just takes the average of the exploration vector
         double[] vec = getExplorationVector(x);
