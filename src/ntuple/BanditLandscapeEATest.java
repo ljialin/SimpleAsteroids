@@ -21,10 +21,16 @@ public class BanditLandscapeEATest {
         int nEvals = 100;
         int[] solution = banditEA.runTrial(problem, nEvals);
 
-        System.out.println("Solution: " + Arrays.toString(solution));
+        System.out.println("Current Solution: " + Arrays.toString(solution));
 
 
 
+
+    }
+
+    static void report(NTupleSystem system) {
+
+        
 
     }
 }

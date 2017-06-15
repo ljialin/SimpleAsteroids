@@ -111,7 +111,7 @@ public class NTupleBanditEA  implements EvoAlg {
             // now set the next point to explore
             p = evc.picker.getBest();
 //            logger.keepBest(picker.getBest(), picker.getBestScore());
-            // System.out.println("Best solution: " + Arrays.toString(picker.getBest()) + "\t: " + picker.getBestScore());
+            System.out.println("Best solution: " + Arrays.toString(evc.picker.getBest()) + "\t: " + evc.picker.getBestScore());
 
         }
 
