@@ -4,6 +4,7 @@ import evodef.Eval2DNonLinear;
 import evodef.EvalMaxM;
 import evodef.SearchSpace;
 import evodef.SearchSpaceUtil;
+import utilities.JEasyFrame;
 
 import java.util.Arrays;
 
@@ -31,6 +32,19 @@ public class BanditLandscapeEATest {
 
         System.out.println("Solution returned: " + Arrays.toString(solution));
 
+        showView(banditEA.nTupleSystem, mValues);
+
+
+    }
+
+    static void showView(NTupleSystem nTupleSystem, int mValues) {
+
+        NTuple xn = nTupleSystem.tuples.get(0);
+        NTuple yn = nTupleSystem.tuples.get(1);
+        NTuple xyn = nTupleSystem.tuples.get(2);
+
+        NTupleView2D nTupleView2D = new NTupleView2D(xn, yn, xyn, mValues);
+        new JEasyFrame(nTupleView2D, "NTuple View 2D");
 
     }
 
