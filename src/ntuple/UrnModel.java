@@ -16,31 +16,44 @@ public class UrnModel {
         //System.out.println(t);
         // System.exit(0);
 
-        int nBalls = 20;
+        int nBalls = 50;
         int nPicks = 30;
 
 
         UrnModel ut = new UrnModel(nBalls, nPicks);
 
-        ut.pWin(3);
-
-        ut.normaliseUrnProbs(ut.jpa);
-
-        // ut.pWin(3);
-
-        ut.printWinProbs();
+//        ut.normaliseUrnProbs();
+//        System.out.println(Arrays.toString(ut.getUrnVec(3)));
+//
+//        System.exit(0);
+//
+//        for (int i=0; i<=nPicks; i++) {
+//            System.out.println(i + "\t " + ut.pWin(i));
+//        }
+//        // System.exit(0);
+//
+//
+//
+//        ut.pWin(3);
+//
+//        ut.normaliseUrnProbs(ut.jpa);
+//
+//        ut.pWin(3);
+//
+        // ut.printWinProbs();
 
         ut.printWinRates();
+//
+//        System.out.println("Calculated Urn posteriors");
+//        System.out.println(t);
+//
+//        // System.exit(0);
 
-        System.out.println("Calculated Urn posteriors");
-        System.out.println(t);
-
-        // System.exit(0);
-
-        for (int nBlack = 0; nBlack <= nPicks; nBlack++) {
-            // System.out.println("nWins = " + nBlack);
-            ut.posteriorProbs(nBlack);
-        }
+//        for (int nBlack = 0; nBlack <= nPicks; nBlack++) {
+//            System.out.println("nWins = " + nBlack);
+//            ut.posteriorProbs(nBlack);
+//            System.out.println();
+//        }
 
     }
 
@@ -69,6 +82,7 @@ public class UrnModel {
     public double pWin(int nWins) {
         // iterate over all Urns
 
+        System.out.println("N Urns: " + nUrns);
         double p = 0;
         double denom = 0;
         for (int i=0; i<nUrns; i++) {
@@ -77,7 +91,7 @@ public class UrnModel {
             denom += jpa[nWins][i];
             p += jpa[nWins][i] * ((double) i / nBalls);
         }
-        // System.out.println(p + "\t " + p / denom);
+        System.out.println(p + "\t " + p / denom);
         return p / denom;
     }
 
@@ -97,8 +111,8 @@ public class UrnModel {
                 if (j == nUrns / 2) supTot += jpa[i][j] / 2;
             }
 
-            System.out.println("Tot = " + tot);
-            System.out.format("%2d wins, \t %.5f\n", i, supTot / tot);
+            // System.out.println("Tot = " + tot);
+            System.out.format("%2d wins, \t %.6f\n", i, supTot / tot);
         }
     }
 
@@ -168,7 +182,7 @@ public class UrnModel {
         for (int urn = 0; urn < jpa[0].length; urn++) {
             double pu = jpa[nBlack][urn] / pnb;
             pCum += pu;
-            // System.out.format("%d \t %f %f %f\n", urn, pu, pCum, 1-(pCum-pu));
+            System.out.format("%d \t %f %f %f\n", urn, pu, pCum, 1-(pCum-pu));
         }
     }
 
