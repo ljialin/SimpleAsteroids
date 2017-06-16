@@ -50,6 +50,9 @@ public class NTupleBanditEA  implements EvoAlg {
     }
 
     SolutionEvaluator evaluator;
+
+    public NTupleView2D view;
+
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {
 
@@ -84,6 +87,13 @@ public class NTupleBanditEA  implements EvoAlg {
 
             // each time around the loop we make one fitness evaluation of p
             // and add this NEW information to the memory
+
+            if (view != null) {
+                view.repaint();
+                try {
+                    Thread.sleep(400);
+                } catch (Exception e) {}
+            }
 
             double fitness = evaluator.evaluate(p);
             ElapsedTimer t = new ElapsedTimer();

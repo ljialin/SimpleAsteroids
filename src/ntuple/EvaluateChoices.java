@@ -27,6 +27,7 @@ public class EvaluateChoices {
     Picker<int[]> picker = new Picker<int[]>(Picker.MAX_FIRST);
     Set<Integer> indices = new HashSet<>();
 
+    // careful: the exploration term is used here
     public void add(int[] p) {
         Integer ix = SearchSpaceUtil.indexOf(nTupleSystem.searchSpace, p);
         if (!indices.contains(ix)) {

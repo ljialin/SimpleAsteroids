@@ -1,5 +1,6 @@
 package ntuple;
 
+import bandits.BanditEA;
 import evodef.Eval2DNonLinear;
 import evodef.EvalMaxM;
 import evodef.SearchSpace;
@@ -23,7 +24,12 @@ public class BanditLandscapeEATest {
         // EvalMaxM problem = new EvalMaxM(nDims, mValues, noiseLevel);
         Eval2DNonLinear problem = new Eval2DNonLinear(mValues, noiseLevel);
 
-        int nEvals = 100;
+        int nEvals = 200;
+        NTupleView2D nTupleView2D = showView(banditEA, mValues);
+        banditEA.view = nTupleView2D;
+
+        // interesting question of how to attach a listener
+        // to the algorithm to get updates as it runs
         int[] solution = banditEA.runTrial(problem, nEvals);
 
         report(problem, banditEA.nTupleSystem);
@@ -32,20 +38,16 @@ public class BanditLandscapeEATest {
 
         System.out.println("Solution returned: " + Arrays.toString(solution));
 
-        showView(banditEA.nTupleSystem, mValues);
 
 
     }
 
-    static void showView(NTupleSystem nTupleSystem, int mValues) {
+    static NTupleView2D showView(NTupleBanditEA banditEA, int mValues) {
 
-        NTuple xn = nTupleSystem.tuples.get(0);
-        NTuple yn = nTupleSystem.tuples.get(1);
-        NTuple xyn = nTupleSystem.tuples.get(2);
-
-        NTupleView2D nTupleView2D = new NTupleView2D(xn, yn, xyn, mValues);
+        NTupleView2D nTupleView2D = new NTupleView2D(banditEA, mValues);
         new JEasyFrame(nTupleView2D, "NTuple View 2D");
 
+        return nTupleView2D;
     }
 
     static void report(SearchSpace searchSpace, NTupleSystem nTupleSystem) {
