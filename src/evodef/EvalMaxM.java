@@ -59,7 +59,7 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
             }
             tot += a[i];
         }
-        return tot / optimalIfKnown();
+        return tot; //  / optimalIfKnown();
     }
 
     @Override

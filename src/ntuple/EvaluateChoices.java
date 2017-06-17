@@ -27,6 +27,8 @@ public class EvaluateChoices {
     Picker<int[]> picker = new Picker<int[]>(Picker.MAX_FIRST);
     Set<Integer> indices = new HashSet<>();
 
+    int nAttempts = 0;
+
     // careful: the exploration term is used here
     public void add(int[] p) {
         Integer ix = SearchSpaceUtil.indexOf(nTupleSystem.searchSpace, p);
@@ -41,10 +43,13 @@ public class EvaluateChoices {
             // System.out.format("\t %d\t %d\t %.2f\t %.2f\t %.2f\n", i, j,
             // exploit, explore, combinedValue);
             picker.add(combinedValue, p);
+
+        } else {
+            nAttempts++;
         }
     }
 
     public int n() {
-        return indices.size();
+        return indices.size() + nAttempts/2;
     }
 }

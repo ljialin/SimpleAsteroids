@@ -21,7 +21,7 @@ public class NTupleBanditEA  implements EvoAlg {
     public NTupleSystem nTupleSystem;
 
     // the exploration rate normally called K or C - called kExplore here for clarity
-    double kExplore = Math.sqrt(0.4);
+    double kExplore = 2.0; // 1.0; // Math.sqrt(0.4);
     // the number of neighbours to explore around the current point each time
     // they are only explored IN THE FITNESS LANDSCAPE MODEL, not by sampling the fitness function
     int nNeighbours = 100;
@@ -32,13 +32,28 @@ public class NTupleBanditEA  implements EvoAlg {
     // this param controls the size of the neighbourhood
     int neighboursWhenFindingBest = 10;
 
+    public int nSamples = 1;
+
+
 
     public NTupleBanditEA(double kExplore, int nNeighbours) {
         this.kExplore = kExplore;
         this.nNeighbours = nNeighbours;
     }
 
+
+
     public NTupleBanditEA() {
+    }
+
+    StatSummary fitness(SolutionEvaluator evaluator, int[] sol) {
+        StatSummary ss = new StatSummary();
+        for (int i=0; i<nSamples; i++) {
+            double fitness = evaluator.evaluate(sol);
+            ss.add(fitness);
+
+        }
+        return ss;
     }
 
 
@@ -95,7 +110,18 @@ public class NTupleBanditEA  implements EvoAlg {
                 } catch (Exception e) {}
             }
 
-            double fitness = evaluator.evaluate(p);
+            // double fitness = evaluator.evaluate(p);
+
+            // the new version enables resampling
+            double fitness;
+
+            if (nSamples == 1) {
+                fitness = evaluator.evaluate(p);
+            } else {
+                fitness = fitness(evaluator, p).mean();
+            }
+
+
             ElapsedTimer t = new ElapsedTimer();
 
             nTupleSystem.addPoint(p, fitness);

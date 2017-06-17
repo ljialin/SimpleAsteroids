@@ -100,7 +100,8 @@ public class Eval2DNonLinear implements NoisySolutionEvaluator, SearchSpace {
 
     @Override
     public Boolean isOptimal(int[] solution) {
-        return trueFitness(solution) == solution.length * (m-1);
+        // return trueFitness(solution) == solution.length * (m-1);
+        return trueFitness(solution) == 1.0 ; // solution.length * (m-1);
     }
 
 }
