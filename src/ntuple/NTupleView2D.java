@@ -1,6 +1,7 @@
 package ntuple;
 
 import bandits.BanditEA;
+import evodef.SolutionEvaluator;
 import math.BanditEquations;
 import math.Vector2d;
 import ropegame.RopeGameState;
@@ -22,10 +23,12 @@ import java.awt.geom.Rectangle2D;
 public class NTupleView2D extends JComponent {
 
 
-    static int cellSize = 100;
+    static int cellSize = 200;
     double fill = 0.9;
 
     NTupleBanditEA banditEA;
+
+    SolutionEvaluator solutionEvaluator;
 
     public NTupleView2D(NTupleBanditEA banditEA, int m) {
         this.banditEA = banditEA;
@@ -57,12 +60,59 @@ public class NTupleView2D extends JComponent {
         g.setColor(bg);
         g.fillRect(0, 0, getWidth(), getHeight());
 
+
+
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
                 int[] p = new int[]{i, j};
                 StatSummary ss = xyn.getStats(p);
-                drawCell(g, ss, i, j);
+                String cellString = String.format("[%d,%d]", i, j);
+
+                String trueVal = null;
+                if (solutionEvaluator != null) {
+                    trueVal = String.format("(%.3f)", solutionEvaluator.evaluate(p));
+                }
+
+                drawCell(g, ss, i, j, cellString, trueVal);
+
+
+
             }
+        }
+
+        for (int i=0; i<m; i++) {
+            // show the 1-tuple ones
+            // note that each of these only samples the
+            // non-zero dimension: we could set the other value to anything
+            int[] px = new int[]{i, 0};
+            int[] py = new int[]{0, i};
+
+            String cellStringX = String.format("[%d,*]", i);
+            String cellStringY = String.format("[*,%d]", i);
+
+            // calculate the trueval for each one
+            StatSummary xTrue = new StatSummary();
+            StatSummary yTrue = new StatSummary();
+            for (int j=0; j<m; j++) {
+                xTrue.add(solutionEvaluator.evaluate(new int[]{i, j}));
+                yTrue.add(solutionEvaluator.evaluate(new int[]{j, i}));
+            }
+            String xs = null, ys = null;
+            if (solutionEvaluator != null) {
+                xs = String.format("(%.3f)", xTrue.mean());
+                ys = String.format("(%.3f)", yTrue.mean());
+            }
+
+            drawCell(g, xn.getStats(px), i, m, cellStringX, xs);
+            drawCell(g, yn.getStats(py), m, i, cellStringY, ys);
+
+            // draw the borders:
+
+            g.setColor(Color.red);
+            int linwWidth = 6;
+            g.fillRect(0, m * cellSize - linwWidth/2, getWidth(), linwWidth);
+            g.fillRect(m * cellSize - linwWidth/2, 0, linwWidth, getHeight());
+
         }
     }
 
@@ -78,7 +128,7 @@ public class NTupleView2D extends JComponent {
     }
 
 
-    private void drawCell(Graphics2D g, StatSummary ss, int i, int j) {
+    private void drawCell(Graphics2D g, StatSummary ss, int i, int j, String cellString, String trueVal) {
         AffineTransform affineTransform = g.getTransform();
         g.translate(i * cellSize, j * cellSize);
         double offset = cellSize * (1 - fill) / 2;
@@ -93,16 +143,18 @@ public class NTupleView2D extends JComponent {
             g.setColor(Color.getHSBColor(v, 1, 1));
             g.fill(path);
             String statString = String.format("%d: %.2f", ss.n(), ss.mean());
-            centreString(g, cellSize / 2, cellSize / 2, statString, 16);
+            centreString(g, cellSize / 2, cellSize / 2, statString, 30);
             String ucbString = ucbString(ss);
-            centreString(g, cellSize/2, cellSize * 0.8f, ucbString, 14);
+            centreString(g, cellSize/2, cellSize * 0.8f, ucbString, 28);
         } else {
             System.out.println("Null " + ss);
             g.setColor(Color.gray);
             g.fill(path);
         }
-        String cell = String.format("[%d,%d]", i, j);
-        centreString(g, cellSize / 2, cellSize / 10, cell, 12);
+        if (trueVal != null) {
+            centreString(g, cellSize/2, cellSize / 4, trueVal, 24);
+        }
+        centreString(g, cellSize / 2, cellSize / 10, cellString, 24);
         g.setTransform(affineTransform);
     }
 

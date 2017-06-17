@@ -26,6 +26,7 @@ public class BanditLandscapeEATest {
 
         int nEvals = 200;
         NTupleView2D nTupleView2D = showView(banditEA, mValues);
+        nTupleView2D.solutionEvaluator = new Eval2DNonLinear(mValues, 0);
         banditEA.view = nTupleView2D;
 
         // interesting question of how to attach a listener
