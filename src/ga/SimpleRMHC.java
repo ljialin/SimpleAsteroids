@@ -31,6 +31,12 @@ public class SimpleRMHC implements EvoAlg {
         this.nSamples = nSamples;
     }
 
+    public void setSamplingRate(int n) {
+        this.nSamples = n;
+    }
+
+
+
     // should not be a static, just did it quick and dirty
 
     // this just adds a noisy test within the algorithm

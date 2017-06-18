@@ -50,6 +50,6 @@ public class EvaluateChoices {
     }
 
     public int n() {
-        return indices.size() + nAttempts/2;
+        return indices.size() + nAttempts/4;
     }
 }

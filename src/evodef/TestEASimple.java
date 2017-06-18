@@ -1,15 +1,12 @@
 package evodef;
 
-import bandits.MBanditEA;
 import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
-import ntuple.NTupleSystem;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,7 +18,7 @@ public class TestEASimple {
     static int nDims = 10;
     static int mValues = 2;
 
-    static int nTrialsRMHC = 1000;
+    static int nTrialsRMHC = 10;
     static int nTrialsNTupleBanditEA = 30;
 
     static int nFitnessEvals = 500;
@@ -41,8 +38,8 @@ public class TestEASimple {
 
         // select which one to use
         // solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
-        // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
-        solutionEvaluator = new Eval2DNonLinear(5, 1.0);
+        solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
+        // solutionEvaluator = new Eval2DNonLinear(5, 1.0);
 
         System.out.println("Running experiment with following settings:");
         System.out.println("Solution evaluator: " + solutionEvaluator.getClass());
@@ -57,31 +54,41 @@ public class TestEASimple {
 
         // Mutator.totalRandomChaosMutation = true;
 
-        testRMHCAlone();
-        testBanditEA();
+        testEvoAlg(new SimpleRMHC());
+        testEvoAlg(new NTupleBanditEA());
+
+        // testBanditEA();
         System.out.println(t);
 
     }
 
-    static StatSummary testNTupleBanditEA(int nTrials) {
-        StatSummary ss = runTrials(new NTupleBanditEA(), nTrials, 0);
-        System.out.println(ss);
-        return ss;
-    }
+//    static StatSummary testNTupleBanditEA(int nTrials) {
+//        StatSummary ss = runTrials(new NTupleBanditEA(), nTrials, 0);
+//        System.out.println(ss);
+//        return ss;
+//    }
+//
+//    static StatSummary testNTupleBanditEA(int nTrials, int nSamples) {
+//        StatSummary ss = runTrials(new NTupleBanditEA(), nTrials, 0);
+//        System.out.println(ss);
+//        return ss;
+//    }
+//
 
-    static StatSummary testNTupleBanditEA(int nTrials, int nSamples) {
-        StatSummary ss = runTrials(new NTupleBanditEA(), nTrials, 0);
-        System.out.println(ss);
-        return ss;
-    }
-
-    static void testRMHCAlone() {
+    // ok need to have a single version
+    static void testEvoAlg(EvoAlg evoAlg) {
         // simpler version does not compare performance with NT
-        ArrayList<StatSummary> results = new ArrayList<>();
+        ArrayList<StatSummary> successRates = new ArrayList<>();
+        ArrayList<StatSummary> fitness = new ArrayList<>();
+
+
         for (int i = 1; i <= maxResamples; i++) {
             // System.out.println("Resampling rate: " + i);
-            StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC, i);
-            results.add(ss2);
+            evoAlg.setSamplingRate(i);
+            StatSummary trueFit = new StatSummary();
+            StatSummary ss2 = runTrials(evoAlg, nTrialsRMHC, i, trueFit);
+            successRates.add(ss2);
+            fitness.add(trueFit);
             // System.out.println(ss2);
             // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
         }
@@ -90,53 +97,60 @@ public class TestEASimple {
         // in this case we just take the number of samples out of each StatSummary
 
         ArrayList<Double> successRate = new ArrayList<>();
-        for (StatSummary ss : results) {
+        for (StatSummary ss : successRates) {
             successRate.add(ss.n() * 100.0 / nTrialsRMHC);
         }
-        System.out.println("Results array:");
+        ArrayList<Double> fitnessArray = new ArrayList<>();
+        for (StatSummary ss : fitness) {
+            fitnessArray.add(ss.mean());
+        }
+        System.out.println("Success rate array:");
         System.out.println(successRate);
+        System.out.println("Fitness array:");
+        System.out.println(fitnessArray);
     }
 
-    static void testBanditEA() {
-        // need to make the code more general and merge this and testRMHCAlone()
-        // simpler version does not compare performance with NT
-        ArrayList<StatSummary> results = new ArrayList<>();
-        for (int i = 1; i <= maxResamples; i++) {
-            // System.out.println("Resampling rate: " + i);
-            NTupleBanditEA banditEA = new NTupleBanditEA();
-            banditEA.nSamples = i;
+//    static void testBanditEA() {
+//        // need to make the code more general and merge this and testEvoAlg()
+//        // simpler version does not compare performance with NT
+//        ArrayList<StatSummary> results = new ArrayList<>();
+//        for (int i = 1; i <= maxResamples; i++) {
+//            // System.out.println("Resampling rate: " + i);
+//            NTupleBanditEA banditEA = new NTupleBanditEA();
+//            banditEA.nSamples = i;
+//
+//            // System.out.println("Running trials: " + nTrialsRMHC);
+//            StatSummary ss2 = runTrials(banditEA, nTrialsRMHC, i);
+//            results.add(ss2);
+//            // System.out.println(ss2);
+//            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
+//        }
+//
+//        // now suppose we may just want to track the number of successes
+//        // in this case we just take the number of samples out of each StatSummary
+//
+//        ArrayList<Double> successRate = new ArrayList<>();
+//        for (StatSummary ss : results) {
+//            successRate.add(ss.n() * 100.0 / nTrialsRMHC);
+//        }
+//        System.out.println("Results array:");
+//        System.out.println(successRate);
+//    }
+//
 
-            // System.out.println("Running trials: " + nTrialsRMHC);
-            StatSummary ss2 = runTrials(banditEA, nTrialsRMHC, i);
-            results.add(ss2);
-            // System.out.println(ss2);
-            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
-        }
-
-        // now suppose we may just want to track the number of successes
-        // in this case we just take the number of samples out of each StatSummary
-
-        ArrayList<Double> successRate = new ArrayList<>();
-        for (StatSummary ss : results) {
-            successRate.add(ss.n() * 100.0 / nTrialsRMHC);
-        }
-        System.out.println("Results array:");
-        System.out.println(successRate);
-    }
-
-
-    static void testRMHC(StatSummary nt) {
-        ArrayList<StatSummary> results = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
-            // System.out.println("Resampling rate: " + i);
-            StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC, i);
-            results.add(ss2);
-            // System.out.println(ss2);
-            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
-        }
-        printJS(results, nt);
-        //
-    }
+//    static void testRMHC(StatSummary nt) {
+//        ArrayList<StatSummary> successRate = new ArrayList<>();
+//
+//        for (int i = 1; i <= 20; i++) {
+//            // System.out.println("Resampling rate: " + i);
+//            StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC, i);
+//            results.add(ss2);
+//            // System.out.println(ss2);
+//            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
+//        }
+//        printJS(results, nt);
+//        //
+//    }
 
     // this is to print out rows of JavaScript for use in a GoogleChart
     public static void printJS(List<StatSummary> ssl, StatSummary nt) {
@@ -153,15 +167,15 @@ public class TestEASimple {
     }
 
 
-    public static StatSummary runTrials(EvoAlg ea, int nTrials, int nResamples) {
+    public static StatSummary runTrials(EvoAlg ea, int nTrials, int nResamples, StatSummary trueFit) {
         // summary of fitness stats
-        StatSummary ss = new StatSummary();
+        // StatSummary ss = new StatSummary();
 
         // summary of optima found
         StatSummary nTrueOpt = new StatSummary("N True Opt Hits");
 
         for (int i = 0; i < nTrials; i++) {
-            ss.add(runTrial(ea, nTrueOpt));
+            runTrial(ea, nTrueOpt, trueFit);
         }
 
         // the ss summary shows the average level of fitness reached
@@ -176,14 +190,15 @@ public class TestEASimple {
     }
 
 
-    static double runTrial(EvoAlg ea, StatSummary nTrueOpt) {
+    static double runTrial(EvoAlg ea, StatSummary nTrueOpt, StatSummary trueFit) {
 
         // grab from static var for now
         NoisySolutionEvaluator evaluator = solutionEvaluator;
         evaluator.reset();
 
         int[] solution = ea.runTrial(evaluator, nFitnessEvals);
-        // System.out.println("Solution: " + Arrays.toString(solution));
+        // System.out.println("Solution: " + Arrays.toString(solution) + " : " + solutionEvaluator.trueFitness(solution));
+        trueFit.add(solutionEvaluator.trueFitness(solution));
 
         //  horrible mess at the moment - changing to a different evaluator
 //        if (useFirstHit && evaluator.logger().firstHit != null) {

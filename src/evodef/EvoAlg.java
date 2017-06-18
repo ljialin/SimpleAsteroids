@@ -14,6 +14,7 @@ public interface EvoAlg {
     NTupleSystem getModel();
 
     EvolutionLogger getLogger();
+    void setSamplingRate(int samplingRate);
 
 }
 

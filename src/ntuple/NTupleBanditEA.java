@@ -34,6 +34,10 @@ public class NTupleBanditEA  implements EvoAlg {
 
     public int nSamples = 1;
 
+    public void setSamplingRate(int n) {
+        nSamples = n;
+    }
+
 
 
     public NTupleBanditEA(double kExplore, int nNeighbours) {
@@ -154,8 +158,8 @@ public class NTupleBanditEA  implements EvoAlg {
 //        System.out.println("Time for calling addPoint: ");
 //        System.out.println(ss);
 
-        // int[] solution = nTupleSystem.getBestSolution();
-        int[] solution = nTupleSystem.getBestOfSampled();
+        int[] solution = nTupleSystem.getBestSolution();
+        // int[] solution = nTupleSystem.getBestOfSampled();
         // int[] solution = nTupleSystem.getBestOfSampledPlusNeighbours(neighboursWhenFindingBest);
         logger.keepBest(solution, evaluator.evaluate(solution));
         return solution;

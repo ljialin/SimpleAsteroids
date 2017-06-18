@@ -47,6 +47,11 @@ public class MBanditEA implements EvoAlg {
 
     }
 
+    @Override
+    public void setSamplingRate(int samplingRate) {
+        
+    }
+
 
     public void init(SearchSpace searchSpace) {
         genome = new MBanditArray(searchSpace);
