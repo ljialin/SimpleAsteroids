@@ -49,7 +49,7 @@ public class MBanditEA implements EvoAlg {
 
     @Override
     public void setSamplingRate(int samplingRate) {
-        
+        // not implemented for this algorithm
     }
 
 

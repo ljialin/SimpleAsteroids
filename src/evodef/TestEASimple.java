@@ -110,47 +110,6 @@ public class TestEASimple {
         System.out.println(fitnessArray);
     }
 
-//    static void testBanditEA() {
-//        // need to make the code more general and merge this and testEvoAlg()
-//        // simpler version does not compare performance with NT
-//        ArrayList<StatSummary> results = new ArrayList<>();
-//        for (int i = 1; i <= maxResamples; i++) {
-//            // System.out.println("Resampling rate: " + i);
-//            NTupleBanditEA banditEA = new NTupleBanditEA();
-//            banditEA.nSamples = i;
-//
-//            // System.out.println("Running trials: " + nTrialsRMHC);
-//            StatSummary ss2 = runTrials(banditEA, nTrialsRMHC, i);
-//            results.add(ss2);
-//            // System.out.println(ss2);
-//            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
-//        }
-//
-//        // now suppose we may just want to track the number of successes
-//        // in this case we just take the number of samples out of each StatSummary
-//
-//        ArrayList<Double> successRate = new ArrayList<>();
-//        for (StatSummary ss : results) {
-//            successRate.add(ss.n() * 100.0 / nTrialsRMHC);
-//        }
-//        System.out.println("Results array:");
-//        System.out.println(successRate);
-//    }
-//
-
-//    static void testRMHC(StatSummary nt) {
-//        ArrayList<StatSummary> successRate = new ArrayList<>();
-//
-//        for (int i = 1; i <= 20; i++) {
-//            // System.out.println("Resampling rate: " + i);
-//            StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC, i);
-//            results.add(ss2);
-//            // System.out.println(ss2);
-//            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
-//        }
-//        printJS(results, nt);
-//        //
-//    }
 
     // this is to print out rows of JavaScript for use in a GoogleChart
     public static void printJS(List<StatSummary> ssl, StatSummary nt) {
@@ -218,4 +177,49 @@ public class TestEASimple {
         return solutionEvaluator.trueFitness(solution);
 
     }
+
+
+    //    static void testBanditEA() {
+//        // need to make the code more general and merge this and testEvoAlg()
+//        // simpler version does not compare performance with NT
+//        ArrayList<StatSummary> results = new ArrayList<>();
+//        for (int i = 1; i <= maxResamples; i++) {
+//            // System.out.println("Resampling rate: " + i);
+//            NTupleBanditEA banditEA = new NTupleBanditEA();
+//            banditEA.nSamples = i;
+//
+//            // System.out.println("Running trials: " + nTrialsRMHC);
+//            StatSummary ss2 = runTrials(banditEA, nTrialsRMHC, i);
+//            results.add(ss2);
+//            // System.out.println(ss2);
+//            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
+//        }
+//
+//        // now suppose we may just want to track the number of successes
+//        // in this case we just take the number of samples out of each StatSummary
+//
+//        ArrayList<Double> successRate = new ArrayList<>();
+//        for (StatSummary ss : results) {
+//            successRate.add(ss.n() * 100.0 / nTrialsRMHC);
+//        }
+//        System.out.println("Results array:");
+//        System.out.println(successRate);
+//    }
+//
+
+//    static void testRMHC(StatSummary nt) {
+//        ArrayList<StatSummary> successRate = new ArrayList<>();
+//
+//        for (int i = 1; i <= 20; i++) {
+//            // System.out.println("Resampling rate: " + i);
+//            StatSummary ss2 = runTrials(new SimpleRMHC(i), nTrialsRMHC, i);
+//            results.add(ss2);
+//            // System.out.println(ss2);
+//            // System.out.format("Resample rate: %d\t %.3f\t %.3f \t %.3f   \n", i, ss2.mean(), ss2.stdErr(), ss2.max());
+//        }
+//        printJS(results, nt);
+//        //
+//    }
+
+
 }
