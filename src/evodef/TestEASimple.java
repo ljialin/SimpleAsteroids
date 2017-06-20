@@ -19,7 +19,7 @@ public class TestEASimple {
     static int nDims = 20;
     static int mValues = 2;
 
-    static int nTrialsRMHC = 10;
+    static int nTrialsRMHC = 100;
     // static int nTrialsNTupleBanditEA = 30;
 
     static int nFitnessEvals = 500;
@@ -38,8 +38,8 @@ public class TestEASimple {
         Mutator.defaultPointProb = 1.0;
 
         // select which one to use
-        // solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
-        solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
+        solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
+        // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
         // solutionEvaluator = new Eval2DNonLinear(5, 1.0);
 
         System.out.println("Running experiment with following settings:");
@@ -55,8 +55,11 @@ public class TestEASimple {
 
         // Mutator.totalRandomChaosMutation = true;
 
+        CompactBinaryGA cga = new CompactBinaryGA();
+        cga.nParents = 10;
+
         testEvoAlg(new SimpleRMHC());
-        testEvoAlg(new CompactBinaryGA());
+        testEvoAlg(cga);
         testEvoAlg(new NTupleBanditEA());
 
         // testBanditEA();

@@ -23,7 +23,7 @@ public class CompactBinaryGA implements EvoAlg {
     }
 
     // this decides how many vectors to generate each iteration
-    int nParents = 8;
+    public int nParents = 8;
 
 
     int nSamples = 1;
@@ -120,7 +120,7 @@ public class CompactBinaryGA implements EvoAlg {
         // logger.
         evaluator.logger().keepBest(solution, evaluator.evaluate(solution));
 
-        System.out.println("Total evaluations made: " + evaluator.nEvals());
+        // System.out.println("Total evaluations made: " + evaluator.nEvals());
         return solution;
     }
 

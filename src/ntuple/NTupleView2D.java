@@ -22,8 +22,7 @@ import java.awt.geom.Rectangle2D;
 
 public class NTupleView2D extends JComponent {
 
-
-    static int cellSize = 200;
+    static int cellSize = 100;
     double fill = 0.9;
 
     NTupleBanditEA banditEA;
@@ -143,18 +142,18 @@ public class NTupleView2D extends JComponent {
             g.setColor(Color.getHSBColor(v, 1, 1));
             g.fill(path);
             String statString = String.format("%d: %.2f", ss.n(), ss.mean());
-            centreString(g, cellSize / 2, cellSize / 2, statString, 30);
+            centreString(g, cellSize / 2, cellSize / 2, statString, 15);
             String ucbString = ucbString(ss);
-            centreString(g, cellSize/2, cellSize * 0.8f, ucbString, 28);
+            centreString(g, cellSize/2, cellSize * 0.8f, ucbString, 14);
         } else {
             System.out.println("Null " + ss);
             g.setColor(Color.gray);
             g.fill(path);
         }
         if (trueVal != null) {
-            centreString(g, cellSize/2, cellSize / 4, trueVal, 24);
+            centreString(g, cellSize/2, cellSize / 4, trueVal, 12);
         }
-        centreString(g, cellSize / 2, cellSize / 10, cellString, 24);
+        centreString(g, cellSize / 2, cellSize / 10, cellString, 12);
         g.setTransform(affineTransform);
     }
 
