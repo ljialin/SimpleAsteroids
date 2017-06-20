@@ -14,7 +14,35 @@ import java.util.Random;
  * <p>
  * Also need to consider how to handle a larger number of picks
  * - though this may not be so important ...
+ *
+ *  // todo Must also make a new version - let's call it the differential Bandit Landscape EA
+ *
+ *  In this one we pick TWO samples each time (or consider the parent and child)
+ *
+ *  Then in each dimension we model the differences between each one.
+ *
+ *  For the bit vector case this is easy.
+ *
+ *  Why can this outperform the mean version?
+ *
+ *  Well it all boils down to paired sampling!
+ *
+ *  Each time we evaluate two neighbours and pick the fitter one
+ *  we then update the scores for each bit of that one and ignore where they differ
+ *
+ *  This is a really interesting alternative for the update rule.
+ *
+ *
+ *
+ *
+ *
  */
+
+// todo need to make this more efficient
+    // todo there is something strange that happens when NTuples are created
+    // something like making the StatSummary objects seems really slow
+
+
 public class NTupleSystem implements FitnessLandscapeModel {
 
 

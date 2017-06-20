@@ -2,6 +2,7 @@ package evodef;
 
 import evogame.Mutator;
 import ga.SimpleRMHC;
+import ntuple.CompactBinaryGA;
 import ntuple.NTupleBanditEA;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
@@ -15,11 +16,11 @@ import java.util.List;
 
 public class TestEASimple {
 
-    static int nDims = 10;
+    static int nDims = 20;
     static int mValues = 2;
 
     static int nTrialsRMHC = 10;
-    static int nTrialsNTupleBanditEA = 30;
+    // static int nTrialsNTupleBanditEA = 30;
 
     static int nFitnessEvals = 500;
 
@@ -55,6 +56,7 @@ public class TestEASimple {
         // Mutator.totalRandomChaosMutation = true;
 
         testEvoAlg(new SimpleRMHC());
+        testEvoAlg(new CompactBinaryGA());
         testEvoAlg(new NTupleBanditEA());
 
         // testBanditEA();
