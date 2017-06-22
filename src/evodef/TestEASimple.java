@@ -26,7 +26,8 @@ public class TestEASimple {
     static int nFitnessEvals = 200;
 
     static boolean useFirstHit;
-    static int maxResamples = 5;
+    static int minSamples = 1;
+    static int maxResamples = 1;
     static NoisySolutionEvaluator solutionEvaluator;
 
 
@@ -105,7 +106,7 @@ public class TestEASimple {
         ArrayList<StatSummary> fitness = new ArrayList<>();
 
 
-        for (int i = 1; i <= maxResamples; i++) {
+        for (int i = minSamples; i <= maxResamples; i++) {
             // System.out.println("Resampling rate: " + i);
             evoAlg.setSamplingRate(i);
             StatSummary trueFit = new StatSummary();
@@ -194,7 +195,8 @@ public class TestEASimple {
         // ok, instead look at the true fitnesses of the evaluated solutions
 
         ArrayList<Double> noiseFree = new ArrayList<>();
-        for (int[] p : solutionEvaluator.logger().solutions) {
+        System.out.println("Best yet solutions length: " + solutionEvaluator.logger().bestYetSolutions.size());
+        for (int[] p : solutionEvaluator.logger().bestYetSolutions) {
             noiseFree.add(solutionEvaluator.trueFitness(p));
         }
         linePlots.add(new LinePlot().setData(noiseFree).setColor(lineColor));

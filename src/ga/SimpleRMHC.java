@@ -36,7 +36,6 @@ public class SimpleRMHC implements EvoAlg {
     }
 
 
-
     // should not be a static, just did it quick and dirty
 
     // this just adds a noisy test within the algorithm
@@ -58,7 +57,6 @@ public class SimpleRMHC implements EvoAlg {
 
 
     /**
-     *
      * @param evaluator
      * @param maxEvals
      * @return: the solution coded as an array of int
@@ -70,12 +68,14 @@ public class SimpleRMHC implements EvoAlg {
         Mutator mutator = new Mutator(searchSpace);
 
 
-
         while (evaluator.nEvals() < maxEvals && !evaluator.optimalFound()) {
             // System.out.println("nEvals: " + evaluator.nEvals());
             int[] mut = mutator.randMut(bestYet);
             // int[] mut = randMutAll(bestYet);
             // int[] mut = randAll(bestYet);
+
+            // keep track of how much we want to mutate this
+            int prevEvals = evaluator.nEvals();
             StatSummary fitMut = fitness(evaluator, mut, new StatSummary());
             if (accumulateBestYetStats) {
                 fitBest = fitness(evaluator, bestYet, fitBest);
@@ -86,7 +86,7 @@ public class SimpleRMHC implements EvoAlg {
                 }
             }
             // System.out.println(fitBest.mean() + " : " + fitMut.mean());
-            if ( fitMut.mean() >= fitBest.mean()) {
+            if (fitMut.mean() >= fitBest.mean()) {
                 // System.out.println("Updating best");
                 bestYet = mut;
                 fitBest = fitMut;
@@ -105,12 +105,18 @@ public class SimpleRMHC implements EvoAlg {
                     }
                 }
             }
+
+            int evalDiff = evaluator.nEvals() - prevEvals;
+            for (int i = 0; i < evalDiff; i++) {
+                evaluator.logger().logBestYest(bestYet);
+            }
         }
         // System.out.println("Ran for: " + evaluator.nEvals());
         return bestYet;
     }
 
     NTupleSystem model;
+
     @Override
     public void setModel(NTupleSystem nTupleSystem) {
         this.model = nTupleSystem;
@@ -127,7 +133,7 @@ public class SimpleRMHC implements EvoAlg {
     }
 
     StatSummary fitness(SolutionEvaluator evaluator, int[] sol, StatSummary ss) {
-        for (int i=0; i<nSamples; i++) {
+        for (int i = 0; i < nSamples; i++) {
             double fitness = evaluator.evaluate(sol);
             ss.add(fitness);
 

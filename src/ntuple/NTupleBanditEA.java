@@ -106,6 +106,7 @@ public class NTupleBanditEA  implements EvoAlg {
 
             // each time around the loop we make one fitness evaluation of p
             // and add this NEW information to the memory
+            int prevEvals = evaluator.nEvals();
 
             if (view != null) {
                 view.repaint();
@@ -151,6 +152,13 @@ public class NTupleBanditEA  implements EvoAlg {
             // now set the next point to explore
             p = evc.picker.getBest();
 //            logger.keepBest(picker.getBest(), picker.getBestScore());
+
+            int diffEvals = evaluator.nEvals() - prevEvals;
+            int[] bestYet = nTupleSystem.getBestOfSampled();
+            for (int i=0; i<diffEvals; i++) {
+                evaluator.logger().logBestYest(bestYet);
+            }
+
             // System.out.println("Best solution: " + Arrays.toString(evc.picker.getBest()) + "\t: " + evc.picker.getBestScore());
 
         }
@@ -158,8 +166,8 @@ public class NTupleBanditEA  implements EvoAlg {
 //        System.out.println("Time for calling addPoint: ");
 //        System.out.println(ss);
 
-        int[] solution = nTupleSystem.getBestSolution();
-        // int[] solution = nTupleSystem.getBestOfSampled();
+        // int[] solution = nTupleSystem.getBestSolution();
+        int[] solution = nTupleSystem.getBestOfSampled();
         // int[] solution = nTupleSystem.getBestOfSampledPlusNeighbours(neighboursWhenFindingBest);
         logger.keepBest(solution, evaluator.evaluate(solution));
         return solution;
