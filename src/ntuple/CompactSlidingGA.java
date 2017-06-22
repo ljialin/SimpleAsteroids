@@ -3,6 +3,7 @@ package ntuple;
 import evodef.*;
 import utilities.StatSummary;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -10,10 +11,28 @@ import java.util.Random;
 /**
  * Created by simonmarklucas on 19/06/2017.
  */
-public class CompactBinaryGA implements EvoAlg {
+public class CompactSlidingGA implements EvoAlg {
 
     public static void main(String[] args) {
-        CompactBinaryGA cga = new CompactBinaryGA();
+
+        // play with adding things to an ArrayList ...
+
+
+        // this illustrates how we will use an array list as a circular history buffer
+        int historyLength = 5;
+        ArrayList<Integer> history = new ArrayList<>();
+        for (int i=0; i<20; i++) {
+            if (history.size() < historyLength)
+                history.add(i);
+            else
+                history.set(i % historyLength, i);
+            System.out.println(history);
+        }
+        System.exit(0);
+
+
+
+        CompactSlidingGA cga = new CompactSlidingGA();
 
         SolutionEvaluator evaluator = new EvalMaxM(20, 2, 1);
         cga.verbose = true;
@@ -23,18 +42,18 @@ public class CompactBinaryGA implements EvoAlg {
     }
 
     // this decides how many vectors to generate each iteration
-    public int nParents = 8;
-
+    public int historyLength = 20;
+    ArrayList<ScoredVec> history = new ArrayList<>();
 
     int nSamples = 1;
     public static double defaultK = 1000;
     public double K = 10;
 
-    public CompactBinaryGA() {
+    public CompactSlidingGA() {
         this(defaultK);
     }
 
-    public CompactBinaryGA(double k) {
+    public CompactSlidingGA(double k) {
         K = k;
     }
 
@@ -51,6 +70,10 @@ public class CompactBinaryGA implements EvoAlg {
 
     static Random random = new Random();
 
+    public CompactSlidingGA setHistoryLength(int historyLength) {
+        this.historyLength = historyLength;
+        return this;
+    }
 
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {
@@ -65,6 +88,7 @@ public class CompactBinaryGA implements EvoAlg {
             pVec[i] = 0.5;
         }
 
+        int nSteps = 0;
         while (evaluator.nEvals() < nEvals) {
 
             // each time around the loop we make one fitness evaluation of p
@@ -77,25 +101,31 @@ public class CompactBinaryGA implements EvoAlg {
             double xFit, yFit;
 
             int prevEvals = evaluator.nEvals();
-            ScoredVec[] vecs = new ScoredVec[nParents];
-            for (int i=0; i<nParents; i++) {
-                // generate
-                int[] x = CompactGAUtil.randBitVec(pVec);
-                double f = fitness(evaluator, x, nSamples).mean(); // evaluator.evaluate(x);
-                ScoredVec sv = new ScoredVec(x, f);
-                vecs[i] = sv;
-            }
 
-            // now pair them off
-            for (int i=0; i<nParents; i++) {
-                for (int j = i+1; j<nParents; j++) {
-                    if (vecs[i].score > vecs[j].score) {
-                        CompactGAUtil.updatePVec(pVec, vecs[i].p, vecs[j].p, K);
-                    } else {
-                        CompactGAUtil.updatePVec(pVec, vecs[j].p, vecs[i].p, K);
-                    }
+            // each time around evaluate a single new individual
+            int[] x = CompactGAUtil.randBitVec(pVec);
+            double f = fitness(evaluator, x, nSamples).mean();
+
+            ScoredVec scoredVec = new ScoredVec(x, f);
+
+            // evaluate it against all history members
+
+            for (ScoredVec sv : history) {
+                if (scoredVec.score > sv.score) {
+                    CompactGAUtil.updatePVec(pVec, scoredVec.p, sv.p, K);
+                } else {
+                    CompactGAUtil.updatePVec(pVec, sv.p, scoredVec.p, K);
                 }
             }
+
+            // now treat the history like a circular buffer and update it
+
+            if (history.size() < historyLength) {
+                history.add(scoredVec);
+            } else {
+                history.set(nSteps % historyLength, scoredVec);
+            }
+            nSteps++;
 
             int diffEvals = evaluator.nEvals() - prevEvals;
             for (int i=0; i<diffEvals; i++) {
@@ -113,8 +143,6 @@ public class CompactBinaryGA implements EvoAlg {
                 System.out.println();
 
             }
-
-
         }
 
             // now draw each x and y vec according to pVec

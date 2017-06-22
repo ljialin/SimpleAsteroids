@@ -54,6 +54,7 @@ public class LineChart extends JComponent {
 
     public void paintComponent(Graphics go) {
         Graphics2D g = (Graphics2D) go;
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Dimension size = getSize();
         g.setColor( bg );
         g.fillRect( 0, 0, size.width, size.height );
@@ -86,6 +87,7 @@ public class LineChart extends JComponent {
             // now render the path on the component
             // by setting the color and then drawing it
             g.setColor(line.color);
+            g.setStroke(new BasicStroke(3));
             g.draw(path);
 
 

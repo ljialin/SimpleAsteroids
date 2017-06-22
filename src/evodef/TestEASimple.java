@@ -3,6 +3,7 @@ package evodef;
 import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactBinaryGA;
+import ntuple.CompactSlidingGA;
 import ntuple.NTupleBanditEA;
 import utilities.*;
 
@@ -23,7 +24,7 @@ public class TestEASimple {
     static int nTrialsRMHC = 10;
     // static int nTrialsNTupleBanditEA = 30;
 
-    static int nFitnessEvals = 200;
+    static int nFitnessEvals = 50;
 
     static boolean useFirstHit;
     static int minSamples = 1;
@@ -43,8 +44,8 @@ public class TestEASimple {
         Mutator.defaultPointProb = 1.0;
 
         // select which one to use
-        solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
-        // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
+        // solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
+        solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
         // solutionEvaluator = new Eval2DNonLinear(5, 1.0);
 
         System.out.println("Running experiment with following settings:");
@@ -61,18 +62,25 @@ public class TestEASimple {
         // Mutator.totalRandomChaosMutation = true;
 
         CompactBinaryGA cga = new CompactBinaryGA();
-        cga.nParents = 2;
+        cga.nParents = 5;
 
         // each time we run a test, we want to get
         // the way the fitness evolves over time
         // hence we need to get a list of arrays for each experiment
 
-        lineColor = Color.yellow;
+        // have an alpha less than 1 to be able to spot overlapping lines more easily
+        float alpha = 0.8f;
+
+        lineColor = new Color(1f, 1f, 0, alpha);
         testEvoAlg(new SimpleRMHC());
-        lineColor = Color.white;
+
+        lineColor = new Color(0f, 1f, 1, alpha);
         testEvoAlg(cga);
-        lineColor = Color.magenta;
-        testEvoAlg(new NTupleBanditEA());
+
+        lineColor = new Color(1f, 0f, 1, alpha);
+        testEvoAlg(new CompactSlidingGA().setHistoryLength(500));
+
+        // testEvoAlg(new NTupleBanditEA());
 
         // testBanditEA();
         System.out.println(t);
