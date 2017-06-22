@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TestEASimple {
 
-    static int nDims = 20;
+    static int nDims = 30;
     static int mValues = 2;
 
     static int nTrialsRMHC = 10;
