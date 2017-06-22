@@ -18,7 +18,14 @@ public class EvolutionLogger {
     // the EA under test thinks is the best solution
 
     ArrayList<Double> fa;
+    // these are all the solutions provided for evaluation
+
     public ArrayList<int[]> solutions;
+
+    // these are the one proposed as best yet
+
+    public ArrayList<int[]> bestYetSolutions;
+
     public StatSummary ss;
     int bestGen = 0;
     int[] bestYet;
@@ -74,6 +81,12 @@ public class EvolutionLogger {
         // System.out.println("Called keep best");
     }
 
+    public void logBestYest(int[] solution) {
+        int[] x = new int[solution.length];
+        for (int i=0; i<x.length; i++) x[i] = solution[i];
+        bestYetSolutions.add(x);
+    }
+
     public double finalFitness() {
         return finalFitness;
     }
@@ -90,6 +103,7 @@ public class EvolutionLogger {
         // System.out.println("RESETTING");
         fa = new ArrayList<>();
         solutions = new ArrayList<>();
+        bestYetSolutions = new ArrayList<>();
         ss = new StatSummary();
         bestYet = null;
         bestGen = 0;

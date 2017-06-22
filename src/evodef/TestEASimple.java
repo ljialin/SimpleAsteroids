@@ -4,10 +4,11 @@ import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactBinaryGA;
 import ntuple.NTupleBanditEA;
-import utilities.ElapsedTimer;
-import utilities.StatSummary;
+import utilities.*;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 /**
@@ -19,19 +20,22 @@ public class TestEASimple {
     static int nDims = 20;
     static int mValues = 2;
 
-    static int nTrialsRMHC = 100;
+    static int nTrialsRMHC = 10;
     // static int nTrialsNTupleBanditEA = 30;
 
-    static int nFitnessEvals = 500;
+    static int nFitnessEvals = 200;
 
     static boolean useFirstHit;
-    static int maxResamples = 20;
+    static int maxResamples = 5;
     static NoisySolutionEvaluator solutionEvaluator;
 
 
     public static void main(String[] args) {
 
         // run configuration for an experiment
+
+        // todo need an easy and general way to log the best solution yet
+        // just add a new log method to the logger
 
         useFirstHit = false;
         Mutator.flipAtLeastOneValue = true;
@@ -56,16 +60,30 @@ public class TestEASimple {
         // Mutator.totalRandomChaosMutation = true;
 
         CompactBinaryGA cga = new CompactBinaryGA();
-        cga.nParents = 10;
+        cga.nParents = 2;
 
+        // each time we run a test, we want to get
+        // the way the fitness evolves over time
+        // hence we need to get a list of arrays for each experiment
+
+        lineColor = Color.yellow;
         testEvoAlg(new SimpleRMHC());
+        lineColor = Color.white;
         testEvoAlg(cga);
+        lineColor = Color.magenta;
         testEvoAlg(new NTupleBanditEA());
 
         // testBanditEA();
         System.out.println(t);
+        LineChart lineChart = new LineChart();
+        for (LinePlot line : linePlots) {
+            lineChart.addLine(line);
+        }
+        new JEasyFrame(lineChart, "Evolution Traces");
 
     }
+
+    static Color lineColor;
 
 //    static StatSummary testNTupleBanditEA(int nTrials) {
 //        StatSummary ss = runTrials(new NTupleBanditEA(), nTrials, 0);
@@ -130,12 +148,19 @@ public class TestEASimple {
         }
     }
 
+    // for now use static array lists
+
+    static ArrayList<LinePlot> linePlots = new ArrayList<>();
+
 
     public static StatSummary runTrials(EvoAlg ea, int nTrials, int nResamples, StatSummary trueFit) {
         // summary of fitness stats
         // StatSummary ss = new StatSummary();
 
         // summary of optima found
+        //
+
+
         StatSummary nTrueOpt = new StatSummary("N True Opt Hits");
 
         for (int i = 0; i < nTrials; i++) {
@@ -163,6 +188,16 @@ public class TestEASimple {
         int[] solution = ea.runTrial(evaluator, nFitnessEvals);
         // System.out.println("Solution: " + Arrays.toString(solution) + " : " + solutionEvaluator.trueFitness(solution));
         trueFit.add(solutionEvaluator.trueFitness(solution));
+
+        // linePlots.add(new LinePlot().setData(solutionEvaluator.logger().fa).setColor(lineColor));
+
+        // ok, instead look at the true fitnesses of the evaluated solutions
+
+        ArrayList<Double> noiseFree = new ArrayList<>();
+        for (int[] p : solutionEvaluator.logger().solutions) {
+            noiseFree.add(solutionEvaluator.trueFitness(p));
+        }
+        linePlots.add(new LinePlot().setData(noiseFree).setColor(lineColor));
 
         //  horrible mess at the moment - changing to a different evaluator
 //        if (useFirstHit && evaluator.logger().firstHit != null) {

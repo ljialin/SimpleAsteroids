@@ -96,7 +96,8 @@ public class CompactBinaryGA implements EvoAlg {
                 }
             }
 
-
+            evaluator.logger().logBestYest(argmax(pVec));
+            
             if (verbose) {
                 int[] solution = argmax(pVec);
                 System.out.format("%.3f\t %s\n", evaluator.evaluate(solution), Arrays.toString(solution));
