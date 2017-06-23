@@ -43,10 +43,10 @@ public class CompactSlidingGA implements EvoAlg {
 
     // this decides how many vectors to generate each iteration
     public int historyLength = 20;
-    ArrayList<ScoredVec> history = new ArrayList<>();
+    ArrayList<ScoredVec> history;
 
     int nSamples = 1;
-    public static double defaultK = 1000;
+    public static double defaultK = 2000;
     public double K = 10;
 
     public CompactSlidingGA() {
@@ -83,6 +83,7 @@ public class CompactSlidingGA implements EvoAlg {
 
         int n = searchSpace.nDims();
 
+        history = new ArrayList<>();
         pVec = new double[n];
         for (int i=0; i<n; i++) {
             pVec[i] = 0.5;
@@ -94,11 +95,7 @@ public class CompactSlidingGA implements EvoAlg {
             // each time around the loop we make one fitness evaluation of p
             // and add this NEW information to the memory
 
-
             // double fitness = evaluator.evaluate(p);
-
-            // the new version enables resampling
-            double xFit, yFit;
 
             int prevEvals = evaluator.nEvals();
 

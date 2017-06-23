@@ -21,7 +21,7 @@ public class TestEASimple {
     static int nDims = 100;
     static int mValues = 2;
 
-    static int nTrialsRMHC = 1;
+    static int nTrialsRMHC = 10;
     // static int nTrialsNTupleBanditEA = 30;
 
     static int nFitnessEvals = 500;
@@ -30,7 +30,7 @@ public class TestEASimple {
     static int minSamples = 1;
     static int maxResamples = 1;
     static NoisySolutionEvaluator solutionEvaluator;
-    static double noise = 0.0;
+    static double noise = 1.0;
 
 
     public static void main(String[] args) {
@@ -79,7 +79,7 @@ public class TestEASimple {
         testEvoAlg(cga);
 
         lineColor = new Color(1f, 0f, 1, alpha);
-        testEvoAlg(new CompactSlidingGA().setHistoryLength(20));
+        testEvoAlg(new CompactSlidingGA().setHistoryLength(50));
 
         // testEvoAlg(new NTupleBanditEA());
 
@@ -212,7 +212,7 @@ public class TestEASimple {
         // ok, instead look at the true fitnesses of the evaluated solutions
 
         ArrayList<Double> noiseFree = new ArrayList<>();
-        System.out.println("Best yet solutions length: " + solutionEvaluator.logger().bestYetSolutions.size());
+        // System.out.println("Best yet solutions length: " + solutionEvaluator.logger().bestYetSolutions.size());
         for (int[] p : solutionEvaluator.logger().bestYetSolutions) {
             noiseFree.add(solutionEvaluator.trueFitness(p));
         }
