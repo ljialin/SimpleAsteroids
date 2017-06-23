@@ -36,77 +36,79 @@ public class TestEASimple {
     static NoisySolutionEvaluator solutionEvaluator;
     static double noise = 0;
 
-    static String outputName = "noisefree_w10.dat";
+    static String outputName = "data/noisefree_w10.dat";
 
     public static void main(String[] args) {
-        File f = new File(outputName);
-        if(f.exists() && !f.isDirectory()) {
-            f.delete();
-        }
-        // run configuration for an experiment
+        for (int w=10; w<=50; w=w+10) {
+            outputName = "data/noisefree_w" + w + ".dat";
+            File f = new File(outputName);
+            if (f.exists() && !f.isDirectory()) {
+                f.delete();
+            }
+            // run configuration for an experiment
 
-        // todo need an easy and general way to log the best solution yet
-        // just add a new log method to the logger
+            // todo need an easy and general way to log the best solution yet
+            // just add a new log method to the logger
 
-        useFirstHit = false;
-        Mutator.flipAtLeastOneValue = true;
-        Mutator.defaultPointProb = 1.0;
+            useFirstHit = false;
+            Mutator.flipAtLeastOneValue = true;
+            Mutator.defaultPointProb = 1.0;
 
-        // select which one to use
-        solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
-        // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
-        // solutionEvaluator = new Eval2DNonLinear(5, noise);
+            // select which one to use
+            solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
+            // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
+            // solutionEvaluator = new Eval2DNonLinear(5, noise);
 
-        System.out.println("Running experiment with following settings:");
-        System.out.println("Solution evaluator: " + solutionEvaluator.getClass());
-        System.out.format("Use first hitting time    :\t %s\n", useFirstHit);
-        System.out.format("RMHC: (flip at least one) :\t %s\n", Mutator.flipAtLeastOneValue);
-        System.out.format("Point mutation probability:\t %.4f\n", Mutator.defaultPointProb / nDims);
+            System.out.println("Running experiment with following settings:");
+            System.out.println("Solution evaluator: " + solutionEvaluator.getClass());
+            System.out.format("Use first hitting time    :\t %s\n", useFirstHit);
+            System.out.format("RMHC: (flip at least one) :\t %s\n", Mutator.flipAtLeastOneValue);
+            System.out.format("Point mutation probability:\t %.4f\n", Mutator.defaultPointProb / nDims);
 
-        ElapsedTimer t = new ElapsedTimer();
+            ElapsedTimer t = new ElapsedTimer();
 
 //        StatSummary nt = testNTupleBanditEA(nTrialsNTupleBanditEA);
 //        System.out.println(t);
 
-        // Mutator.totalRandomChaosMutation = true;
+            // Mutator.totalRandomChaosMutation = true;
 
-        CompactBinaryGA cga = new CompactBinaryGA();
-        cga.nParents = 2;
+            CompactBinaryGA cga = new CompactBinaryGA();
+            cga.nParents = 2;
 
-        // each time we run a test, we want to get
-        // the way the fitness evolves over time
-        // hence we need to get a list of arrays for each experiment
+            // each time we run a test, we want to get
+            // the way the fitness evolves over time
+            // hence we need to get a list of arrays for each experiment
 
-        // have an alpha less than 1 to be able to spot overlapping lines more easily
-        float alpha = 0.8f;
+            // have an alpha less than 1 to be able to spot overlapping lines more easily
+            float alpha = 0.8f;
 
-        lineColor = new Color(1f, 1f, 0, alpha);
-        testEvoAlg(new SimpleRMHC());
+            lineColor = new Color(1f, 1f, 0, alpha);
+            testEvoAlg(new SimpleRMHC());
 
-        lineColor = new Color(0f, 1f, 1, alpha);
-        testEvoAlg(cga);
+            lineColor = new Color(0f, 1f, 1, alpha);
+            testEvoAlg(cga);
 
-        lineColor = new Color(1f, 0f, 1, alpha);
-        testEvoAlg(new CompactSlidingGA().setHistoryLength(10));
+            lineColor = new Color(1f, 0f, 1, alpha);
+            testEvoAlg(new CompactSlidingGA().setHistoryLength(w));
 
-        // testEvoAlg(new NTupleBanditEA());
+            // testEvoAlg(new NTupleBanditEA());
 
-        // testBanditEA();
-        System.out.println(t);
-        LineChart lineChart = new LineChart();
-        for (LinePlot line : linePlots) {
-            lineChart.addLine(line);
+            // testBanditEA();
+            System.out.println(t);
+            LineChart lineChart = new LineChart();
+            for (LinePlot line : linePlots) {
+                lineChart.addLine(line);
+            }
+
+            // add a linear plot
+
+            LinePlot linear = new LinePlot();
+            linear.setColor(Color.white);
+            for (int i = 0; i < nDims; i++) linear.add(i);
+            lineChart.addLine(linear);
+
+            new JEasyFrame(lineChart, "Evolution Traces");
         }
-
-        // add a linear plot
-
-        LinePlot linear = new LinePlot();
-        linear.setColor(Color.white);
-        for (int i=0; i<nDims; i++) linear.add(i);
-        lineChart.addLine(linear);
-
-        new JEasyFrame(lineChart, "Evolution Traces");
-
     }
 
     static Color lineColor;
