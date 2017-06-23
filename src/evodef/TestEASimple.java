@@ -28,18 +28,18 @@ public class TestEASimple {
     static int nTrialsRMHC = 10;
     // static int nTrialsNTupleBanditEA = 30;
 
-    static int nFitnessEvals = 500;
+    static int nFitnessEvals = 100;
 
     static boolean useFirstHit;
     static int minSamples = 1;
     static int maxResamples = 1;
     static NoisySolutionEvaluator solutionEvaluator;
-    static double noise = 0;
+    static double noise = 1.0;
 
     static String outputName = "data/noisefree_w10.dat";
 
     public static void main(String[] args) {
-        for (int w=10; w<=50; w=w+10) {
+        for (int w=50; w<=50; w=w+10) {
             outputName = "data/noisefree_w" + w + ".dat";
             File f = new File(outputName);
             if (f.exists() && !f.isDirectory()) {
@@ -72,8 +72,11 @@ public class TestEASimple {
 
             // Mutator.totalRandomChaosMutation = true;
 
-            CompactBinaryGA cga = new CompactBinaryGA();
-            cga.nParents = 2;
+            int defaultK = 100;
+
+            CompactBinaryGA cga = new CompactBinaryGA(defaultK);
+            cga.nParents = 2
+            ;
 
             // each time we run a test, we want to get
             // the way the fitness evolves over time
@@ -89,7 +92,7 @@ public class TestEASimple {
             testEvoAlg(cga);
 
             lineColor = new Color(1f, 0f, 1, alpha);
-            testEvoAlg(new CompactSlidingGA().setHistoryLength(w));
+            testEvoAlg(new CompactSlidingGA(2000).setHistoryLength(w));
 
             // testEvoAlg(new NTupleBanditEA());
 

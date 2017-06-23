@@ -27,7 +27,7 @@ public class CompactBinaryGA implements EvoAlg {
 
 
     int nSamples = 1;
-    public static double defaultK = 1000;
+    public static double defaultK = 2000;
     public double K = 10;
 
     public CompactBinaryGA() {
