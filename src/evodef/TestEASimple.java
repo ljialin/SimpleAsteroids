@@ -18,18 +18,19 @@ import java.util.List;
 
 public class TestEASimple {
 
-    static int nDims = 30;
+    static int nDims = 100;
     static int mValues = 2;
 
-    static int nTrialsRMHC = 10;
+    static int nTrialsRMHC = 1;
     // static int nTrialsNTupleBanditEA = 30;
 
-    static int nFitnessEvals = 50;
+    static int nFitnessEvals = 500;
 
     static boolean useFirstHit;
     static int minSamples = 1;
     static int maxResamples = 1;
     static NoisySolutionEvaluator solutionEvaluator;
+    static double noise = 0.0;
 
 
     public static void main(String[] args) {
@@ -44,9 +45,9 @@ public class TestEASimple {
         Mutator.defaultPointProb = 1.0;
 
         // select which one to use
-        // solutionEvaluator = new EvalMaxM(nDims, mValues, 1.0);
-        solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, 1.0);
-        // solutionEvaluator = new Eval2DNonLinear(5, 1.0);
+        solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
+        // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
+        // solutionEvaluator = new Eval2DNonLinear(5, noise);
 
         System.out.println("Running experiment with following settings:");
         System.out.println("Solution evaluator: " + solutionEvaluator.getClass());
@@ -78,7 +79,7 @@ public class TestEASimple {
         testEvoAlg(cga);
 
         lineColor = new Color(1f, 0f, 1, alpha);
-        testEvoAlg(new CompactSlidingGA().setHistoryLength(500));
+        testEvoAlg(new CompactSlidingGA().setHistoryLength(20));
 
         // testEvoAlg(new NTupleBanditEA());
 
@@ -88,6 +89,14 @@ public class TestEASimple {
         for (LinePlot line : linePlots) {
             lineChart.addLine(line);
         }
+
+        // add a linear plot
+
+        LinePlot linear = new LinePlot();
+        linear.setColor(Color.white);
+        for (int i=0; i<nDims; i++) linear.add(i);
+        lineChart.addLine(linear);
+
         new JEasyFrame(lineChart, "Evolution Traces");
 
     }
