@@ -8,6 +8,10 @@ import ntuple.NTupleBanditEA;
 import utilities.*;
 
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
@@ -30,11 +34,15 @@ public class TestEASimple {
     static int minSamples = 1;
     static int maxResamples = 1;
     static NoisySolutionEvaluator solutionEvaluator;
-    static double noise = 1.0;
+    static double noise = 0;
 
+    static String outputName = "noisefree_w10.dat";
 
     public static void main(String[] args) {
-
+        File f = new File(outputName);
+        if(f.exists() && !f.isDirectory()) {
+            f.delete();
+        }
         // run configuration for an experiment
 
         // todo need an easy and general way to log the best solution yet
@@ -63,7 +71,7 @@ public class TestEASimple {
         // Mutator.totalRandomChaosMutation = true;
 
         CompactBinaryGA cga = new CompactBinaryGA();
-        cga.nParents = 5;
+        cga.nParents = 2;
 
         // each time we run a test, we want to get
         // the way the fitness evolves over time
@@ -79,7 +87,7 @@ public class TestEASimple {
         testEvoAlg(cga);
 
         lineColor = new Color(1f, 0f, 1, alpha);
-        testEvoAlg(new CompactSlidingGA().setHistoryLength(50));
+        testEvoAlg(new CompactSlidingGA().setHistoryLength(10));
 
         // testEvoAlg(new NTupleBanditEA());
 
@@ -216,6 +224,26 @@ public class TestEASimple {
         for (int[] p : solutionEvaluator.logger().bestYetSolutions) {
             noiseFree.add(solutionEvaluator.trueFitness(p));
         }
+        // TODO: 23/06/2017 save data
+        try
+        {
+            FileWriter fw = new FileWriter(outputName, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw);
+
+            for (int i=0; i<noiseFree.size(); i++)
+            {
+                out.print(noiseFree.get(i)+ " ");
+            }
+            out.print("\n");
+            out.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("No such file exists.");
+        }
+
         linePlots.add(new LinePlot().setData(noiseFree).setColor(lineColor));
 
         //  horrible mess at the moment - changing to a different evaluator
