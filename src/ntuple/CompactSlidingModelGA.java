@@ -148,8 +148,8 @@ public class CompactSlidingModelGA implements EvoAlg {
         // logger.
         evaluator.logger().keepBest(solution, evaluator.evaluate(solution));
 
-        System.out.println("Total evaluations made: " + evaluator.nEvals());
-        geneArrayModel.report();
+        // System.out.println("Total evaluations made in compact: " + evaluator.nEvals());
+        // geneArrayModel.report();
         return solution;
     }
 

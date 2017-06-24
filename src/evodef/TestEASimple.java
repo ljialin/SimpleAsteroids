@@ -23,8 +23,8 @@ import java.util.List;
 
 public class TestEASimple {
 
-    static int nDims = 100;
-    static int mValues = 2;
+    static int nDims = 10;
+    static int mValues = 5;
 
     static int nTrialsRMHC = 10;
     // static int nTrialsNTupleBanditEA = 30;
@@ -57,8 +57,8 @@ public class TestEASimple {
 
             // select which one to use
             // solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
-            // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
-            solutionEvaluator = new Eval2DNonLinear(8, noise);
+            solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
+            // solutionEvaluator = new Eval2DNonLinear(8, noise);
 
             System.out.println("Running experiment with following settings:");
             System.out.println("Solution evaluator: " + solutionEvaluator.getClass());

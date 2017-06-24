@@ -32,7 +32,7 @@ public class BattleTestEA {
         // SolutionEvaluator evaluator = new EvalMaxM(nDims, mValues);
         SolutionEvaluator evaluator = new EvalBattleGame();
 
-        ea = new NTupleBanditEA();
+        // ea = new NTupleBanditEA();
 
 
         System.out.println("Best fitness stats:");

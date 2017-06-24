@@ -13,6 +13,7 @@ import evodef.GameActionSpaceAdapter;
 import evodef.GameActionSpaceAdapterMulti;
 import evogame.Mutator;
 import ga.SimpleRMHC;
+import ntuple.CompactSlidingModelGA;
 import ntuple.NTupleBanditEA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
@@ -72,7 +73,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         SpaceBattleLinkStateTwoPlayer linkState = new SpaceBattleLinkStateTwoPlayer();
         StateObservationMulti multi = linkState;
 
-        GameActionSpaceAdapterMulti.useHeuristic = false;
+        GameActionSpaceAdapterMulti.useHeuristic = true;
 
         Mutator.totalRandomChaosMutation = false;
 
@@ -102,8 +103,10 @@ public class SpaceBattleLinkTestTwoPlayer {
         int nEvals = 200;
         // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
+        evoAlg = new CompactSlidingModelGA().setHistoryLength(30);
+
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);
-        // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
+        player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
 
 
         // player1  = new controllers.multiPlayer.smlrand.Agent();

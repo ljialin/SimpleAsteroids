@@ -22,7 +22,7 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
     static Random random = new Random();
     static double noiseLevel = 0;
 
-    public static int actionRepeat = 10;
+    public static int actionRepeat = 1;
 
     public int numActions;
     public Types.ACTIONS[] gvgaiActions;
