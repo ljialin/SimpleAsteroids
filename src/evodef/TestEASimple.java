@@ -56,9 +56,9 @@ public class TestEASimple {
             Mutator.defaultPointProb = 1.0;
 
             // select which one to use
-            solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
+            // solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
             // solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
-            // solutionEvaluator = new Eval2DNonLinear(5, noise);
+            solutionEvaluator = new Eval2DNonLinear(8, noise);
 
             System.out.println("Running experiment with following settings:");
             System.out.println("Solution evaluator: " + solutionEvaluator.getClass());
@@ -96,9 +96,10 @@ public class TestEASimple {
 //            testEvoAlg(new CompactSlidingGA(2000).setHistoryLength(w));
 
             lineColor = Color.getHSBColor(0.7f, 1, 1);
-            testEvoAlg(new CompactSlidingModelGA().setHistoryLength(30));
+            testEvoAlg(new CompactSlidingModelGA().setHistoryLength(w));
 
-            // testEvoAlg(new NTupleBanditEA());
+            lineColor = Color.getHSBColor(0.5f, 1, 1);
+            testEvoAlg(new NTupleBanditEA());
 
             // testBanditEA();
             System.out.println(t);
@@ -111,8 +112,9 @@ public class TestEASimple {
 
             LinePlot linear = new LinePlot();
             linear.setColor(Color.white);
-            for (int i = 0; i < nDims; i++) linear.add(i);
-            lineChart.addLine(linear);
+            for (int i = 0; i < nDims; i++)
+                linear.add(solutionEvaluator.optimalIfKnown()  * (0.5 + i / (2.0 * nDims)));
+            // lineChart.addLine(linear);
 
             new JEasyFrame(lineChart, "Evolution Traces");
         }

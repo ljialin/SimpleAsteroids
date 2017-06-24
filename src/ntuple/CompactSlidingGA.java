@@ -153,6 +153,7 @@ public class CompactSlidingGA implements EvoAlg {
         evaluator.logger().keepBest(solution, evaluator.evaluate(solution));
 
         // System.out.println("Total evaluations made: " + evaluator.nEvals());
+        // System.out.println(Arrays.toString(pVec));
         return solution;
     }
 

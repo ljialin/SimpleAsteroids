@@ -42,14 +42,11 @@ import java.util.Random;
     // todo there is something strange that happens when NTuples are created
     // something like making the StatSummary objects seems really slow
 
-
 public class NTupleSystem implements FitnessLandscapeModel {
-
 
     static int minTupleSize = 1;
 
     List<int[]> sampledPoints;
-
 
     SearchSpace searchSpace;
     ArrayList<NTuple> tuples;
@@ -65,11 +62,11 @@ public class NTupleSystem implements FitnessLandscapeModel {
     // n-tuples to add
     public NTupleSystem addTuples() {
         add1Tuples();
-        // add2Tuples();
+        add2Tuples();
         // add3Tuples();
         //
         //
-        addNTuple();
+        // addNTuple();
         // urnSystem = new UrnSystem();
         return this;
     }

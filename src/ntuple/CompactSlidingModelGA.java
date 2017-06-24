@@ -24,7 +24,6 @@ public class CompactSlidingModelGA implements EvoAlg {
 
     }
 
-    // this decides how many vectors to generate each iteration
     public int historyLength = 50;
     ArrayList<ScoredVec> history;
 
@@ -59,6 +58,12 @@ public class CompactSlidingModelGA implements EvoAlg {
         return this;
     }
 
+    // worth a try but it works badly
+    static boolean resetStatsWithFullHistory = false;
+
+    // also was worth a try, but works badly
+    static double pArgMaxInjection = 0.0;
+
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {
         this.evaluator = evaluator;
@@ -80,13 +85,23 @@ public class CompactSlidingModelGA implements EvoAlg {
 
             int prevEvals = evaluator.nEvals();
 
-            // each time around evaluate a single new individual
-            int[] x = geneArrayModel.generate();
+            // each time around evaluate a single new individual: x
+            // but occasionally have the possibility of sampling the best guess so far
+            int[] x;
+            if (random.nextDouble() < pArgMaxInjection) {
+                x = geneArrayModel.argMax();
+            } else {
+                x = geneArrayModel.generate();
+            }
             double f = fitness(evaluator, x, nSamples).mean();
 
             ScoredVec scoredVec = new ScoredVec(x, f);
 
             // evaluate it against all history members
+
+            if (resetStatsWithFullHistory && history.size() >= historyLength) {
+                geneArrayModel.resetStats();
+            }
 
             for (ScoredVec sv : history) {
                 if (scoredVec.score > sv.score) {
@@ -134,6 +149,7 @@ public class CompactSlidingModelGA implements EvoAlg {
         evaluator.logger().keepBest(solution, evaluator.evaluate(solution));
 
         System.out.println("Total evaluations made: " + evaluator.nEvals());
+        geneArrayModel.report();
         return solution;
     }
 
