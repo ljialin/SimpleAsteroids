@@ -4,6 +4,7 @@ import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactBinaryGA;
 import ntuple.CompactSlidingGA;
+import ntuple.CompactSlidingModelGA;
 import ntuple.NTupleBanditEA;
 import utilities.*;
 
@@ -28,7 +29,7 @@ public class TestEASimple {
     static int nTrialsRMHC = 10;
     // static int nTrialsNTupleBanditEA = 30;
 
-    static int nFitnessEvals = 100;
+    static int nFitnessEvals = 500;
 
     static boolean useFirstHit;
     static int minSamples = 1;
@@ -87,12 +88,15 @@ public class TestEASimple {
 
             lineColor = new Color(1f, 1f, 0, alpha);
             testEvoAlg(new SimpleRMHC());
+//
+//            lineColor = new Color(0f, 1f, 1, alpha);
+//            testEvoAlg(cga);
+//
+//            lineColor = new Color(1f, 0f, 1, alpha);
+//            testEvoAlg(new CompactSlidingGA(2000).setHistoryLength(w));
 
-            lineColor = new Color(0f, 1f, 1, alpha);
-            testEvoAlg(cga);
-
-            lineColor = new Color(1f, 0f, 1, alpha);
-            testEvoAlg(new CompactSlidingGA(2000).setHistoryLength(w));
+            lineColor = Color.getHSBColor(0.7f, 1, 1);
+            testEvoAlg(new CompactSlidingModelGA().setHistoryLength(30));
 
             // testEvoAlg(new NTupleBanditEA());
 
