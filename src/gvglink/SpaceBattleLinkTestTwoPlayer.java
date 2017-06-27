@@ -100,10 +100,11 @@ public class SpaceBattleLinkTestTwoPlayer {
         double kExplore = 10;
         int nNeighbours = 100;
 
-        int nEvals = 200;
+        int nEvals = 500;
         // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        evoAlg = new CompactSlidingModelGA().setHistoryLength(30);
+        evoAlg = new CompactSlidingModelGA().setHistoryLength(10);
+        EvoAlg evoAlg2 = new SimpleRMHC(2);
 
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);
         player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
@@ -111,7 +112,6 @@ public class SpaceBattleLinkTestTwoPlayer {
 
         // player1  = new controllers.multiPlayer.smlrand.Agent();
 
-        EvoAlg evoAlg2 = new SimpleRMHC(2);
 
         // player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer1, nEvals);
 
