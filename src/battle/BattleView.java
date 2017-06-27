@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static asteroids.Constants.*;
@@ -36,6 +37,9 @@ public class BattleView extends JComponent {
 
     static Random rand = new Random();
 
+    int[][][] rolls;
+
+
     static double viewScale = 1.0;
 
     public static Color randColor() {
@@ -44,9 +48,18 @@ public class BattleView extends JComponent {
         return color;
     }
 
+    public void setRolls(int i, EvoAlg evoAlg) {
+        ArrayList<int[]> solutions = evoAlg.getLogger().solutions;
+        rolls[i] = new int[solutions.size()][];
+        for (int j=0; j<solutions.size(); j++) {
+            rolls[i][j] = solutions.get(j);
+        }
+    }
+
     public BattleView(SimpleBattleState game) {
         this.game = game;
         scale = size.width - 2 * offset;
+        rolls = new int[2][][];
     }
 
     static Color bg = randColor();
@@ -95,14 +108,15 @@ public class BattleView extends JComponent {
             SimpleShip ss = game.ships[i];
             g.setColor(shipColors[i]);
             ss.draw(g);
-            int[] roll = SearchSpaceUtil.randomPoint(new TenSpace(rolloutLength, nActions));
-            if (evoAlg != null && i == 0) {
+            // int[] roll = SearchSpaceUtil.randomPoint(new TenSpace(rolloutLength, nActions));
+            int[][] roll = rolls[i];
+            if (roll != null && roll.length > 0) {
                 // g.setColor(Color.black);
                 g.setColor(new Color(0, 0, 0, 50));
                 // roll = evoAlg.getLogger().finalSolution();
                 // handle evo controllers specially: give them lots of drawing!
-                System.out.println("Solutions: " + evoAlg.getLogger().solutions.size());
-                for (int[] a : evoAlg.getLogger().solutions) {
+                // System.out.println("Solutions: " + roll.length);
+                for (int[] a : roll) {
                     drawShipRollout(g, game.ships[i].copy(), a);
                 }
 

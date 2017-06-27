@@ -107,7 +107,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         EvoAlg evoAlg2 = new SimpleRMHC(2);
 
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);
-        player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
+        player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer2, nEvals);
 
 
         // player1  = new controllers.multiPlayer.smlrand.Agent();
@@ -171,6 +171,8 @@ public class SpaceBattleLinkTestTwoPlayer {
             multi.advance(new Types.ACTIONS[]{action1, action2});
 
             if (view != null) {
+                view.setRolls(0, evoAlg);
+                view.setRolls(1, evoAlg2);
                 view.repaint();
                 try {
                     Thread.sleep(delay);
