@@ -73,7 +73,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         SpaceBattleLinkStateTwoPlayer linkState = new SpaceBattleLinkStateTwoPlayer();
         StateObservationMulti multi = linkState;
 
-        GameActionSpaceAdapterMulti.useHeuristic = true;
+        GameActionSpaceAdapterMulti.useHeuristic = false;
 
         Mutator.totalRandomChaosMutation = false;
 
@@ -103,15 +103,17 @@ public class SpaceBattleLinkTestTwoPlayer {
         int nEvals = 200;
         // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        evoAlg = new CompactSlidingModelGA().setHistoryLength(30);
+        evoAlg = new CompactSlidingModelGA().setHistoryLength(10);
+        EvoAlg evoAlg2 = new CompactSlidingModelGA().setHistoryLength(30);
 
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);
-        player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
+        player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer2, nEvals);
+        // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
 
 
         // player1  = new controllers.multiPlayer.smlrand.Agent();
 
-        EvoAlg evoAlg2 = new SimpleRMHC(2);
+        // EvoAlg evoAlg2 = new SimpleRMHC(2);
 
         // player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer1, nEvals);
 
@@ -126,7 +128,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         int nSteps = 500;
 
         ElapsedTimer t = new ElapsedTimer();
-        BattleView view = new BattleView(linkState.state);
+        BattleView view = new BattleView(linkState.state.copyState());
         if (showVisible)
             view.evoAlg = evoAlg;
 
@@ -145,6 +147,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         StatSummary ssTicks2 = new StatSummary("Player 2 nTicks");
 
         for (int i=0; i<nSteps && !linkState.isGameOver(); i++) {
+            linkState.state = linkState.state.copyState();
             timer = new ElapsedCpuTimer();
             timer.setMaxTimeMillis(thinkingTime);
 
@@ -171,6 +174,7 @@ public class SpaceBattleLinkTestTwoPlayer {
             multi.advance(new Types.ACTIONS[]{action1, action2});
 
             if (view != null) {
+                view.game = linkState.state.copyState();
                 view.repaint();
                 try {
                     Thread.sleep(delay);

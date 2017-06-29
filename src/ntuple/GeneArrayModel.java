@@ -62,7 +62,6 @@ public class GeneArrayModel {
             System.out.println(nDifferent + " : " + weight);
         }
 
-
         for (int i=0; i<nGenes; i++) {
             if (winner.p[i] != loser.p[i]) {
                 geneModel[i].update(winner.p[i], loser.p[i], weight);
@@ -79,6 +78,16 @@ public class GeneArrayModel {
     public void report() {
         for (int i=0; i<geneModel.length; i++) {
             System.out.println(i + "\t " + geneModel[i].toString());
+        }
+    }
+
+    public void updateModelDiff(ScoredVec svi, ScoredVec svj) {
+
+
+        for (int i=0; i<nGenes; i++) {
+            if (svi.p[i] != svj.p[i]) {
+                geneModel[i].updateDiff(svi.p[i], svj.p[i], svi.score - svj.score);
+            }
         }
     }
 }

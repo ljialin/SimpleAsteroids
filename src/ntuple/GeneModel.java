@@ -85,6 +85,16 @@ public class GeneModel {
 
     }
 
+    public void updateDiff(int x, int y, double diff) {
+//        nWins[winner] += weight;
+//        count[winner] += weight;
+//        count[loser]  += weight;
+
+        p[x] += diff/K;
+        p[y] -= diff/K;
+
+    }
+
     public int argmax() {
         Picker<Integer> picker = new Picker<>(Picker.MAX_FIRST);
         for (int i=0; i<nValues; i++) {
