@@ -26,7 +26,7 @@ public class BattleView extends JComponent {
     static int offset = 0;
     int scale;
     // static int carSize = 5;
-    SimpleBattleState game;
+    public SimpleBattleState game;
 
     public EvoAlg evoAlg;
 
