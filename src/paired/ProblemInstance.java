@@ -18,15 +18,16 @@ public class ProblemInstance {
     // create a list to store the scored vectors in
     List<ScoredVec> scoredVecs;
 
-    // make k random vectors
-    int k = 10;
-
     // each n-dimensional
     int n = 10;
 
     // each dimension having m possible values
     // popular value for m is 2
     int m = 2;
+
+    // make k random vectors
+    int k = 10;
+
 
     // when evaluation add gaussian noise with this standard deviation
     double noise = 1.0;
@@ -39,18 +40,12 @@ public class ProblemInstance {
     public ProblemInstance() {
     }
 
-    public ProblemInstance(int k, int n, int m, NoisySolutionEvaluator evaluator) {
-        this.k = k;
+    public ProblemInstance(int n, int m, int k, NoisySolutionEvaluator evaluator) {
         this.n = n;
         this.m = m;
+        this.k = k;
         this.evaluator = evaluator;
         // getVecs();
-    }
-
-    public ProblemInstance(int k, int n, int m) {
-        this.k = k;
-        this.n = n;
-        this.m = m;
     }
 
     public ProblemInstance useVecsAroundRandomPoint() {

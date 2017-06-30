@@ -34,13 +34,19 @@ public class PowerOfDifferencePairsTest {
         ScoredVectorLearner diffLearner = new PairedDifferenceLearner();
         ScoredVectorLearner[] learners = new ScoredVectorLearner[]{meanLearner, diffLearner};
 
-        List<ProblemInstance> problems = new ArrayList<>();
-        int nTrials = 10;
+        int nTrials = 30;
         int n=100, m = 2;
         double noise = 1.0;
         NoisySolutionEvaluator evaluator = new EvalMaxM(n,m, noise);
 
-        int k = 30;
+        int k = 500;
+
+        List<StatSummary> stats = new ArrayList<>();
+
+        for (ScoredVectorLearner learner : learners) {
+            stats.add(new StatSummary(learner.getClass().getSimpleName()));
+        }
+
         LineChart lineChart = new LineChart();
         for (int i=0; i<nTrials; i++) {
             // ProblemInstance problem = new ProblemInstance(n, m, k, evaluator).useRandomVecs();
@@ -53,6 +59,7 @@ public class PowerOfDifferencePairsTest {
                 int[] p = learner.learn(problem.scoredVecs, problem.evaluator);
                 // System.out.println(Arrays.toString(p));
                 System.out.println("True fitness is: " + evaluator.trueFitness(p));
+                stats.get(ix).add(evaluator.trueFitness(p));
 
                 System.out.println();
                 // now show evolution of fitness
@@ -62,8 +69,11 @@ public class PowerOfDifferencePairsTest {
                 Color color = ix++ % 2 == 0 ? Color.red : Color.blue;
                 LinePlot linePlot = new LinePlot().setData(learner.getFitness()).setColor(color);
                 lineChart.addLine(linePlot);
+
+                System.out.println(learner.getFitness().length);
             }
         }
         new JEasyFrame(lineChart,"Fitness v. vectors processes");
+        for (StatSummary ss : stats) System.out.println(ss);
     }
 }

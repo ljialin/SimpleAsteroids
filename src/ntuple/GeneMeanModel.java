@@ -1,6 +1,7 @@
 package ntuple;
 
 import utilities.Picker;
+import utilities.RangeMapper;
 import utilities.StatSummary;
 
 import java.util.Random;
@@ -40,7 +41,7 @@ public class GeneMeanModel {
             // System.out.println(i + " : " + stats[i].mean());
             try {
                 double mean = stats[i].mean();
-                picker.add(stats[i].mean() + random.nextGaussian() * 1e-10, i);
+                picker.add(mean + random.nextGaussian() * 1e-10, i);
             } catch (Exception e) {
 
             }
@@ -56,10 +57,48 @@ public class GeneMeanModel {
         for (int i=0; i<nValues; i++)
             stats[i] = new StatSummary().setStrict(true);
     }
+    static double gain = 2;
+
+    public int generate() {
+        // add the numbers to ...
+        StatSummary rangeStats = new StatSummary();
+        // find the range
+        for (StatSummary ss : stats) {
+            if (ss.n() > 0) {
+                rangeStats.add(ss.mean());
+            }
+        }
+        double range = rangeStats.max() - rangeStats.min();
+
+        // having got the range we now map these values in to the new range
+        // when computing the softmax function
+        RangeMapper map = new RangeMapper(rangeStats.min(), rangeStats.max(), 0, gain);
+
+        // now put all the numbers through the map
+        double totExp = 0;
+        for (StatSummary ss : stats) {
+            if (ss.n() > 0) totExp += Math.exp(map.map(ss.mean()));
+        }
+        // now pick one
+        System.out.println("Tot exp = " + totExp);
+        double x = random.nextDouble() * totExp;
+
+        double tot = 0;
+        for (int i=0; i<nValues; i++) {
+            if (stats[i].n() > 0) {
+                tot += Math.exp(map.map(stats[i].mean()));
+                if (x <= tot) return i;
+            }
+        }
+        throw new RuntimeException("Failed to return a valid option in GenePairedModel");
+    }
 
     public void updateMean(int i, double score) {
-
         stats[i].add(score);
+    }
+
+    public void remove(int i, double score) {
+        stats[i].removeFromMean(score);
     }
 
 }

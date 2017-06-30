@@ -16,6 +16,8 @@ public class PairedDifferenceLearner implements ScoredVectorLearner {
 
     double[] fitness;
 
+    public static boolean diffUpdate = false;
+
     @Override
     public double[] getFitness() {
         return fitness;
@@ -28,18 +30,20 @@ public class PairedDifferenceLearner implements ScoredVectorLearner {
 
         GeneArrayModel geneArrayModel = new GeneArrayModel(evaluator.searchSpace());
 
-        for (int i=0; i<scoredVecs.size(); i++) {
-            for (int j=i+1; j<scoredVecs.size(); j++) {
+        for (int i = 0; i < scoredVecs.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                // System.out.println(i + " <> " + j);
                 ScoredVec svi = scoredVecs.get(i);
                 ScoredVec svj = scoredVecs.get(j);
-                geneArrayModel.updateModelDiff(svi, svj);
-
-//                if (svi.score > svj.score) {
-//                    geneArrayModel.updateModel(svi, svj);
-//                } else {
-//                    geneArrayModel.updateModel(svj, svi);
-//                }
-
+                if (diffUpdate) {
+                    geneArrayModel.updateModelDiff(svi, svj);
+                } else {
+                    if (svi.score > svj.score) {
+                        geneArrayModel.updateModel(svi, svj);
+                    } else {
+                        geneArrayModel.updateModel(svj, svi);
+                    }
+                }
             }
             fitness[i] = evaluator.trueFitness(geneArrayModel.argMax());
         }

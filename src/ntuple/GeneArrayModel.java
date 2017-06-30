@@ -1,6 +1,7 @@
 package ntuple;
 
 import evodef.SearchSpace;
+import utilities.StatSummary;
 
 /**
  * Created by simonmarklucas on 24/06/2017.
@@ -9,6 +10,7 @@ public class GeneArrayModel {
 
     int nGenes;
     GenePairedModel[] geneModel;
+    StatSummary differences;
 
     public GeneArrayModel(SearchSpace searchSpace) {
         nGenes = searchSpace.nDims();
@@ -16,6 +18,7 @@ public class GeneArrayModel {
         for (int i=0; i<nGenes; i++) {
             geneModel[i] = new GenePairedModel(searchSpace.nValues(i));
         }
+        differences = new StatSummary();
     }
 
     public int[] generate() {
@@ -69,6 +72,15 @@ public class GeneArrayModel {
         }
     }
 
+    private void updateDifferenceStats(int[] a, int[] b) {
+        int tot = 0;
+        for (int i=0; i<a.length; i++) {
+            if (a[i] != b[i]) tot++;
+        }
+        differences.add(tot);
+
+    }
+
     public void resetStats() {
         for (GenePairedModel gene : geneModel) {
             gene.resetStats();
@@ -79,6 +91,7 @@ public class GeneArrayModel {
         for (int i=0; i<geneModel.length; i++) {
             System.out.println(i + "\t " + geneModel[i].toString());
         }
+        System.out.println(differences);
     }
 
     public void updateModelDiff(ScoredVec svi, ScoredVec svj) {
@@ -87,6 +100,7 @@ public class GeneArrayModel {
                 geneModel[i].updateDiff(svi.p[i], svj.p[i], svi.score - svj.score);
             }
         }
+        updateDifferenceStats(svi.p, svj.p);
     }
 
     public void updateModelMean(ScoredVec sv) {
