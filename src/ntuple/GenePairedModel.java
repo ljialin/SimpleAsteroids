@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Created by simonmarklucas on 24/06/2017.
  */
-public class GeneModel {
+public class GenePairedModel {
 
     static Random random = new Random();
 
@@ -21,7 +21,7 @@ public class GeneModel {
     double[] p;
     static int init = 100;
 
-    public GeneModel(int nValues) {
+    public GenePairedModel(int nValues) {
         this.nValues = nValues;
         nWins = new double[nValues];
         count = new double[nValues];
@@ -71,7 +71,7 @@ public class GeneModel {
             tot += p[i];
             if (x <= tot) return i;
         }
-        throw new RuntimeException("Failed to return a valid option in GeneModel");
+        throw new RuntimeException("Failed to return a valid option in GenePairedModel");
         // return nValues-1;
     }
 
@@ -112,5 +112,9 @@ public class GeneModel {
             count[i] = init;
             p[i] = 1.0 / nValues;
         }
+    }
+
+    public void updateMean(int i, double score) {
+
     }
 }
