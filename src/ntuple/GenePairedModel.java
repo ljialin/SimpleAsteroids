@@ -65,6 +65,7 @@ public class GenePairedModel {
 //            picker.add(randScore, i);
 //        }
 
+        // this only works because the total will always sum to 1.0
         double x = random.nextDouble();
         double tot = 0;
         for (int i=0; i<nValues; i++) {
@@ -114,7 +115,7 @@ public class GenePairedModel {
         }
     }
 
-    public void updateMean(int i, double score) {
-
-    }
+//    public void updateMean(int i, double score) {
+//
+//    }
 }
