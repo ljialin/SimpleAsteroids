@@ -8,13 +8,13 @@ import evodef.SearchSpace;
 public class GeneArrayModel {
 
     int nGenes;
-    GeneModel[] geneModel;
+    GenePairedModel[] geneModel;
 
     public GeneArrayModel(SearchSpace searchSpace) {
         nGenes = searchSpace.nDims();
-        geneModel = new GeneModel[nGenes];
+        geneModel = new GenePairedModel[nGenes];
         for (int i=0; i<nGenes; i++) {
-            geneModel[i] = new GeneModel(searchSpace.nValues(i));
+            geneModel[i] = new GenePairedModel(searchSpace.nValues(i));
         }
     }
 
@@ -70,7 +70,7 @@ public class GeneArrayModel {
     }
 
     public void resetStats() {
-        for (GeneModel gene : geneModel) {
+        for (GenePairedModel gene : geneModel) {
             gene.resetStats();
         }
     }
@@ -82,12 +82,16 @@ public class GeneArrayModel {
     }
 
     public void updateModelDiff(ScoredVec svi, ScoredVec svj) {
-
-
         for (int i=0; i<nGenes; i++) {
             if (svi.p[i] != svj.p[i]) {
                 geneModel[i].updateDiff(svi.p[i], svj.p[i], svi.score - svj.score);
             }
+        }
+    }
+
+    public void updateModelMean(ScoredVec sv) {
+        for (int i=0; i<nGenes; i++) {
+            geneModel[i].updateMean( sv.p[i], sv.score );
         }
     }
 }
