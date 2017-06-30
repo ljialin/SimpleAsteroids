@@ -37,16 +37,24 @@ public class GeneMeanModel {
         Picker<Integer> picker = new Picker<>(Picker.MAX_FIRST);
         for (int i=0; i<nValues; i++) {
             // add small noise to dither
-            picker.add(stats[i].mean() + random.nextGaussian() * 1e-10, i);
+            // System.out.println(i + " : " + stats[i].mean());
+            try {
+                double mean = stats[i].mean();
+                picker.add(stats[i].mean() + random.nextGaussian() * 1e-10, i);
+            } catch (Exception e) {
+
+            }
         }
         return picker.getBest();
     }
 
     public void resetStats() {
         // give each one a 50% chance of being on
+        // set each StatSummary as strict to avoid incorrect use of mean value
+        // a StatSummary with no numbers does not have a mean
         stats = new StatSummary[nValues];
         for (int i=0; i<nValues; i++)
-            stats[i] = new StatSummary();
+            stats[i] = new StatSummary().setStrict(true);
     }
 
     public void updateMean(int i, double score) {

@@ -43,7 +43,7 @@ public class PairedDifferenceLearner implements ScoredVectorLearner {
             }
             fitness[i] = evaluator.trueFitness(geneArrayModel.argMax());
         }
-        geneArrayModel.report();
+        // geneArrayModel.report();
         return geneArrayModel.argMax();
     }
 }

@@ -29,6 +29,9 @@ public class StatSummary {
     private double mean;
     private double sd;
 
+
+    private boolean strict = false;
+
     // trick class loader into loading this now
     // private static StatisticalTests dummy = new StatisticalTests();
 
@@ -55,6 +58,11 @@ public class StatSummary {
         valid = false;
     }
 
+    public StatSummary setStrict(boolean strict) {
+        this.strict = strict;
+        return this;
+    }
+
     public final void reset() {
         n = 0;
         sum = 0;
@@ -67,15 +75,19 @@ public class StatSummary {
     }
 
 
+    static String strictMessage = "No values in summary";
     public double max() {
+        if (strict && n < 1) throw new RuntimeException(strictMessage);
         return max;
     }
 
     public double min() {
+        if (strict && n < 1) throw new RuntimeException(strictMessage);
         return min;
     }
 
     public double mean() {
+        if (strict && n < 1) throw new RuntimeException(strictMessage);
         if (!valid)
             computeStats();
         return mean;
@@ -105,6 +117,7 @@ public class StatSummary {
     }
 
     public double sd() {
+        if (strict && n < 2) throw new RuntimeException(strictMessage);
         if (!valid)
             computeStats();
         return sd;

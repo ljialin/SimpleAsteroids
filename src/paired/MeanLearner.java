@@ -43,41 +43,12 @@ public class MeanLearner implements ScoredVectorLearner {
                 models[i].updateMean(sv.p[i], sv.score);
             }
             int[] p = argmax(models);
-            System.out.println(Arrays.toString(p));
+            // System.out.println(Arrays.toString(p));
             fitness[ix++] = evaluator.trueFitness(p);
         }
         // now return the argmax array
         return argmax(models);
     }
-
-//    @Override
-//    public int[] learn(List<ScoredVec> scoredVecs, NoisySolutionEvaluator evaluator) {
-//        int n = evaluator.searchSpace().nDims();
-//        fitness = new double[scoredVecs.size()];
-//
-//        StatSummary[][] means = new StatSummary[n][];
-//        for (int i=0; i<means.length; i++) {
-//            means[i] = new StatSummary[evaluator.searchSpace().nValues(i)];
-//            for (int j=0; j<means[i].length; j++) {
-//                means[i][j] = new StatSummary();
-//            }
-//        }
-//        int ix = 0;
-//
-//        for (ScoredVec sv : scoredVecs) {
-//            // update it here
-//            for (int i=0; i<n; i++) {
-//                means[i][sv.p[i]].add(sv.score);
-//            }
-//            System.out.println(Arrays.toString(argmax(means, n)));
-//            fitness[ix++] = evaluator.trueFitness(argmax(means, n));
-//        }
-//        // now return the argmax array
-//        return argmax(means, n);
-//    }
-
-    
-    // hah! watch out for NaN problem with StatSummary
 
     static int[] argmax(GeneMeanModel[] models) {
         int[] argMax = new int[models.length];
@@ -88,26 +59,5 @@ public class MeanLearner implements ScoredVectorLearner {
         }
         return argMax;
     }
-
-//    static int[] argmax(StatSummary[][] means, int n) {
-//        int[] argMax = new int[n];
-//
-//        for (int i=0; i<n; i++) {
-//            argMax[i] = argmax(means[i]);
-//        }
-//
-//        return argMax;
-//    }
-//
-//    static double epsilon = 1e2;
-//    static Random random = new Random();
-//
-//    static int argmax(StatSummary[] stats) {
-//        Picker<Integer> picker = new Picker<>(Picker.MAX_FIRST);
-//        for (int i=0; i<stats.length; i++) {
-//            picker.add(stats[i].mean() + epsilon * random.nextGaussian(), i);
-//        }
-//        return picker.getBest();
-//    }
 
 }
