@@ -26,7 +26,6 @@ public class CompactSlidingModelGA implements EvoAlg {
         System.out.println(evaluator.trueFitness(p));
 
 
-
     }
 
     public int historyLength = 50;
@@ -55,6 +54,7 @@ public class CompactSlidingModelGA implements EvoAlg {
     SolutionEvaluator evaluator;
 
     GeneArrayModel geneArrayModel;
+    static Integer timeLimit = 30;
 
     static Random random = new Random();
 
@@ -81,7 +81,11 @@ public class CompactSlidingModelGA implements EvoAlg {
         geneArrayModel = new GeneArrayModel(searchSpace);
 
         int nSteps = 0;
-        while (evaluator.nEvals() < nEvals) {
+        Long endTime = null;
+        if (timeLimit != null) {
+            endTime = timeLimit + System.currentTimeMillis();
+        }
+        while (evaluator.nEvals() < nEvals && (endTime == null || System.currentTimeMillis() < endTime)) {
 
             // each time around the loop we make one fitness evaluation of p
             // and add this NEW information to the memory
@@ -126,7 +130,7 @@ public class CompactSlidingModelGA implements EvoAlg {
             nSteps++;
 
             int diffEvals = evaluator.nEvals() - prevEvals;
-            for (int i=0; i<diffEvals; i++) {
+            for (int i = 0; i < diffEvals; i++) {
                 evaluator.logger().logBestYest(geneArrayModel.argMax());
             }
 
@@ -143,7 +147,7 @@ public class CompactSlidingModelGA implements EvoAlg {
 //            }
         }
 
-            // now draw each x and y vec according to pVec
+        // now draw each x and y vec according to pVec
 
         // indeed, what to return
 
@@ -180,9 +184,10 @@ public class CompactSlidingModelGA implements EvoAlg {
         nSamples = samplingRate;
     }
 
+
     static StatSummary fitness(SolutionEvaluator evaluator, int[] sol, int nSamples) {
         StatSummary ss = new StatSummary();
-        for (int i=0; i<nSamples; i++) {
+        for (int i = 0; i < nSamples; i++) {
             double fitness = evaluator.evaluate(sol);
             ss.add(fitness);
 

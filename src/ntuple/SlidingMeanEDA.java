@@ -13,16 +13,16 @@ import java.util.Random;
  */
 
 
-public class SlidingMeanModelGA implements EvoAlg {
+public class SlidingMeanEDA implements EvoAlg {
 
     public static void main(String[] args) {
 
-        SlidingMeanModelGA smmga = new SlidingMeanModelGA().setHistoryLength(20);
+        SlidingMeanEDA smeda = new SlidingMeanEDA().setHistoryLength(20);
 
         NoisySolutionEvaluator evaluator = new EvalMaxM(100, 2, 0);
-        smmga.verbose = true;
+        smeda.verbose = true;
 
-        int[] p = smmga.runTrial(evaluator, 1000);
+        int[] p = smeda.runTrial(evaluator, 1000);
 
         System.out.println(Arrays.toString(p));
         System.out.println(evaluator.trueFitness(p));
@@ -36,6 +36,8 @@ public class SlidingMeanModelGA implements EvoAlg {
 
     boolean verbose = false;
 
+    // this for GVGAI
+    static Integer timeLimit = 30;
 
     @Override
     public void setInitialSeed(int[] seed) {
@@ -48,7 +50,7 @@ public class SlidingMeanModelGA implements EvoAlg {
 
     static Random random = new Random();
 
-    public SlidingMeanModelGA setHistoryLength(int historyLength) {
+    public SlidingMeanEDA setHistoryLength(int historyLength) {
         this.historyLength = historyLength;
         return this;
     }
@@ -65,8 +67,11 @@ public class SlidingMeanModelGA implements EvoAlg {
         geneArrayModel = new GeneArrayMeanModel(searchSpace);
 
         int nSteps = 0;
-        while (evaluator.nEvals() < nEvals) {
-
+        Long endTime = null;
+        if (timeLimit != null) {
+            endTime = timeLimit + System.currentTimeMillis();
+        }
+        while (evaluator.nEvals() < nEvals && (endTime == null || System.currentTimeMillis() < endTime)) {
 
             int prevEvals = evaluator.nEvals();
 
@@ -122,7 +127,7 @@ public class SlidingMeanModelGA implements EvoAlg {
         // logger.
         evaluator.logger().keepBest(solution, evaluator.evaluate(solution));
 
-        // System.out.println("Total evaluations made in compact: " + evaluator.nEvals());
+        System.out.println("Total evaluations made in sliding: " + evaluator.nEvals());
         // geneArrayModel.report();
 
         return solution;

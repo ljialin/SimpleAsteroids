@@ -18,7 +18,7 @@ public class GameActionSpaceAdapter implements FitnessSpace {
     public static boolean useDiscountFactor = true;
     public static boolean useHeuristic = true;
     static Random random = new Random();
-    static double noiseLevel = 0;
+    static double noiseLevel = 0.01;
 
     public int numActions;
     public Types.ACTIONS[] gvgaiActions;

@@ -1,7 +1,6 @@
 package evodef;
 
 import evogame.Mutator;
-import ga.SimpleRMHC;
 import ntuple.*;
 import utilities.*;
 
@@ -11,7 +10,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 /**
@@ -102,7 +100,7 @@ public class TestEASimple {
 
             // lineColor = Color.getHSBColor(0.3f, 1, 1);
             lineColor = Color.blue;
-            testEvoAlg(new SlidingMeanModelGA().setHistoryLength(w));
+            testEvoAlg(new SlidingMeanEDA().setHistoryLength(w));
 
             // testBanditEA();
             System.out.println(t);

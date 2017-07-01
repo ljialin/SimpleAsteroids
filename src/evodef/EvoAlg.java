@@ -16,5 +16,7 @@ public interface EvoAlg {
     EvolutionLogger getLogger();
     void setSamplingRate(int samplingRate);
 
+    // EvoAlg setTimeLimit(int ms);
+
 }
 

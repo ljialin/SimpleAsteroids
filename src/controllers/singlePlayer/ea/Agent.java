@@ -5,6 +5,7 @@ import core.player.AbstractPlayer;
 import evodef.EvoAlg;
 import evodef.GameActionSpaceAdapter;
 import evodef.SearchSpaceUtil;
+import ntuple.CompactSlidingModelGA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 
@@ -19,10 +20,10 @@ import java.util.Arrays;
 public class Agent extends AbstractPlayer {
 
     public static int MCTS_ITERATIONS = 100;
-    public static double REWARD_DISCOUNT = 1.00;
+    public static double REWARD_DISCOUNT = 0.99;
     public int num_actions;
     public Types.ACTIONS[] actions;
-    public static int SEQUENCE_LENGTH = 25;
+    public static int SEQUENCE_LENGTH = 15;
 
     int nEvals;
 
@@ -34,21 +35,20 @@ public class Agent extends AbstractPlayer {
 
     /**
      * Public constructor with state observation and time due.
-     * @param so state observation of the current game.
+     *
+     * @param so           state observation of the current game.
      * @param elapsedTimer Timer for the controller creation.
      */
-    public Agent(StateObservation so, ElapsedCpuTimer elapsedTimer, EvoAlg evoAlg, int nEvals)
-    {
+    public Agent(StateObservation so, ElapsedCpuTimer elapsedTimer, EvoAlg evoAlg, int nEvals) {
         //Get the actions in a static array.
         ArrayList<Types.ACTIONS> act = so.getAvailableActions();
         actions = new Types.ACTIONS[act.size()];
-        for(int i = 0; i < actions.length; ++i)
-        {
+        for (int i = 0; i < actions.length; ++i) {
             actions[i] = act.get(i);
         }
         num_actions = actions.length;
 
-        System.out.println("RHEA: " + Arrays.toString(actions));
+        System.out.println("Sliding window EA: " + Arrays.toString(actions) + evoAlg.getClass().getSimpleName());
 
         //Create the player.
 
@@ -57,10 +57,16 @@ public class Agent extends AbstractPlayer {
         index = 0;
     }
 
+    public Agent(StateObservation so, ElapsedCpuTimer elapsedTimer) {
+        // this(so, elapsedTimer, new SlidingMeanEDA().setHistoryLength(20), 500);
+        this(so, elapsedTimer, new CompactSlidingModelGA().setHistoryLength(20), 500);
+    }
+
 
     /**
      * Picks an action. This function is called every game step to request an
      * action from the player.
+     *
      * @param stateObs Observation of the current state.
      * @param elapsedTimer Timer when the action returned is due.
      * @return An action for the current state
@@ -81,8 +87,10 @@ public class Agent extends AbstractPlayer {
         // we'll set up a game adapter and run the algorithm independently each
         // time at least to being with
 
+        // ElapsedTimer timer = new ElapsedTimer();
+
         int action;
-            GameActionSpaceAdapter game = new GameActionSpaceAdapter(stateObs, SEQUENCE_LENGTH);
+        GameActionSpaceAdapter game = new GameActionSpaceAdapter(stateObs, SEQUENCE_LENGTH);
 
         if (solution != null) {
             solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, game);
@@ -101,6 +109,7 @@ public class Agent extends AbstractPlayer {
         index = 1;
 
         //... and return it.
+        // System.out.println(timer);
         return actions[action];
     }
 

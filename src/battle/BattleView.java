@@ -49,10 +49,14 @@ public class BattleView extends JComponent {
     }
 
     public void setRolls(int i, EvoAlg evoAlg) {
-        ArrayList<int[]> solutions = evoAlg.getLogger().solutions;
-        rolls[i] = new int[solutions.size()][];
-        for (int j=0; j<solutions.size(); j++) {
-            rolls[i][j] = solutions.get(j);
+        try {
+            ArrayList<int[]> solutions = evoAlg.getLogger().solutions;
+            rolls[i] = new int[solutions.size()][];
+            for (int j = 0; j < solutions.size(); j++) {
+                rolls[i][j] = solutions.get(j);
+            }
+        } catch (Exception e) {
+
         }
     }
 

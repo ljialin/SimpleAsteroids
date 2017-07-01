@@ -1,21 +1,15 @@
 package gvglink;
 
-import asteroids.Controller;
 import battle.BattleGameParameters;
 import battle.BattleView;
-import battle.SampleEvolvedParams;
-import controllers.singlePlayer.discountOLMCTS.SingleTreeNode;
 import core.game.StateObservationMulti;
 import core.player.AbstractMultiPlayer;
-import core.player.AbstractPlayer;
 import evodef.EvoAlg;
-import evodef.GameActionSpaceAdapter;
 import evodef.GameActionSpaceAdapterMulti;
 import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactSlidingModelGA;
 import ntuple.NTupleBanditEA;
-import ntuple.SlidingMeanModelGA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 import utilities.ElapsedTimer;
@@ -71,10 +65,11 @@ public class SpaceBattleLinkTestTwoPlayer {
 
         // can also override parameters by setting them directly as follows:
         BattleGameParameters.loss = 0.995;
+        BattleGameParameters.thrust = 2;
         SpaceBattleLinkStateTwoPlayer linkState = new SpaceBattleLinkStateTwoPlayer();
         StateObservationMulti multi = linkState;
 
-        GameActionSpaceAdapterMulti.useHeuristic = true;
+        GameActionSpaceAdapterMulti.useHeuristic = false;
 
         Mutator.totalRandomChaosMutation = false;
 
@@ -102,16 +97,16 @@ public class SpaceBattleLinkTestTwoPlayer {
         int nNeighbours = 100;
 
         int nEvals = 200;
-        // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
+        evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        // evoAlg = new CompactSlidingModelGA().setHistoryLength(20);
-        evoAlg = new SlidingMeanModelGA().setHistoryLength(40);
+        evoAlg = new CompactSlidingModelGA().setHistoryLength(20);
+        // evoAlg = new SlidingMeanEDA().setHistoryLength(40);
 
         EvoAlg evoAlg2 = new CompactSlidingModelGA().setHistoryLength(20);
 
 
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);
-        player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer2, nEvals);
+        // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer2, nEvals);
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
 
         // player1  = new controllers.multiPlayer.smlrand.Agent();
