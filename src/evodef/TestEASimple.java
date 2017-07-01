@@ -2,10 +2,7 @@ package evodef;
 
 import evogame.Mutator;
 import ga.SimpleRMHC;
-import ntuple.CompactBinaryGA;
-import ntuple.CompactSlidingGA;
-import ntuple.CompactSlidingModelGA;
-import ntuple.NTupleBanditEA;
+import ntuple.*;
 import utilities.*;
 
 import java.awt.*;
@@ -23,8 +20,8 @@ import java.util.List;
 
 public class TestEASimple {
 
-    static int nDims = 10;
-    static int mValues = 5;
+    static int nDims = 20;
+    static int mValues = 2;
 
     static int nTrialsRMHC = 10;
     // static int nTrialsNTupleBanditEA = 30;
@@ -40,7 +37,7 @@ public class TestEASimple {
     static String outputName = "data/noisefree_w10.dat";
 
     public static void main(String[] args) {
-        for (int w=50; w<=50; w=w+10) {
+        for (int w=30; w<=30; w=w+10) {
             outputName = "data/noisefree_w" + w + ".dat";
             File f = new File(outputName);
             if (f.exists() && !f.isDirectory()) {
@@ -73,10 +70,10 @@ public class TestEASimple {
 
             // Mutator.totalRandomChaosMutation = true;
 
-            int defaultK = 100;
+            int defaultK = 2000;
 
             CompactBinaryGA cga = new CompactBinaryGA(defaultK);
-            cga.nParents = 2
+            cga.nParents = 10
             ;
 
             // each time we run a test, we want to get
@@ -86,20 +83,26 @@ public class TestEASimple {
             // have an alpha less than 1 to be able to spot overlapping lines more easily
             float alpha = 0.8f;
 
-            lineColor = new Color(1f, 1f, 0, alpha);
-            testEvoAlg(new SimpleRMHC());
-//
+//            lineColor = new Color(1f, 1f, 0, alpha);
+//            testEvoAlg(new SimpleRMHC());
+
 //            lineColor = new Color(0f, 1f, 1, alpha);
 //            testEvoAlg(cga);
 //
 //            lineColor = new Color(1f, 0f, 1, alpha);
 //            testEvoAlg(new CompactSlidingGA(2000).setHistoryLength(w));
 
-            lineColor = Color.getHSBColor(0.7f, 1, 1);
-            testEvoAlg(new CompactSlidingModelGA().setHistoryLength(w));
+            // lineColor = Color.getHSBColor(0.7f, 1, 1);
+//            lineColor = Color.red;
+//            testEvoAlg(new CompactSlidingModelGA().setHistoryLength(w));
 
-            lineColor = Color.getHSBColor(0.5f, 1, 1);
-            testEvoAlg(new NTupleBanditEA());
+            // lineColor = Color.getHSBColor(0.5f, 1, 1);
+            lineColor = Color.green;
+            // testEvoAlg(new NTupleBanditEA());
+
+            // lineColor = Color.getHSBColor(0.3f, 1, 1);
+            lineColor = Color.blue;
+            testEvoAlg(new SlidingMeanModelGA().setHistoryLength(w));
 
             // testBanditEA();
             System.out.println(t);
@@ -110,11 +113,11 @@ public class TestEASimple {
 
             // add a linear plot
 
-            LinePlot linear = new LinePlot();
-            linear.setColor(Color.white);
-            for (int i = 0; i < nDims; i++)
-                linear.add(solutionEvaluator.optimalIfKnown()  * (0.5 + i / (2.0 * nDims)));
-            // lineChart.addLine(linear);
+//            LinePlot linear = new LinePlot();
+//            linear.setColor(Color.white);
+//            for (int i = 0; i < nDims; i++)
+//                linear.add(solutionEvaluator.optimalIfKnown()  * (0.5 + i / (2.0 * nDims)));
+//            lineChart.addLine(linear);
 
             new JEasyFrame(lineChart, "Evolution Traces");
         }

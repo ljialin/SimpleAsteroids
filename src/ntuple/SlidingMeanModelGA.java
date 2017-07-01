@@ -4,22 +4,28 @@ import evodef.*;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 
 /**
  * Created by simonmarklucas on 19/06/2017.
  */
+
+
 public class SlidingMeanModelGA implements EvoAlg {
 
     public static void main(String[] args) {
 
-        SlidingMeanModelGA smmga = new SlidingMeanModelGA();
+        SlidingMeanModelGA smmga = new SlidingMeanModelGA().setHistoryLength(20);
 
-        SolutionEvaluator evaluator = new EvalMaxM(20, 2, 1);
+        NoisySolutionEvaluator evaluator = new EvalMaxM(100, 2, 0);
         smmga.verbose = true;
 
-        smmga.runTrial(evaluator, 100);
+        int[] p = smmga.runTrial(evaluator, 1000);
+
+        System.out.println(Arrays.toString(p));
+        System.out.println(evaluator.trueFitness(p));
 
     }
 
@@ -27,16 +33,6 @@ public class SlidingMeanModelGA implements EvoAlg {
     ArrayList<ScoredVec> history;
 
     int nSamples = 1;
-    public static double defaultK = 2000;
-    public double K = 10;
-
-    public SlidingMeanModelGA() {
-        this(defaultK);
-    }
-
-    public SlidingMeanModelGA(double k) {
-        K = k;
-    }
 
     boolean verbose = false;
 
@@ -48,7 +44,7 @@ public class SlidingMeanModelGA implements EvoAlg {
 
     SolutionEvaluator evaluator;
 
-    GeneArrayModel geneArrayModel;
+    GeneArrayMeanModel geneArrayModel;
 
     static Random random = new Random();
 
@@ -56,12 +52,6 @@ public class SlidingMeanModelGA implements EvoAlg {
         this.historyLength = historyLength;
         return this;
     }
-
-    // worth a try but it works badly
-    static boolean resetStatsWithFullHistory = false;
-
-    // also was worth a try, but works badly
-    static double pArgMaxInjection = 0.0;
 
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {
@@ -72,15 +62,11 @@ public class SlidingMeanModelGA implements EvoAlg {
         int n = searchSpace.nDims();
 
         history = new ArrayList<>();
-        geneArrayModel = new GeneArrayModel(searchSpace);
+        geneArrayModel = new GeneArrayMeanModel(searchSpace);
 
         int nSteps = 0;
         while (evaluator.nEvals() < nEvals) {
 
-            // each time around the loop we make one fitness evaluation of p
-            // and add this NEW information to the memory
-
-            // double fitness = evaluator.evaluate(p);
 
             int prevEvals = evaluator.nEvals();
 
@@ -91,20 +77,20 @@ public class SlidingMeanModelGA implements EvoAlg {
 
             ScoredVec scoredVec = new ScoredVec(x, f);
 
-            for (ScoredVec sv : history) {
-                if (scoredVec.score > sv.score) {
-                    geneArrayModel.updateModel(scoredVec, sv);
-                } else {
-                    geneArrayModel.updateModel(sv, scoredVec);
-                }
-            }
-
             // now treat the history like a circular buffer and update it
+            // always add the ScoredVector in
 
+            geneArrayModel.updateModelMean(scoredVec);
+            // geneArrayModel.report();
             if (history.size() < historyLength) {
                 history.add(scoredVec);
+
             } else {
-                history.set(nSteps % historyLength, scoredVec);
+                // if we're replacing one in the history
+                // then remove it from our stats
+                int ix = nSteps % historyLength;
+                geneArrayModel.removeVec(history.get(ix));
+                history.set(ix, scoredVec);
             }
             nSteps++;
 
@@ -138,6 +124,7 @@ public class SlidingMeanModelGA implements EvoAlg {
 
         // System.out.println("Total evaluations made in compact: " + evaluator.nEvals());
         // geneArrayModel.report();
+
         return solution;
     }
 

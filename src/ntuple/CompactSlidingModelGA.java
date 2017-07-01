@@ -15,12 +15,17 @@ public class CompactSlidingModelGA implements EvoAlg {
 
     public static void main(String[] args) {
 
-        CompactSlidingModelGA cga = new CompactSlidingModelGA();
+        CompactSlidingModelGA cga = new CompactSlidingModelGA(20);
 
-        SolutionEvaluator evaluator = new EvalMaxM(20, 2, 1);
+        NoisySolutionEvaluator evaluator = new EvalMaxM(50, 2, 0);
         cga.verbose = true;
 
-        cga.runTrial(evaluator, 100);
+        int[] p = cga.runTrial(evaluator, 100);
+
+        System.out.println(Arrays.toString(p));
+        System.out.println(evaluator.trueFitness(p));
+
+
 
     }
 

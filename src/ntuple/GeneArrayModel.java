@@ -103,9 +103,4 @@ public class GeneArrayModel {
         updateDifferenceStats(svi.p, svj.p);
     }
 
-    public void updateModelMean(ScoredVec sv) {
-        for (int i=0; i<nGenes; i++) {
-            geneModel[i].updateMean( sv.p[i], sv.score );
-        }
-    }
 }

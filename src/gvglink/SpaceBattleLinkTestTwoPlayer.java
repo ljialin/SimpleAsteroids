@@ -15,6 +15,7 @@ import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactSlidingModelGA;
 import ntuple.NTupleBanditEA;
+import ntuple.SlidingMeanModelGA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 import utilities.ElapsedTimer;
@@ -69,7 +70,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         System.out.println(BattleGameParameters.params);
 
         // can also override parameters by setting them directly as follows:
-        // BattleGameParameters.loss = 1.1;
+        BattleGameParameters.loss = 0.995;
         SpaceBattleLinkStateTwoPlayer linkState = new SpaceBattleLinkStateTwoPlayer();
         StateObservationMulti multi = linkState;
 
@@ -103,19 +104,22 @@ public class SpaceBattleLinkTestTwoPlayer {
         int nEvals = 200;
         // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        evoAlg = new CompactSlidingModelGA().setHistoryLength(20);
-        EvoAlg evoAlg2 = new CompactSlidingModelGA().setHistoryLength(2);
+        // evoAlg = new CompactSlidingModelGA().setHistoryLength(20);
+        evoAlg = new SlidingMeanModelGA().setHistoryLength(40);
+
+        EvoAlg evoAlg2 = new CompactSlidingModelGA().setHistoryLength(20);
+
 
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);
         player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer2, nEvals);
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
-
 
         // player1  = new controllers.multiPlayer.smlrand.Agent();
 
         // EvoAlg evoAlg2 = new SimpleRMHC(2);
 
         // player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer1, nEvals);
+
 
         int thinkingTime = 50; // in milliseconds
         int delay = 10;
@@ -129,8 +133,8 @@ public class SpaceBattleLinkTestTwoPlayer {
 
         ElapsedTimer t = new ElapsedTimer();
         BattleView view = new BattleView(linkState.state.copyState());
-        if (showVisible)
-            view.evoAlg = evoAlg;
+//        if (showVisible)
+//            view.evoAlg = evoAlg;
 
 
         // set view to null to run fast with no visuals

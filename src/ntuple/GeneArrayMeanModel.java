@@ -10,7 +10,6 @@ public class GeneArrayMeanModel {
 
     int nGenes;
     GeneMeanModel[] geneModel;
-    StatSummary differences;
 
     public GeneArrayMeanModel(SearchSpace searchSpace) {
         nGenes = searchSpace.nDims();
@@ -18,7 +17,6 @@ public class GeneArrayMeanModel {
         for (int i=0; i<nGenes; i++) {
             geneModel[i] = new GeneMeanModel(searchSpace.nValues(i));
         }
-        differences = new StatSummary();
     }
 
     public int[] generate() {
@@ -39,16 +37,6 @@ public class GeneArrayMeanModel {
 
     static boolean verbose = false;
 
-
-    private void updateDifferenceStats(int[] a, int[] b) {
-        int tot = 0;
-        for (int i=0; i<a.length; i++) {
-            if (a[i] != b[i]) tot++;
-        }
-        differences.add(tot);
-
-    }
-
     public void resetStats() {
         for (GeneMeanModel gene : geneModel) {
             gene.resetStats();
@@ -59,13 +47,17 @@ public class GeneArrayMeanModel {
         for (int i=0; i<geneModel.length; i++) {
             System.out.println(i + "\t " + geneModel[i].toString());
         }
-        System.out.println(differences);
     }
 
 
     public void updateModelMean(ScoredVec sv) {
         for (int i=0; i<nGenes; i++) {
             geneModel[i].updateMean( sv.p[i], sv.score );
+        }
+    }
+    public void removeVec(ScoredVec sv) {
+        for (int i=0; i<nGenes; i++) {
+            geneModel[i].remove( sv.p[i], sv.score );
         }
     }
 }
