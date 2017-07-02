@@ -6,6 +6,7 @@ import evodef.EvoAlg;
 import evodef.GameActionSpaceAdapter;
 import evodef.SearchSpaceUtil;
 import ntuple.CompactSlidingModelGA;
+import ntuple.SlidingMeanEDA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 
@@ -58,8 +59,8 @@ public class Agent extends AbstractPlayer {
     }
 
     public Agent(StateObservation so, ElapsedCpuTimer elapsedTimer) {
-        // this(so, elapsedTimer, new SlidingMeanEDA().setHistoryLength(20), 500);
-        this(so, elapsedTimer, new CompactSlidingModelGA().setHistoryLength(20), 500);
+        this(so, elapsedTimer, new SlidingMeanEDA().setHistoryLength(20), 500);
+        // this(so, elapsedTimer, new CompactSlidingModelGA().setHistoryLength(20), 500);
     }
 
 
