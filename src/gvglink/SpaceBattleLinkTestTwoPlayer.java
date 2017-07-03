@@ -10,6 +10,7 @@ import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactSlidingModelGA;
 import ntuple.NTupleBanditEA;
+import ntuple.SlidingMeanEDA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 import utilities.ElapsedTimer;
@@ -99,8 +100,8 @@ public class SpaceBattleLinkTestTwoPlayer {
         int nEvals = 200;
         evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        evoAlg = new CompactSlidingModelGA().setHistoryLength(20);
-        // evoAlg = new SlidingMeanEDA().setHistoryLength(40);
+        // evoAlg = new CompactSlidingModelGA().setHistoryLength(20);
+        evoAlg = new SlidingMeanEDA().setHistoryLength(40);
 
         EvoAlg evoAlg2 = new CompactSlidingModelGA().setHistoryLength(20);
 

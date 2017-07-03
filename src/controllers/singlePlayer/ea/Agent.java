@@ -18,6 +18,7 @@ import java.util.Arrays;
  *
  *
  */
+
 public class Agent extends AbstractPlayer {
 
     public static int MCTS_ITERATIONS = 100;
@@ -62,7 +63,6 @@ public class Agent extends AbstractPlayer {
         this(so, elapsedTimer, new SlidingMeanEDA().setHistoryLength(20), 500);
         // this(so, elapsedTimer, new CompactSlidingModelGA().setHistoryLength(20), 500);
     }
-
 
     /**
      * Picks an action. This function is called every game step to request an
