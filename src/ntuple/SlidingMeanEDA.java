@@ -69,9 +69,12 @@ public class SlidingMeanEDA implements EvoAlg {
         int nSteps = 0;
         Long endTime = null;
         if (timeLimit != null) {
-            endTime = timeLimit + System.currentTimeMillis();
+            // endTime = timeLimit + System.currentTimeMillis();
+            endTime = timeLimit + System.nanoTime() / 1000000;
         }
-        while (evaluator.nEvals() < nEvals && (endTime == null || System.currentTimeMillis() < endTime)) {
+//        while (evaluator.nEvals() < nEvals && (endTime == null || System.currentTimeMillis() < endTime)) {
+
+        while (evaluator.nEvals() < nEvals && (endTime == null || System.nanoTime() / 1000000 < endTime)) {
 
             int prevEvals = evaluator.nEvals();
 
@@ -127,7 +130,7 @@ public class SlidingMeanEDA implements EvoAlg {
         // logger.
         evaluator.logger().keepBest(solution, evaluator.evaluate(solution));
 
-        System.out.println("Total evaluations made in sliding: " + evaluator.nEvals());
+        // System.out.println("Total evaluations made in sliding: " + evaluator.nEvals());
         // geneArrayModel.report();
 
         return solution;

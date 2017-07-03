@@ -63,7 +63,7 @@ public class SingleTreeNode
         long remaining = elapsedTimer.remainingTimeMillis();
         int numIters = 0;
 
-        int remainingLimit = 5;
+        int remainingLimit = 10;
         while(remaining > 2*avgTimeTaken && remaining > remainingLimit){
         //while(numIters < Agent.MCTS_ITERATIONS){
 

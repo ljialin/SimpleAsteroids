@@ -4,6 +4,7 @@ package gvglink;
  * Created by sml on 14/10/2016.
  */
 
+import controllers.singlePlayer.ea.Agent;
 import core.ArcadeMachine;
 import evodef.EvoAlg;
 import ntuple.SlidingMeanEDA;
@@ -97,7 +98,12 @@ public class Test
         // 2. This plays a game in a level by the controller.
 
         ArcadeMachine.runOneGame(game, level1, visuals, slidingEA, recordActionsFile, seed, 0);
+        System.out.println("\nRunning next game\n");
         ArcadeMachine.runOneGame(game, level1, visuals, sampleMCTSController, recordActionsFile, seed, 0);
+
+        System.out.println(Agent.nanoTimer);
+        System.out.println(Agent.milliTimer);
+        System.out.println(Agent.diffTimer);
 
 
         // ArcadeMachine.runOneGame(game, level1, visuals, sampleRandomController, recordActionsFile, seed, 0);

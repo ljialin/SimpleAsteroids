@@ -9,6 +9,7 @@ import ntuple.CompactSlidingModelGA;
 import ntuple.SlidingMeanEDA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
+import utilities.StatSummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,8 @@ public class Agent extends AbstractPlayer {
     int nEvals;
 
     public EvoAlg evoAlg;
+
+
 
     public static void main(String[] args) {
         System.out.println();
@@ -81,6 +84,10 @@ public class Agent extends AbstractPlayer {
 
     public static boolean useShiftBuffer = true;
 
+    public static StatSummary nanoTimer = new StatSummary("Nano time stats\n");
+    public static StatSummary milliTimer = new StatSummary("Milli time stats\n");
+    public static StatSummary diffTimer = new StatSummary("Time diff (nano - milli) stats\n");
+
     public Types.ACTIONS act(StateObservation stateObs, ElapsedCpuTimer elapsedTimer) {
 
         //Set the state observation object as the new root of the tree.
@@ -89,6 +96,10 @@ public class Agent extends AbstractPlayer {
         // time at least to being with
 
         // ElapsedTimer timer = new ElapsedTimer();
+
+        // take the milli and nano times
+        double nano = System.nanoTime();
+        double milli = System.currentTimeMillis();
 
         int action;
         GameActionSpaceAdapter game = new GameActionSpaceAdapter(stateObs, SEQUENCE_LENGTH);
@@ -111,6 +122,17 @@ public class Agent extends AbstractPlayer {
 
         //... and return it.
         // System.out.println(timer);
+
+        // for nano take the difference and convert to millis
+        nano = (System.nanoTime() - nano) / 1e6;
+        // for milli, just take the difference
+        milli = System.currentTimeMillis() - milli;
+
+        // update the summaries
+        nanoTimer.add(nano);
+        milliTimer.add(milli);
+        diffTimer.add(nano - milli);
+
         return actions[action];
     }
 
