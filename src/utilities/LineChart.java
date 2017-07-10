@@ -4,6 +4,7 @@ package utilities;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.util.List;
 
@@ -20,7 +21,22 @@ public class LineChart extends JComponent {
         lineChart.addLine(LinePlot.randomLine());
         lineChart.addLine(LinePlot.randomLine());
         new JEasyFrame( lineChart , "Line Chart Test");
+
+        lineChart.setXRange(0, 500, 6);
+        System.out.println(lineChart.xLabels);
     }
+
+    // set these up in ratios
+    // right and top do not need as much space
+    // as left and bottom due to the labelling
+    // on the latter ones
+
+    double leftMargin = 0.06;
+    double rightMargin = leftMargin / 2;
+
+    double bottomMargin = 0.1;
+    double topMargin = bottomMargin / 2;
+
 
     public LineChart() {
         this(new Dimension(600, 350));
@@ -53,6 +69,7 @@ public class LineChart extends JComponent {
         lines.add(line);
     }
 
+
     public void paintComponent(Graphics go) {
         Graphics2D g = (Graphics2D) go;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -69,8 +86,21 @@ public class LineChart extends JComponent {
         }
 
         // now plot each of the lines, as a new Path2D
-        RangeMapper xMap = new RangeMapper(0, sx.max(), 0, getWidth());
-        RangeMapper yMap = new RangeMapper(sy.min(), sy.max(), getHeight(), 0);
+        double plotLeft = getWidth() * leftMargin;
+        double plotRight = getWidth() * (1 - rightMargin);
+        double plotTop = getHeight() * (1 - topMargin);
+        double plotBottom = getHeight() * bottomMargin;
+//        RangeMapper xMap = new RangeMapper(0, sx.max(), 0, getWidth());
+//        RangeMapper yMap = new RangeMapper(sy.min(), sy.max(), getHeight(), 0);
+
+        g.setColor(Color.white);
+        double rw = getWidth() * (1 - (leftMargin + rightMargin));
+        double rh = getHeight() * (1 - (topMargin + bottomMargin));
+        g.setStroke(new BasicStroke(2));
+        g.draw(new Rectangle2D.Double(plotLeft, topMargin * getHeight(), rw, rh));
+
+        RangeMapper xMap = new RangeMapper(0, sx.max(), plotLeft, plotRight);
+        RangeMapper yMap = new RangeMapper(sy.min(), sy.max(), plotTop, plotBottom);
 
         for (LinePlot line : lines) {
 
@@ -90,11 +120,28 @@ public class LineChart extends JComponent {
             g.setColor(line.color);
             g.setStroke(new BasicStroke(3));
             g.draw(path);
-
-
         }
-
     }
+
+    List<String> xLabels;
+    StatSummary xRange;
+    public LineChart setXRange(double xMin, double xMax, int nTicks) {
+
+        xRange = new StatSummary();
+        xRange.add(xMin);
+        xRange.add(xMax);
+
+        xLabels = new ArrayList<>();
+        double step = (xMax - xMin) / (nTicks-1);
+        double x = xMin;
+        for (int i=0; i<nTicks; i++) {
+            // note. more work would be needed here to format depending on range
+            xLabels.add(String.format("%.0f", x));
+            x += step;
+        }
+        return this;
+    }
+
 
     public Dimension getPreferredSize() {
         return d;
