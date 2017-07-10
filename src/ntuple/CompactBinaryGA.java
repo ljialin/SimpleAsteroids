@@ -23,7 +23,7 @@ public class CompactBinaryGA implements EvoAlg {
     }
 
     // this decides how many vectors to generate each iteration
-    public int nParents = 8;
+    public int nParents = 2;
 
 
     int nSamples = 1;
@@ -44,6 +44,11 @@ public class CompactBinaryGA implements EvoAlg {
     @Override
     public void setInitialSeed(int[] seed) {
         // ignore this for now
+    }
+
+    public CompactBinaryGA setParents(int nParents) {
+        this.nParents = nParents;
+        return this;
     }
 
     SolutionEvaluator evaluator;

@@ -4,7 +4,8 @@ package utilities;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Path2D;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
 
 public class LineChart extends JComponent {
 
@@ -99,5 +100,11 @@ public class LineChart extends JComponent {
         return d;
     }
 
+    public LineChart addLines(List<LinePlot> linePlots) {
+
+        for (LinePlot linePlot : linePlots) addLine(linePlot);
+        return this;
+
+    }
 }
 

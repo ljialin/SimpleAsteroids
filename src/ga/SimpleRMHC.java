@@ -112,6 +112,7 @@ public class SimpleRMHC implements EvoAlg {
             }
         }
         // System.out.println("Ran for: " + evaluator.nEvals());
+        // System.out.println("Sampling rate: " + nSamples);
         return bestYet;
     }
 

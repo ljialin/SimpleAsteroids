@@ -63,7 +63,6 @@ public class ImageWriteExample extends JComponent {
         g.drawString(message, (size - stringWidth) / 2, size / 2 + stringHeight / 4);
     }
 
-
     public void paintComponent(Graphics go) {
         Graphics2D g = (Graphics2D) go;
         drawWithShadow(g);
