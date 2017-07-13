@@ -38,8 +38,13 @@ public class TestEAGraphRunTrials {
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
         SimpleRMHC rmhc5 = new SimpleRMHC(4);
 
-        CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(20);
-        CompactBinaryGA cga = new CompactBinaryGA().setParents(2);
+        int windowLength = 20;
+        CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
+        slidingGA.K = nDims * windowLength;
+
+        int nParents = 10;
+        CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
+        cga.K = nDims * nParents;
 
 
         // add them to the test list
@@ -49,8 +54,8 @@ public class TestEAGraphRunTrials {
         evos.add(cga);
 
 
-        evos.add(rmhc1);
-        evos.add(rmhc5);
+//        evos.add(rmhc1);
+//        evos.add(rmhc5);
 
         Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.pink, Color.magenta};
 
