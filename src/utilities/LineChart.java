@@ -15,6 +15,12 @@ public class LineChart extends JComponent {
     Color bg = Color.black; // new Color( 200, 200, 255 );
     ArrayList<LinePlot> lines;
 
+    // todo: add ticks for each axis
+
+    // todo: add the possibility of grid-lines to go with each tick
+
+    // todo
+
     public static void main(String[] args) {
         LineChart lineChart = new LineChart();
         double[] y = new double[101];
@@ -29,7 +35,7 @@ public class LineChart extends JComponent {
         lineChart.addLine(new LinePlot().setData(yy).setColor(Color.red));
         new JEasyFrame( lineChart , "Line Chart Test");
         lineChart.xAxis = new LineChartAxis(new double[]{0, 20, 40, 60, 80, 100});
-        // lineChart.yAxis = new LineChartAxis(new double[]{-1, 0, 1, 2, 3});
+        lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2, 3});
     }
 
     // set these up in ratios
@@ -77,6 +83,8 @@ public class LineChart extends JComponent {
     }
 
 
+    RangeMapper xMap, yMap;
+    double plotLeft, plotRight, plotTop, plotBottom;
     public void paintComponent(Graphics go) {
         Graphics2D g = (Graphics2D) go;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -107,10 +115,10 @@ public class LineChart extends JComponent {
         }
 
         // now plot each of the lines, as a new Path2D
-        double plotLeft = getWidth() * leftMargin;
-        double plotRight = getWidth() * (1 - rightMargin);
-        double plotTop = getHeight() * (1 - topMargin);
-        double plotBottom = getHeight() * bottomMargin;
+        plotLeft = getWidth() * leftMargin;
+        plotRight = getWidth() * (1 - rightMargin);
+        plotTop = getHeight() * (1 - topMargin);
+        plotBottom = getHeight() * bottomMargin;
 
 //        RangeMapper xMap = new RangeMapper(0, sx.max(), 0, getWidth());
 //        RangeMapper yMap = new RangeMapper(sy.min(), sy.max(), getHeight(), 0);
@@ -118,8 +126,8 @@ public class LineChart extends JComponent {
 //        double rw = getWidth() * (1 - (leftMargin + rightMargin));
 //        double rh = getHeight() * (1 - (topMargin + bottomMargin));
 
-        RangeMapper xMap = new RangeMapper(0, sx.max(), plotLeft, plotRight);
-        RangeMapper yMap = new RangeMapper(sy.min(), sy.max(), plotBottom, plotTop);
+        xMap = new RangeMapper(0, sx.max(), plotLeft, plotRight);
+        yMap = new RangeMapper(sy.min(), sy.max(), plotBottom, plotTop);
 
 
         double rw = plotRight - plotLeft;
@@ -152,6 +160,36 @@ public class LineChart extends JComponent {
             g.setColor(line.color);
             g.setStroke(new BasicStroke(3));
             g.draw(path);
+        }
+
+        drawGridLines(g);
+
+    }
+
+    private void drawGridLines(Graphics2D g) {
+        if (xAxis != null) {
+            // draw the xLines in
+            Path2D.Double path = new Path2D.Double();
+            for (double x : xAxis.ticks) {
+                g.setColor(new Color(100, 100, 100, 100));
+                path.moveTo(xMap.map(x), plotBottom);
+                path.lineTo(xMap.map(x), plotTop);
+
+            }
+            g.draw(path);
+
+        }
+        if (yAxis != null) {
+            // draw the yLines in
+            Path2D.Double path = new Path2D.Double();
+            for (double y : yAxis.ticks) {
+                g.setColor(new Color(100, 100, 100, 100));
+                path.moveTo(plotLeft, yMap.map(y));
+                path.lineTo(plotRight, yMap.map(y));
+
+            }
+            g.draw(path);
+
         }
     }
 
