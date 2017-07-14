@@ -7,6 +7,7 @@ import ntuple.SlidingMeanEDA;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.LineChart;
+import utilities.LinePlot;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
  * Created by simonmarklucas on 10/07/2017.
  */
 public class TestEAGraphRunTrials {
+
+    public static ArrayList<ArrayList<Double>> extras = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -40,9 +43,9 @@ public class TestEAGraphRunTrials {
 
         int windowLength = 20;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
-        slidingGA.K = nDims * windowLength;
+        slidingGA.K = nDims * windowLength / 0.5;
 
-        int nParents = 10;
+        int nParents = 2;
         CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
         cga.K = nDims * nParents;
 
@@ -62,7 +65,6 @@ public class TestEAGraphRunTrials {
         LineChart lineChart = new LineChart();
 
         for (int i=0; i<evos.size(); i++) {
-
             ElapsedTimer elapsedTimer = new ElapsedTimer();
             tester.setColor(colors[i]);
             TestEvoResults results = tester.runTrials(evos.get(i), nTrials);
@@ -71,6 +73,10 @@ public class TestEAGraphRunTrials {
             System.out.println(elapsedTimer);
             System.out.println();
             lineChart.addLines(results.linePlots);
+        }
+
+        for (ArrayList<Double> extra : extras) {
+            lineChart.addLine(new LinePlot().setColor(Color.white).setData(extra));
         }
 
         new JEasyFrame(lineChart, "Fitness Evolution");

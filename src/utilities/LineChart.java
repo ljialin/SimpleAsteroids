@@ -17,13 +17,19 @@ public class LineChart extends JComponent {
 
     public static void main(String[] args) {
         LineChart lineChart = new LineChart();
+        double[] y = new double[101];
+        double[] yy = new double[101];
+        for (int i=0; i<y.length; i++) {
+            y[i] = Math.abs(50 - i);
+            yy[i] = i;
+        }
         lineChart.addLine(LinePlot.randomLine());
         lineChart.addLine(LinePlot.randomLine());
-        lineChart.addLine(LinePlot.randomLine());
+        lineChart.addLine(new LinePlot().setData(y).setColor(Color.blue));
+        lineChart.addLine(new LinePlot().setData(yy).setColor(Color.red));
         new JEasyFrame( lineChart , "Line Chart Test");
-
-        lineChart.setXRange(0, 500, 6);
-        System.out.println(lineChart.xLabels);
+        lineChart.xAxis = new LineChartAxis(new double[]{0, 20, 40, 60, 80, 100});
+        // lineChart.yAxis = new LineChartAxis(new double[]{-1, 0, 1, 2, 3});
     }
 
     // set these up in ratios
@@ -37,6 +43,7 @@ public class LineChart extends JComponent {
     double bottomMargin = 0.1;
     double topMargin = bottomMargin / 2;
 
+    public LineChartAxis xAxis, yAxis;
 
     public LineChart() {
         this(new Dimension(600, 350));
@@ -75,14 +82,28 @@ public class LineChart extends JComponent {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Dimension size = getSize();
         g.setColor( bg );
+        g.translate(0, getHeight());
+        g.scale(1,-1);
         g.fillRect( 0, 0, size.width, size.height );
         StatSummary sx = new StatSummary(), sy = new StatSummary();
 
         // first of all find the limits of the data
-        for (LinePlot line : lines) {
-            // for sx we are only interested in the number of points on each line
-            sx.add(line.getData().size());
-            sy.add(line.sy);
+
+        if (xAxis != null) {
+            sx = xAxis.range;
+        } else {
+            for (LinePlot line : lines) {
+                // for sx we are only interested in the number of points on each line
+                sx.add(line.getData().size());
+            }
+        }
+
+        if (yAxis != null) {
+            sy = yAxis.range;
+        } else {
+            for (LinePlot line : lines) {
+                sy.add(line.sy);
+            }
         }
 
         // now plot each of the lines, as a new Path2D
@@ -90,17 +111,28 @@ public class LineChart extends JComponent {
         double plotRight = getWidth() * (1 - rightMargin);
         double plotTop = getHeight() * (1 - topMargin);
         double plotBottom = getHeight() * bottomMargin;
+
 //        RangeMapper xMap = new RangeMapper(0, sx.max(), 0, getWidth());
 //        RangeMapper yMap = new RangeMapper(sy.min(), sy.max(), getHeight(), 0);
 
-        g.setColor(Color.white);
-        double rw = getWidth() * (1 - (leftMargin + rightMargin));
-        double rh = getHeight() * (1 - (topMargin + bottomMargin));
-        g.setStroke(new BasicStroke(2));
-        g.draw(new Rectangle2D.Double(plotLeft, topMargin * getHeight(), rw, rh));
+//        double rw = getWidth() * (1 - (leftMargin + rightMargin));
+//        double rh = getHeight() * (1 - (topMargin + bottomMargin));
 
         RangeMapper xMap = new RangeMapper(0, sx.max(), plotLeft, plotRight);
-        RangeMapper yMap = new RangeMapper(sy.min(), sy.max(), plotTop, plotBottom);
+        RangeMapper yMap = new RangeMapper(sy.min(), sy.max(), plotBottom, plotTop);
+
+
+        double rw = plotRight - plotLeft;
+        double rh = plotTop - plotBottom;
+
+        Rectangle2D.Double plotRegion = new Rectangle2D.Double(plotLeft, plotBottom, rw, rh);
+        g.setColor(new Color(50, 50, 50));
+        g.fill(plotRegion);
+        g.setStroke(new BasicStroke(2));
+        g.setColor(Color.white);
+        g.draw(plotRegion);
+        System.out.println(plotRegion);
+
 
         for (LinePlot line : lines) {
 
@@ -122,26 +154,6 @@ public class LineChart extends JComponent {
             g.draw(path);
         }
     }
-
-    List<String> xLabels;
-    StatSummary xRange;
-    public LineChart setXRange(double xMin, double xMax, int nTicks) {
-
-        xRange = new StatSummary();
-        xRange.add(xMin);
-        xRange.add(xMax);
-
-        xLabels = new ArrayList<>();
-        double step = (xMax - xMin) / (nTicks-1);
-        double x = xMin;
-        for (int i=0; i<nTicks; i++) {
-            // note. more work would be needed here to format depending on range
-            xLabels.add(String.format("%.0f", x));
-            x += step;
-        }
-        return this;
-    }
-
 
     public Dimension getPreferredSize() {
         return d;

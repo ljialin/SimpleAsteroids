@@ -89,6 +89,8 @@ public class CompactSlidingGA implements EvoAlg {
             pVec[i] = 0.5;
         }
 
+        ArrayList<Double> pVecEvo = new ArrayList<>();
+
         int nSteps = 0;
         while (evaluator.nEvals() < nEvals) {
 
@@ -114,6 +116,13 @@ public class CompactSlidingGA implements EvoAlg {
                     CompactGAUtil.updatePVec(pVec, sv.p, scoredVec.p, K);
                 }
             }
+
+            // keep track of how rapidly the probabilities converge to one
+            // this only makes any sense for cases where the solution is
+            // an array of 1s.
+            double pTot = 0;
+            for (double p : pVec) pTot += p;
+            pVecEvo.add(pTot);
 
             // now treat the history like a circular buffer and update it
 
@@ -151,6 +160,7 @@ public class CompactSlidingGA implements EvoAlg {
         int[] solution = CompactGAUtil.argmax(pVec);
         // logger.
         evaluator.logger().keepBest(solution, evaluator.evaluate(solution));
+        TestEAGraphRunTrials.extras.add(pVecEvo);
 
         // System.out.println("Total evaluations made: " + evaluator.nEvals());
         // System.out.println(Arrays.toString(pVec));
