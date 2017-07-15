@@ -4,10 +4,7 @@ import ga.SimpleRMHC;
 import ntuple.CompactBinaryGA;
 import ntuple.CompactSlidingGA;
 import ntuple.SlidingMeanEDA;
-import utilities.ElapsedTimer;
-import utilities.JEasyFrame;
-import utilities.LineChart;
-import utilities.LinePlot;
+import utilities.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -63,6 +60,10 @@ public class TestEAGraphRunTrials {
         Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.pink, Color.magenta};
 
         LineChart lineChart = new LineChart();
+
+        lineChart.xAxis = new LineChartAxis(new double[]{0, 100, 200, 300, 400, 500});
+        lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
+
 
         for (int i=0; i<evos.size(); i++) {
             ElapsedTimer elapsedTimer = new ElapsedTimer();
