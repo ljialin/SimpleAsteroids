@@ -327,7 +327,10 @@ public class LineChart extends JComponent {
 
                 // label it
 
-                String yLabel = String.format("%.0f", y);
+                // need a better way to handle the ticks:
+                // may be better to specify as a string ...
+                // String yLabel = String.format("%.0f", y);
+                String yLabel = String.format("%.1f", y);
                 g.setFont(new Font("Monospaced", Font.BOLD, fontSize));
                 Rectangle2D rect = g.getFontMetrics().getStringBounds(yLabel, g);
                 // use a drawString method for now

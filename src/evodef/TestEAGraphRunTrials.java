@@ -24,13 +24,13 @@ public class TestEAGraphRunTrials {
         // create and run a test
         // showing flexibility to create multiple graphs
 
-        int nDims=100, mValues = 2;
+        int nDims=20, mValues = 2;
         double noise = 1.0;
         int nEvals = 1000;
         int nTrials = 20;
 
         NoisySolutionEvaluator solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
-        solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
+        // solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
         // solutionEvaluator = new Eval2DNonLinear(8, noise);
 
         TestEAGraph tester = new TestEAGraph(solutionEvaluator, nEvals).setColor(Color.red);
@@ -62,7 +62,6 @@ public class TestEAGraphRunTrials {
 
         evos.add(cga2);
 
-
         evos.add(rmhc1);
         evos.add(rmhc5);
 
@@ -71,7 +70,8 @@ public class TestEAGraphRunTrials {
         LineChart lineChart = new LineChart();
 
         lineChart.xAxis = new LineChartAxis(new double[]{0, 200, 400, 600, 800, 1000});
-        lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
+        // lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
+        lineChart.yAxis = new LineChartAxis(new double[]{0.0, 0.2, 0.4, 0.6, 0.8, 1.0});
 
 
         for (int i=0; i<evos.size(); i++) {
@@ -91,10 +91,10 @@ public class TestEAGraphRunTrials {
             // lineChart.addLine(new LinePlot().setColor(Color.white).setData(extra));
         }
 
-        // new JEasyFrame(lineChart, "Fitness Evolution");
+        new JEasyFrame(lineChart, "Fitness Evolution");
 
         String dir = "results/javares/sweda/";
-        String filename = "results.png";
+        String filename = "resultsPMax.png";
         lineChart.saveImage(dir, filename);
     }
 }
