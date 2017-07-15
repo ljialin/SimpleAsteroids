@@ -3,7 +3,9 @@ package evodef;
 import ga.SimpleRMHC;
 import ntuple.CompactBinaryGA;
 import ntuple.CompactSlidingGA;
-import ntuple.SlidingMeanEDA;
+import plot.LineChart;
+import plot.LineChartAxis;
+import plot.LinePlot;
 import utilities.*;
 
 import java.awt.*;
@@ -16,14 +18,15 @@ public class TestEAGraphRunTrials {
 
     public static ArrayList<ArrayList<Double>> extras = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
 
         // create and run a test
         // showing flexibility to create multiple graphs
 
         int nDims=100, mValues = 2;
         double noise = 1.0;
-        int nEvals = 500;
+        int nEvals = 1000;
         int nTrials = 20;
 
         NoisySolutionEvaluator solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
@@ -36,15 +39,15 @@ public class TestEAGraphRunTrials {
         // Set up all the algorithms to test
 
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
-        SimpleRMHC rmhc5 = new SimpleRMHC(4);
+        SimpleRMHC rmhc5 = new SimpleRMHC(3);
 
-        int windowLength = 20;
+        int windowLength = 30;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
-        slidingGA.K = nDims * windowLength / 0.5;
+        slidingGA.K = nDims * windowLength / 2;
 
         int nParents = 2;
         CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
-        cga.K = nDims * nParents;
+        cga.K = nDims * nParents * 2;
 
 
         // add them to the test list
@@ -53,15 +56,21 @@ public class TestEAGraphRunTrials {
         evos.add(slidingGA);
         evos.add(cga);
 
+        nParents = 20;
+        CompactBinaryGA cga2 = new CompactBinaryGA().setParents(nParents);
+        cga2.K = nDims * nParents * 2;
 
-//        evos.add(rmhc1);
-//        evos.add(rmhc5);
+        evos.add(cga2);
 
-        Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.pink, Color.magenta};
+
+        evos.add(rmhc1);
+        evos.add(rmhc5);
+
+        Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.pink, Color.magenta};
 
         LineChart lineChart = new LineChart();
 
-        lineChart.xAxis = new LineChartAxis(new double[]{0, 100, 200, 300, 400, 500});
+        lineChart.xAxis = new LineChartAxis(new double[]{0, 200, 400, 600, 800, 1000});
         lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
 
 
@@ -73,13 +82,19 @@ public class TestEAGraphRunTrials {
             System.out.println(results.trueOpt);
             System.out.println(elapsedTimer);
             System.out.println();
-            lineChart.addLines(results.linePlots);
+            // lineChart.addLines(results.linePlots);
+
+            lineChart.addLineGroup(results.getLineGroup().setColor(colors[i]));
         }
 
         for (ArrayList<Double> extra : extras) {
-            lineChart.addLine(new LinePlot().setColor(Color.white).setData(extra));
+            // lineChart.addLine(new LinePlot().setColor(Color.white).setData(extra));
         }
 
-        new JEasyFrame(lineChart, "Fitness Evolution");
+        // new JEasyFrame(lineChart, "Fitness Evolution");
+
+        String dir = "results/javares/sweda/";
+        String filename = "results.png";
+        lineChart.saveImage(dir, filename);
     }
 }

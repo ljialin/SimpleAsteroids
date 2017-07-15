@@ -1,9 +1,9 @@
 package evodef;
 
-import utilities.LinePlot;
+import plot.LineGroup;
+import plot.LinePlot;
 import utilities.StatSummary;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ public class TestEvoResults {
     // this class is
 
     StatSummary trueOpt;
-    List<LinePlot> linePlots;
+    public List<LinePlot> linePlots;
 
     public TestEvoResults(String name, StatSummary trueOpt, List<LinePlot> linePlots) {
         this.name = name;
@@ -26,6 +26,14 @@ public class TestEvoResults {
     public TestEvoResults(String name, StatSummary trueOpt) {
         this.name = name;
         this.trueOpt = trueOpt;
+    }
+
+    public LineGroup getLineGroup() {
+        LineGroup lineGroup = new LineGroup();
+        for (LinePlot linePlot : linePlots) {
+            lineGroup.add(linePlot.getData());
+        }
+        return lineGroup;
     }
 
 }

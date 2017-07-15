@@ -1,4 +1,6 @@
-package utilities;
+package plot;
+
+import utilities.StatSummary;
 
 import java.util.List;
 

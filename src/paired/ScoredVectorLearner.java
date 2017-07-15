@@ -2,10 +2,8 @@ package paired;
 
 import evodef.NoisySolutionEvaluator;
 import ntuple.ScoredVec;
-import utilities.LinePlot;
 
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by sml on 30/06/2017.

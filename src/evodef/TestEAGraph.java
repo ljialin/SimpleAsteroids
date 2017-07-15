@@ -1,7 +1,7 @@
 package evodef;
 
-import utilities.LineChart;
-import utilities.LinePlot;
+import plot.LineChart;
+import plot.LinePlot;
 import utilities.StatSummary;
 
 import java.awt.*;

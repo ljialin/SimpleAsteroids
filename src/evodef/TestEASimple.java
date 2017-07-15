@@ -2,6 +2,8 @@ package evodef;
 
 import evogame.Mutator;
 import ntuple.*;
+import plot.LineChart;
+import plot.LinePlot;
 import utilities.*;
 
 import java.awt.*;

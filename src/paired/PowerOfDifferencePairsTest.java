@@ -2,6 +2,8 @@ package paired;
 
 import evodef.EvalMaxM;
 import evodef.NoisySolutionEvaluator;
+import plot.LineChart;
+import plot.LinePlot;
 import utilities.*;
 
 import java.awt.*;

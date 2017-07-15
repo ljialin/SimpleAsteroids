@@ -121,7 +121,11 @@ public class CompactSlidingGA implements EvoAlg {
             // this only makes any sense for cases where the solution is
             // an array of 1s.
             double pTot = 0;
-            for (double p : pVec) pTot += p;
+            for (double p : pVec) {
+                // clamp it to be between zero and one
+                p = Math.max(0, (Math.min(1, p)));
+                pTot += p;
+            }
             pVecEvo.add(pTot);
 
             // now treat the history like a circular buffer and update it
