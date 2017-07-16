@@ -21,6 +21,7 @@ public class LineChart extends JComponent {
     Color bg = Color.black; // new Color( 200, 200, 255 );
     ArrayList<LinePlot> lines;
     ArrayList<LineGroup> lineGroups;
+    public String title;
 
     // todo: add ticks for each axis
 
@@ -55,7 +56,7 @@ public class LineChart extends JComponent {
     double rightMargin = leftMargin / 2;
 
     double bottomMargin = 0.1;
-    double topMargin = bottomMargin / 2;
+    double topMargin = bottomMargin / 1.5;
 
     public LineChartAxis xAxis, yAxis;
 
@@ -96,6 +97,11 @@ public class LineChart extends JComponent {
 
     public LineChart addLineGroup(LineGroup lineGroup) {
         lineGroups.add(lineGroup);
+        return this;
+    }
+
+    public LineChart setTitle(String title) {
+        this.title = title;
         return this;
     }
 
@@ -174,7 +180,20 @@ public class LineChart extends JComponent {
 
 
         drawTicks(g, size);
+        drawTitle(g, size);
 
+    }
+
+    private void drawTitle(Graphics2D g, Dimension size) {
+        if (title == null) return;
+        g.setFont(new Font("Monospaced", Font.BOLD, getFontSize(size)));
+        Rectangle2D rect = g.getFontMetrics().getStringBounds(title, g);
+        System.out.println("Title: " + rect);
+        // use a drawString method for now
+        int sx = (int) ((size.getWidth() - rect.getWidth()) / 2);
+        int sy = (int) (plotTop + labelGap * size.getHeight()  + rect.getCenterY() * 2 );
+        g.setColor(labelColor);
+        drawInvertedString(g, title, sx, sy);
     }
 
     private void drawLines(Graphics2D g) {
@@ -282,10 +301,14 @@ public class LineChart extends JComponent {
     Color tickColor = new Color(200, 200, 200, 200);
     Color labelColor = Color.white;
 
+    private int getFontSize(Dimension size) {
+        return (int) (2.1 * size.getHeight() * tickHeight);
+    }
+
     private void drawTicks(Graphics2D g, Dimension size) {
-        int fontSize = (int) (2 * size.getHeight() * tickHeight);
-        System.out.println("Font size: " + fontSize);
-        fontSize = 20;
+        int fontSize = getFontSize(size);
+        // System.out.println("Font size: " + fontSize);
+        // fontSize = 20;
         if (xAxis != null) {
             // draw the x ticks in
             Path2D.Double path = new Path2D.Double();

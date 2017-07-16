@@ -27,7 +27,7 @@ public class TestEAGraphRunTrials {
         int nDims=20, mValues = 2;
         double noise = 1.0;
         int nEvals = 1000;
-        int nTrials = 20;
+        int nTrials = 100;
 
         NoisySolutionEvaluator solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
         // solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
@@ -39,7 +39,7 @@ public class TestEAGraphRunTrials {
         // Set up all the algorithms to test
 
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
-        SimpleRMHC rmhc5 = new SimpleRMHC(3);
+        SimpleRMHC rmhc5 = new SimpleRMHC(15);
 
         int windowLength = 30;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
@@ -67,11 +67,11 @@ public class TestEAGraphRunTrials {
 
         Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.pink, Color.magenta};
 
-        LineChart lineChart = new LineChart();
+        LineChart lineChart = new LineChart().setTitle("Evolution of True Fitness");
 
         lineChart.xAxis = new LineChartAxis(new double[]{0, 200, 400, 600, 800, 1000});
         // lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
-        lineChart.yAxis = new LineChartAxis(new double[]{0.0, 0.2, 0.4, 0.6, 0.8, 1.0});
+        lineChart.yAxis = new LineChartAxis(new double[]{0.4, 0.6, 0.8, 1.0});
 
 
         for (int i=0; i<evos.size(); i++) {
