@@ -17,7 +17,7 @@ import java.util.List;
 public class LineChart extends JComponent {
 
     Dimension d;
-    Color fg = new Color(20, 20, 150);
+    Color fg = Color.white;
     Color bg = Color.black; // new Color( 200, 200, 255 );
     ArrayList<LinePlot> lines;
     ArrayList<LineGroup> lineGroups;
@@ -198,6 +198,41 @@ public class LineChart extends JComponent {
         drawTitle(g, size);
         drawXLabel(g, size);
         drawYLabel(g, size);
+        drawLegend(g, size);
+    }
+
+    private void drawLegend(Graphics2D g, Dimension size) {
+
+        if (lineGroups == null) return;
+
+        double plotWidth = plotRight - plotLeft;
+
+        double lineLength = plotWidth / 10;
+        g.setFont(new Font("Monospaced", Font.BOLD, getFontSize(size)));
+
+        // first draw in the lines
+
+        double gap = getFontSize(size) * 1.5;
+        double top = plotBottom + gap * (lineGroups.size() + 1);
+
+        double boxWidth = 2 * lineLength;
+        double boxHeight = gap * (lineGroups.size() + 2);
+        Rectangle2D.Double rect = new Rectangle2D.Double(plotRight - gap/2 - boxWidth, plotBottom + gap/2, boxWidth, boxHeight);
+        g.setColor(new Color(240, 240, 240, 225));
+        g.fill(rect);
+
+
+        for (LineGroup lineGroup : lineGroups) {
+            Path2D path = new Path2D.Double();
+            path.moveTo(plotRight - gap - lineLength, top);
+            path.lineTo(plotRight - gap, top);
+            top -= gap;
+            g.setColor(lineGroup.color);
+            // change this to better styles later
+            g.setStroke(new BasicStroke(2));
+            g.draw(path);
+        }
+        // Rectangle2D rect = new Rectangle2D.Double()
     }
 
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * Created by Simon Lucas on 15/07/2017.
  */
 public class LineGroup {
+    public String name;
     ArrayList<StatSummary> stats;
     public Color color = Color.white;
 
@@ -18,6 +19,11 @@ public class LineGroup {
 
     public LineGroup setColor(Color color) {
         this.color = color;
+        return this;
+    }
+
+    public LineGroup setName(String name) {
+        this.name = name;
         return this;
     }
 
