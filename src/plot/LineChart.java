@@ -52,8 +52,8 @@ public class LineChart extends JComponent {
     // as left and bottom due to the labelling
     // on the latter ones
 
-    double leftMargin = 0.06;
-    double rightMargin = leftMargin / 2;
+    double leftMargin = 0.10;
+    double rightMargin = 0.03;
 
     double bottomMargin = 0.1;
     double topMargin = bottomMargin / 1.5;
@@ -102,6 +102,18 @@ public class LineChart extends JComponent {
 
     public LineChart setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    String xLabel;
+    public LineChart setXLabel(String xLabel) {
+        this.xLabel = xLabel;
+        return this;
+    }
+
+    String yLabel;
+    public LineChart setYLabel(String yLabel) {
+        this.yLabel = yLabel;
         return this;
     }
 
@@ -180,17 +192,44 @@ public class LineChart extends JComponent {
 
 
         drawTicks(g, size);
-        drawTitle(g, size);
 
+        // ues the same fonts for all the labelling / titling
+        g.setFont(new Font("Monospaced", Font.BOLD, getFontSize(size)));
+        drawTitle(g, size);
+        drawXLabel(g, size);
+        drawYLabel(g, size);
+    }
+
+
+
+    // these label functions were done in a hurry and
+    // could be greatly simplified with some generic
+    // string placement and rotation methods
+
+    private void drawXLabel(Graphics2D g, Dimension size) {
+        if (xLabel == null) return;
+        Rectangle2D rect = g.getFontMetrics().getStringBounds(xLabel, g);
+        int sx = (int) ( xMap.map(leftMargin) + (plotRight - plotLeft - rect.getWidth()) / 2);
+        int sy = (int) (plotBottom - labelGap * size.getHeight()  + rect.getCenterY() * 2 );
+        g.setColor(labelColor);
+        drawInvertedString(g, xLabel, sx, sy);
+    }
+
+    private void drawYLabel(Graphics2D g, Dimension size) {
+        if (yLabel == null) return;
+        int sx = (int) (plotLeft * 0.4); // (xMap.map(leftMargin*8));
+        int sy = (int) (size.getHeight()/2 );
+        System.out.println("Y Label: " + sx + " : " + sy);
+        g.setColor(labelColor);
+        drawRotatedString(g, yLabel, sx, sy);
     }
 
     private void drawTitle(Graphics2D g, Dimension size) {
         if (title == null) return;
-        g.setFont(new Font("Monospaced", Font.BOLD, getFontSize(size)));
         Rectangle2D rect = g.getFontMetrics().getStringBounds(title, g);
-        System.out.println("Title: " + rect);
         // use a drawString method for now
-        int sx = (int) ((size.getWidth() - rect.getWidth()) / 2);
+        int sx = (int) ( xMap.map(leftMargin) + (plotRight - plotLeft - rect.getWidth()) / 2);
+//        int sx = (int) ((size.getWidth() - rect.getWidth()) / 2);
         int sy = (int) (plotTop + labelGap * size.getHeight()  + rect.getCenterY() * 2 );
         g.setColor(labelColor);
         drawInvertedString(g, title, sx, sy);
@@ -373,6 +412,18 @@ public class LineChart extends JComponent {
         g.scale(1, -1);
         g.drawString(s, (int) x, (int) -y);
         g.scale(1, -1);
+    }
+
+    private void drawRotatedString(Graphics2D g, String s, double x, double y) {
+        Rectangle2D rect = g.getFontMetrics().getStringBounds(yLabel, g);
+        double angle = Math.PI / 2;
+        g.translate(x,y);
+        g.scale(1, -1);
+        g.rotate(-angle);
+        g.drawString(s, (int) -rect.getWidth()/2, 0);
+        g.rotate(angle);
+        g.scale(1, -1);
+        g.translate(-x,-y);
     }
 
     public Dimension getPreferredSize() {

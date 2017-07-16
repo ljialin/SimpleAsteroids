@@ -68,6 +68,7 @@ public class TestEAGraphRunTrials {
         Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.pink, Color.magenta};
 
         LineChart lineChart = new LineChart().setTitle("Evolution of True Fitness");
+        lineChart.setXLabel("Fitness Evaluations").setYLabel("Noise-Free Fitness");
 
         lineChart.xAxis = new LineChartAxis(new double[]{0, 200, 400, 600, 800, 1000});
         // lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
