@@ -135,7 +135,7 @@ public class CompactSlidingGA implements EvoAlg {
                 }
                 pTot += p;
             }
-            pVecEvo.add(pTot);
+            pVecEvo.add(pTot/n);
 
             // now treat the history like a circular buffer and update it
 

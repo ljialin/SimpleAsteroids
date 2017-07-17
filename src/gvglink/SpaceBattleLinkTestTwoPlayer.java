@@ -25,7 +25,7 @@ import java.util.Random;
  */
 public class SpaceBattleLinkTestTwoPlayer {
 
-    public static boolean runVisible = false;
+    public static boolean runVisible = true;
     public static boolean showVisible = true;
 
     public static void main(String[] args) {
