@@ -5,6 +5,7 @@ import ntuple.CompactBinaryGA;
 import ntuple.CompactSlidingGA;
 import plot.LineChart;
 import plot.LineChartAxis;
+import plot.LineGroup;
 import plot.LinePlot;
 import utilities.*;
 
@@ -24,13 +25,13 @@ public class TestEAGraphRunTrials {
         // create and run a test
         // showing flexibility to create multiple graphs
 
-        int nDims=20, mValues = 2;
+        int nDims=100, mValues = 2;
         double noise = 1.0;
         int nEvals = 1000;
         int nTrials = 100;
 
         NoisySolutionEvaluator solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
-        // solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
+        solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
         // solutionEvaluator = new Eval2DNonLinear(8, noise);
 
         TestEAGraph tester = new TestEAGraph(solutionEvaluator, nEvals).setColor(Color.red);
@@ -43,7 +44,7 @@ public class TestEAGraphRunTrials {
 
         int windowLength = 30;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
-        slidingGA.K = nDims * windowLength / 2;
+        slidingGA.K = nDims * windowLength * 10;
 
         int nParents = 2;
         CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
@@ -71,8 +72,8 @@ public class TestEAGraphRunTrials {
         lineChart.setXLabel("Fitness Evaluations").setYLabel("Noise-Free Fitness");
 
         lineChart.xAxis = new LineChartAxis(new double[]{0, 200, 400, 600, 800, 1000});
-        // lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
-        lineChart.yAxis = new LineChartAxis(new double[]{0.4, 0.6, 0.8, 1.0});
+        lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
+        // lineChart.yAxis = new LineChartAxis(new double[]{0.4, 0.6, 0.8, 1.0});
 
 
         for (int i=0; i<evos.size(); i++) {
@@ -88,14 +89,18 @@ public class TestEAGraphRunTrials {
             lineChart.addLineGroup(results.getLineGroup().setColor(colors[i]));
         }
 
+        LineGroup pVec = new LineGroup().setName("P-Vec").setColor(Color.white);
         for (ArrayList<Double> extra : extras) {
             // lineChart.addLine(new LinePlot().setColor(Color.white).setData(extra));
+            pVec.add(extra);
         }
+        lineChart.addLineGroup(pVec);
 
         new JEasyFrame(lineChart, "Fitness Evolution");
 
         String dir = "results/javares/sweda/";
-        String filename = "resultsPMax.png";
+        // String filename = "resultsPMax.png";
+        String filename = "resultsOneMax.png";
         lineChart.saveImage(dir, filename);
     }
 }

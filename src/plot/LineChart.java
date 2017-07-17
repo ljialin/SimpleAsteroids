@@ -23,6 +23,20 @@ public class LineChart extends JComponent {
     ArrayList<LineGroup> lineGroups;
     public String title;
 
+
+    // set these up in ratios
+    // right and top do not need as much space
+    // as left and bottom due to the labelling
+    // on the latter ones
+
+    double leftMargin = 0.10;
+    double rightMargin = 0.03;
+
+    double bottomMargin = 0.1;
+    double topMargin = bottomMargin / 1.5;
+
+    public LineChartAxis xAxis, yAxis;
+
     // todo: add ticks for each axis
 
 
@@ -47,18 +61,6 @@ public class LineChart extends JComponent {
         lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2, 3});
     }
 
-    // set these up in ratios
-    // right and top do not need as much space
-    // as left and bottom due to the labelling
-    // on the latter ones
-
-    double leftMargin = 0.10;
-    double rightMargin = 0.03;
-
-    double bottomMargin = 0.1;
-    double topMargin = bottomMargin / 1.5;
-
-    public LineChartAxis xAxis, yAxis;
 
     public LineChart() {
         this(new Dimension(800, 600));
@@ -252,7 +254,7 @@ public class LineChart extends JComponent {
 
     private void drawYLabel(Graphics2D g, Dimension size) {
         if (yLabel == null) return;
-        int sx = (int) (plotLeft * 0.4); // (xMap.map(leftMargin*8));
+        int sx = (int) (plotLeft * 0.2); // (xMap.map(leftMargin*8));
         int sy = (int) (size.getHeight()/2 );
         System.out.println("Y Label: " + sx + " : " + sy);
         g.setColor(labelColor);
