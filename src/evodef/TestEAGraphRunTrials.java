@@ -40,15 +40,16 @@ public class TestEAGraphRunTrials {
         // Set up all the algorithms to test
 
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
-        SimpleRMHC rmhc5 = new SimpleRMHC(15);
+        SimpleRMHC rmhc5 = new SimpleRMHC(3);
 
         int windowLength = 30;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
-        slidingGA.K = nDims * windowLength * 10;
+        slidingGA.K = nDims * windowLength / 10;
 
         int nParents = 2;
         CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
-        cga.K = nDims * nParents * 2;
+        cga.K = nDims / 2; //  * nParents;  // setting from Jialin
+        // cga.K = nDims * nParents;
 
 
         // add them to the test list
@@ -59,7 +60,7 @@ public class TestEAGraphRunTrials {
 
         nParents = 20;
         CompactBinaryGA cga2 = new CompactBinaryGA().setParents(nParents);
-        cga2.K = nDims * nParents * 2;
+        cga2.K = nDims * nParents * 10;
 
         evos.add(cga2);
 
@@ -100,7 +101,7 @@ public class TestEAGraphRunTrials {
 
         String dir = "results/javares/sweda/";
         // String filename = "resultsPMax.png";
-        String filename = "resultsOneMax.png";
+        String filename = "resultsOneMaxPVec.png";
         lineChart.saveImage(dir, filename);
     }
 }

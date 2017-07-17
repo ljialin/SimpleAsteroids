@@ -25,12 +25,12 @@ import java.util.Random;
  */
 public class SpaceBattleLinkTestTwoPlayer {
 
-    public static boolean runVisible = true;
+    public static boolean runVisible = false;
     public static boolean showVisible = true;
 
     public static void main(String[] args) {
         StatSummary ss = new StatSummary();
-        int nTrials = 1;
+        int nTrials = 10;
         ElapsedTimer t = new ElapsedTimer();
 
         ArrayList<Double> results = new ArrayList<>();
@@ -97,13 +97,13 @@ public class SpaceBattleLinkTestTwoPlayer {
         double kExplore = 10;
         int nNeighbours = 100;
 
-        int nEvals = 200;
+        int nEvals = 500;
         evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
         // evoAlg = new CompactSlidingModelGA().setHistoryLength(20);
-        evoAlg = new SlidingMeanEDA().setHistoryLength(40);
+        evoAlg = new SlidingMeanEDA().setHistoryLength(20);
 
-        EvoAlg evoAlg2 = new CompactSlidingModelGA().setHistoryLength(20);
+        EvoAlg evoAlg2 = new CompactSlidingModelGA().setHistoryLength(2);
 
 
         player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg, idPlayer1, nEvals);

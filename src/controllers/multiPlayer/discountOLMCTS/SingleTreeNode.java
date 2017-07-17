@@ -84,7 +84,7 @@ public class SingleTreeNode
 
             nIts++;
         }
-        System.out.println("Total iterations = " + nIts);
+        // System.out.println("Total iterations = " + nIts);
     }
 
     public SingleTreeNode treePolicy(StateObservationMulti state) {

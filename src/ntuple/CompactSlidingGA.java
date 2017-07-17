@@ -41,6 +41,11 @@ public class CompactSlidingGA implements EvoAlg {
 
     }
 
+    // set this to true to just measure pVec convergence,
+    // false to measure pVec quality (convergence to one)
+    // note: this measure only makes sense for problems
+    // where the optimal solution is all ones
+    public boolean pVecConvergenceOnly = true;
     // this decides how many vectors to generate each iteration
     public int historyLength = 20;
     ArrayList<ScoredVec> history;
@@ -124,6 +129,10 @@ public class CompactSlidingGA implements EvoAlg {
             for (double p : pVec) {
                 // clamp it to be between zero and one
                 p = Math.max(0, (Math.min(1, p)));
+                // optionally just measure it's proximity to either extreme
+                if (pVecConvergenceOnly) {
+                    p = 0.5 + Math.abs(p - 0.5);
+                }
                 pTot += p;
             }
             pVecEvo.add(pTot);
