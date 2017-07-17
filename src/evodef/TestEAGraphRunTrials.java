@@ -42,14 +42,14 @@ public class TestEAGraphRunTrials {
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
         SimpleRMHC rmhc5 = new SimpleRMHC(15);
 
-        int windowLength = 3000;
+        int windowLength = 30;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
-        slidingGA.K = 5000; // nDims * windo * 2;
+        slidingGA.K = nDims * windowLength / 2;
 
         int nParents = 2;
         CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
-        cga.K = nDims / 2; //  * nParents;  // setting from Jialin
-        // cga.K = nDims * nParents;
+        // cga.K = nDims / 2; //  * nParents;  // setting from Jialin
+        cga.K = nDims * nParents;
 
 
         // add them to the test list
@@ -60,7 +60,7 @@ public class TestEAGraphRunTrials {
 
         nParents = 20;
         CompactBinaryGA cga2 = new CompactBinaryGA().setParents(nParents);
-        cga2.K = nDims * nParents * 10;
+        cga2.K = nDims * nParents * 2;
 
         evos.add(cga2);
 
@@ -88,7 +88,7 @@ public class TestEAGraphRunTrials {
             System.out.println();
             // lineChart.addLines(results.linePlots);
 
-            lineChart.addLineGroup(results.getLineGroup().setColor(colors[i]));
+            lineChart.addLineGroup(results.getLineGroup().setColor(colors[i]).setName(results.name));
         }
 
         LineGroup pVec = new LineGroup().setName("P-Vec").setColor(Color.white);

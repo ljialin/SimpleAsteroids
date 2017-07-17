@@ -41,6 +41,12 @@ public class CompactBinaryGA implements EvoAlg {
     boolean verbose = false;
 
 
+    public String toString() {
+        return String.format("MScGA: k=%d, s=%d", (int) K, nParents);
+    }
+
+
+
     @Override
     public void setInitialSeed(int[] seed) {
         // ignore this for now

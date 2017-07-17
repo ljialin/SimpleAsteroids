@@ -207,6 +207,17 @@ public class LineChart extends JComponent {
 
         if (lineGroups == null) return;
 
+        // get the string stat size stats: we need this to get the
+        // size of the bounding box to be correct
+
+        StatSummary stringLengths = new StatSummary();
+        for (LineGroup lineGroup : lineGroups) {
+            if (lineGroup.name != null) {
+                Rectangle2D stringRect = g.getFontMetrics().getStringBounds(lineGroup.name, g);
+                stringLengths.add(stringRect.getWidth());
+            }
+        }
+
         double plotWidth = plotRight - plotLeft;
 
         double lineLength = plotWidth / 10;
@@ -217,22 +228,33 @@ public class LineChart extends JComponent {
         double gap = getFontSize(size) * 1.5;
         double top = plotBottom + gap * (lineGroups.size() + 1);
 
-        double boxWidth = 2 * lineLength;
-        double boxHeight = gap * (lineGroups.size() + 2);
+        double boxWidth = stringLengths.max() + gap + lineLength;
+        double boxHeight = gap * (lineGroups.size() + 1);
         Rectangle2D.Double rect = new Rectangle2D.Double(plotRight - gap/2 - boxWidth, plotBottom + gap/2, boxWidth, boxHeight);
-        g.setColor(new Color(240, 240, 240, 225));
+        g.setColor(new Color(255, 255, 255, 230));
         g.fill(rect);
+        g.setColor(Color.black);
+        g.draw(rect);
 
 
+        top -= gap/2;
         for (LineGroup lineGroup : lineGroups) {
             Path2D path = new Path2D.Double();
-            path.moveTo(plotRight - gap - lineLength, top);
+            double xStart = plotRight - gap - lineLength;
+            path.moveTo( xStart, top);
             path.lineTo(plotRight - gap, top);
+
             top -= gap;
             g.setColor(lineGroup.color);
             // change this to better styles later
             g.setStroke(new BasicStroke(2));
             g.draw(path);
+
+            if (lineGroup.name != null) {
+                Rectangle2D stringRect = g.getFontMetrics().getStringBounds(lineGroup.name, g);
+
+                g.setColor(bg);
+                drawInvertedString(g, lineGroup.name, xStart - stringRect.getWidth() - gap/5,  top + gap/2 - stringRect.getCenterY());            }
         }
         // Rectangle2D rect = new Rectangle2D.Double()
     }

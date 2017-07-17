@@ -47,7 +47,7 @@ public class TestEAGraph {
         for (int i=0; i<nTrials; i++) {
             runTrial(ea);
         }
-        return new TestEvoResults(ea.getClass().getSimpleName(), trueFit, linePlots);
+        return new TestEvoResults(ea.toString(), trueFit, linePlots);
     }
 
     public ArrayList<Double> runTrial(EvoAlg ea) {

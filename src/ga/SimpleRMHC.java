@@ -31,6 +31,10 @@ public class SimpleRMHC implements EvoAlg {
         this.nSamples = nSamples;
     }
 
+    public String toString() {
+        return String.format("RMHC, r=%d", nSamples);
+    }
+
     public void setSamplingRate(int n) {
         this.nSamples = n;
     }

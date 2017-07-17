@@ -64,6 +64,10 @@ public class CompactSlidingGA implements EvoAlg {
 
     boolean verbose = false;
 
+    public String toString() {
+        return String.format("SWcGA: k=%d, w=%d", (int) K, historyLength);
+    }
+
 
     @Override
     public void setInitialSeed(int[] seed) {

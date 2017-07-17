@@ -10,7 +10,7 @@ import java.util.List;
  * Created by simonmarklucas on 10/07/2017.
  */
 public class TestEvoResults {
-    String name;
+    public String name;
 
     // this class is
 
