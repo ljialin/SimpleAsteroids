@@ -44,6 +44,7 @@ public class TestEAGraphRunTrials {
 
         int windowLength = 30;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
+        slidingGA.useBayesUpdates = true;
         slidingGA.K = nDims * windowLength / 2;
 
         int nParents = 2;

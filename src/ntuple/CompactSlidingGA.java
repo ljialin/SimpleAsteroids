@@ -41,6 +41,8 @@ public class CompactSlidingGA implements EvoAlg {
 
     }
 
+    public boolean useBayesUpdates = true;
+
     // set this to true to just measure pVec convergence,
     // false to measure pVec quality (convergence to one)
     // note: this measure only makes sense for problems
@@ -65,7 +67,11 @@ public class CompactSlidingGA implements EvoAlg {
     boolean verbose = false;
 
     public String toString() {
-        return String.format("SWcGA: k=%d, w=%d", (int) K, historyLength);
+        if (useBayesUpdates) {
+            return String.format("SWcGA: bayes, w=%d", (int) historyLength);
+        } else {
+            return String.format("SWcGA: k=%d, w=%d", (int) K, historyLength);
+        }
     }
 
 
@@ -76,6 +82,7 @@ public class CompactSlidingGA implements EvoAlg {
 
     SolutionEvaluator evaluator;
     double[] pVec;
+    SlidingBayes[] bayes;
 
     static Random random = new Random();
 
@@ -92,10 +99,12 @@ public class CompactSlidingGA implements EvoAlg {
 
         int n = searchSpace.nDims();
 
+        bayes = new SlidingBayes[n];
         history = new ArrayList<>();
         pVec = new double[n];
         for (int i=0; i<n; i++) {
             pVec[i] = 0.5;
+            bayes[i] = new SlidingBayes();
         }
 
         ArrayList<Double> pVecEvo = new ArrayList<>();
@@ -111,7 +120,12 @@ public class CompactSlidingGA implements EvoAlg {
             int prevEvals = evaluator.nEvals();
 
             // each time around evaluate a single new individual
-            int[] x = CompactGAUtil.randBitVec(pVec);
+            int[] x;
+            if (useBayesUpdates) {
+                x = CompactGAUtil.randBitBayes(bayes);
+            } else {
+                x = CompactGAUtil.randBitVec(pVec);
+            }
             double f = fitness(evaluator, x, nSamples).mean();
 
             ScoredVec scoredVec = new ScoredVec(x, f);
@@ -121,8 +135,10 @@ public class CompactSlidingGA implements EvoAlg {
             for (ScoredVec sv : history) {
                 if (scoredVec.score > sv.score) {
                     CompactGAUtil.updatePVec(pVec, scoredVec.p, sv.p, K);
+                    CompactGAUtil.updateBayes(bayes, scoredVec.p, sv.p);
                 } else {
                     CompactGAUtil.updatePVec(pVec, sv.p, scoredVec.p, K);
+                    CompactGAUtil.updateBayes(bayes, sv.p, scoredVec.p);
                 }
             }
 
@@ -130,8 +146,9 @@ public class CompactSlidingGA implements EvoAlg {
             // this only makes any sense for cases where the solution is
             // an array of 1s.
             double pTot = 0;
-            for (double p : pVec) {
+            for (int i=0; i<n; i++) {
                 // clamp it to be between zero and one
+                double p = useBayesUpdates ? bayes[i].pOne() : pVec[i];
                 p = Math.max(0, (Math.min(1, p)));
                 // optionally just measure it's proximity to either extreme
                 if (pVecConvergenceOnly) {
@@ -152,7 +169,11 @@ public class CompactSlidingGA implements EvoAlg {
 
             int diffEvals = evaluator.nEvals() - prevEvals;
             for (int i=0; i<diffEvals; i++) {
-                evaluator.logger().logBestYest(CompactGAUtil.argmax(pVec));
+                if (useBayesUpdates) {
+                    evaluator.logger().logBestYest(CompactGAUtil.argmax(bayes));
+                } else {
+                    evaluator.logger().logBestYest(CompactGAUtil.argmax(pVec));
+                }
             }
 
             if (verbose) {
@@ -174,7 +195,9 @@ public class CompactSlidingGA implements EvoAlg {
 
         // finally, return the argmax of each dimension
 
-        int[] solution = CompactGAUtil.argmax(pVec);
+        int[] solution = useBayesUpdates ?
+                CompactGAUtil.argmax(bayes) : CompactGAUtil.argmax(pVec);
+
         // logger.
         evaluator.logger().keepBest(solution, evaluator.evaluate(solution));
         TestEAGraphRunTrials.extras.add(pVecEvo);

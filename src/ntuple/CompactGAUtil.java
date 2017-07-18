@@ -12,12 +12,31 @@ public class CompactGAUtil {
     static Random random = new Random();
 
     public static void updatePVec(double[] pVec, int [] winner, int[] loser, double K) {
+
+        // for now also splice in the Bayes update
+        // can then also compare them
         for (int i=0; i<pVec.length; i++) {
             if (winner[i] != loser[i]) {
                 if (winner[i] == 1) {
                     pVec[i] += 1/K;
                 } else {
                     pVec[i] -= 1/K;
+                }
+            }
+        }
+    }
+
+    public static void updateBayes(SlidingBayes[] bayes, int [] winner, int[] loser) {
+
+        // for now also splice in the Bayes update
+        // can then also compare them
+        for (int i=0; i<bayes.length; i++) {
+            if (winner[i] != loser[i]) {
+                if (winner[i] == 1) {
+                    bayes[i].add(1);
+                } else {
+                    bayes[i].add(0);
+                    // pVec[i] -= 1/K;
                 }
             }
         }
@@ -34,10 +53,26 @@ public class CompactGAUtil {
         return x;
     }
 
+    public static int[] argmax(SlidingBayes[] bayes) {
+        int[] x = new int[bayes.length];
+        for (int i=0; i<x.length; i++) {
+            x[i] =  bayes[i].argmax();
+        }
+        return x;
+    }
+
     public static int[] randBitVec(double[] pVec) {
         int[] x = new int[pVec.length];
         for (int i=0; i<x.length; i++) {
             x[i] = random.nextDouble() < pVec[i] ? 1 : 0;
+        }
+        return x;
+    }
+
+    public static int[] randBitBayes(SlidingBayes[] bayes) {
+        int[] x = new int[bayes.length];
+        for (int i=0; i<x.length; i++) {
+            x[i] = random.nextDouble() < bayes[i].pOne() ? 1 : 0;
         }
         return x;
     }

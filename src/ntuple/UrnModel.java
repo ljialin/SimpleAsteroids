@@ -16,8 +16,8 @@ public class UrnModel {
         //System.out.println(t);
         // System.exit(0);
 
-        int nBalls = 50;
-        int nPicks = 30;
+        int nBalls = 30;
+        int nPicks = 1;
 
 
         UrnModel ut = new UrnModel(nBalls, nPicks);
@@ -43,6 +43,7 @@ public class UrnModel {
         // ut.printWinProbs();
 
         ut.printWinRates();
+
 //
 //        System.out.println("Calculated Urn posteriors");
 //        System.out.println(t);
@@ -125,14 +126,11 @@ public class UrnModel {
         for (int n = 0; n < nPicks + 1; n++) {
             double tot = 0;
             for (int u = 0; u < nUrns; u++) {
-
                 tot += pa[n][u];
             }
             for (int u = 0; u < nUrns; u++) {
-
                 pa[n][u] /= tot;
             }
-
         }
     }
 
