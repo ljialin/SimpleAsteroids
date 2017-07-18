@@ -169,7 +169,9 @@ public class LineChart extends JComponent {
 //        double rw = getWidth() * (1 - (leftMargin + rightMargin));
 //        double rh = getHeight() * (1 - (topMargin + bottomMargin));
 
-        xMap = new RangeMapper(0, sx.max(), plotLeft, plotRight);
+        System.out.println("SX: " + sx);
+
+        xMap = new RangeMapper(sx.min(), sx.max(), plotLeft, plotRight);
         yMap = new RangeMapper(sy.min(), sy.max(), plotBottom, plotTop);
 
 
@@ -187,6 +189,7 @@ public class LineChart extends JComponent {
 
         drawLines(g);
         drawLineGroups(g);
+        drawScatterData(g);
 
         // they will only be drawn in ticks have been set
         if (gridLines)
@@ -320,6 +323,36 @@ public class LineChart extends JComponent {
 
     public double stdErrs = 2.0;
 
+    int rad = 5;
+    int pointFontSize = 10;
+    private void drawScatterData(Graphics2D g) {
+        if (scatterPlot == null) return;
+
+        // otherwise go ahead ...
+        g.setFont(new Font("Monospaced", Font.BOLD, pointFontSize));
+
+
+
+        // draw in two stages with solid font and transparent points
+        for (DataPoint point : scatterPlot.points) {
+            int x = (int) xMap.map(point.x);
+            int y = (int) yMap.map(point.y);
+            if (point.name != null) {
+                g.setColor(Color.white);
+                this.drawInvertedString(g, point.name, x + rad, y);
+            }
+        }
+        for (DataPoint point : scatterPlot.points) {
+            int x = (int) xMap.map(point.x);
+            int y = (int) yMap.map(point.y);
+            g.setColor(new Color(255, 255, 255, 200));
+            if (point.color != null) {
+                g.setColor(point.color);
+            }
+            g.fillOval(x-rad, y-rad, 2*rad, 2*rad);
+        }
+    }
+
     private void drawLineGroups(Graphics2D g) {
         for (LineGroup lineGroup : lineGroups) {
 
@@ -372,6 +405,7 @@ public class LineChart extends JComponent {
             // draw the xLines in
             Path2D.Double path = new Path2D.Double();
             for (double x : xAxis.ticks) {
+                System.out.println(x);
                 g.setColor(new Color(100, 100, 100, 100));
                 path.moveTo(xMap.map(x), plotBottom);
                 path.lineTo(xMap.map(x), plotTop);
@@ -494,6 +528,12 @@ public class LineChart extends JComponent {
         for (LinePlot linePlot : linePlots) addLine(linePlot);
         return this;
 
+    }
+
+    ScatterPlot scatterPlot;
+    public LineChart setScatterPlot(ScatterPlot scatterPlot) {
+        this.scatterPlot = scatterPlot;
+        return this;
     }
 
     public LineChart saveImage(String dir, String fileName) throws Exception {
