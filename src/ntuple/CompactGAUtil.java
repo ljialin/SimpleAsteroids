@@ -42,6 +42,22 @@ public class CompactGAUtil {
         }
     }
 
+    public static void removeBayes(SlidingBayes[] bayes, int [] winner, int[] loser) {
+
+        // for now also splice in the Bayes update
+        // can then also compare them
+        for (int i=0; i<bayes.length; i++) {
+            if (winner[i] != loser[i]) {
+                if (winner[i] == 1) {
+                    bayes[i].remove(1);
+                } else {
+                    bayes[i].remove(0);
+                    // pVec[i] -= 1/K;
+                }
+            }
+        }
+    }
+
     // randomly dither the output to avoid weird effects such as
     // returning the optimal solution for OneMax after zero iterations!
 

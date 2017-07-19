@@ -47,7 +47,7 @@ public class CompactSlidingGA implements EvoAlg {
     // false to measure pVec quality (convergence to one)
     // note: this measure only makes sense for problems
     // where the optimal solution is all ones
-    public boolean pVecConvergenceOnly = true;
+    public boolean pVecConvergenceOnly = false;
     // this decides how many vectors to generate each iteration
     public int historyLength = 20;
     ArrayList<ScoredVec> history;
@@ -163,7 +163,26 @@ public class CompactSlidingGA implements EvoAlg {
             if (history.size() < historyLength) {
                 history.add(scoredVec);
             } else {
-                history.set(nSteps % historyLength, scoredVec);
+                // at this point if we're using Bayes updating then we should remove the old ScoredVec from the
+                // Bayes updates
+                if (useBayesUpdates) {
+                    // get the old one we're about to replace
+                    ScoredVec old = history.get(nSteps % historyLength);
+                    history.set(nSteps % historyLength, scoredVec);
+                    // now iterate over the vectors, comparing with the old one
+                    // and removing it from the stats
+                    for (ScoredVec sv : history) {
+                        if (sv.score > old.score) {
+                            CompactGAUtil.removeBayes(bayes, sv.p, old.p);
+                        } else {
+                            CompactGAUtil.removeBayes(bayes, old.p, sv.p);
+                        }
+                    }
+
+
+                } else {
+                    history.set(nSteps % historyLength, scoredVec);
+                }
             }
             nSteps++;
 
@@ -204,6 +223,12 @@ public class CompactSlidingGA implements EvoAlg {
 
         // System.out.println("Total evaluations made: " + evaluator.nEvals());
         // System.out.println(Arrays.toString(pVec));
+        if (useBayesUpdates) {
+            for (SlidingBayes sb : bayes) {
+                System.out.println(sb);
+            }
+            System.out.println();
+        }
         return solution;
     }
 

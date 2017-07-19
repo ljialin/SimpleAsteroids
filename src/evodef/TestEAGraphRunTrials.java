@@ -15,36 +15,34 @@ import java.util.ArrayList;
 /**
  * Created by simonmarklucas on 10/07/2017.
  */
+
 public class TestEAGraphRunTrials {
 
     public static ArrayList<ArrayList<Double>> extras = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
-
-
         // create and run a test
         // showing flexibility to create multiple graphs
 
-        int nDims=20, mValues = 2;
+        int nDims=100, mValues = 2;
         double noise = 1.0;
         int nEvals = 1000;
         int nTrials = 100;
 
         NoisySolutionEvaluator solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
-        // solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
+        solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
         // solutionEvaluator = new Eval2DNonLinear(8, noise);
 
         TestEAGraph tester = new TestEAGraph(solutionEvaluator, nEvals).setColor(Color.red);
 
-
         // Set up all the algorithms to test
 
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
-        SimpleRMHC rmhc5 = new SimpleRMHC(15);
+        SimpleRMHC rmhc5 = new SimpleRMHC(3);
 
-        int windowLength = 30;
+        int windowLength = 40;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
-        slidingGA.useBayesUpdates = true;
+        slidingGA.useBayesUpdates = false;
         slidingGA.K = nDims * windowLength / 2;
 
         int nParents = 2;
@@ -70,13 +68,13 @@ public class TestEAGraphRunTrials {
 
         Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.pink, Color.magenta};
 
-        LineChart lineChart = new LineChart().setTitle("Evolution of True Fitness");
+        LineChart lineChart = new LineChart().setTitle(String.format("Noisy OneMax, %d dimensions", nDims));
         lineChart.setXLabel("Fitness Evaluations").setYLabel("Noise-Free Fitness");
 
         lineChart.xAxis = new LineChartAxis(new double[]{0, 200, 400, 600, 800, 1000});
-        // lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
+        lineChart.yAxis = new LineChartAxis(new double[]{40, 50, 60, 70, 80, 90, 100});
         //
-        lineChart.yAxis = new LineChartAxis(new double[]{0.4, 0.6, 0.8, 1.0});
+        // lineChart.yAxis = new LineChartAxis(new double[]{0.4, 0.6, 0.8, 1.0});
 
 
         for (int i=0; i<evos.size(); i++) {
@@ -97,12 +95,12 @@ public class TestEAGraphRunTrials {
             // lineChart.addLine(new LinePlot().setColor(Color.white).setData(extra));
             pVec.add(extra);
         }
-        lineChart.addLineGroup(pVec);
+        // lineChart.addLineGroup(pVec);
 
         new JEasyFrame(lineChart, "Fitness Evolution");
 
         String dir = "results/javares/sweda/";
-        // String filename = "resultsPMax.png";
+        // String filename = "resultsOneMax.png";
         String filename = "resultsOneMaxPVec.png";
         lineChart.saveImage(dir, filename);
     }

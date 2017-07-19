@@ -41,6 +41,10 @@ public class SlidingBayes {
         nWins = new int[mValues];
     }
 
+    public String toString() {
+        return nWins[0] + "\t" + nWins[1];
+    }
+
     public double pOne() {
 
         // double winRate = nWins[1] / tot;
