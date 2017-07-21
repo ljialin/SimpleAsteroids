@@ -65,12 +65,14 @@ public class SpaceBattleLinkTestTwoPlayer {
         System.out.println(BattleGameParameters.params);
 
         // can also override parameters by setting them directly as follows:
-        BattleGameParameters.loss = 0.995;
-        BattleGameParameters.thrust = 2;
+        BattleGameParameters.loss = 0.996;
+        BattleGameParameters.thrust = 3;
+//        BattleGameParameters.shipSize *= 2;
+//        BattleGameParameters.damageRadius *= 2;
         SpaceBattleLinkStateTwoPlayer linkState = new SpaceBattleLinkStateTwoPlayer();
         StateObservationMulti multi = linkState;
 
-        GameActionSpaceAdapterMulti.useHeuristic = false;
+        GameActionSpaceAdapterMulti.useHeuristic = true;
 
         Mutator.totalRandomChaosMutation = false;
 
