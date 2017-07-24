@@ -1,6 +1,9 @@
-package ntuple;
+package eda;
 
 import evodef.*;
+import ntuple.GeneArrayMeanModel;
+import ntuple.NTupleSystem;
+import ntuple.ScoredVec;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
@@ -13,11 +16,11 @@ import java.util.Random;
  */
 
 
-public class SlidingMeanEDA implements EvoAlg {
+public class RankCorrelationEDA implements EvoAlg {
 
     public static void main(String[] args) {
 
-        SlidingMeanEDA smeda = new SlidingMeanEDA().setHistoryLength(20);
+        RankCorrelationEDA smeda = new RankCorrelationEDA().setHistoryLength(20);
 
         NoisySolutionEvaluator evaluator = new EvalMaxM(100, 2, 0);
         smeda.verbose = true;
@@ -37,7 +40,7 @@ public class SlidingMeanEDA implements EvoAlg {
     boolean verbose = false;
 
     // this for GVGAI
-    static Integer timeLimit = null; //30;
+    static Integer timeLimit = 30;
 
     @Override
     public void setInitialSeed(int[] seed) {
@@ -50,7 +53,7 @@ public class SlidingMeanEDA implements EvoAlg {
 
     static Random random = new Random();
 
-    public SlidingMeanEDA setHistoryLength(int historyLength) {
+    public RankCorrelationEDA setHistoryLength(int historyLength) {
         this.historyLength = historyLength;
         return this;
     }

@@ -85,6 +85,21 @@ public class CompactGAUtil {
         return x;
     }
 
+    public static int[] randBitVec(double[] pVec, int[] base, int nDiff) {
+        int[] x = new int[pVec.length];
+        // first of all make a faithful copy of the base
+        for (int i=0; i<x.length; i++)  {
+            x[i] = base[i];
+        }
+        // now just pick a few to flip
+        // this could be done in a better way but is ok for now ...
+        for (int i=0; i<nDiff; i++) {
+            int ix = random.nextInt(x.length);
+            x[ix] = 1 - x[ix];
+        }
+        return x;
+    }
+
     public static int[] randBitBayes(SlidingBayes[] bayes) {
         int[] x = new int[bayes.length];
         for (int i=0; i<x.length; i++) {

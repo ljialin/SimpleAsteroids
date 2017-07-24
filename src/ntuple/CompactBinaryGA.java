@@ -62,6 +62,9 @@ public class CompactBinaryGA implements EvoAlg {
 
     static Random random = new Random();
 
+    // or set to null for normal model
+    public Integer nToFlip = null; // 2;
+
 
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {
@@ -70,6 +73,9 @@ public class CompactBinaryGA implements EvoAlg {
         SearchSpace searchSpace = evaluator.searchSpace();
 
         int n = searchSpace.nDims();
+
+        // experiment with flip few from base versio
+        int[] base = new int[n];
 
         pVec = new double[n];
         for (int i=0; i<n; i++) {
@@ -91,7 +97,12 @@ public class CompactBinaryGA implements EvoAlg {
             ScoredVec[] vecs = new ScoredVec[nParents];
             for (int i=0; i<nParents; i++) {
                 // generate
-                int[] x = CompactGAUtil.randBitVec(pVec);
+                int[] x;
+                if (nToFlip != null) {
+                    x = CompactGAUtil.randBitVec(pVec, base, nToFlip);
+                } else {
+                    x = CompactGAUtil.randBitVec(pVec);
+                }
                 double f = fitness(evaluator, x, nSamples).mean(); // evaluator.evaluate(x);
                 ScoredVec sv = new ScoredVec(x, f);
                 vecs[i] = sv;

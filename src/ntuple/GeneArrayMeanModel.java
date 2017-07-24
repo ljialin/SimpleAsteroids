@@ -49,7 +49,6 @@ public class GeneArrayMeanModel {
         }
     }
 
-
     public void updateModelMean(ScoredVec sv) {
         for (int i=0; i<nGenes; i++) {
             geneModel[i].updateMean( sv.p[i], sv.score );

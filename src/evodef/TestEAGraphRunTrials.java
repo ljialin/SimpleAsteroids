@@ -3,6 +3,7 @@ package evodef;
 import ga.SimpleRMHC;
 import ntuple.CompactBinaryGA;
 import ntuple.CompactSlidingGA;
+import ntuple.SlidingMeanEDA;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LineGroup;
@@ -27,7 +28,7 @@ public class TestEAGraphRunTrials {
         int nDims=100, mValues = 2;
         double noise = 1.0;
         int nEvals = 1000;
-        int nTrials = 10;
+        int nTrials = 30;
 
         NoisySolutionEvaluator solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
         solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
@@ -49,22 +50,26 @@ public class TestEAGraphRunTrials {
         CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
         // cga.K = nDims / 2; //  * nParents;  // setting from Jialin
         cga.K = nDims * nParents;
+        cga.nToFlip = 2;
+
 
 
         // add them to the test list
         ArrayList<EvoAlg> evos = new ArrayList<>();
         // evos.add(new SlidingMeanEDA().setHistoryLength(30));
-        evos.add(slidingGA);
+        // evos.add(slidingGA);
         evos.add(cga);
 
         nParents = 20;
         CompactBinaryGA cga2 = new CompactBinaryGA().setParents(nParents);
         cga2.K = nDims * nParents * 2;
 
-        evos.add(cga2);
+        // evos.add(cga2);
 
         evos.add(rmhc1);
         evos.add(rmhc5);
+
+        evos.add(new SlidingMeanEDA().setHistoryLength(30));
 
         Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.pink, Color.magenta};
 
