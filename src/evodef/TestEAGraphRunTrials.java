@@ -28,7 +28,7 @@ public class TestEAGraphRunTrials {
         int nDims=100, mValues = 2;
         double noise = 1.0;
         int nEvals = 1000;
-        int nTrials = 30;
+        int nTrials = 100;
 
         NoisySolutionEvaluator solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
         solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
@@ -44,20 +44,20 @@ public class TestEAGraphRunTrials {
         int windowLength = 40;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
         slidingGA.useBayesUpdates = false;
-        slidingGA.K = nDims * windowLength / 2;
+        slidingGA.K = 1000; // nDims * windowLength / 2;
 
-        int nParents = 2;
+        int nParents = 40;
         CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
         // cga.K = nDims / 2; //  * nParents;  // setting from Jialin
-        cga.K = nDims * nParents;
-        cga.nToFlip = 2;
+        cga.K = 1000; // nDims * nParents;
+        // cga.nToFlip = 2;
 
 
 
         // add them to the test list
         ArrayList<EvoAlg> evos = new ArrayList<>();
         // evos.add(new SlidingMeanEDA().setHistoryLength(30));
-        // evos.add(slidingGA);
+        evos.add(slidingGA);
         evos.add(cga);
 
         nParents = 20;
@@ -66,10 +66,10 @@ public class TestEAGraphRunTrials {
 
         // evos.add(cga2);
 
-        evos.add(rmhc1);
-        evos.add(rmhc5);
+//        evos.add(rmhc1);
+//        evos.add(rmhc5);
 
-        evos.add(new SlidingMeanEDA().setHistoryLength(30));
+        // evos.add(new SlidingMeanEDA().setHistoryLength(30));
 
         Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.pink, Color.magenta};
 
