@@ -39,22 +39,25 @@ public class Vector2d {
     }
 
     public Vector2d copy() {
-        return new Vector2d(x,y);
+        return new Vector2d(x, y);
     }
 
-    public void set(Vector2d v) {
+    public Vector2d set(Vector2d v) {
         this.x = v.x;
         this.y = v.y;
+        return this;
     }
 
-    public void set(double x, double y) {
+    public Vector2d set(double x, double y) {
         this.x = x;
         this.y = y;
+        return this;
     }
 
-    public void zero() {
+    public Vector2d zero() {
         x = 0.0;
         y = 0.0;
+        return this;
     }
 
     public String toString() {
@@ -106,7 +109,7 @@ public class Vector2d {
         return this;
     }
 
-    public void rotate(double theta) {
+    public Vector2d rotate(double theta) {
         // rotate this vector by the angle made to the horizontal by this line
         // theta is in radians
         double cosTheta = Math.cos(theta);
@@ -117,9 +120,10 @@ public class Vector2d {
 
         x = nx;
         y = ny;
+        return this;
     }
 
-//    public void rotate(Vector2d start, Vector2d end) {
+    //    public void rotate(Vector2d start, Vector2d end) {
 //        // rotate this vector by the angle made to the horizontal by this line
 //        double r = start.dist(end);
 //        double cosTheta = (end.x - start.x) / r;
@@ -145,24 +149,39 @@ public class Vector2d {
 //        }
 //    }
 //
-//    public void contraRotate(Vector2d start, Vector2d end) {
-//        // rotate this vector by the opposite angle made to the horizontal by this line
-//        double r = start.dist(end);
-//        double cosTheta = (end.x - start.x) / r;
-//        double sinTheta = (end.y - start.y) / r;
-//
-//        double nx = x * cosTheta + y * sinTheta;
-//        double ny = -x * sinTheta + y * cosTheta;
-//
-//        x = nx;
-//        y = ny;
-//    }
+    public Vector2d contraRotate(Vector2d start, Vector2d end) {
+        // rotate this vector by the opposite angle made to the horizontal by this line
+        double r = start.dist(end);
+        double cosTheta = (end.x - start.x) / r;
+        double sinTheta = (end.y - start.y) / r;
+
+        double nx = x * cosTheta + y * sinTheta;
+        double ny = -x * sinTheta + y * cosTheta;
+
+        x = nx;
+        y = ny;
+        return this;
+    }
+
+    public Vector2d contraRotate(Vector2d heading) {
+        // rotate this vector by the opposite angle made to the vertical by this line
+        double r = heading.mag();
+        double cosTheta = heading.y / r;
+        double sinTheta = heading.x / r;
+
+        double nx = x * cosTheta + y * sinTheta;
+        double ny = -x * sinTheta + y * cosTheta;
+
+        x = nx;
+        y = ny;
+        return this;
+    }
 
     public double scalarProduct(Vector2d v) {
         return x * v.x + y * v.y;
     }
 
-//    public void div(double den) {
+    //    public void div(double den) {
 //        x /= den;
 //        y /= den;
 //    }
@@ -179,7 +198,7 @@ public class Vector2d {
         return Math.sqrt(sqr(x) + sqr(y));
     }
 
-//    public double sqMag() {
+    //    public double sqMag() {
 //        return sqr( x ) + sqr( y );
 //    }
 //

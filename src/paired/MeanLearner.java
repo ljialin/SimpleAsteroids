@@ -54,7 +54,7 @@ public class MeanLearner implements ScoredVectorLearner {
         int[] argMax = new int[models.length];
         for (int i=0; i<models.length; i++) {
             argMax[i] = models[i].argmax();
-            // System.out.println("Model: " + i + " : " + models[i].toString() );
+            // System.out.println("GridModel: " + i + " : " + models[i].toString() );
 
         }
         return argMax;

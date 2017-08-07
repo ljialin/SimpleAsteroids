@@ -285,7 +285,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
         for (NTuple nt : tuples) {
             System.out.println(nt);
         }
-        System.out.format("Model has %d tuples.\n", tuples.size());
+        System.out.format("GridModel has %d tuples.\n", tuples.size());
 
     }
 
@@ -295,7 +295,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
             nt.printNonEmpty();
             System.out.println();
         }
-        System.out.format("Model has %d tuples.\n", tuples.size());
+        System.out.format("GridModel has %d tuples.\n", tuples.size());
 
     }
 
