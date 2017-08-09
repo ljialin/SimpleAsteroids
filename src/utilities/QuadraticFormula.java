@@ -7,10 +7,17 @@ public class QuadraticFormula {
 
     public static void main(String[] args) {
 
-        QuadraticFormula qf = new QuadraticFormula(1, 1, -6);
+        QuadraticFormula qf = new QuadraticFormula(1, -5, 1);
 
         System.out.println(qf.root1());
         System.out.println(qf.root2());
+        System.out.println();
+
+        // this example is a solution to a problem posted on Brilliant.com
+        for (double x : new double[]{0.2, 4.8}) {
+            System.out.println(x * x + 1 / (x * x));
+        }
+        System.out.println();
 
     }
 
