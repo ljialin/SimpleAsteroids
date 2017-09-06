@@ -34,7 +34,7 @@ public class EvaluateChoices {
         Integer ix = SearchSpaceUtil.indexOf(nTupleSystem.searchSpace, p);
         if (!indices.contains(ix)) {
             indices.add(ix);
-            double exploit = nTupleSystem.getSimple(p);
+            double exploit = nTupleSystem.getMeanEstimate(p);
             double explore = nTupleSystem.getExplorationEstimate(p);
 
             // add small random noise to break ties

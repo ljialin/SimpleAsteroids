@@ -105,7 +105,7 @@ public class NTupleSystemTest {
             // System.out.println("Probing: " + Arrays.toString(p));
 
             // Double value = nts.get(p);
-            Double value = nts.getSimple(p);
+            Double value = nts.getMeanEstimate(p);
             // value = Math.random();
 
 
@@ -197,7 +197,7 @@ public class NTupleSystemTest {
         for (int i=0; i<nPoints; i++) {
             int[] x = SearchSpaceUtil.nthPoint(nts.searchSpace, i);
             System.out.println(Arrays.toString(nts.getExplorationVector(x)) + " : " + nts.getExplorationEstimate(x));
-            System.out.println(nts.getSimple(x));
+            System.out.println(nts.getMeanEstimate(x));
             System.out.println();
         }
     }

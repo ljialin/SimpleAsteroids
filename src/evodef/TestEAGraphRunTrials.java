@@ -28,7 +28,7 @@ public class TestEAGraphRunTrials {
         int nDims=100, mValues = 2;
         double noise = 1.0;
         int nEvals = 1000;
-        int nTrials = 100;
+        int nTrials = 10;
 
         NoisySolutionEvaluator solutionEvaluator = new EvalNoisyWinRate(nDims, mValues, noise);
         solutionEvaluator = new EvalMaxM(nDims, mValues, noise);

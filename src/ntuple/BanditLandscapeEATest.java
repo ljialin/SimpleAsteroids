@@ -19,7 +19,7 @@ public class BanditLandscapeEATest {
         // set up a 2d grid search space
 
         int nDims = 2;
-        int mValues = 5;
+        int mValues = 4;
         double noiseLevel = 1.0;
         // EvalMaxM problem = new EvalMaxM(nDims, mValues, noiseLevel);
         Eval2DNonLinear problem = new Eval2DNonLinear(mValues, noiseLevel);

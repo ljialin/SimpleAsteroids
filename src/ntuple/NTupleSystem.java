@@ -1,13 +1,11 @@
 package ntuple;
 
 import evodef.*;
-import gvglink.BattleGameSearchSpace;
 import utilities.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by simonmarklucas on 13/11/2016.
@@ -93,7 +91,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
         Picker<int[]> picker = new Picker<int[]>(Picker.MAX_FIRST);
         for (int i = 0; i < SearchSpaceUtil.size(searchSpace); i++) {
             int[] p = SearchSpaceUtil.nthPoint(searchSpace, i);
-            picker.add(getSimple(p), p);
+            picker.add(getMeanEstimate(p), p);
         }
         // System.out.println("Best solution: " + Arrays.toString(picker.getBest()) + "\t: " + picker.getBestScore());
         return picker.getBest();
@@ -103,7 +101,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
     public int[] getBestOfSampled() {
         Picker<int[]> picker = new Picker<int[]>(Picker.MAX_FIRST);
         for (int[] p : sampledPoints) {
-            picker.add(getSimple(p), p);
+            picker.add(getMeanEstimate(p), p);
         }
         // System.out.println("Best solution: " + Arrays.toString(picker.getBest()) + "\t: " + picker.getBestScore());
         return picker.getBest();
@@ -143,7 +141,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
     }
 
     @Override
-    public Double getSimple(int[] x) {
+    public Double getMeanEstimate(int[] x) {
         // we could get an average ...
 
         StatSummary ssTot = new StatSummary();
@@ -181,6 +179,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
         }
     }
 
+    @Override
     public double getExplorationEstimate(int[] x) {
         // just takes the average of the exploration vector
         double[] vec = getExplorationVector(x);
