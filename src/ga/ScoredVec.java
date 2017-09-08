@@ -1,11 +1,11 @@
-package ntuple;
+package ga;
 
 /**
  * Created by Simon Lucas on 22/06/2017.
  */
-public class ScoredVec {
+public class ScoredVec implements Comparable<ScoredVec> {
     public int[] p;
-    public double score;
+    public Double score;
 
     public ScoredVec(int[] p, double score) {
         this.p = p;
@@ -16,8 +16,9 @@ public class ScoredVec {
         this.p = p;
     }
 
-    public ScoredVec setScore(double score) {
-        this.score = score;
-        return this;
+
+    @Override
+    public int compareTo(ScoredVec o) {
+        return score.compareTo(o.score);
     }
 }
