@@ -38,8 +38,8 @@ public class TestFHT {
         int nFitnessEvals = 100000;
 
         TestFHT testFHT = new TestFHT(evaluator, nFitnessEvals);
-        Mutator.defaultPointProb = 0;
-        // Mutator.flipAtLeastOneValue = false;
+        Mutator.defaultPointProb = 1;
+        Mutator.flipAtLeastOneValue = false;
 
         System.out.println("Problem: " + evaluator.getClass().getSimpleName());
         System.out.println("N Fitness Evals: " + nFitnessEvals);

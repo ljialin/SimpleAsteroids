@@ -29,8 +29,6 @@ public class Mutator {
         System.out.println(Arrays.toString(mutator.randMut(new int[mutator.searchSpace.nDims()])));
     }
 
-
-
     // this will be set each time a Mutator is created
     public double pointProb;
     static Random random = new Random();
