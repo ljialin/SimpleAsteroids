@@ -80,15 +80,23 @@ public class SimpleGA implements EvoAlg {
         mutator = new Mutator(evaluator.searchSpace());
 
         initPop();
-        System.out.println(pop.size() + " : " + popSize);
+        // System.out.println(pop.size() + " : " + popSize);
 
         while (evaluator.nEvals() < nEvals) {
+
+            int prevEvals = evaluator.nEvals();
 
             // evaluate them
             evalPop();
 
+
             // breed them
             pop = breed();
+
+            int diffEvals = evaluator.nEvals() - prevEvals;
+            for (int i=0; i<diffEvals; i++) {
+                evaluator.logger().logBestYest(pop.get(0).p);
+            }
 
         }
         // a final evaluation
@@ -143,12 +151,13 @@ public class SimpleGA implements EvoAlg {
         }
         // and sort them
         Collections.sort(pop);
-        System.out.println("Pop size: " + pop.size());
+
+        // System.out.println("Pop size: " + pop.size());
         int i = 0;
-        for (ScoredVec sv : pop) {
-            System.out.println(i++ + " : " + Arrays.toString(sv.p) + " : " + sv.score);
-        }
-        System.out.println();
+//        for (ScoredVec sv : pop) {
+//            System.out.println(i++ + " : " + Arrays.toString(sv.p) + " : " + sv.score);
+//        }
+        // System.out.println();
     }
 
     double fitness(int[] sol) {

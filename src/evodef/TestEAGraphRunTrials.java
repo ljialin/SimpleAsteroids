@@ -42,7 +42,7 @@ public class TestEAGraphRunTrials {
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
         SimpleRMHC rmhc5 = new SimpleRMHC(3);
 
-        SimpleGA sga = new SimpleGA().setPopulationSize(20);
+        SimpleGA sga = new SimpleGA().setPopulationSize(50).setCrossoverRate(0.8);
 
         int windowLength = 40;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
@@ -60,7 +60,7 @@ public class TestEAGraphRunTrials {
         // add them to the test list
         ArrayList<EvoAlg> evos = new ArrayList<>();
         // evos.add(new SlidingMeanEDA().setHistoryLength(30));
-        // evos.add(sga);
+        evos.add(sga);
         evos.add(rmhc1);
         evos.add(rmhc5);
         evos.add(slidingGA);
