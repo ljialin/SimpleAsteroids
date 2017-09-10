@@ -6,6 +6,7 @@ import ntuple.NTupleSystem;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ public class SimpleGA implements EvoAlg {
 
     public static void main(String[] args) {
         int popSize = 100;
-        SimpleGA sga = new SimpleGA();
+        SimpleGA sga = new SimpleGA().setPopulationSize(20);
         for (int i=0; i<20; i++) {
             System.out.println(sga.selectRank(popSize));
         }
@@ -40,11 +41,17 @@ public class SimpleGA implements EvoAlg {
 
     public SimpleGA setPopulationSize(int popSize) {
         this.popSize = popSize;
+        System.out.println(popSize);
         return this;
     }
 
     public SimpleGA setSampleRate(int nSamples) {
         this.nSamples = nSamples;
+        return this;
+    }
+
+    public SimpleGA setCrossoverRate(double crossoverRate) {
+        this.crossoverRate = crossoverRate;
         return this;
     }
 
@@ -73,15 +80,28 @@ public class SimpleGA implements EvoAlg {
         mutator = new Mutator(evaluator.searchSpace());
 
         initPop();
+        System.out.println(pop.size() + " : " + popSize);
 
         while (evaluator.nEvals() < nEvals) {
 
             // evaluate them
             evalPop();
 
+            // breed them
+            pop = breed();
 
-            ArrayList<ScoredVec> nextPop = new ArrayList<>();
+        }
+        // a final evaluation
+        evalPop();
+        return pop.get(0).p;
+    }
 
+    ArrayList<ScoredVec> breed() {
+
+
+        ArrayList<ScoredVec> nextPop = new ArrayList<>();
+
+        while (nextPop.size() < popSize) {
             // child c
             int[] c;
             if (rand.nextDouble() < crossoverRate) {
@@ -93,12 +113,8 @@ public class SimpleGA implements EvoAlg {
                 c = mutator.randMut(p);
             }
             nextPop.add(new ScoredVec(c));
-
-            // breed them
-            pop = nextPop;
-
         }
-        return pop.get(0).p;
+        return nextPop;
     }
 
     int[] uniformCrossover(int[] p1, int[] p2) {
@@ -116,7 +132,7 @@ public class SimpleGA implements EvoAlg {
     }
 
     int selectRank(int popSize) {
-        double x = rand.nextDouble() * 0.7;
+        double x = rand.nextDouble() * selectionPressure;
         int ix = (int) (popSize * x * x);
         return ix;
     }
@@ -127,6 +143,12 @@ public class SimpleGA implements EvoAlg {
         }
         // and sort them
         Collections.sort(pop);
+        System.out.println("Pop size: " + pop.size());
+        int i = 0;
+        for (ScoredVec sv : pop) {
+            System.out.println(i++ + " : " + Arrays.toString(sv.p) + " : " + sv.score);
+        }
+        System.out.println();
     }
 
     double fitness(int[] sol) {

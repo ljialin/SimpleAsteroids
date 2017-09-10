@@ -19,6 +19,6 @@ public class ScoredVec implements Comparable<ScoredVec> {
 
     @Override
     public int compareTo(ScoredVec o) {
-        return score.compareTo(o.score);
+        return -score.compareTo(o.score);
     }
 }

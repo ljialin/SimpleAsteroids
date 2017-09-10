@@ -1,5 +1,6 @@
 package evodef;
 
+import ga.SimpleGA;
 import ga.SimpleRMHC;
 import ntuple.CompactBinaryGA;
 import ntuple.CompactSlidingGA;
@@ -41,6 +42,8 @@ public class TestEAGraphRunTrials {
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
         SimpleRMHC rmhc5 = new SimpleRMHC(3);
 
+        SimpleGA sga = new SimpleGA().setPopulationSize(20);
+
         int windowLength = 40;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
         slidingGA.useBayesUpdates = false;
@@ -57,6 +60,9 @@ public class TestEAGraphRunTrials {
         // add them to the test list
         ArrayList<EvoAlg> evos = new ArrayList<>();
         // evos.add(new SlidingMeanEDA().setHistoryLength(30));
+        // evos.add(sga);
+        evos.add(rmhc1);
+        evos.add(rmhc5);
         evos.add(slidingGA);
         evos.add(cga);
 
