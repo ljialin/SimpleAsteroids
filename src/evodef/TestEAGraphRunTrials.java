@@ -40,16 +40,16 @@ public class TestEAGraphRunTrials {
         // Set up all the algorithms to test
 
         SimpleRMHC rmhc1 = new SimpleRMHC(1);
-        SimpleRMHC rmhc5 = new SimpleRMHC(3);
+        SimpleRMHC rmhc5 = new SimpleRMHC(5);
 
-        SimpleGA sga = new SimpleGA().setPopulationSize(50).setCrossoverRate(0.8);
+        SimpleGA sga = new SimpleGA().setPopulationSize(20).setCrossoverRate(0.5);
 
         int windowLength = 40;
         CompactSlidingGA slidingGA = new CompactSlidingGA().setHistoryLength(windowLength);
         slidingGA.useBayesUpdates = false;
         slidingGA.K = 1000; // nDims * windowLength / 2;
 
-        int nParents = 40;
+        int nParents = 2;
         CompactBinaryGA cga = new CompactBinaryGA().setParents(nParents);
         // cga.K = nDims / 2; //  * nParents;  // setting from Jialin
         cga.K = 1000; // nDims * nParents;
@@ -96,7 +96,7 @@ public class TestEAGraphRunTrials {
             System.out.println(results.trueOpt);
             System.out.println(elapsedTimer);
             System.out.println();
-            // lineChart.addLines(results.linePlots);
+            lineChart.addLines(results.linePlots);
 
             lineChart.addLineGroup(results.getLineGroup().setColor(colors[i]).setName(results.name));
         }

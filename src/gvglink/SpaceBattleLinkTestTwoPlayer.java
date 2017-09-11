@@ -72,7 +72,7 @@ public class SpaceBattleLinkTestTwoPlayer {
         SpaceBattleLinkStateTwoPlayer linkState = new SpaceBattleLinkStateTwoPlayer();
         StateObservationMulti multi = linkState;
 
-        GameActionSpaceAdapterMulti.useHeuristic = true;
+        GameActionSpaceAdapterMulti.useHeuristic = false;
 
         Mutator.totalRandomChaosMutation = false;
 

@@ -19,10 +19,15 @@ public class SimpleGA implements EvoAlg {
 
     public static void main(String[] args) {
         int popSize = 100;
-        SimpleGA sga = new SimpleGA().setPopulationSize(20);
+        SimpleGA sga = new SimpleGA().setPopulationSize(20).setCrossoverRate(0.5);
         for (int i=0; i<20; i++) {
             System.out.println(sga.selectRank(popSize));
         }
+        System.out.println(sga);
+    }
+
+    public String toString() {
+        return "SGA-" + popSize + " : " + crossoverRate;
     }
 
     int popSize;

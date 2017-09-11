@@ -17,12 +17,25 @@ public class OneMaxVisual {
     int[] bestYet;
 
     public static void main(String[] args) {
-        int dim = 100;
-        new OneMaxVisual(dim).run(maxEvals);
+        int dim = 36;
+        double noise = 0;
+        if (args.length > 0) {
+            try {
+                noise = Double.parseDouble(args[0]);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        new OneMaxVisual(dim).setNoise(noise).run(maxEvals);
     }
 
     public OneMaxVisual(int n) {
         this(randVec(n));
+    }
+
+    public OneMaxVisual setNoise(double noise) {
+        this.noise = noise;
+        return this;
     }
 
     public OneMaxVisual(int[] bestYet) {
@@ -36,13 +49,15 @@ public class OneMaxVisual {
             // randomly mutate the best yet
             int[] mut = randMut(bestYet);
             view.v = mut;
-            frame.setTitle(i + " : " + countOnes(mut));
+            int test = countOnes(mut);
+            // frame.setTitle(i + " : " + countOnes(mut));
             view.repaint();
             delay();
             // if it's better then adopt the mutation as the new best
-            if (countOnes(mut) >= countOnes(bestYet)) {
+            if (countOnes(mut) + noise * random.nextGaussian() >= countOnes(bestYet) + noise * random.nextGaussian()) {
                 bestYet = mut;
             }
+            frame.setTitle(i + " : " + countOnes(bestYet) + " : " + test);
             // System.out.println(Arrays.toString(bestYet));
             if (countOnes(bestYet) == bestYet.length) {
                 // return how many evals it took to reach perfection
@@ -58,6 +73,9 @@ public class OneMaxVisual {
             Thread.sleep(200);
         } catch (Exception e) {}
     }
+
+
+    double noise = 1.0;
 
     public int countOnes(int[] x) {
         int tot = 0;

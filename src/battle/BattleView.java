@@ -102,6 +102,9 @@ public class BattleView extends JComponent {
             tmp.add(ss.d, SimpleBattleState.projection);
             // now do a fill-oval
             int r = (int) damageRadius;
+            if (game.damageFunction(game.ships[i], game.ships[(i+1) % game.ships.length]) > 0) {
+                g.setColor(Color.red);
+            }
             g.fillOval((int) tmp.x-r, (int) tmp.y-r, 2*r, 2*r);
         }
 

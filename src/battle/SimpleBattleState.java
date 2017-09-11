@@ -14,7 +14,6 @@ import static battle.BattleGameParameters.*;
  * Created by simonmarklucas on 04/10/2016.
  */
 
-
 public class SimpleBattleState {
 
     public static void main(String[] args) {
@@ -134,14 +133,10 @@ public class SimpleBattleState {
         return diskDifferenceHeuristic(ships[0], ships[1]);
     }
 
-
-
     public double simpleHeuristic() {
         // this one simple encourages some interaction!
         return -ships[0].s.dist(ships[1].s);
     }
-
-
 
     public double diskDifferenceHeuristic(SimpleShip attacker, SimpleShip defender) {
         double d1 = attackDiskDifference(attacker, defender);
@@ -156,8 +151,5 @@ public class SimpleBattleState {
         tmp.add(attacker.d, projection);
         return defender.s.dist(tmp);
     }
-
-
-
 
 }
