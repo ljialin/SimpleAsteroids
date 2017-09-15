@@ -64,7 +64,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
         // add3Tuples();
         //
         //
-        // addNTuple();
+        addNTuple();
         // urnSystem = new UrnSystem();
         return this;
     }

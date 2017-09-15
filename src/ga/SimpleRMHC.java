@@ -72,6 +72,8 @@ public class SimpleRMHC implements EvoAlg {
         Mutator mutator = new Mutator(searchSpace);
 
 
+
+
         while (evaluator.nEvals() < maxEvals && !evaluator.optimalFound()) {
             // System.out.println("nEvals: " + evaluator.nEvals());
             int[] mut = mutator.randMut(bestYet);
@@ -141,7 +143,6 @@ public class SimpleRMHC implements EvoAlg {
         for (int i = 0; i < nSamples; i++) {
             double fitness = evaluator.evaluate(sol);
             ss.add(fitness);
-
         }
         if (model != null) {
             // System.out.println("Added summary");
@@ -161,5 +162,6 @@ public class SimpleRMHC implements EvoAlg {
             bestYet = SearchSpaceUtil.copyPoint(seed);
         }
     }
-
 }
+
+

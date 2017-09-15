@@ -55,7 +55,7 @@ public class Eval2DNonLinear implements NoisySolutionEvaluator, SearchSpace {
     }
 
     @Override
-    public double trueFitness(int[] a) {
+    public Double trueFitness(int[] a) {
         double x = a[0];
         double y = a[1];
         return f(x,y) / optimalIfKnown();

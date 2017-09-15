@@ -51,7 +51,7 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
     }
 
     @Override
-    public double trueFitness(int[] a) {
+    public Double trueFitness(int[] a) {
         double tot = 0;
         for (int i=0; i<a.length; i++) {
             if (a[i] <0 || a[i] >= m) {

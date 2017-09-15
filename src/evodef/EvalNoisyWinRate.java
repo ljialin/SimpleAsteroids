@@ -177,7 +177,7 @@ public class EvalNoisyWinRate implements NoisySolutionEvaluator, SearchSpace, Fi
     }
 
     @Override
-    public double trueFitness(int[] solution) {
+    public Double trueFitness(int[] solution) {
         // true fitness is the proprtion of the max value
         return pVal(solution);
     }

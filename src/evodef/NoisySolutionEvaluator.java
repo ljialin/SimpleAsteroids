@@ -5,5 +5,5 @@ package evodef;
  */
 public interface NoisySolutionEvaluator extends SolutionEvaluator {
     public Boolean isOptimal(int[] solution);
-    public double trueFitness(int[] solution);
+    public Double trueFitness(int[] solution);
 }

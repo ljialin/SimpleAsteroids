@@ -41,7 +41,7 @@ public class CompactSlidingGA implements EvoAlg {
 
     }
 
-    public boolean useBayesUpdates = true;
+    public boolean useBayesUpdates = false;
 
     // set this to true to just measure pVec convergence,
     // false to measure pVec quality (convergence to one)
@@ -191,6 +191,7 @@ public class CompactSlidingGA implements EvoAlg {
                 if (useBayesUpdates) {
                     evaluator.logger().logBestYest(CompactGAUtil.argmax(bayes));
                 } else {
+                    System.out.println("Ev: " + evaluator);
                     evaluator.logger().logBestYest(CompactGAUtil.argmax(pVec));
                 }
             }

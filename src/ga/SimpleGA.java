@@ -55,6 +55,12 @@ public class SimpleGA implements EvoAlg {
         return this;
     }
 
+    public SimpleGA setSelectionPressure(double selectionPressure) {
+        this.selectionPressure = selectionPressure;
+        return this;
+    }
+
+
     public SimpleGA setCrossoverRate(double crossoverRate) {
         this.crossoverRate = crossoverRate;
         return this;
@@ -106,8 +112,11 @@ public class SimpleGA implements EvoAlg {
         }
         // a final evaluation
         evalPop();
+        finalFitness = pop.get(0).score;
         return pop.get(0).p;
     }
+
+    Double finalFitness;
 
     ArrayList<ScoredVec> breed() {
 
@@ -187,10 +196,12 @@ public class SimpleGA implements EvoAlg {
         return null;
     }
 
+
     @Override
     public EvolutionLogger getLogger() {
-        return null;
+        return evaluator.logger();
     }
+
 
     @Override
     public void setSamplingRate(int samplingRate) {
