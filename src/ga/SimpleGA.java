@@ -46,7 +46,7 @@ public class SimpleGA implements EvoAlg {
 
     public SimpleGA setPopulationSize(int popSize) {
         this.popSize = popSize;
-        System.out.println(popSize);
+        // System.out.println(popSize);
         return this;
     }
 

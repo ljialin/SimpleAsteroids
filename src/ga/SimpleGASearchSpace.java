@@ -80,6 +80,8 @@ public class SimpleGASearchSpace implements NoisySolutionEvaluator, SearchSpace 
         // note that at the moment, these next few steps are particular to the SimpleGA
         // however, much of the code could be made far more general
 
+        // System.out.println();
+        // System.out.println("Before sga");
 
         SimpleGA sga = new SimpleGA();
         sga.setCrossoverRate(crossoverRate[x[crossoverIndex]]);
@@ -91,9 +93,10 @@ public class SimpleGASearchSpace implements NoisySolutionEvaluator, SearchSpace 
         // now run the sga on the problem at hand
 
         problemEvaluator.reset();
+        // System.out.println("Aah");
         int[] solution = sga.runTrial(problemEvaluator, innerEvals);
-        System.out.println(nEvals + " -> " + Arrays.toString(solution));
-        System.out.println(sga.getLogger());
+//        System.out.println(nEvals + " -> " + Arrays.toString(solution));
+//        System.out.println(sga.getLogger());
 
         nEvals++;
 
@@ -101,12 +104,12 @@ public class SimpleGASearchSpace implements NoisySolutionEvaluator, SearchSpace 
         // well, it should be simply the quality of the solution found at the end of the run
 
         double fitness = sga.finalFitness; // sga.getLogger().finalFitness();
+        // System.out.println("Hey!");
 
-        System.out.println(Arrays.toString(x));
-        System.out.println(fitness);
+//        System.out.println(Arrays.toString(x));
+//        System.out.println(fitness);
 
         logger.log(fitness, solution, false);
-
 
         return fitness;
     }
