@@ -33,10 +33,10 @@ public class Agent extends AbstractMultiPlayer {
         System.out.println();
     }
 
-
     public int[] NUM_ACTIONS;
     public Types.ACTIONS[][] actions;
     public int id, oppID, no_players;
+
 
     /**
      * Public constructor with state observation and time due.
@@ -51,6 +51,7 @@ public class Agent extends AbstractMultiPlayer {
 
         no_players = so.getNoPlayers();
         id = playerID;
+
         oppID = (id + 1) % so.getNoPlayers();
         this.nEvals = nEvals;
 
