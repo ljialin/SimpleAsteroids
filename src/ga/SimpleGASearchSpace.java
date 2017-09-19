@@ -11,13 +11,15 @@ public class SimpleGASearchSpace implements NoisySolutionEvaluator, SearchSpace 
     double[] crossoverRate = {0, 0.2, 0.4, 0.6, 0.8, 1,0};
     double[] selectionPressure = {0.0, 0.2, 0.5, 0.75, 1.0};
     int[] popSize = {2, 5, 10, 20, 50, 100};
+    int[] sampleRate = {1, 2,3,5,10};
 
-    int[] nValues = new int[]{crossoverRate.length, selectionPressure.length, popSize.length};
+    int[] nValues = new int[]{crossoverRate.length, selectionPressure.length, popSize.length, sampleRate.length};
     int nDims = nValues.length;
 
     static int crossoverIndex = 0;
     static int selectionPressureIndex = 1;
     static int popSizeIndex = 2;
+    static int sampleRateIndex = 3;
 
     NoisySolutionEvaluator problemEvaluator;
 
@@ -33,6 +35,7 @@ public class SimpleGASearchSpace implements NoisySolutionEvaluator, SearchSpace 
         sb.append(String.format("crossover rate:     %.2f\n", crossoverRate[solution[crossoverIndex]]));
         sb.append(String.format("selection pressure: %.2f\n", selectionPressure[solution[selectionPressureIndex]]));
         sb.append(String.format("population size:    %d\n", popSize[solution[popSizeIndex]]));
+        sb.append(String.format("sample rate    :    %d\n", sampleRate[solution[sampleRateIndex]]));
         return sb.toString();
     }
 
@@ -87,6 +90,7 @@ public class SimpleGASearchSpace implements NoisySolutionEvaluator, SearchSpace 
         sga.setCrossoverRate(crossoverRate[x[crossoverIndex]]);
         sga.setSelectionPressure(selectionPressure[x[selectionPressureIndex]]);
         sga.setPopulationSize(popSize[x[popSizeIndex]]);
+        sga.setSampleRate(sampleRate[x[sampleRateIndex]]);
 
         // okay, we've made the algorithm, now we evaluate it ...
 

@@ -18,7 +18,7 @@ import java.util.Random;
  *  then moved out of.  Imagine having a planet of focus, so the actions are to move between
  *  them, and then to add or remove ships from it.
  *
- *  This has a rather noce feel to it - can be done with a small number of actions - let's say just 4.
+ *  This has a rather nice feel to it - can be done with a small number of actions - let's say just 4.
  *
  *  Also has a nice feel for clever use of budget, and possible things to hide.
  *
@@ -146,6 +146,12 @@ public class GameState {
     public GameState next(int[] actions) {
         if (true)
             throw new RuntimeException("Not yet implemented.");
+
+        // need to make these for each player
+
+        // very easy - just put in a switch statement for each one?
+
+
         return this;
 
     }
