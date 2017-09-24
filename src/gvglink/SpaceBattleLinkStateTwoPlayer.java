@@ -20,7 +20,7 @@ public class SpaceBattleLinkStateTwoPlayer
     public static int nTicks = 0;
 
     // this class is already 2-player ready
-    SimpleBattleState state;
+    public SimpleBattleState state;
 
     static ArrayList<Types.ACTIONS> actions = new ArrayList<>();
 

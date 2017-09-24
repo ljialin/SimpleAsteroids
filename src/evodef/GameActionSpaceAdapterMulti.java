@@ -29,7 +29,7 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
 
     // this is used to value future rewards less
     // than immediate ones via an exponential decay
-    double discountFactor = 0.99;
+    public double discountFactor = 0.99;
 
     int playerID;
     int opponentID;

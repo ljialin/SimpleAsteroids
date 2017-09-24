@@ -15,6 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by sml on 23/01/2017.
  */
+
 public class Agent extends AbstractMultiPlayer {
 
     public int num_actions;
@@ -71,8 +72,6 @@ public class Agent extends AbstractMultiPlayer {
         }
     }
 
-
-
     /**
      * Picks an action. This function is called every game step to request an
      * action from the player.
@@ -120,6 +119,13 @@ public class Agent extends AbstractMultiPlayer {
         return null; //
     }
 
+    double discountFactor = 1.0;
+
+    public Agent setDiscountFactor(double discountFactor) {
+        this.discountFactor = discountFactor;
+        return this;
+    }
+
     @Override
     public Types.ACTIONS act(StateObservationMulti stateObs, ElapsedCpuTimer elapsedCpuTimer) {
         //Set the state observation object as the new root of the tree.
@@ -129,6 +135,7 @@ public class Agent extends AbstractMultiPlayer {
 
         int action1;
         GameActionSpaceAdapterMulti game = new GameActionSpaceAdapterMulti(stateObs, sequenceLength, id, oppID);
+        game.discountFactor = this.discountFactor;
 
         if (solution != null) {
             solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, game);

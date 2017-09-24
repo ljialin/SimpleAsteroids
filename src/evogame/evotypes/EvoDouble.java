@@ -15,7 +15,6 @@ public class EvoDouble {
         EvoDouble evo = new EvoDouble(10, 100, -50);
         System.out.println(evo);
 
-
     }
 
     double min;
@@ -29,7 +28,6 @@ public class EvoDouble {
 
     // this number of sds between min and max values
     static double rangeFac = 50;
-
 
     double x;
 
