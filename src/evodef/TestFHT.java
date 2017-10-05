@@ -17,15 +17,19 @@ import java.util.ArrayList;
  */
 
 public class TestFHT {
+
+    public static StatSummary check = new StatSummary("FHT Check");
+    public static boolean foundOpt = false;
+
     public static void main(String[] args) {
 
-        int nSamples = 5;
+        int nSamples = 1;
         SimpleRMHC rmhc = new SimpleRMHC(nSamples);
 
         // now perform the evaluation with and without FHT
         // in order to do this we need access to the solution
 
-        int nDims = 100;
+        int nDims = 10;
 
         // make this 2 for bit strings
         int mValues = 2;
@@ -33,9 +37,10 @@ public class TestFHT {
         double noise = 1.0;
 
         NoisySolutionEvaluator evaluator = new EvalMaxM(nDims, mValues, noise);
-        int nReps = 100;
+        // evaluator = new EvalNoisyWinRate(nDims, mValues, noise);
+        int nReps = 10000;
 
-        int nFitnessEvals = 100000;
+        int nFitnessEvals = 500;
 
         TestFHT testFHT = new TestFHT(evaluator, nFitnessEvals);
         Mutator.defaultPointProb = 1;
@@ -50,14 +55,25 @@ public class TestFHT {
         System.out.println("Flip at least one? " + Mutator.flipAtLeastOneValue);
         System.out.println("Mutation probability: " + Mutator.defaultPointProb);
 
+        StatSummary nEvals = new StatSummary("nEvals");
+
         for (int i=0; i<nReps; i++) {
             // System.out.println("Trial: " + i);
+
+            foundOpt = false;
             testFHT.runTrial(rmhc);
+            nEvals.add(evaluator.nEvals());
+
+            check.add(foundOpt ? 1 : 0);
+
 //            System.out.println(testFHT.nTrueOpt);
 //            System.out.println(testFHT.trueFit);
 //            System.out.println(testFHT.nFalseOpt);
 //            System.out.println();
         }
+
+        System.out.println(nEvals);
+        System.out.println(check);
 
         System.out.println("Final results:");
         System.out.println(testFHT.trueFit);
@@ -114,8 +130,5 @@ public class TestFHT {
         }
         return noiseFree;
     }
-
-
-
-
 }
+

@@ -1,5 +1,6 @@
 package evodef;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -43,6 +44,11 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
     public double evaluate(int[] a) {
         // keep track of whether it is truly optimal
         double tot = trueFitness(a);
+
+        if (tot >= a.length && TestFHT.foundOpt == false) {
+            TestFHT.foundOpt = true;
+            // System.out.println("Stumbled on opt: " + Arrays.toString(a));
+        }
         boolean isOptimal = isOptimal(a);
         tot += noise * random.nextGaussian();
 

@@ -44,57 +44,91 @@ public class GameState {
 
     static Random random = new Random();
 
-    static int incFocus = 0;
-    static int decFocus = 1;
-    static int incBuffer = 2;
-    static int decBuffer = 3;
-    static int doNothing = 4;
+    public final static int incFocus = 0;
+    public final static int decFocus = 1;
+    public final static int incBuffer = 2;
+    public final static int decBuffer = 3;
+    public final static int doNothing = 4;
+
+    final static int signPlayerOne = 1;
+    final static int signPlayerTwo = -1;
+
+    final static int[] signs = {signPlayerOne, signPlayerTwo};
 
     static int nActions = 5;
 
+    int nTicks;
+
+    // todo: check that the copy function works properly ...
+
+    public GameState() {
+        buffers = new double[2];
+        focii = new int[2];
+        nTicks = 0;
+    }
+
     public static void main(String[] args) {
+
+        // set a fixed random seed in order to check the outcome
+        Random random = new Random(3);
+        GameState.random = random;
         GameState gameState = new GameState().setNPlanets(10);
         gameState.setRandomGrowthRates().setRandomOwnerships();
 
-        int nReps = 1000000;
+        int nTicks = 10000000;
 
         ElapsedTimer timer = new ElapsedTimer();
         System.out.format("Initial score: %.2f\n", gameState.getScore());
 
         System.out.println(timer);
-        for (int i=0; i<nReps; i++) {
-            gameState.update();
-            gameState = gameState.copy();
+        for (int i=0; i<nTicks; i++) {
+            int a1 = random.nextInt(GameState.nActions);
+            int a2 = random.nextInt(GameState.nActions);
+            a1 = GameState.doNothing;
+            a2 = GameState.doNothing;
+            int[] actions = new int[]{a1, a2};
+            gameState.next(actions);
+            // gameState.update();
+            // gameState = gameState.copy();
         }
         System.out.println(timer);
         System.out.println(Arrays.toString(gameState.planets));
         System.out.println(Arrays.toString(gameState.growthRates));
         System.out.println();
         System.out.format("Final score: %.2f\n", gameState.getScore());
-
     }
 
     public GameState setNPlanets(int nPlanets) {
         this.nPlanets = nPlanets;
+        focii[0] = 0;
+        focii[1] = nPlanets/2;
         return this;
     }
 
     public GameState copy() {
         GameState gs = new GameState();
         gs.nPlanets = this.nPlanets;
-        gs.growthRates = new double[nPlanets];
+        gs.growthRates = this.growthRates;
         gs.planets = new double[nPlanets];
         for (int i=0; i<nPlanets; i++) {
-            gs.growthRates[i] = growthRates[i];
             gs.planets[i] = planets[i];
         }
-        return this;
+        gs.focii[0] = this.focii[0];
+        gs.focii[1] = this.focii[1];
+
+        gs.buffers[0] = this.buffers[0];
+        gs.buffers[1] = this.buffers[1];
+
+        // todo: finish off the copy mechanism here
+
+
+        return gs;
     }
 
     public GameState setRandomGrowthRates() {
         growthRates = new double[nPlanets];
         for (int i=0; i<nPlanets; i++) {
-            growthRates[i] = random.nextDouble() + 0.5;
+            growthRates[i] = (random.nextDouble() + 0.5) / 10;
         }
         return this;
     }
@@ -116,13 +150,7 @@ public class GameState {
     // records the current planet of focus
     int[] focii;
 
-    // the buffers store floating point numbers to allow
-    // for transfer rates of less than one per game tick
-    // the idea is that the further away, the longer it takes
-    // and hence we have a slower fractional transfer rate.
-
-    // also, when switching focus, any partial amount could be
-    // potentially lost - this is a detail that needs a bit of thought
+    // buffer are one per player and store the number of ships in each case
 
     double[] buffers;
 
@@ -135,25 +163,60 @@ public class GameState {
                 planets[i] -= growthRates[i];
             }
         }
+        nTicks++;
         return this;
     }
 
-    // this version provides a next function
-    // that does a transfer from source to destination for
-    // each player
-    // the source and destination planets have to be decoded
-    // from the single int that encodes both of them
+
     public GameState next(int[] actions) {
-        if (true)
-            throw new RuntimeException("Not yet implemented.");
 
         // need to make these for each player
 
         // very easy - just put in a switch statement for each one?
 
+        next(actions[0], 0);
+        next(actions[1], 1);
+
+        // then update
+        update();
 
         return this;
+    }
 
+    public GameState next(int action, int playerId) {
+        switch (action) {
+            case incFocus: {
+                focii[playerId] = (focii[playerId] + 1) % nPlanets;
+                break;
+            }
+            case decFocus: {
+                focii[playerId] = (focii[playerId] - 1 + nPlanets) % nPlanets;
+                break;
+            }
+            case incBuffer: {
+                // check ownership, then inc buffer if allowed
+                // and decrement the ships of this sign on the planet
+                int planetId = focii[playerId];
+                if (planets[planetId] * signs[playerId] >= 0) {
+                    planets[planetId] -= signs[playerId];
+                    buffers[playerId]++;
+                }
+                break;
+            }
+            case decBuffer: {
+                // check that the buffer has some stuff in it
+                if (buffers[playerId] > 0) {
+                    int planetId = focii[playerId];
+                    // then decrement the buffer
+                    // and increment the planet by the sign of this player
+                    // (so will become increasingly negative for a negative player)
+                    buffers[playerId]--;
+                    planets[planetId] += signs[playerId];
+                }
+                break;
+            }
+        }
+        return this;
     }
 
     public double getScore() {
@@ -161,6 +224,9 @@ public class GameState {
         for (double x : planets) {
             score += x;
         }
+        // now also factor in the buffers
+
         return score;
     }
+
 }

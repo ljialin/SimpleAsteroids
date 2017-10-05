@@ -3,13 +3,14 @@ package ga;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class OneMaxVisual {
 
     // Random mutation hill climber for testing one-max
     static Random random = new Random();
-    static int maxEvals = 500;
+    static int maxEvals = 50;
 
     JEasyFrame frame;
     BitView view;
@@ -17,7 +18,7 @@ public class OneMaxVisual {
     int[] bestYet;
 
     public static void main(String[] args) {
-        int dim = 36;
+        int dim = 25;
         double noise = 0;
         if (args.length > 0) {
             try {
@@ -63,6 +64,7 @@ public class OneMaxVisual {
                 // return how many evals it took to reach perfection
                 return i;
             }
+            System.out.println(Arrays.toString(bestYet));
         }
         // failed to find a solution
         return null;

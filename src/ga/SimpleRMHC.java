@@ -71,9 +71,6 @@ public class SimpleRMHC implements EvoAlg {
         StatSummary fitBest = fitness(evaluator, bestYet, new StatSummary());
         Mutator mutator = new Mutator(searchSpace);
 
-
-
-
         while (evaluator.nEvals() < maxEvals && !evaluator.optimalFound()) {
             // System.out.println("nEvals: " + evaluator.nEvals());
             int[] mut = mutator.randMut(bestYet);
