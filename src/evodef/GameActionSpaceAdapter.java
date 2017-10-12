@@ -3,8 +3,13 @@ package evodef;
 import core.game.StateObservation;
 import gvglink.SpaceBattleLinkState;
 import ontology.Types;
+import plot.LineChart;
+import plot.LinePlot;
+import utilities.JEasyFrame;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -49,7 +54,15 @@ public class GameActionSpaceAdapter implements FitnessSpace {
         numActions = gvgaiActions.length;
         logger = new EvolutionLogger();
         nEvals = 0;
+        // also make the plot list if we're running visually
+        if (visual) {
+            linePlots = new ArrayList<>();
+        }
     }
+
+    public static boolean visual = true;
+    List<LinePlot> linePlots;
+
 
 
     @Override
@@ -85,8 +98,16 @@ public class GameActionSpaceAdapter implements FitnessSpace {
         double denom = 0;
         double discountedTot = 0;
 
+        // need to do the visual stuff here ...
+        LinePlot linePlot = null;
+        if (visual) {
+            float grey = (nEvals % 100) / 100;
+            linePlot = new LinePlot().setColor(new Color(grey, grey, grey));
+        }
+
         for (int i=0; i<sequenceLength; i++) {
             obs.advance(gvgaiActions[actions[i]]);
+
             discountedTot += discount * (obs.getGameScore() - initScore);
             if (useHeuristic && obs instanceof SpaceBattleLinkState) {
                 SpaceBattleLinkState state = (SpaceBattleLinkState) obs;
@@ -94,7 +115,16 @@ public class GameActionSpaceAdapter implements FitnessSpace {
             }
             denom += discount;
             discount *= discountFactor;
+
+            if (linePlot != null) {
+                linePlot.add(discountedTot + Math.random() * 0);
+            }
         }
+
+        if (visual) {
+            linePlots.add(linePlot);
+        }
+
 
         nEvals++;
         double delta;
@@ -106,6 +136,15 @@ public class GameActionSpaceAdapter implements FitnessSpace {
         delta += noiseLevel * random.nextGaussian();
         logger.log(delta, actions, false);
         return delta;
+    }
+
+    public void plot() {
+        System.out.println("in plot? "  + linePlots == null);
+        if (linePlots!=null) {
+            LineChart lineChart = new LineChart().setBG(Color.blue);
+            lineChart.addLines(linePlots);
+            new JEasyFrame(lineChart, "Evo Plots");
+        }
     }
 
     @Override

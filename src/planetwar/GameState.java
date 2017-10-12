@@ -42,7 +42,7 @@ import java.util.Random;
 
 public class GameState {
 
-    static Random random = new Random();
+    public static Random random = new Random();
 
     public final static int incFocus = 0;
     public final static int decFocus = 1;
@@ -55,7 +55,7 @@ public class GameState {
 
     final static int[] signs = {signPlayerOne, signPlayerTwo};
 
-    static int nActions = 5;
+    public static int nActions = 5;
 
     int nTicks;
 
@@ -84,8 +84,8 @@ public class GameState {
         for (int i=0; i<nTicks; i++) {
             int a1 = random.nextInt(GameState.nActions);
             int a2 = random.nextInt(GameState.nActions);
-            a1 = GameState.doNothing;
-            a2 = GameState.doNothing;
+//            a1 = GameState.doNothing;
+//            a2 = GameState.doNothing;
             int[] actions = new int[]{a1, a2};
             gameState.next(actions);
             // gameState.update();
@@ -197,9 +197,18 @@ public class GameState {
                 // check ownership, then inc buffer if allowed
                 // and decrement the ships of this sign on the planet
                 int planetId = focii[playerId];
+
+
                 if (planets[planetId] * signs[playerId] >= 0) {
-                    planets[planetId] -= signs[playerId];
-                    buffers[playerId]++;
+
+                    if (remove50perCent) {
+                        double tmp = planets[planetId] / 2;
+                        planets[planetId] -= tmp;
+                        buffers[playerId] += tmp * signs[playerId];
+                    } else {
+                        planets[planetId] -= signs[playerId];
+                        buffers[playerId]++;
+                    }
                 }
                 break;
             }
@@ -210,14 +219,24 @@ public class GameState {
                     // then decrement the buffer
                     // and increment the planet by the sign of this player
                     // (so will become increasingly negative for a negative player)
-                    buffers[playerId]--;
-                    planets[planetId] += signs[playerId];
+                    // o
+                    if (invadeAll) {
+                        double temp = buffers[playerId];
+                        buffers[playerId] = 0;
+                        planets[planetId] += temp * signs[playerId];
+                    } else {
+                        buffers[playerId]--;
+                        planets[planetId] += signs[playerId];
+                    }
                 }
                 break;
             }
         }
         return this;
     }
+
+    static boolean invadeAll = true;
+    static boolean remove50perCent = true;
 
     public double getScore() {
         double score = 0;
@@ -229,4 +248,7 @@ public class GameState {
         return score;
     }
 
+    public int getGameTick() {
+        return nTicks;
+    }
 }

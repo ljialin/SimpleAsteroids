@@ -77,6 +77,15 @@ public class LinePlot {
         }
         lp.color = randColor();
         return lp;
+
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(color + "\t ");
+        for (double x : line)
+            sb.append(String.format("%.2f\t ", x));
+        return sb.toString();
     }
 
     public static Color randColor() {

@@ -19,6 +19,7 @@ public class LineChart extends JComponent {
     Dimension d;
     Color fg = Color.white;
     Color bg = Color.black; // new Color( 200, 200, 255 );
+    Color plotBG = Color.cyan;
     ArrayList<LinePlot> lines;
     ArrayList<LineGroup> lineGroups;
     public String title;
@@ -73,6 +74,10 @@ public class LineChart extends JComponent {
         lineGroups = new ArrayList<>();
         System.out.println(d);
 
+    }
+    public LineChart setBG(Color bg) {
+        this.bg = bg;
+        return this;
     }
 
 
@@ -157,6 +162,8 @@ public class LineChart extends JComponent {
             }
         }
 
+        System.out.println("Sy: " + sy);
+
         // now plot each of the lines, as a new Path2D
         plotLeft = size.getWidth() * leftMargin;
         plotRight = size.getWidth() * (1 - rightMargin);
@@ -179,7 +186,7 @@ public class LineChart extends JComponent {
         double rh = plotTop - plotBottom;
 
         Rectangle2D.Double plotRegion = new Rectangle2D.Double(plotLeft, plotBottom, rw, rh);
-        g.setColor(new Color(50, 50, 50));
+        g.setColor(plotBG);
         g.fill(plotRegion);
         g.setStroke(new BasicStroke(2));
         g.setColor(Color.white);

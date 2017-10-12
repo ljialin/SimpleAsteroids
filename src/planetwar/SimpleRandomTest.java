@@ -4,7 +4,7 @@ import utilities.JEasyFrame;
 
 import java.util.Random;
 
-public class SimpleTest {
+public class SimpleRandomTest {
 
     public static void main(String[] args) throws Exception {
         GameState game = new GameState().setNPlanets(10).setRandomOwnerships().setRandomGrowthRates();

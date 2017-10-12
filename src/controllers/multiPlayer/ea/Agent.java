@@ -23,7 +23,7 @@ public class Agent extends AbstractMultiPlayer {
     // these used to be static, but have made them instance variables
     // to allow experiments between multiple instances of the agent
     // with different values
-    public int sequenceLength = 40;
+    public int sequenceLength = 10;
     public boolean useShiftBuffer = true;
 
     int nEvals;
@@ -47,6 +47,7 @@ public class Agent extends AbstractMultiPlayer {
     public Agent(StateObservationMulti so, ElapsedCpuTimer elapsedTimer, EvoAlg evoAlg, int playerID, int nEvals)
     {
         //get game information
+        System.out.println("Making an Agent");
 
         this.evoAlg = evoAlg;
 
@@ -119,7 +120,7 @@ public class Agent extends AbstractMultiPlayer {
         return null; //
     }
 
-    double discountFactor = 1.0;
+    double discountFactor = 0.95;
 
     public Agent setDiscountFactor(double discountFactor) {
         this.discountFactor = discountFactor;
@@ -143,6 +144,10 @@ public class Agent extends AbstractMultiPlayer {
         }
 
         solution = evoAlg.runTrial(game, nEvals);
+
+        // now if we're running verbose, then plot the solutions found by the algorithm
+        // System.out.println("Calling gamePlot");
+        game.plot();
 
         // System.out.println(Arrays.toString(solution) + "\t " + game.evaluate(solution));
 

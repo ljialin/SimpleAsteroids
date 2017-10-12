@@ -54,7 +54,7 @@ public class PlanetWarView extends JComponent {
             drawPlanet(g, i , color, sectorAngle * i);
         }
 
-        String score = game.buffers[0] + " : " + (int) game.getScore() + " : " + game.buffers[1];
+        String score = (int) game.buffers[0] + " : " + (int) game.getScore() + " : " + (int) game.buffers[1];
         centreString(g, score,getWidth() / 2, getHeight() / 2);
 
     }

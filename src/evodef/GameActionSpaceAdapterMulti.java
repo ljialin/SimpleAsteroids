@@ -5,8 +5,15 @@ import core.game.StateObservationMulti;
 import gvglink.SpaceBattleLinkState;
 import gvglink.SpaceBattleLinkStateTwoPlayer;
 import ontology.Types;
+import planetwar.GameState;
+import plot.LineChart;
+import plot.LineChartAxis;
+import plot.LinePlot;
+import utilities.JEasyFrame;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -57,7 +64,17 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
         nEvals = 0;
         this.playerID = playerID;
         this.opponentID = opponentID;
+
+        // also make the plot list if we're running visually
+        if (visual) {
+            linePlots = new ArrayList<>();
+        }
+
     }
+
+    public static boolean visual = false;
+    List<LinePlot> linePlots;
+
 
 
     @Override
@@ -93,6 +110,16 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
         double denom = 0;
         double discountedTot = 0;
 
+        // need to do the visual stuff here ...
+        LinePlot linePlot = null;
+        if (visual) {
+            float grey = (nEvals % 100) / 50.0f;
+            linePlot = new LinePlot().setColor(new Color(grey, grey, grey));
+            // linePlot = new LinePlot().setColor(Color.red);
+
+        }
+
+
         for (int i=0; i<sequenceLength; i++) {
 
             // Note here that we need to look at the advance method which takes multiple players
@@ -100,6 +127,7 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
             // the idea is that we'll pad out the
             int myAction = actions[i];
             int opAction = random.nextInt(obs.getAvailableActions(opponentID).size());
+            opAction = GameState.doNothing;
             Types.ACTIONS[] acts = new Types.ACTIONS[2];
             acts[playerID] = gvgaiActions[myAction];
             acts[opponentID] = gvgaiActions[opAction];
@@ -116,6 +144,14 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
             }
             denom += discount;
             discount *= discountFactor;
+
+            if (linePlot != null) {
+                linePlot.add(discountedTot);
+            }
+
+        }
+        if (visual) {
+            linePlots.add(linePlot);
         }
 
         nEvals++;
@@ -130,6 +166,29 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
 
         return delta;
     }
+
+    public void plot() {
+        System.out.println("in plot? "  + linePlots == null);
+        if (linePlots!=null) {
+            LineChart lineChart = new LineChart().setBG(Color.blue);
+            lineChart.xAxis = new LineChartAxis(new double[]{0, 10, 20, 30});
+            lineChart.yAxis = new LineChartAxis(new double[]{-200, -100, 0, 100, 200});
+
+            lineChart.addLines(linePlots);
+            // lineChart.
+            // lineChart.
+            new JEasyFrame(lineChart, "Evo Plots");
+            for (LinePlot linePlot : linePlots) {
+                System.out.println(linePlot);
+                // System.out.println();
+            }
+            System.out.println();
+        }
+    }
+
+
+
+
 
     @Override
     public boolean optimalFound() {

@@ -77,6 +77,15 @@ public class SimpleRMHC implements EvoAlg {
             // int[] mut = randMutAll(bestYet);
             // int[] mut = randAll(bestYet);
 
+            int oneBits = 0;
+            for (int x:bestYet)
+                oneBits+=x;
+            if (oneBits == 10 && TestFHT.foundOpt == false) {
+                TestFHT.foundOpt = true;
+                // System.out.println("Stumbled on opt: " + Arrays.toString(a));
+            }
+
+
             // keep track of how much we want to mutate this
             int prevEvals = evaluator.nEvals();
             StatSummary fitMut = fitness(evaluator, mut, new StatSummary());
@@ -93,6 +102,9 @@ public class SimpleRMHC implements EvoAlg {
                 // System.out.println("Updating best");
                 bestYet = mut;
                 fitBest = fitMut;
+
+
+
                 evaluator.logger().keepBest(mut, fitMut.mean());
 
 
@@ -109,10 +121,12 @@ public class SimpleRMHC implements EvoAlg {
                 }
             }
 
+
             int evalDiff = evaluator.nEvals() - prevEvals;
             for (int i = 0; i < evalDiff; i++) {
                 evaluator.logger().logBestYest(bestYet);
             }
+
         }
         // System.out.println("Ran for: " + evaluator.nEvals());
         // System.out.println("Sampling rate: " + nSamples);

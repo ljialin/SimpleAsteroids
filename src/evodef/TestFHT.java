@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class TestFHT {
 
-    public static StatSummary check = new StatSummary("FHT Check");
+    public static StatSummary check = new StatSummary("FHT Checker");
     public static boolean foundOpt = false;
 
     public static void main(String[] args) {
@@ -73,12 +73,14 @@ public class TestFHT {
         }
 
         System.out.println(nEvals);
-        System.out.println(check);
 
         System.out.println("Final results:");
         System.out.println(testFHT.trueFit);
         System.out.println(testFHT.nTrueOpt);
+        System.out.println();
         System.out.println(testFHT.nFalseOpt);
+        System.out.println();
+        System.out.println(check);
 
     }
 

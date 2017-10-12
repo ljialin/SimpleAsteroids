@@ -45,10 +45,10 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
         // keep track of whether it is truly optimal
         double tot = trueFitness(a);
 
-        if (tot >= a.length && TestFHT.foundOpt == false) {
-            TestFHT.foundOpt = true;
-            // System.out.println("Stumbled on opt: " + Arrays.toString(a));
-        }
+//        if (tot >= a.length && TestFHT.foundOpt == false) {
+//            TestFHT.foundOpt = true;
+//            // System.out.println("Stumbled on opt: " + Arrays.toString(a));
+//        }
         boolean isOptimal = isOptimal(a);
         tot += noise * random.nextGaussian();
 

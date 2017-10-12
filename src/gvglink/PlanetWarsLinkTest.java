@@ -1,0 +1,116 @@
+package gvglink;
+
+import controllers.multiPlayer.ea.Agent;
+import core.player.AbstractMultiPlayer;
+import evodef.EvoAlg;
+import evodef.GameActionSpaceAdapter;
+import ga.SimpleRMHC;
+import ntuple.CompactSlidingModelGA;
+import ntuple.NTupleBanditEA;
+import ntuple.SlidingMeanEDA;
+import ontology.Types;
+import planetwar.GameState;
+import planetwar.KeyController;
+import planetwar.PlanetWarView;
+import tools.ElapsedCpuTimer;
+import utilities.JEasyFrame;
+
+import java.util.Random;
+
+public class PlanetWarsLinkTest {
+
+    // todo: show a graphic of the rollout predictions
+    // split this in to two parts
+    // for each action, we need to collect the data
+    // then we need to display the data
+    // each time plot the fitness of each sample versus the length
+    // of the rollout - this will give a good idea of what we need to plot...
+
+    // todo: implement a different transfer mechanism, that moves (say) 50% of the buffer or planet ships each time
+
+    // todo: implement a collision mechanism
+
+    // todo: implement a nice graphic that shows transfer from planet to buffer
+
+
+    public static void main(String[] args) throws Exception {
+        PlanetWarsLinkState state = new PlanetWarsLinkState();
+        boolean visual = true;
+
+        PlanetWarView view = new PlanetWarView(state.state);
+        JEasyFrame frame = new JEasyFrame(view, "Test View");
+        KeyController controller = new KeyController();
+        frame.addKeyListener(controller);
+
+        // now p;ay
+        Random random = new Random();
+
+
+        AbstractMultiPlayer player1, player2;
+        GameActionSpaceAdapter.visual = true;
+
+//        controllers.singlePlayer.sampleOLMCTS.Agent olmcts =
+//                new controllers.singlePlayer.sampleOLMCTS.Agent(linkState, timer);
+
+        int idPlayer1 = 0;
+        int idPlayer2 = 1;
+
+        ElapsedCpuTimer timer = new ElapsedCpuTimer();
+
+        player2 = new controllers.multiPlayer.discountOLMCTS.Agent(state, timer, idPlayer2);
+
+        // try the evolutionary players
+
+        int nResamples = 1;
+        EvoAlg evoAlg = new SimpleRMHC(nResamples);
+
+        int nEvals = 50;
+        evoAlg = new SlidingMeanEDA().setHistoryLength(20);
+
+
+        Agent evoAgent = new controllers.multiPlayer.ea.Agent(state, timer, evoAlg, idPlayer1, nEvals);
+        evoAgent.sequenceLength = 10;
+        player1 = evoAgent;
+        // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer2, nEvals);
+        // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
+
+        player2  = new controllers.multiPlayer.smlrand.Agent();
+
+        // EvoAlg evoAlg2 = new SimpleRMHC(2);
+
+        // player1 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer1, nEvals);
+
+
+        // player1 =
+        int thinkingTime = 50; // in milliseconds
+        int delay = 1000;
+
+        // player = new controllers.singlePlayer.sampleRandom.Agent(stateObs, timer);
+
+        // check that we can play the game
+
+        int nSteps = 500;
+
+        for (int i=0; i<nSteps; i++) {
+
+            timer = new ElapsedCpuTimer();
+            timer.setMaxTimeMillis(thinkingTime);
+
+            Types.ACTIONS action1 = player1.act(state.copy(), timer);
+
+            timer = new ElapsedCpuTimer();
+            timer.setMaxTimeMillis(thinkingTime);
+            Types.ACTIONS action2 = player2.act(state.copy(), timer);
+            // §action2 =
+
+            state.advance(new Types.ACTIONS[]{action1, action2});
+
+            if (view != null) {
+                view.update(state.state);
+                Thread.sleep(delay);
+            }
+        }
+        System.out.println("Game Score: " + state.getGameScore()) ;
+    }
+}
+
