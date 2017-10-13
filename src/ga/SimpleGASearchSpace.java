@@ -64,7 +64,7 @@ public class SimpleGASearchSpace implements NoisySolutionEvaluator, SearchSpace 
         return nValues[i];
     }
 
-    int innerEvals = 100;
+    int innerEvals = 1000;
 
     int nEvals = 0;
     @Override

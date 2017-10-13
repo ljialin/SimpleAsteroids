@@ -19,10 +19,10 @@ public class SlidingMeanEDA implements EvoAlg {
 
         SlidingMeanEDA smeda = new SlidingMeanEDA().setHistoryLength(20);
 
-        NoisySolutionEvaluator evaluator = new EvalMaxM(100, 2, 0);
+        NoisySolutionEvaluator evaluator = new EvalMaxM(100, 3, 0);
         smeda.verbose = true;
 
-        int[] p = smeda.runTrial(evaluator, 1000);
+        int[] p = smeda.runTrial(evaluator, 10);
 
         System.out.println(Arrays.toString(p));
         System.out.println(evaluator.trueFitness(p));
@@ -135,7 +135,6 @@ public class SlidingMeanEDA implements EvoAlg {
 
         return solution;
     }
-
 
     @Override
     public void setModel(NTupleSystem nTupleSystem) {

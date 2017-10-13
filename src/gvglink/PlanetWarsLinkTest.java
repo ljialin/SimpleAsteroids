@@ -26,11 +26,10 @@ public class PlanetWarsLinkTest {
     // each time plot the fitness of each sample versus the length
     // of the rollout - this will give a good idea of what we need to plot...
 
-    // todo: implement a different transfer mechanism, that moves (say) 50% of the buffer or planet ships each time
-
     // todo: implement a collision mechanism
 
     // todo: implement a nice graphic that shows transfer from planet to buffer
+    // this is very easy to do - but question of whether we need a timed or instant movement...
 
 
     public static void main(String[] args) throws Exception {
@@ -75,6 +74,7 @@ public class PlanetWarsLinkTest {
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
 
         player2  = new controllers.multiPlayer.smlrand.Agent();
+        player2 = new controllers.multiPlayer.doNothing.Agent(state, timer, 1);
 
         // EvoAlg evoAlg2 = new SimpleRMHC(2);
 
@@ -83,7 +83,7 @@ public class PlanetWarsLinkTest {
 
         // player1 =
         int thinkingTime = 50; // in milliseconds
-        int delay = 1000;
+        int delay = 100;
 
         // player = new controllers.singlePlayer.sampleRandom.Agent(stateObs, timer);
 

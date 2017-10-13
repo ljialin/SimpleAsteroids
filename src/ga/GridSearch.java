@@ -59,7 +59,7 @@ public class GridSearch implements EvoAlg {
 
         // iterate over the points to find the best one
 
-        Picker<Integer> picker = new Picker<>();
+        Picker<Integer> picker = new Picker<>(Picker.MAX_FIRST);
         for (int i=0; i<results.length; i++) {
             picker.add(results[i].mean(), i);
         }

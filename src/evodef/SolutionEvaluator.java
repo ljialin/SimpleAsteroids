@@ -10,7 +10,7 @@ package evodef;
 public interface SolutionEvaluator {
     // call reset before running
     public void reset();
-    double evaluate(int[] bits);
+    double evaluate(int[] solution);
 
     // has the algorithm found the optimal solution?
     boolean optimalFound();

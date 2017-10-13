@@ -105,6 +105,10 @@ public class GameState {
         return this;
     }
 
+    public GameState defaultState() {
+        return this.setNPlanets(10).setRandomOwnerships().setRandomGrowthRates();
+    }
+
     public GameState copy() {
         GameState gs = new GameState();
         gs.nPlanets = this.nPlanets;
@@ -137,7 +141,7 @@ public class GameState {
         planets = new double[nPlanets];
         for (int i=0; i<nPlanets; i++) {
             planets[i] = random.nextInt(3) - 1;
-            System.out.println(planets[i]);
+            // System.out.println(planets[i]);
         }
         return this;
     }
@@ -245,7 +249,7 @@ public class GameState {
         }
         // now also factor in the buffers
 
-        return score;
+        return (int) (score * 100);
     }
 
     public int getGameTick() {
