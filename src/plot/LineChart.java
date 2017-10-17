@@ -46,20 +46,28 @@ public class LineChart extends JComponent {
     public boolean gridLines = true;
 
     public static void main(String[] args) {
-        LineChart lineChart = new LineChart();
-        double[] y = new double[101];
-        double[] yy = new double[101];
-        for (int i = 0; i < y.length; i++) {
-            y[i] = Math.abs(50 - i);
-            yy[i] = i;
-        }
-        lineChart.addLine(LinePlot.randomLine());
-        lineChart.addLine(LinePlot.randomLine());
-        lineChart.addLine(new LinePlot().setData(y).setColor(Color.blue));
-        lineChart.addLine(new LinePlot().setData(yy).setColor(Color.red));
-        new JEasyFrame(lineChart, "Line Chart Test");
+//        LineChart lineChart = new LineChart();
+//        double[] y = new double[101];
+//        double[] yy = new double[101];
+//        for (int i = 0; i < y.length; i++) {
+//            y[i] = Math.abs(50 - i);
+//            yy[i] = i;
+//        }
+//        lineChart.addLine(LinePlot.randomLine());
+//        lineChart.addLine(LinePlot.randomLine());
+//        lineChart.addLine(new LinePlot().setData(y).setColor(Color.blue));
+//        lineChart.addLine(new LinePlot().setData(yy).setColor(Color.red));
+//        new JEasyFrame(lineChart, "Line Chart Test");
+//        lineChart.xAxis = new LineChartAxis(new double[]{0, 20, 40, 60, 80, 100});
+//        lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2, 3});
+
+
+        LineChart lineChart = new LineChart().addLine(LinePlot.randomLine());
+        // lineChart.yAxis = new LineChartAxis(new double[]{-2, 0, 2});
         lineChart.xAxis = new LineChartAxis(new double[]{0, 20, 40, 60, 80, 100});
-        lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2, 3});
+
+        new JEasyFrame(lineChart, "Single Line Test");
+
     }
 
 
@@ -96,6 +104,16 @@ public class LineChart extends JComponent {
 //    public void addLine(double[] x) {
 //        addLine(new LinePlot(x));
 //    }
+
+    public static LineChart easyPlot(ArrayList<Double> data) {
+        LinePlot linePlot = new LinePlot().setData(data).setColor(Color.blue);
+        LineChart lineChart = new LineChart().addLine(linePlot);
+        // lineChart.yAxis = new LineChartAxis(linePlot.sy.min(), linePlot.sy.max());
+
+        lineChart.xAxis = new LineChartAxis(new double[]{0, data.size()/2, data.size()-1});
+        return lineChart;
+    }
+
 
     public LineChart addLine(LinePlot line) {
         lines.add(line);
@@ -147,6 +165,7 @@ public class LineChart extends JComponent {
 
         if (xAxis != null) {
             sx = xAxis.range;
+
         } else {
             for (LinePlot line : lines) {
                 // for sx we are only interested in the number of points on each line
@@ -162,6 +181,7 @@ public class LineChart extends JComponent {
             }
         }
 
+        System.out.println("Sx: " + sx);
         System.out.println("Sy: " + sy);
 
         // now plot each of the lines, as a new Path2D
@@ -565,7 +585,6 @@ public class LineChart extends JComponent {
 
         return this;
     }
-
 
 
 }

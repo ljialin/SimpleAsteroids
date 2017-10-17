@@ -15,7 +15,7 @@ import evodef.SimpleGameAdapter;
  *  but this is a simpler approach that enables
  */
 
-public class EvoAgent {
+public class EvoAgent implements SimplePlayerInterface {
 
     ActionSequencer actionSequencer;
     EvoAlg evoAlg;

@@ -17,7 +17,7 @@ public class EvolutionLogger {
     // but the keepBest() method is used to track what
     // the EA under test thinks is the best solution
 
-    ArrayList<Double> fa;
+    public ArrayList<Double> fa;
     // these are all the solutions provided for evaluation
 
     public ArrayList<int[]> solutions;
