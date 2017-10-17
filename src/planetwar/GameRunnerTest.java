@@ -14,8 +14,9 @@ public class GameRunnerTest {
 
         EvoAlg evoAlg = new SimpleRMHC();
         int nEvals = 100;
-        int seqLength = 100;
-        p1 = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
+        int seqLength = 20;
+        // p1 = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
+        p2 = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
 
         gameRunner.setPlayers(p1, p2);
 
@@ -23,7 +24,7 @@ public class GameRunnerTest {
         // verbose is set to true by default so after the games have been played
         // it will report the outcomes
 
-        int nGames = 100;
+        int nGames = 20;
         gameRunner.playGames(nGames);
 
     }
