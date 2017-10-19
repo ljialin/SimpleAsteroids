@@ -15,7 +15,10 @@ public class GameRunnerTest {
         EvoAlg evoAlg = new SimpleRMHC();
         int nEvals = 100;
         int seqLength = 20;
-        // p1 = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
+
+
+        p1 = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
+
         p2 = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
 
         gameRunner.setPlayers(p1, p2);

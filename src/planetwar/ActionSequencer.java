@@ -57,6 +57,6 @@ public class ActionSequencer implements PluginEvaluator {
     public double fitness(int[] solution) {
         double rawScore = actVersusDoNothing(solution, playerId).terminalState.getScore();
         // should this be negated for the minimising player
-        return rawScore;
+        return playerId == 0 ? rawScore : -rawScore;
     }
 }
