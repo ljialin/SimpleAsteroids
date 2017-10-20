@@ -47,7 +47,7 @@ public class Agent extends AbstractMultiPlayer {
     public Agent(StateObservationMulti so, ElapsedCpuTimer elapsedTimer, EvoAlg evoAlg, int playerID, int nEvals)
     {
         //get game information
-        System.out.println("Making an Agent");
+        // System.out.println("Making an Agent");
 
         this.evoAlg = evoAlg;
 
@@ -89,6 +89,8 @@ public class Agent extends AbstractMultiPlayer {
 
 
     public Types.ACTIONS act(StateObservation stateObs, ElapsedCpuTimer elapsedTimer) {
+
+        if (true) throw new RuntimeException("Not yet implemented");
 
         //Set the state observation object as the new root of the tree.
 
@@ -163,36 +165,6 @@ public class Agent extends AbstractMultiPlayer {
 
         return actions[id][action1];
     }
-
-
-
-
-//    /**
-//     * Public constructor with state observation and time due.
-//     * @param so state observation of the current game.
-//     * @param elapsedTimer Timer for the controller creation.
-//     */
-//    public Agent(StateObservation so, ElapsedCpuTimer elapsedTimer, EvoAlg evoAlg, int nEvals)
-//    {
-//        //Get the actions in a static array.
-//        ArrayList<Types.ACTIONS> act = so.getAvailableActions();
-////        actions = new Types.ACTIONS[act.size()];
-////        for(int i = 0; i < actions.length; ++i)
-////        {
-////            actions[i] = act.get(i);
-////        }
-////        num_actions = actions.length;
-//
-//        System.out.println(Arrays.toString(actions));
-//
-//        //Create the player.
-//
-//        this.evoAlg = evoAlg;
-//        this.nEvals = nEvals;
-//        index = 0;
-//    }
-//
-//
 
 
 }

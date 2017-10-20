@@ -60,7 +60,7 @@ public class GameActionSpaceAdapter implements FitnessSpace {
         }
     }
 
-    public static boolean visual = true;
+    public static boolean visual = false;
     List<LinePlot> linePlots;
 
 

@@ -53,10 +53,31 @@ public class ActionSequencer implements PluginEvaluator {
         return this;
     }
 
+    SimplePlayerInterface opponent = new DoNothingAgent();
+
+    public ActionSequencer setOpponent(SimplePlayerInterface opponent) {
+        this.opponent = opponent;
+        return this;
+    }
+
+    public ActionSequencer actVersusAgent(int[] seq, int playerId) {
+        // careful, this may not be copiing the game state ...
+        terminalState = initialState.copy();
+        int[] actions = new int[2];
+        for (int a : seq) {
+            actions[playerId] = a;
+            actions[1 - playerId] = GameState.doNothing;
+            terminalState.next(actions);
+        }
+        // System.out.println("Terminal score: " + terminalState.getScore());
+        return this;
+    }
+
     @Override
     public double fitness(int[] solution) {
-        double rawScore = actVersusDoNothing(solution, playerId).terminalState.getScore();
+        // double rawScore = actVersusDoNothing(solution, playerId).terminalState.getScore();
         // should this be negated for the minimising player
+        double rawScore = actVersusAgent(solution, playerId).terminalState.getScore();
         return playerId == 0 ? rawScore : -rawScore;
     }
 }

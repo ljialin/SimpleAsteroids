@@ -45,8 +45,15 @@ public class EvoAgent implements SimplePlayerInterface {
         return this;
     }
 
+    SimplePlayerInterface opponent = new DoNothingAgent();
+
+    public EvoAgent setOpponent(SimplePlayerInterface opponent) {
+        this.opponent = opponent;
+        return this;
+    }
+
     public int[] getActions(GameState gameState, int playerId) {
-        actionSequencer.setGameState(gameState.copy()).setPlayerId(playerId);
+        actionSequencer.setGameState(gameState.copy()).setPlayerId(playerId).setOpponent(opponent);
 
         if (solution != null) {
             solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, searchSpace);

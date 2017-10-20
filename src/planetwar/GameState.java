@@ -106,7 +106,11 @@ public class GameState {
     }
 
     public GameState defaultState() {
-        return this.setNPlanets(10).setRandomOwnerships().setRandomGrowthRates();
+        return this.setNPlanets(10).setAlternateOwnerships().setRandomGrowthRates();
+    }
+    public GameState defaultState(long seed) {
+        GameState.random = new Random(seed);
+        return this.setNPlanets(10).setAlternateOwnerships().setRandomGrowthRates();
     }
 
     public GameState copy() {
@@ -141,6 +145,15 @@ public class GameState {
         planets = new double[nPlanets];
         for (int i=0; i<nPlanets; i++) {
             planets[i] = random.nextInt(3) - 1;
+            // System.out.println(planets[i]);
+        }
+        return this;
+    }
+
+    public GameState setAlternateOwnerships() {
+        planets = new double[nPlanets];
+        for (int i=0; i<nPlanets; i++) {
+            planets[i] = i % 2 == 0 ? 1 : -1; // random.nextInt(3) - 1;
             // System.out.println(planets[i]);
         }
         return this;

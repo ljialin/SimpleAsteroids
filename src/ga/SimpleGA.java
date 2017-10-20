@@ -30,16 +30,16 @@ public class SimpleGA implements EvoAlg {
         return "SGA-" + popSize + " : " + crossoverRate;
     }
 
-    int popSize;
+    int popSize = 20;
 
     // default to 1
     int nSamples = 1;
 
-    double selectionPressure = 0.5;
+    double selectionPressure = 0.1;
 
 
     // the percentage of individuals generated via crossover
-    double crossoverRate;
+    double crossoverRate = 0.5;
 
     ArrayList<ScoredVec> pop;
     SolutionEvaluator evaluator;
@@ -74,10 +74,23 @@ public class SimpleGA implements EvoAlg {
         return this;
     }
 
+    public SimpleGA initPop(int[] seed) {
+        pop = new ArrayList<>();
+        // add in a perfect copy of the seed
+        pop.add(new ScoredVec(seed));
+        for (int i=1; i<popSize; i++) {
+            int[] mut = mutator.randMut(seed);
+            pop.add(new ScoredVec(mut));
+        }
+        return this;
+    }
+
     @Override
     public void setInitialSeed(int[] seed) {
-        throw new RuntimeException("Not yet implemented");
+        initPop(seed);
+        // throw new RuntimeException("Not yet implemented");
         // aim will be to include actual seed plus many mutations of it
+
     }
 
     static Random rand = new Random();

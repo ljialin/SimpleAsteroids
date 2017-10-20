@@ -1,7 +1,9 @@
 package planetwar;
 
 import evodef.EvoAlg;
+import ga.SimpleGA;
 import ga.SimpleRMHC;
+import ntuple.SlidingMeanEDA;
 
 public class GameRunnerTest {
     public static void main(String[] args) {
@@ -10,25 +12,39 @@ public class GameRunnerTest {
         SimplePlayerInterface p1, p2;
 
         p1 = new RandomAgent();
-        p2 = new DoNothingAgent();
+        // p2 = new DoNothingAgent();
 
-        EvoAlg evoAlg = new SimpleRMHC();
-        int nEvals = 100;
-        int seqLength = 20;
+        EvoAlg evoAlg1 = new SimpleRMHC();
 
+        int nEvals = 200;
+        int seqLength = 10;
 
-        p1 = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
+        SlidingMeanEDA evoAlg2 = new SlidingMeanEDA().setHistoryLength(50);
 
-        p2 = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
+        SimpleGA simpleGA = new SimpleGA().setPopulationSize(50);
 
+        EvoAgent evoAgent1 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength);
+        // evoAgent1.setOpponent(new RandomAgent());
+
+        p1 = evoAgent1;
+
+        SimplePlayerInterface opponentModel;
+        opponentModel = new DoNothingAgent();
+        // opponentModel = new RandomAgent();
+        // p2 = new EvoAgent().setEvoAlg(simpleGA, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
+        p2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
+
+        p2 = new RandomAgent();
         gameRunner.setPlayers(p1, p2);
 
         // now play a number of games and observe the outcomes
         // verbose is set to true by default so after the games have been played
         // it will report the outcomes
 
-        int nGames = 20;
+        int nGames = 50;
         gameRunner.playGames(nGames);
+
+        // System.out.println(evoAlg2.pVec);
 
     }
 }

@@ -31,7 +31,7 @@ public class PlanetWarsLinkState
             }
         }
 
-        System.out.println("nActions = " + actions.size());
+        // System.out.println("nActions = " + actions.size());
     }
 
     public static void main(String[] args) {
@@ -42,15 +42,19 @@ public class PlanetWarsLinkState
     }
 
     public PlanetWarsLinkState() {
-        this(new GameState());
+        this(new GameState().defaultState());
     }
 
-    static int nPlanets = 10;
+    public void setup(String actionFile, int randomSeed, boolean isHuman) {
+        this.state = state.defaultState();
+    }
+
+        static int nPlanets = 10;
 
     public PlanetWarsLinkState(GameState state) {
         super(null);
         this.state = state;
-        state.setNPlanets(nPlanets).setRandomOwnerships().setRandomGrowthRates();
+        // state.setNPlanets(nPlanets).setAlternateOwnerships().setRandomGrowthRates();
     }
 
     public StateObservationMulti copy() {
@@ -61,6 +65,7 @@ public class PlanetWarsLinkState
 
 
     public void advance(Types.ACTIONS action) {
+        if (true) throw new RuntimeException("Not meant to call this!");
         int[] a = new int[]{action.ordinal(), random.nextInt(actions.size())};
         state.next(a);
     }
@@ -81,7 +86,10 @@ public class PlanetWarsLinkState
      * @param seed the new seed.
      */
     public void setNewSeed(int seed) {
-        state.random.setSeed(seed);
+
+        // state.random.setSeed(seed);
+        // and generate a new default state
+        state = state.defaultState(seed);
     }
 
     /**
