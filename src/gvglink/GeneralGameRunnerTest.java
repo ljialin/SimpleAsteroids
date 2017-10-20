@@ -11,7 +11,7 @@ import tools.ElapsedCpuTimer;
 public class GeneralGameRunnerTest {
     public static void main(String[] args) {
         PlanetWarsLinkState linkState = new PlanetWarsLinkState();
-        GeneralGameRunner runner = new GeneralGameRunner().setGame(linkState);
+        GeneralGameRunner runner = new GeneralGameRunner().setGame(linkState).setLength(200);
 
         AbstractMultiPlayer player1, player2;
         GameActionSpaceAdapterMulti.visual = false;
@@ -38,7 +38,7 @@ public class GeneralGameRunnerTest {
 
 
         Agent evoAgent2 = new controllers.multiPlayer.ea.Agent(linkState.copy(), timer, evoAlg, idPlayer2, nEvals);
-        evoAgent2.sequenceLength = 10;
+        evoAgent2.sequenceLength = 20;
         player2 = evoAgent2;
 
 
@@ -46,13 +46,13 @@ public class GeneralGameRunnerTest {
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
 
         // player1 = new controllers.multiPlayer.smlrand.Agent();
-        player1 = new controllers.multiPlayer.smlrand.Agent();
-        // player2 = new controllers.multiPlayer.doNothing.Agent(state, timer, 1);
+        // player1 = new controllers.multiPlayer.smlrand.Agent();
+        // player2 = new controllers.multiPlayer.doNothing.Agent(linkState.copy(), timer, 1);
 
 
         runner.setPlayers(player1, player2);
 
-        int nGames = 20;
+        int nGames = 50;
         runner.playGames(nGames);
 
 

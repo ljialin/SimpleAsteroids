@@ -45,6 +45,7 @@ public class GameRunner {
             playGame();
         }
         if (verbose) {
+            System.out.println(p1 + " versus " + p2);
             System.out.println(scores);
             System.out.println();
             System.out.println("p1 wins:\t " + p1Wins);

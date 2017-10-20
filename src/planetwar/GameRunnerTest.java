@@ -19,9 +19,9 @@ public class GameRunnerTest {
         int nEvals = 200;
         int seqLength = 10;
 
-        SlidingMeanEDA evoAlg2 = new SlidingMeanEDA().setHistoryLength(50);
+        SlidingMeanEDA evoAlg2 = new SlidingMeanEDA().setHistoryLength(40);
 
-        SimpleGA simpleGA = new SimpleGA().setPopulationSize(50);
+        SimpleGA simpleGA = new SimpleGA().setPopulationSize(20);
 
         EvoAgent evoAgent1 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength);
         // evoAgent1.setOpponent(new RandomAgent());
@@ -31,10 +31,10 @@ public class GameRunnerTest {
         SimplePlayerInterface opponentModel;
         opponentModel = new DoNothingAgent();
         // opponentModel = new RandomAgent();
-        // p2 = new EvoAgent().setEvoAlg(simpleGA, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
-        p2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
+        p2 = new EvoAgent().setEvoAlg(simpleGA, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
+        // p2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
 
-        p2 = new RandomAgent();
+        // p2 = new RandomAgent();
         gameRunner.setPlayers(p1, p2);
 
         // now play a number of games and observe the outcomes

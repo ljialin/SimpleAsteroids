@@ -47,7 +47,7 @@ public class Agent extends AbstractMultiPlayer {
     public Agent(StateObservationMulti so, ElapsedCpuTimer elapsedTimer, EvoAlg evoAlg, int playerID, int nEvals)
     {
         //get game information
-        // System.out.println("Making an Agent");
+        System.out.println("Making an Agent");
 
         this.evoAlg = evoAlg;
 
@@ -140,6 +140,8 @@ public class Agent extends AbstractMultiPlayer {
         GameActionSpaceAdapterMulti game = new GameActionSpaceAdapterMulti(stateObs, sequenceLength, id, oppID);
         game.discountFactor = this.discountFactor;
 
+
+
         if (solution != null) {
             solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, game);
             evoAlg.setInitialSeed(solution);
@@ -147,9 +149,11 @@ public class Agent extends AbstractMultiPlayer {
 
         solution = evoAlg.runTrial(game, nEvals);
 
+
         // now if we're running verbose, then plot the solutions found by the algorithm
         // System.out.println("Calling gamePlot");
         game.plot();
+
 
         // System.out.println(Arrays.toString(solution) + "\t " + game.evaluate(solution));
 
@@ -162,6 +166,8 @@ public class Agent extends AbstractMultiPlayer {
 
         //... and return it.
         // return actions[action];
+
+
 
         return actions[id][action1];
     }

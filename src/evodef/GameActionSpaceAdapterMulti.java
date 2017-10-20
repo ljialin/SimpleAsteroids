@@ -179,7 +179,7 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
     }
 
     public void plot() {
-        System.out.println("in plot? "  + linePlots == null);
+        // System.out.println("in plot? "  + linePlots == null);
         if (linePlots!=null) {
             LineChart lineChart = new LineChart().setBG(Color.blue);
             lineChart.xAxis = new LineChartAxis(new double[]{0, 10, 20, 30});
