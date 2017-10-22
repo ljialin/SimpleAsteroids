@@ -10,6 +10,7 @@ import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LinePlot;
 import utilities.JEasyFrame;
+import utilities.StatSummary;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -55,6 +56,8 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
      * @param sequenceLength
      */
     public GameActionSpaceAdapterMulti(StateObservationMulti stateObservation, int sequenceLength, int playerID, int opponentID) {
+
+        // much of this does not need to be done each time
         this.stateObservation = stateObservation;
         this.sequenceLength = sequenceLength;
         this.playerID = playerID;
@@ -76,12 +79,11 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
         if (visual) {
             linePlots = new ArrayList<>();
         }
-
+        // System.out.println("Made a new GameActionSpaceAdapter");
     }
 
     public static boolean visual = false;
-    List<LinePlot> linePlots;
-
+    ArrayList<LinePlot> linePlots;
 
 
     @Override
@@ -97,13 +99,26 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
         return numActions;
     }
 
+    StatSummary deltas = new StatSummary();
     @Override
     public void reset() {
         // no action is needed apart from resetting the count;
         // the state is defined by the stateObservation that is passed to this
         logger.reset();
+        deltas = new StatSummary();
+        linePlots = new ArrayList<>();
         nEvals = 0;
     }
+
+    JEasyFrame frame;
+    LineChart lineChart;
+
+    public GameActionSpaceAdapterMulti setState(StateObservationMulti stateObservation) {
+        this.stateObservation = stateObservation;
+        return this;
+    }
+
+
 
     @Override
     public double evaluate(int[] actions) {
@@ -124,7 +139,14 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
         // need to do the visual stuff here ...
         LinePlot linePlot = null;
         if (visual) {
-            float grey = (nEvals % 100) / 50.0f;
+            if (lineChart == null) {
+                lineChart = new LineChart().setBG(Color.blue);
+                lineChart.xAxis = new LineChartAxis(new double[]{0, sequenceLength/2, sequenceLength});
+                lineChart.yAxis = new LineChartAxis(new double[]{-50, -25, 0, 25, 50});
+                lineChart.plotBG = Color.blue;
+                frame = new JEasyFrame(lineChart, "Fitness versus depth");
+            }
+            float grey = (nEvals % 100) / 100.0f;
             linePlot = new LinePlot().setColor(new Color(grey, grey, grey));
             // linePlot = new LinePlot().setColor(Color.red);
 
@@ -157,9 +179,11 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
             discount *= discountFactor;
 
             if (linePlot != null) {
-                linePlot.add(discountedTot);
+                // linePlot.add(discountedTot);
+                double delta = obs.getGameScore((playerID)) - initScore;
+                linePlot.add(delta);
+                deltas.add(delta);
             }
-
         }
         if (visual) {
             linePlots.add(linePlot);
@@ -179,27 +203,15 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
     }
 
     public void plot() {
-        // System.out.println("in plot? "  + linePlots == null);
         if (linePlots!=null) {
-            LineChart lineChart = new LineChart().setBG(Color.blue);
-            lineChart.xAxis = new LineChartAxis(new double[]{0, 10, 20, 30});
-            lineChart.yAxis = new LineChartAxis(new double[]{-200, -100, 0, 100, 200});
-
-            lineChart.addLines(linePlots);
-            // lineChart.
-            // lineChart.
-            new JEasyFrame(lineChart, "Evo Plots");
-            for (LinePlot linePlot : linePlots) {
-                System.out.println(linePlot);
-                // System.out.println();
-            }
-            System.out.println();
+            lineChart.setLines(linePlots);
+            int max = (int) Math.max(Math.abs(deltas.min()), Math.abs(deltas.max()));
+            // prevent a zero range
+            if (max < 5) max = 5;
+            lineChart.yAxis = new LineChartAxis(new double[]{-max, 0, max});
+            lineChart.repaint();
         }
     }
-
-
-
-
 
     @Override
     public boolean optimalFound() {

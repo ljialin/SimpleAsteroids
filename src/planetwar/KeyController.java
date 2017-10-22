@@ -22,11 +22,14 @@ public class KeyController extends KeyAdapter {
         return temp;
     }
 
+    // need to be a bit careful with the logic for this
+    // we need to record the action
+
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         // set the default - or not - if this is set
         // then it every key press just has one action (i.e. no auto-repeat)
-        action = GameState.doNothing;
+        // action = GameState.doNothing;
         if (key == KeyEvent.VK_LEFT) {
             action = GameState.decFocus;
         }
@@ -46,6 +49,6 @@ public class KeyController extends KeyAdapter {
     public void keyReleased(KeyEvent e) {
         // active actions are only made on KeyDown
         // so set the action to do nothing
-        action = GameState.doNothing;
+        // action = GameState.doNothing;
     }
 }

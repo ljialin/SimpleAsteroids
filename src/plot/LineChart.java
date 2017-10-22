@@ -18,8 +18,10 @@ public class LineChart extends JComponent {
 
     Dimension d;
     Color fg = Color.white;
-    Color bg = Color.black; // new Color( 200, 200, 255 );
-    Color plotBG = Color.cyan;
+    public Color bg = Color.black; // new Color( 200, 200, 255 );
+    public Color plotBG = Color.white;
+    Color tickColor = new Color(200, 200, 200, 200);
+
     ArrayList<LinePlot> lines;
     ArrayList<LineGroup> lineGroups;
     public String title;
@@ -117,6 +119,11 @@ public class LineChart extends JComponent {
 
     public LineChart addLine(LinePlot line) {
         lines.add(line);
+        return this;
+    }
+
+    public LineChart setLines(ArrayList<LinePlot> lines) {
+        this.lines = lines;
         return this;
     }
 
@@ -457,8 +464,7 @@ public class LineChart extends JComponent {
 
     double tickHeight = 0.015;
     double labelGap = 0.05;
-    Color tickColor = new Color(200, 200, 200, 200);
-    Color labelColor = Color.white;
+    Color labelColor = fg;
 
     private int getFontSize(Dimension size) {
         return (int) (2.1 * size.getHeight() * tickHeight);

@@ -19,12 +19,13 @@ import static asteroids.Constants.size;
 public class PlanetWarView extends JComponent {
 
     GameState game;
+    Color[] playerColors = {Color.green, Color.red};
 
     public PlanetWarView(GameState game) {
         this.game = game;
     }
 
-    static Color bg = Color.getHSBColor(0.1f, 1, 1);
+    static Color bg = Color.black; // Color.getHSBColor(0.9f, 1, 0.8f);
 
     public void paintComponent(Graphics gx) {
         Graphics2D g = (Graphics2D) gx;
@@ -46,19 +47,34 @@ public class PlanetWarView extends JComponent {
         for (int i = 0; i < game.nPlanets; i++) {
             Color color = Color.gray;
             if (game.planets[i] > 0) {
-                color = Color.green;
+                color = playerColors[0];
             }
             if (game.planets[i] < 0) {
-                color = color.red;
+                color = playerColors[1];
             }
             drawPlanet(g, i , color, sectorAngle * i);
         }
 
         String score = (int) game.buffers[0] + " : " + (int) game.getScore() + " : " + (int) game.buffers[1];
+        drawBuffers(g);
         centreString(g, score,getWidth() / 2, getHeight() / 2);
 
     }
 
+    private void drawBuffers(Graphics2D g) {
+        // for now just draw it as a rectangle
+        int w = getWidth() / 10;
+        int cx = getWidth() / 2;
+        int cy = getHeight() / 2;
+        int[] xx = { cx - w, cx  + w};
+        for (int i=0; i<game.buffers.length; i++) {
+            int h = (int) game.buffers[i] * bufferScale;
+            g.setColor(playerColors[i]);
+            g.fillRect(xx[i] - w/2, cy - h/2, w, h);
+        }
+    }
+
+    static int bufferScale = 5;
     static int planetScale = 3;
 
     private void drawPlanet(Graphics2D g, int i, Color color, double angle) {
@@ -102,6 +118,7 @@ public class PlanetWarView extends JComponent {
         int fontSize = 16;
         g.setFont(new Font("Monospaced", Font.BOLD, fontSize));
         Rectangle2D rect = g.getFontMetrics().getStringBounds(str, g);
+        g.setColor(Color.white);
         // use a drawString method for now
         int sx = x - (int) rect.getWidth() / 2;
         int sy = y + (int)  + rect.getHeight() / 2;

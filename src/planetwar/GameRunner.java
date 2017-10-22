@@ -1,7 +1,14 @@
 package planetwar;
 
+import gvglink.GameLog;
+import plot.LineChart;
+import plot.LineChartAxis;
+import plot.LinePlot;
 import utilities.ElapsedTimer;
+import utilities.JEasyFrame;
 import utilities.StatSummary;
+
+import java.util.ArrayList;
 
 public class GameRunner {
 
@@ -15,6 +22,8 @@ public class GameRunner {
     static int p1Index = 0;
     static int p2Index = 1;
 
+
+    ArrayList<GameLog> gameLogs;
     boolean verbose = true;
 
     public GameRunner setPlayers(SimplePlayerInterface p1, SimplePlayerInterface p2) {
@@ -35,6 +44,7 @@ public class GameRunner {
         nGames = 0;
         p1Wins = 0;
         p2Wins = 0;
+        gameLogs = new ArrayList<>();
     }
 
     public GameRunner playGames(int n) {
@@ -57,18 +67,48 @@ public class GameRunner {
         return this;
     }
 
+    // boolean verbose = true;
     public GameRunner playGame() {
         GameState gameState = new GameState().defaultState();
+        GameLog gameLog = new GameLog();
+        gameLog.addScore(gameState.getScore());
         int[] actions = new int[2];
         for (int i=0; i<nSteps; i++) {
             actions[0] = p1.getAction(gameState.copy(), p1Index);
             actions[1] = p2.getAction(gameState.copy(), p2Index);
             gameState.next(actions);
+            gameLog.addScore(gameState.getScore());
         }
         scores.add(gameState.getScore());
         if (gameState.getScore() > 0) p1Wins++;
         if (gameState.getScore() < 0) p2Wins++;
+        if (verbose) {
+            System.out.format("Game %d, score: %d\n", nGames, (int) gameState.getScore());
+            System.out.println("Lead changes: "+ gameLog.leadChanges);
+            System.out.println();
+        }
         nGames++;
+        gameLogs.add(gameLog);
         return this;
     }
+
+    public LineChart plotGameScores() {
+        LineChart lineChart = new LineChart();
+        for (GameLog gameLog : gameLogs) {
+            LinePlot linePlot = new LinePlot().setData(gameLog.scores).setRandomColor();
+            lineChart.addLine(linePlot);
+        }
+        lineChart.xAxis = new LineChartAxis(new double[]{0, nSteps/2, nSteps});
+        lineChart.setXLabel("Game Tick");
+        lineChart.setYLabel("Score");
+        String title = String.format("%s (%d) v. %s (%d)", p1.toString(), p1Wins,
+                p2.toString(), p2Wins);
+        lineChart.setTitle(title);
+
+        double[] scoreTics = new  double[]{scores.min(), 0, scores.max()};
+        lineChart.yAxis = new LineChartAxis(scoreTics);
+        new JEasyFrame(lineChart, "Game Scores");
+        return lineChart;
+    }
+
 }

@@ -23,8 +23,10 @@ public class Agent extends AbstractMultiPlayer {
     // these used to be static, but have made them instance variables
     // to allow experiments between multiple instances of the agent
     // with different values
-    public int sequenceLength = 10;
+    public int sequenceLength = 20;
     public boolean useShiftBuffer = true;
+
+    GameActionSpaceAdapterMulti gameAdapter;
 
     int nEvals;
 
@@ -38,23 +40,26 @@ public class Agent extends AbstractMultiPlayer {
     public Types.ACTIONS[][] actions;
     public int id, oppID, no_players;
 
+    StateObservationMulti stateObservationMulti;
+
 
     /**
      * Public constructor with state observation and time due.
-     * @param so state observation of the current game.
+     * @param stateObservationMulti state observation of the current game.
      * @param elapsedTimer Timer for the controller creation.
      */
-    public Agent(StateObservationMulti so, ElapsedCpuTimer elapsedTimer, EvoAlg evoAlg, int playerID, int nEvals)
+    public Agent(StateObservationMulti stateObservationMulti, ElapsedCpuTimer elapsedTimer, EvoAlg evoAlg, int playerID, int nEvals)
     {
+        this.stateObservationMulti = stateObservationMulti;
         //get game information
         System.out.println("Making an Agent");
 
         this.evoAlg = evoAlg;
 
-        no_players = so.getNoPlayers();
+        no_players = stateObservationMulti.getNoPlayers();
         id = playerID;
 
-        oppID = (id + 1) % so.getNoPlayers();
+        oppID = (id + 1) % stateObservationMulti.getNoPlayers();
         this.nEvals = nEvals;
 
         //Get the actions for all players in a static array.
@@ -63,7 +68,7 @@ public class Agent extends AbstractMultiPlayer {
         actions = new Types.ACTIONS[no_players][];
         for (int i = 0; i < no_players; i++) {
 
-            ArrayList<Types.ACTIONS> act = so.getAvailableActions(i);
+            ArrayList<Types.ACTIONS> act = stateObservationMulti.getAvailableActions(i);
 
             actions[i] = new Types.ACTIONS[act.size()];
             for (int j = 0; j < act.size(); ++j) {
@@ -71,6 +76,16 @@ public class Agent extends AbstractMultiPlayer {
             }
             NUM_ACTIONS[i] = actions[i].length;
         }
+        gameAdapter = new GameActionSpaceAdapterMulti(stateObservationMulti, sequenceLength, id, oppID);
+
+    }
+
+
+
+    public Agent setSequenceLength(int sequenceLength) {
+        this.sequenceLength = sequenceLength;
+        gameAdapter = new GameActionSpaceAdapterMulti(stateObservationMulti, sequenceLength, id, oppID);
+        return this;
     }
 
     /**
@@ -137,22 +152,24 @@ public class Agent extends AbstractMultiPlayer {
         // time at least to being with
 
         int action1;
-        GameActionSpaceAdapterMulti game = new GameActionSpaceAdapterMulti(stateObs, sequenceLength, id, oppID);
-        game.discountFactor = this.discountFactor;
+        // GameActionSpaceAdapterMulti game = new GameActionSpaceAdapterMulti(stateObs, sequenceLength, id, oppID);
+        gameAdapter.setState(stateObs);
+        gameAdapter.discountFactor = this.discountFactor;
+        gameAdapter.reset();
 
 
 
         if (solution != null) {
-            solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, game);
+            solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, gameAdapter);
             evoAlg.setInitialSeed(solution);
         }
 
-        solution = evoAlg.runTrial(game, nEvals);
+        solution = evoAlg.runTrial(gameAdapter, nEvals);
 
 
         // now if we're running verbose, then plot the solutions found by the algorithm
         // System.out.println("Calling gamePlot");
-        game.plot();
+        gameAdapter.plot();
 
 
         // System.out.println(Arrays.toString(solution) + "\t " + game.evaluate(solution));

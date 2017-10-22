@@ -24,7 +24,7 @@ public class EvoAgent implements SimplePlayerInterface {
 
     static int nActions = GameState.nActions;
     int sequenceLength = 20;
-    static boolean useShiftBuffer = true;
+    public boolean useShiftBuffer = true;
     int[] solution;
     int nEvals;
 
@@ -35,6 +35,11 @@ public class EvoAgent implements SimplePlayerInterface {
         actionSequencer = new ActionSequencer();
         searchSpace = new RegularSearchSpace(sequenceLength, nActions);
         simpleGameAdapter = new SimpleGameAdapter().setEvaluator(actionSequencer).setSearchSpace(searchSpace);
+        return this;
+    }
+
+    public EvoAgent setUseShiftBuffer(boolean useShiftBuffer) {
+        this.useShiftBuffer = useShiftBuffer;
         return this;
     }
 
@@ -72,6 +77,10 @@ public class EvoAgent implements SimplePlayerInterface {
 
         // return first element
         return tmp;
+    }
+
+    public String toString() {
+        return "EA: " + evoAlg.getClass().getSimpleName() + " : " + nEvals + " : " + sequenceLength;
     }
 
     public int getAction(GameState gameState, int playerId) {

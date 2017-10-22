@@ -39,6 +39,11 @@ public class LinePlot {
         return this;
     }
 
+    public LinePlot setRandomColor() {
+        this.color = randColor();
+        return this;
+    }
+
     public LinePlot add(double x) {
         line.add(x);
         sy.add(x);

@@ -33,11 +33,12 @@ public class PlanetWarsLinkTest {
     // this is very easy to do - but question of whether we need a timed or instant movement...
 
     public static void main(String[] args) throws Exception {
+
         PlanetWarsLinkState state = new PlanetWarsLinkState();
 
         PlanetWarView view = null;
-        // view = new PlanetWarView(state.state);
-//        JEasyFrame frame = new JEasyFrame(view, "Test View");
+        view = new PlanetWarView(state.state);
+        JEasyFrame frame = new JEasyFrame(view, "Test View");
 //        KeyController controller = new KeyController();
 //        frame.addKeyListener(controller);
 
@@ -46,7 +47,7 @@ public class PlanetWarsLinkTest {
 
 
         AbstractMultiPlayer player1, player2;
-        GameActionSpaceAdapterMulti.visual = false;
+        GameActionSpaceAdapterMulti.visual = true;
 
 //        controllers.singlePlayer.sampleOLMCTS.Agent olmcts =
 //                new controllers.singlePlayer.sampleOLMCTS.Agent(linkState, timer);
@@ -56,26 +57,26 @@ public class PlanetWarsLinkTest {
 
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
 
-        player1 = new controllers.multiPlayer.discountOLMCTS.Agent(state.copy(), timer, idPlayer1);
+        player2 = new controllers.multiPlayer.discountOLMCTS.Agent(state.copy(), timer, idPlayer2);
 
         // try the evolutionary players
 
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
-        int nEvals = 200;
-        evoAlg = new SlidingMeanEDA().setHistoryLength(20);
+        int nEvals = 100;
+        // evoAlg = new SlidingMeanEDA().setHistoryLength(20);
 
 
         Agent evoAgent = new controllers.multiPlayer.ea.Agent(state.copy(), timer, evoAlg, idPlayer1, nEvals);
-        evoAgent.sequenceLength = 100;
-        // player1 = evoAgent;
+        evoAgent.sequenceLength = 20;
+        player1 = evoAgent;
 
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer2, nEvals);
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
 
         // player1 = new controllers.multiPlayer.smlrand.Agent();
-        player2 = new controllers.multiPlayer.smlrand.Agent();
+        // player2 = new controllers.multiPlayer.smlrand.Agent();
         // player2 = new controllers.multiPlayer.doNothing.Agent(state, timer, 1);
 
         // EvoAlg evoAlg2 = new SimpleRMHC(2);
@@ -85,13 +86,13 @@ public class PlanetWarsLinkTest {
 
         // player1 =
         int thinkingTime = 5; // in milliseconds
-        int delay = 100;
+        int delay = 1000;
 
         // player = new controllers.singlePlayer.sampleRandom.Agent(stateObs, timer);
 
         // check that we can play the game
 
-        int nSteps = 10;
+        int nSteps = 100;
 
         for (int i = 0; i < nSteps; i++) {
 

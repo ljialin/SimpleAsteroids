@@ -154,6 +154,8 @@ public class GameState {
         planets = new double[nPlanets];
         for (int i=0; i<nPlanets; i++) {
             planets[i] = i % 2 == 0 ? 1 : -1; // random.nextInt(3) - 1;
+            // at the same time, for now, also allocate a ship to each one
+
             // System.out.println(planets[i]);
         }
         return this;
@@ -262,7 +264,7 @@ public class GameState {
         }
         // now also factor in the buffers
 
-        return (int) (score * 100);
+        return (int) (score * 10);
     }
 
     public int getGameTick() {
