@@ -57,7 +57,8 @@ public class PlanetWarsLinkTest {
 
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
 
-        player2 = new controllers.multiPlayer.discountOLMCTS.Agent(state.copy(), timer, idPlayer2);
+        // player2 = new controllers.multiPlayer.discountOLMCTS.Agent(state.copy(), timer, idPlayer2);
+        player2 = new controllers.multiPlayer.sampleOLMCTS.Agent(state.copy(), timer, idPlayer2);
 
         // try the evolutionary players
 
