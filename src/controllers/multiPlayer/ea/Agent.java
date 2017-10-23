@@ -144,6 +144,11 @@ public class Agent extends AbstractMultiPlayer {
         return this;
     }
 
+    public Agent setUseShiftBuffer(boolean useShiftBuffer) {
+        this.useShiftBuffer = useShiftBuffer;
+        return this;
+    }
+
     @Override
     public Types.ACTIONS act(StateObservationMulti stateObs, ElapsedCpuTimer elapsedCpuTimer) {
         //Set the state observation object as the new root of the tree.

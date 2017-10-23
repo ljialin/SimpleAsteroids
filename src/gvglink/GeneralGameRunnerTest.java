@@ -24,6 +24,7 @@ public class GeneralGameRunnerTest {
         player1 = new controllers.multiPlayer.discountOLMCTS.Agent(linkState.copy(), timer, idPlayer1);
 
         // try the evolutionary players
+        GameActionSpaceAdapterMulti.visual = true;
 
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
@@ -39,6 +40,7 @@ public class GeneralGameRunnerTest {
 
         Agent evoAgent2 = new controllers.multiPlayer.ea.Agent(linkState.copy(), timer, evoAlg, idPlayer2, nEvals);
         evoAgent2.sequenceLength = 20;
+        // evoAgent2.setUseShiftBuffer(false);
         player2 = evoAgent2;
 
 

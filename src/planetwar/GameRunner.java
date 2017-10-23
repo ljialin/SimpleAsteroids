@@ -19,6 +19,7 @@ public class GameRunner {
     int p2Wins;
     int nGames;
 
+    int nInitialLeaderWins;
     static int p1Index = 0;
     static int p2Index = 1;
 
@@ -44,6 +45,7 @@ public class GameRunner {
         nGames = 0;
         p1Wins = 0;
         p2Wins = 0;
+        nInitialLeaderWins = 0;
         gameLogs = new ArrayList<>();
     }
 
@@ -61,17 +63,20 @@ public class GameRunner {
             System.out.println("p1 wins:\t " + p1Wins);
             System.out.println("p2 wins:\t " + p2Wins);
             System.out.println("n games:\t " + nGames);
+            System.out.println("Init leader wins: " + nInitialLeaderWins);
             System.out.println(t);
         }
         System.out.println();
         return this;
     }
 
+
     // boolean verbose = true;
     public GameRunner playGame() {
         GameState gameState = new GameState().defaultState();
         GameLog gameLog = new GameLog();
         gameLog.addScore(gameState.getScore());
+        gameLog.setInitialGrowthRate(gameState.totalGrowthRate());
         int[] actions = new int[2];
         for (int i=0; i<nSteps; i++) {
             actions[0] = p1.getAction(gameState.copy(), p1Index);
@@ -80,14 +85,18 @@ public class GameRunner {
             gameLog.addScore(gameState.getScore());
         }
         scores.add(gameState.getScore());
+
         if (gameState.getScore() > 0) p1Wins++;
         if (gameState.getScore() < 0) p2Wins++;
         if (verbose) {
             System.out.format("Game %d, score: %d\n", nGames, (int) gameState.getScore());
             System.out.println("Lead changes: "+ gameLog.leadChanges);
+            System.out.println(gameLog);
+            System.out.println();
             System.out.println();
         }
         nGames++;
+        if (gameLog.leaderHadAdvantage()) nInitialLeaderWins++;
         gameLogs.add(gameLog);
         return this;
     }

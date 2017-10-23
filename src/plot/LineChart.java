@@ -82,7 +82,7 @@ public class LineChart extends JComponent {
         this.d = d;
         lines = new ArrayList<>();
         lineGroups = new ArrayList<>();
-        System.out.println(d);
+        // System.out.println(d);
 
     }
     public LineChart setBG(Color bg) {
@@ -160,7 +160,7 @@ public class LineChart extends JComponent {
     // the second version is to enable various sizes to be passed
     // when not used as part of a window component
     public void paintComponent(Graphics2D g, Dimension size) {
-        System.out.println(d);
+        // System.out.println(d);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(bg);
         g.translate(0, size.getHeight());
@@ -188,8 +188,8 @@ public class LineChart extends JComponent {
             }
         }
 
-        System.out.println("Sx: " + sx);
-        System.out.println("Sy: " + sy);
+//        System.out.println("Sx: " + sx);
+//        System.out.println("Sy: " + sy);
 
         // now plot each of the lines, as a new Path2D
         plotLeft = size.getWidth() * leftMargin;
@@ -203,7 +203,7 @@ public class LineChart extends JComponent {
 //        double rw = getWidth() * (1 - (leftMargin + rightMargin));
 //        double rh = getHeight() * (1 - (topMargin + bottomMargin));
 
-        System.out.println("SX: " + sx);
+        // System.out.println("SX: " + sx);
 
         xMap = new RangeMapper(sx.min(), sx.max(), plotLeft, plotRight);
         yMap = new RangeMapper(sy.min(), sy.max(), plotBottom, plotTop);
@@ -218,7 +218,7 @@ public class LineChart extends JComponent {
         g.setStroke(new BasicStroke(2));
         g.setColor(Color.white);
         g.draw(plotRegion);
-        System.out.println(plotRegion);
+        // System.out.println(plotRegion);
 
 
         drawLines(g);
@@ -315,7 +315,7 @@ public class LineChart extends JComponent {
         if (yLabel == null) return;
         int sx = (int) (plotLeft * 0.2); // (xMap.map(leftMargin*8));
         int sy = (int) (size.getHeight()/2 );
-        System.out.println("Y Label: " + sx + " : " + sy);
+        // System.out.println("Y Label: " + sx + " : " + sy);
         g.setColor(labelColor);
         drawRotatedString(g, yLabel, sx, sy);
     }
@@ -439,7 +439,7 @@ public class LineChart extends JComponent {
             // draw the xLines in
             Path2D.Double path = new Path2D.Double();
             for (double x : xAxis.ticks) {
-                System.out.println(x);
+                // System.out.println(x);
                 g.setColor(new Color(100, 100, 100, 100));
                 path.moveTo(xMap.map(x), plotBottom);
                 path.lineTo(xMap.map(x), plotTop);

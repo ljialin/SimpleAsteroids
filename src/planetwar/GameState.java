@@ -141,6 +141,19 @@ public class GameState {
         return this;
     }
 
+    public double totalGrowthRate() {
+        double tot = 0;
+        for (int i=0; i<nPlanets; i++) {
+            tot += growthRates[i] * owner(i);
+        }
+        return tot;
+    }
+
+    public int owner(int i) {
+        if (planets[i] == 0) return 0;
+        return (planets[i] > 0) ? 1 : -1;
+    }
+
     public GameState setRandomOwnerships() {
         planets = new double[nPlanets];
         for (int i=0; i<nPlanets; i++) {

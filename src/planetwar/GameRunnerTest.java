@@ -16,16 +16,18 @@ public class GameRunnerTest {
 
         EvoAlg evoAlg1 = new SimpleRMHC();
 
-        int nEvals = 2000;
-        int seqLength = 10;
+        int nEvals = 100;
+        int seqLength = 20;
 
         SlidingMeanEDA evoAlg2 = new SlidingMeanEDA().setHistoryLength(40);
 
         SimpleGA simpleGA = new SimpleGA().setPopulationSize(20);
 
         EvoAgent evoAgent1 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength);
+        // evoAgent1.setUseShiftBuffer(false);
         // evoAgent1.u
-        evoAgent1.setOpponent(new RandomAgent()).setUseShiftBuffer(false);
+
+        // evoAgent1.setOpponent(new RandomAgent()).setUseShiftBuffer(false);
 
         // evoAgent1.setOpponent(new RandomAgent());
 
@@ -33,10 +35,16 @@ public class GameRunnerTest {
 
         SimplePlayerInterface opponentModel;
         opponentModel = new DoNothingAgent();
-        opponentModel = new RandomAgent();
-        p2 = new EvoAgent().setEvoAlg(simpleGA, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
+        // opponentModel = new RandomAgent();
+        // p2 = new EvoAgent().setEvoAlg(simpleGA, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
 
-        p2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals/2).setSequenceLength(seqLength*2).setOpponent(opponentModel);
+        // p2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals/2).setSequenceLength(seqLength*2).setOpponent(opponentModel);
+        EvoAgent evoAgent2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
+
+        evoAgent2.setUseShiftBuffer(false);
+        p2 = evoAgent2;
+
+
 
         // p2 = new RandomAgent();
 
