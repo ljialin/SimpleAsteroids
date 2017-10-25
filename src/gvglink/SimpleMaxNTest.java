@@ -74,7 +74,7 @@ public class SimpleMaxNTest {
 
         evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        Mutator.totalRandomChaosMutation = true;
+        // Mutator.totalRandomChaosMutation = true;
 
         Agent.useShiftBuffer = false;
 

@@ -35,7 +35,7 @@ public class GeneralGameRunnerTest {
 
         Agent evoAgent1 = new controllers.multiPlayer.ea.Agent(linkState.copy(), timer, evoAlg, idPlayer1, nEvals);
         evoAgent1.sequenceLength = 10;
-        player1 = evoAgent1;
+        // player1 = evoAgent1;
 
 
         Agent evoAgent2 = new controllers.multiPlayer.ea.Agent(linkState.copy(), timer, evoAlg, idPlayer2, nEvals);

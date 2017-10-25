@@ -2,7 +2,6 @@ package evodef;
 
 import evogame.Mutator;
 import ga.SimpleRMHC;
-import plot.LinePlot;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class TestFHT {
 
         TestFHT testFHT = new TestFHT(evaluator, nFitnessEvals);
         Mutator.defaultPointProb = 1;
-        Mutator.flipAtLeastOneValue = false;
+        // Mutator.flipAtLeastOneValueDefault = false;
 
         System.out.println("Problem: " + evaluator.getClass().getSimpleName());
         System.out.println("N Fitness Evals: " + nFitnessEvals);
@@ -52,7 +51,7 @@ public class TestFHT {
         System.out.println("N Dimensions: " + nDims);
         System.out.println("n Resamples: " + nSamples);
         System.out.println("Algorithm: " + rmhc.getClass().getSimpleName());
-        System.out.println("Flip at least one? " + Mutator.flipAtLeastOneValue);
+        System.out.println("Flip at least one? " + Mutator.flipAtLeastOneValueDefault);
         System.out.println("Mutation probability: " + Mutator.defaultPointProb);
 
         StatSummary nEvals = new StatSummary("nEvals");

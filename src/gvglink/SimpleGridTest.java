@@ -75,7 +75,7 @@ public class SimpleGridTest {
         evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
         evoAlg = new SlidingMeanEDA();
 
-        Mutator.totalRandomChaosMutation = false;
+        // Mutator.totalRandomChaosMutation = false;
 
         Agent.useShiftBuffer = true;
 

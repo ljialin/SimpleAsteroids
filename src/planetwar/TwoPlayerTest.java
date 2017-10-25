@@ -1,6 +1,7 @@
 package planetwar;
 
 import evodef.EvoAlg;
+import evodef.GameActionSpaceAdapterMulti;
 import ga.SimpleRMHC;
 import ntuple.SlidingMeanEDA;
 import utilities.JEasyFrame;
@@ -29,6 +30,7 @@ public class TwoPlayerTest {
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
 
         int delay = 500;
+        GameActionSpaceAdapterMulti.visual = true;
         Random random = new Random();
         for (int i=0; i<500; i++) {
             int p1, p2;

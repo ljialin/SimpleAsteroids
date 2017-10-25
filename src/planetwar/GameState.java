@@ -267,15 +267,25 @@ public class GameState {
         return this;
     }
 
-    static boolean invadeAll = true;
-    static boolean remove50perCent = true;
+    public static boolean invadeAll = true;
+    public static boolean remove50perCent = true;
+
+    public static boolean includeBuffersInScore = true;
 
     public double getScore() {
         double score = 0;
         for (double x : planets) {
             score += x;
         }
+
         // now also factor in the buffers
+        // or not, if we want the game to be more deceptive ...
+
+        if (includeBuffersInScore) {
+            score += buffers[0];
+            score -= buffers[1];
+        }
+
 
         return (int) (score * 10);
     }

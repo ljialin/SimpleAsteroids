@@ -7,7 +7,6 @@ import evogame.Mutator;
 import ntuple.ScoredVec;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -54,7 +53,7 @@ public class ProblemInstance {
         Mutator mutator = new Mutator(evaluator.searchSpace());
         mutator.pointProb = 0.0; // 1.0; // 3 / n;
         // mutator
-        Mutator.flipAtLeastOneValue = true;
+        Mutator.flipAtLeastOneValueDefault = true;
         Mutator.totalRandomChaosMutation = false;
 
         for (int i = 0; i < k; i++) {

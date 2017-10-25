@@ -68,7 +68,7 @@ public class SpaceBattleLinkTest {
         // set some parameters for the experiment
         GameActionSpaceAdapter.useHeuristic = false;
         Agent.useShiftBuffer = true;
-        Mutator.totalRandomChaosMutation = false;
+        // Mutator.totalRandomChaosMutation = false;
 
 
 

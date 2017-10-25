@@ -15,33 +15,46 @@ public class Mutator {
     public static void main(String[] args) {
 
         // check operation on a simple case
-
         Mutator mutator = new Mutator(new EvalMaxM(3, 2));
 
         System.out.println(Arrays.toString(mutator.randMut(new int[]{0, 0, 0})));
         System.out.println(Arrays.toString(mutator.randMut(new int[]{1, 1, 1})));
 
         // check operation of this
-        totalRandomChaosMutation = false;
+        mutator.totalRandomChaosMutation = false;
         mutator = new Mutator(new EvalMaxM(50, 10));
         System.out.println(Arrays.toString(mutator.randMut(new int[mutator.searchSpace.nDims()])));
-        totalRandomChaosMutation = true;
+        // mutator.totalRandomChaosMutation = true;
         System.out.println(Arrays.toString(mutator.randMut(new int[mutator.searchSpace.nDims()])));
+
+        System.out.println();
+        Mutator mutator1 = new Mutator(new EvalMaxM(50, 10));
+        System.out.println(mutator1);
+        mutator1.flipAtLeastOneValue = false;
+        mutator1.pointProb = 3.0;
+        System.out.println(mutator1);
+
+        Mutator mutator2 = new Mutator(new EvalMaxM(1, 3));
+        System.out.println(Arrays.toString(mutator2.randMut(new int[]{0})));
+
     }
 
     // this will be set each time a Mutator is created
     public double pointProb;
     static Random random = new Random();
 
-    public static boolean totalRandomChaosMutation = false;
+    public static boolean totalRandomChaosMutation = true;
     public static double defaultPointProb = 1.0;
-    public static boolean flipAtLeastOneValue = true;
+    public static boolean flipAtLeastOneValueDefault = true;
+
+    public boolean flipAtLeastOneValue = flipAtLeastOneValueDefault;
 
     SearchSpace searchSpace;
 
     public Mutator(SearchSpace searchSpace) {
         this.searchSpace = searchSpace;
         pointProb = defaultPointProb;
+        flipAtLeastOneValue = flipAtLeastOneValueDefault;
     }
 
     public int[] randMut(int[] v) {
@@ -61,7 +74,7 @@ public class Mutator {
             // leaving it at the randomly chosen value ensures that at least one bit (or more generally value) is always flipped
             ix = -1;
         }
-        // copy all the values fauthfully apart from the chosen one
+        // copy all the values faithfully apart from the chosen one
         for (int i=0; i<n; i++) {
             if (i == ix || random.nextDouble() < mutProb) {
                 x[i] = mutateValue(v[i], searchSpace.nValues(i));
@@ -77,7 +90,22 @@ public class Mutator {
         // selecting the current value is not allowed
         // therefore we add 1 if the randomly chosen
         // value is greater than or equal to the current value
+        if (nPossible <= 1) return cur;
         int rx = random.nextInt(nPossible-1);
         return rx >= cur ? rx+1 : rx;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Mutator\n");
+        sb.append("Totally random mutations: " + totalRandomChaosMutation + "\n");
+        sb.append("Flip at least one value:  " + flipAtLeastOneValue + "\n");
+        sb.append("Point mutation prob:      " + pointProb + "\n");
+        return sb.toString();
+    }
+
+    public Mutator setSearchSpace(SearchSpace searchSpace) {
+        this.searchSpace = searchSpace;
+        return this;
     }
 }

@@ -74,7 +74,7 @@ public class SpaceBattleLinkTestTwoPlayer {
 
         GameActionSpaceAdapterMulti.useHeuristic = false;
 
-        Mutator.totalRandomChaosMutation = false;
+        // Mutator.totalRandomChaosMutation = false;
 
         // // supercl
         // StateObservation stateObs = linkState;

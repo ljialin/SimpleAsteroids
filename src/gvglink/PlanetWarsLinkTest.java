@@ -5,6 +5,7 @@ import core.player.AbstractMultiPlayer;
 import evodef.EvoAlg;
 import evodef.GameActionSpaceAdapter;
 import evodef.GameActionSpaceAdapterMulti;
+import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactSlidingModelGA;
 import ntuple.NTupleBanditEA;
@@ -48,6 +49,7 @@ public class PlanetWarsLinkTest {
 
         AbstractMultiPlayer player1, player2;
         GameActionSpaceAdapterMulti.visual = true;
+        // Mutator.totalRandomChaosMutation = true;
 
 //        controllers.singlePlayer.sampleOLMCTS.Agent olmcts =
 //                new controllers.singlePlayer.sampleOLMCTS.Agent(linkState, timer);
@@ -77,7 +79,7 @@ public class PlanetWarsLinkTest {
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
 
         // player1 = new controllers.multiPlayer.smlrand.Agent();
-        // player2 = new controllers.multiPlayer.smlrand.Agent();
+        player2 = new controllers.multiPlayer.smlrand.Agent();
         // player2 = new controllers.multiPlayer.doNothing.Agent(state, timer, 1);
 
         // EvoAlg evoAlg2 = new SimpleRMHC(2);

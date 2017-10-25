@@ -59,6 +59,12 @@ public class SimpleRMHC implements EvoAlg {
         this.seed = seed;
     }
 
+    Mutator mutator;
+
+    public SimpleRMHC setMutator(Mutator mutator) {
+        this.mutator = mutator;
+        return this;
+    }
 
     /**
      * @param evaluator
@@ -69,7 +75,12 @@ public class SimpleRMHC implements EvoAlg {
     public int[] runTrial(SolutionEvaluator evaluator, int maxEvals) {
         init(evaluator);
         StatSummary fitBest = fitness(evaluator, bestYet, new StatSummary());
-        Mutator mutator = new Mutator(searchSpace);
+
+        // create a mutator if it has not already been made
+        if (mutator == null)
+            mutator = new Mutator(searchSpace);
+        else
+            mutator.setSearchSpace(searchSpace);
 
         while (evaluator.nEvals() < maxEvals && !evaluator.optimalFound()) {
             // System.out.println("nEvals: " + evaluator.nEvals());
