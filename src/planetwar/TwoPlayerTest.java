@@ -28,6 +28,8 @@ public class TwoPlayerTest {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(20);
         System.out.println("Initial score: " + game.getScore());
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
+        evoAgent.setUseShiftBuffer(true);
+        evoAgent.setVisual();
 
         int delay = 500;
         GameActionSpaceAdapterMulti.visual = true;

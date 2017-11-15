@@ -20,7 +20,7 @@ public class Ship extends GameObject {
     // public static double scale = 15;
 
 
-    // set these from the game params
+    // set these from the gameState params
     // define how quickly the ship will rotate
     double steerStep; //  = 10 * Math.PI / 180;
 
@@ -38,6 +38,9 @@ public class Ship extends GameObject {
     public Action action;
     public GameState game;
 
+    // a ship fires a missile this way
+    public Missile pending;
+
     // position and velocity
     public Vector2d d;
 
@@ -54,6 +57,8 @@ public class Ship extends GameObject {
         Ship ship = new Ship(game, s, v, d);
         ship.action = new Action(action);
         ship.releaseVelocity = releaseVelocity;
+        ship.pending = pending;
+        ship.thrusting = thrusting;
         return ship;
     }
 
@@ -75,8 +80,9 @@ public class Ship extends GameObject {
         // System.out.println("Reset the ship ");
     }
 
-    public void update() {
-        update(action);
+    public void update(GameState gameState) {
+        // do nothing here, wait for the action call instead
+        // update(action);
     }
 
     public Ship update(Action action) {
@@ -111,8 +117,10 @@ public class Ship extends GameObject {
     }
 
     private void tryMissileLaunch() {
-        // System.out.println("Trying a missile launch");
+//        System.out.println("Trying a missile launch");
+//        System.out.println("Release velocity: " + releaseVelocity);
         if (releaseVelocity > maxRelease) {
+            // System.out.println("Missile fired!");
             releaseVelocity = Math.max(releaseVelocity, game.params.missileMinVelocity * 2);
             Missile m = new Missile(s, new Vector2d(0, 0), game.params.missileTTL, game.params.missileRadius);
             releaseVelocity = Math.min(releaseVelocity, maxRelease);
@@ -120,11 +128,16 @@ public class Ship extends GameObject {
             // make it clear the ship
             m.s.add(m.v, (r() + game.params.missileRadius) * 1.5 / m.v.mag());
             releaseVelocity = 0;
-            game.add(m);
+            // got it! - it adds it to the old version of the gameState
+            pending = m;
+
+            // used to add the missile to the gameState here, but caused problems in
+            // the way the reference was being copied, hence removed it
+            // gameState.add(m);
             // System.out.println("Fired: " + m);
             // sounds.fire();
         } else {
-            // System.out.println("Failed!");
+//            System.out.println("Failed!");
         }
     }
 

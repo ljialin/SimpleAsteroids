@@ -64,27 +64,27 @@ public class LiveListBackup {
     }
 
     public synchronized void update() {
-        // update them
-        // System.out.println("In update(): " + n);
-        for (GameObject ob : objects) {
-            ob.update();
-            wrap(ob);
-            checkCollision(ob);
-        }
-        // add all live objects to the pending list
-        for (GameObject ob : objects) {
-            if (!ob.dead()) {
-                pending.add(ob);
-            }
-        }
-        objects.clear();
-        // copy pending list back to objects
-        for (GameObject ob : pending) {
-            objects.add(ob);
-        }
-        pending.clear();
-        n++;
-        // System.out.println("nObjects = " + objects.size());
+//        // update them
+//        // System.out.println("In update(): " + n);
+//        for (GameObject ob : objects) {
+//            ob.update();
+//            wrap(ob);
+//            checkCollision(ob);
+//        }
+//        // add all live objects to the pending list
+//        for (GameObject ob : objects) {
+//            if (!ob.dead()) {
+//                pending.add(ob);
+//            }
+//        }
+//        objects.clear();
+//        // copy pending list back to objects
+//        for (GameObject ob : pending) {
+//            objects.add(ob);
+//        }
+//        pending.clear();
+//        n++;
+//        // System.out.println("nObjects = " + objects.size());
     }
 
     public synchronized void moveAsteroids() {
@@ -92,14 +92,14 @@ public class LiveListBackup {
         // System.out.println("In update(): " + n);
         for (GameObject ob : objects) {
             if (ob instanceof Asteroid) {
-                ob.update();
+                // ob.update();
                 wrap(ob);
             }
         }
     }
 
     public void checkCollision(GameObject actor) {
-        // check with all other game objects
+        // check with all other gameState objects
         if (!actor.dead() &&
                 (actor instanceof Missile
                         || actor instanceof Ship)) {

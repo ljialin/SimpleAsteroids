@@ -1,13 +1,17 @@
 package asteroids;
 
+import battle.SimpleBattleState;
+import evodef.GameActionSpaceAdapterMulti;
 import math.Vector2d;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
-import static asteroids.Constants.bg;
+import static asteroids.Asteroid.stroke;
 import static java.awt.Color.black;
 import static asteroids.Constants.*;
 
@@ -18,19 +22,23 @@ public class View extends JComponent {
     int scale;
     // static int carSize = 5;
     static Color bg = black;
-    GameState game;
+    GameState gameState;
     // Font font;
 
     Ship ship;
 
     static double viewScale = 1.0;
 
+    ArrayList<int[]> playouts;
 
-    public View(GameState game) {
-        this.game = game;
+
+    public View(GameState gameState) {
+        this.gameState = gameState;
         scale = size.width - 2 * offset;
-        ship = new Ship(game, new Vector2d(), new Vector2d(), new Vector2d());
+        ship = new Ship(gameState, new Vector2d(), new Vector2d(), new Vector2d());
     }
+
+
 
     public void paintComponent(Graphics gx) {
         Graphics2D g = (Graphics2D) gx;
@@ -42,24 +50,67 @@ public class View extends JComponent {
         // but it produces a weird moving screen effect
         // needs more logic in the drawing process
         // to wrap the asteroids that have been projected off the screen
-        // g.translate(-(game.ship.s.x - width/2), 0);
+        // g.translate(-(gameState.ship.s.x - width/2), 0);
 
         g.scale(viewScale, viewScale);
 
-        game.draw(g);
+        gameState.draw(g);
+        drawPlayouts(g);
+
         g.setTransform(at);
+
         paintState(g);
 
 //        g.setFont(font);
 //        g.drawString("Hello", 100, 100);
     }
 
+    private void drawPlayouts(Graphics2D g) {
+        try {
+            //EvoAgentAdapter adapter = (EvoAgentAdapter) gameState.
+
+            g.setColor(new Color(255, 0, 128, 100));
+            if (playouts != null) {
+                for (int[] seq : playouts) {
+                    drawShipPlayout(g, gameState.forwardModel.ship.copy(), seq);
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void drawShipPlayout(Graphics2D g, Ship ship, int[] seq) {
+
+        g.setStroke(stroke);
+        Path2D path = new Path2D.Double();
+        path.moveTo(ship.s.x, ship.s.y);
+
+        for (int a : seq) {
+//            for (int i = 0; i< GameActionSpaceAdapterMulti.actionRepeat; i++) {
+//                ship.update(SimpleBattleState.actions[a]);
+//            }
+            ship.update(actionAdapter.getAction(a));
+
+            // the ship should be wrapped, but the problem is with how to draw the path
+            // it would need to be restarted ...
+            // gameState.forwardModel.wrap(ship);
+            path.lineTo(ship.s.x, ship.s.y);
+        }
+        g.draw(path);
+
+    }
+
+    ActionAdapter actionAdapter = new ActionAdapter();
+
+
 
     public void paintState(Graphics2D g) {
         g.setColor(Color.white);
         g.setFont(font);
-        String str = "" + game.score + " : " + game.list.nShips() + " : " + game.state
-                + " : " + game.list.isSafe(game.ship) + " : " + game.nLives;
+        String str = "" + gameState.getScore() + " : " + gameState.forwardModel.nLives + " : " + gameState.state
+                + " : " + gameState.forwardModel.isShipSafe();
         // FontMetrics fm = font.
 
         g.drawString(str, 10, 20);
@@ -68,7 +119,7 @@ public class View extends JComponent {
         // now show the lives as ships ...
         ship.s.set(10, 40);
         ship.d.set(0, -1);
-        for (int i = 0; i < game.nLives; i++) {
+        for (int i = 0; i < gameState.forwardModel.nLives; i++) {
             ship.draw(g);
             ship.s.add(20, 0);
         }

@@ -81,7 +81,9 @@ public class Test
         int seed = new Random().nextInt();
 
         //Game and level to play
-        int gameIdx = 0;
+//        int gameIdx = 0;  // aliens
+//        int gameIdx = 28; // dig-dug
+        int gameIdx = 72; //
         int levelIdx = 0; //level names from 0 to 4 (game_lvlN.txt).
         String game = gamesPath + games[gameIdx] + ".txt";
         String level1 = gamesPath + games[gameIdx] + "_lvl" + levelIdx +".txt";
@@ -93,7 +95,6 @@ public class Test
         // ArcadeMachine.playOneGame(game, level1, recordActionsFile, seed);
 
         core.competition.CompetitionParameters.TIMER_TYPE = ElapsedCpuTimer.TimerType.WALL_TIME;
-
 
         // 2. This plays a game in a level by the controller.
 

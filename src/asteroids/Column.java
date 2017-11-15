@@ -79,7 +79,7 @@ public class Column extends GameObject implements PolyContains {
         g.setTransform(at);
     }
 
-    public void update() {
+    public void update(GameState gameState) {
         s.add(v);
         if (s.x < 0) {
             s.x = width * 5 / 4 ;
@@ -95,7 +95,7 @@ public class Column extends GameObject implements PolyContains {
     public void hit() {
         // may need need to flag up that the thing has been hit ...
 //        dead = true;
-//        game.asteroidDeath(this);
+//        gameState.asteroidDeath(this);
     }
 
     public boolean contains(Vector2d p) {

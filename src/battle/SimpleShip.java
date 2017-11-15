@@ -1,7 +1,6 @@
 package battle;
 
 import asteroids.Action;
-import asteroids.GameObject;
 import math.Vector2d;
 
 import java.awt.*;

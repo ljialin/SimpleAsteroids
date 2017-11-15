@@ -82,7 +82,7 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
         // System.out.println("Made a new GameActionSpaceAdapter");
     }
 
-    public static boolean visual = false;
+    public static boolean visual = true;
     ArrayList<LinePlot> linePlots;
 
 
@@ -203,13 +203,15 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
     }
 
     public void plot() {
-        if (linePlots!=null) {
-            lineChart.setLines(linePlots);
-            int max = (int) Math.max(Math.abs(deltas.min()), Math.abs(deltas.max()));
-            // prevent a zero range
-            if (max < 5) max = 5;
-            lineChart.yAxis = new LineChartAxis(new double[]{-max, 0, max});
-            lineChart.repaint();
+        if (visual) {
+            if (linePlots != null) {
+                lineChart.setLines(linePlots);
+                int max = (int) Math.max(Math.abs(deltas.min()), Math.abs(deltas.max()));
+                // prevent a zero range
+                if (max < 5) max = 5;
+                lineChart.yAxis = new LineChartAxis(new double[]{-max, 0, max});
+                lineChart.repaint();
+            }
         }
     }
 

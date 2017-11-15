@@ -1,5 +1,5 @@
 package planetwar;
 
 public interface SimplePlayerInterface {
-    int getAction(GameState gameState, int playerId);
+    int getAction(AbstractGameState gameState, int playerId);
 }

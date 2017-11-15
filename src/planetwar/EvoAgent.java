@@ -4,6 +4,9 @@ import evodef.EvoAlg;
 import evodef.RegularSearchSpace;
 import evodef.SearchSpaceUtil;
 import evodef.SimpleGameAdapter;
+import plot.NullPlayoutPlotter;
+import plot.PlayoutPlotter;
+import plot.PlayoutPlotterInterface;
 
 /**
  *  This is a simple evolutionary planning agent
@@ -18,23 +21,23 @@ import evodef.SimpleGameAdapter;
 public class EvoAgent implements SimplePlayerInterface {
 
     ActionSequencer actionSequencer;
-    EvoAlg evoAlg;
+    public EvoAlg evoAlg;
     SimpleGameAdapter simpleGameAdapter;
     RegularSearchSpace searchSpace;
 
-    static int nActions = GameState.nActions;
+    // static int nActions = GameState.nActions;
     int sequenceLength = 20;
     public boolean useShiftBuffer = true;
     int[] solution;
     int nEvals;
+
+    PlayoutPlotterInterface playoutPlotter = new NullPlayoutPlotter();
 
     public EvoAgent setEvoAlg(EvoAlg evoAlg, int nEvals) {
         this.evoAlg = evoAlg;
         this.nEvals = nEvals;
         // set up the search space and other helpers at the same time
         actionSequencer = new ActionSequencer();
-        searchSpace = new RegularSearchSpace(sequenceLength, nActions);
-        simpleGameAdapter = new SimpleGameAdapter().setEvaluator(actionSequencer).setSearchSpace(searchSpace);
         return this;
     }
 
@@ -43,10 +46,14 @@ public class EvoAgent implements SimplePlayerInterface {
         return this;
     }
 
+    public EvoAgent setVisual() {
+        playoutPlotter = new PlayoutPlotter();
+        playoutPlotter.startPlot(sequenceLength);
+        return this;
+    }
+
     public EvoAgent setSequenceLength(int sequenceLength) {
         this.sequenceLength = sequenceLength;
-        searchSpace = new RegularSearchSpace(sequenceLength, nActions);
-        simpleGameAdapter = new SimpleGameAdapter().setEvaluator(actionSequencer).setSearchSpace(searchSpace);
         return this;
     }
 
@@ -57,8 +64,15 @@ public class EvoAgent implements SimplePlayerInterface {
         return this;
     }
 
-    public int[] getActions(GameState gameState, int playerId) {
+    public int[] getActions(AbstractGameState gameState, int playerId) {
+
+        searchSpace = new RegularSearchSpace(sequenceLength, gameState.nActions());
+        simpleGameAdapter = new SimpleGameAdapter().setEvaluator(actionSequencer).setSearchSpace(searchSpace);
         actionSequencer.setGameState(gameState.copy()).setPlayerId(playerId).setOpponent(opponent);
+
+        actionSequencer.playoutPlotter = playoutPlotter;
+        playoutPlotter.reset();
+
 
         if (solution != null) {
             solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, searchSpace);
@@ -68,6 +82,7 @@ public class EvoAgent implements SimplePlayerInterface {
         simpleGameAdapter.reset();
         solution = evoAlg.runTrial(simpleGameAdapter, nEvals);
 
+        playoutPlotter.plotPlayout();
         // System.out.println(Arrays.toString(solution) + "\t " + game.evaluate(solution));
 
         int[] tmp = solution;
@@ -83,8 +98,9 @@ public class EvoAgent implements SimplePlayerInterface {
         return "EA: " + evoAlg.getClass().getSimpleName() + " : " + nEvals + " : " + sequenceLength;
     }
 
-    public int getAction(GameState gameState, int playerId) {
+    public int getAction(AbstractGameState gameState, int playerId) {
         return getActions(gameState, playerId)[0];
     }
 
 }
+

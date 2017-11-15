@@ -18,7 +18,7 @@ public interface Constants {
     Color bg = Color.black;
     Font font = new Font("Courier", Font.PLAIN, 20);
 
-    int delay = 20;
+    int delay = 40;
     double ac = 0.01;
     double t = 1.0;
     Random rand = new Random();
@@ -27,8 +27,7 @@ public interface Constants {
     int smallSaucerScore = 1000;
     int firstLevel = 50;
     int increasePerLevel = firstLevel / 4;
-    int lifeThreshold = 1000;
-
+    int lifeThreshold = 10000;
 
     // how many smaller asteroids an asteroid splits into
     int nSplits = 3;

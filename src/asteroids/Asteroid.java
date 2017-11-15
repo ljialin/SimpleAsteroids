@@ -18,17 +18,40 @@ public class Asteroid extends GameObject {
     double rot;
     boolean dead;
     int index;
-    GameState game;
 
-    public Asteroid(GameState game, Vector2d s, Vector2d v, int index) {
+    // ToDo get rid of all the references to the Game Object
+    // they are not necessary, not really
+    // can manage all the collisions at gameState level instead
+    // and then tell the objects whether to die etc
+    // GameState gameState;
+
+    public Asteroid(Vector2d s, Vector2d v, int index, double r) {
         super(s, v);
-        this.game = game;
+        // this.gameState = gameState;
         rotRate = (rand.nextDouble() - 0.5) * Math.PI / 20;
         rot = 0;
         this.index = index;
-        r = game.params.radii[index];
+        this.r = r;
         setPolygon();
     }
+
+    public Asteroid(Vector2d s, Vector2d v) {
+        super(s, v);
+    }
+
+    public Asteroid copy() {
+
+        Asteroid asteroid = new Asteroid(s, v);
+        asteroid.rotRate = rotRate;
+        asteroid.rot = rot;
+        asteroid.index = index;
+        asteroid.r = r;
+        asteroid.px = px;
+        asteroid.py = py;
+        return asteroid;
+
+    }
+
 
     public boolean dead() {
         return dead;
@@ -71,16 +94,29 @@ public class Asteroid extends GameObject {
         g.setTransform(at);
     }
 
+    public void update(GameState gameState) {
+        s.add(v);
+        rot += rotRate;
+//        if (dead) {
+//            gameState.asteroidDeath(this);
+//        }
+    }
+
     public void update() {
         s.add(v);
         rot += rotRate;
+//        if (dead) {
+//            gameState.asteroidDeath(this);
+//        }
     }
+
     public String toString() {
         return s.toString();
     }
 
     public void hit() {
         dead = true;
-        game.asteroidDeath(this);
+        // gameState.asteroidDeath(this);
     }
+
 }

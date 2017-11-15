@@ -20,9 +20,12 @@ public class Action {
     }
 
     public Action(Action a) {
-        thrust = a.thrust;
-        turn = a.turn;
-        shoot = a.shoot;
+        if (a != null) {
+            this.thrust = a.thrust;
+            this.turn = a.turn;
+            this.shoot = a.shoot;
+        }
+        // System.out.println(a + " versus " + this);
     }
 
     public String toString() {

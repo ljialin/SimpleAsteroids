@@ -1,4 +1,4 @@
-package gvglink;
+package planetwar;
 
 import utilities.StatSummary;
 

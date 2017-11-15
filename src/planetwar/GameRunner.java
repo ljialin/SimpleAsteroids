@@ -1,6 +1,5 @@
 package planetwar;
 
-import gvglink.GameLog;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LinePlot;

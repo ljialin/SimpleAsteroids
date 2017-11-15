@@ -3,18 +3,18 @@ package asteroids;
 import evogame.DefaultParams;
 import evogame.GameParameters;
 import math.Vector2d;
+import planetwar.AbstractGameState;
 
 import java.awt.*;
 
 import static asteroids.Constants.*;
 
-public class GameState {
-    public int level;
-    public int score;
-    public int nLives = 3;
-    LiveList list;
+public class GameState implements AbstractGameState {
 
-    Ship ship;
+    public int initialLives = 3;
+    public int initialLevel = 3;
+    public ForwardModel forwardModel;
+
     State state, nextState;
     String message;
     int wait;
@@ -22,91 +22,85 @@ public class GameState {
 
     public GameParameters params;
 
-    public GameState() {
+    static ActionAdapter actionAdapter = new ActionAdapter();
 
-        params = new GameParameters().injectValues(new DefaultParams());
+    public GameState() {
+        // setParams(new GameParameters().injectValues(new DefaultParams()));
     }
 
-    public GameState(GameParameters params, int level, int nLives) {
-        this.params = params;
-        this.level = level;
-        this.nLives = nLives;
-        list = new LiveList();
+    public int nActions() {
+        return actionAdapter.actions.length;
+    }
 
-        makeAsteroids(level);
-        // makeColumns(5);
+    public GameState setParams(GameParameters params) {
+        this.params = params;
+        return this;
+    }
+
+    public GameState initForwardModel() {
+        forwardModel = new ForwardModel().setGameState(this);
+        forwardModel.level = initialLevel;
+        forwardModel.nLives = initialLives;
+        forwardModel.makeAsteroids();
         makeShip();
         state = State.WaitingToStart;
-    }
-
-    public GameState(int level, int nLives) {
-        this(new GameParameters().injectValues(new DefaultParams()), level, nLives);
-//        this.level = level;
-//        this.nLives = nLives;
-//        list = new LiveList();
-    }
-
-    public GameState(int level) {
-        this(level, 3);
+        return this;
     }
 
     public GameState copy() {
         GameState gs = new GameState();
-
-        gs.level = level;
-        gs.score = score;
-        gs.nLives = nLives;
         gs.state = state;
         gs.nextState = nextState;
         gs.message = message;
         gs.wait = wait;
-        gs.params = params.copy();
 
+        // no need to copy the params
+        gs.params = params;  // .copy();
 
-        // todo: need to make the handling of the object list more general
-        // since currently we would be in danger of making two copies of the ship
-
-        // the solution is to rewrite the livelist to store everything needed
-        // in the list and then simply add the ship in afterwards
-
-
-        gs.list = list.copy();
-
-        gs.ship = ship.copy();
-
-        // add the ship separately, we explicitly did not copy it before
-        gs.list.add(gs.ship);
+        gs.forwardModel = forwardModel.copy();
 
         return gs;
+    }
+
+    @Override
+    public AbstractGameState next(int[] actions) {
+        update(actionAdapter.getAction(actions[0]));
+        return this;
     }
 
 
     // update needs to take an action, or more generally a list of actions to
     // advance it to the next state
 
-    public void update() {
-        // System.out.println("GameState.update()");
+    public void update(Action action) {
+        // System.out.println("GameState.update() " + state + " : " + action);
         switch (state) {
             case WaitingToStart: {
-                if (ship.action.shoot)
+                if (action.shoot)
                     state = State.Playing;
                 break;
             }
             case Playing: {
-                list.update();
+                forwardModel.update(action);
                 // System.out.println(list.nAsteroids());
-                if (ship.dead()) {
+                if (forwardModel.ship.dead()) {
                     // System.out.println("Dead ship!!!");
                     state = State.LifeLost;
                 }
-                if (list.nAsteroids() == 0) state = State.LevelCleared;
+                if (forwardModel.nAsteroids() == 0)
+                    state = State.LevelCleared;
                 break;
             }
             case LifeLost: {
                 wait = 100;
-                nLives--;
-                if (nLives <= 0) nextState = State.GameOver;
-                else nextState = State.ReEntry;
+                forwardModel.nLives--;
+                forwardModel.incScore(-200);
+                if (forwardModel.nLives <= 0) {
+                    nextState = State.GameOver;
+                }
+                else {
+                    nextState = State.ReEntry;
+                }
                 message = "Oops: be more careful!";
                 // System.out.println("Life lost!");
                 state = State.Waiting;
@@ -122,23 +116,27 @@ public class GameState {
 
             case ReEntry : {
                 // do nothing until it is isSafe
-                if (ship.dead()) makeShip();
-                list.moveAsteroids();
-                if (list.isSafe(ship)) {
+//                if (forwardModel.ship.dead()) {
+//                    makeShip();
+//                }
+                makeShip();
+                // forwardModel.moveAsteroids(this);
+                forwardModel.makeSafe(this);
+                if (forwardModel.isShipSafe()) {
                     state = State.Playing;
                 }
                 break;
             }
             case LevelCleared: {
                 wait = 100;
-                level++;
-                list.clear();
+                forwardModel.level++;
+                forwardModel.clearObjects();
                 makeShip();
-                makeAsteroids(level);
+                forwardModel.makeAsteroids(forwardModel.level);
                 // System.out.println("nAsteroids: " + list.nAsteroids());
                 nextState = State.Playing;
                 state = State.Waiting;
-                message = "Well done; prepare for next level!: " + level;
+                message = "Well done; prepare for next level!: " + forwardModel.level;
                 break;
             }
             case Waiting: {
@@ -153,7 +151,7 @@ public class GameState {
 
     public void draw(Graphics2D g) {
         // interesting: the best way to make the
-        // game state tie in with what is drawn!
+        // gameState state tie in with what is drawn!
         // simple but not wholly satisfying is to use
         // another switch statement
         // System.out.println("GameState.draw()");
@@ -164,7 +162,7 @@ public class GameState {
             }
 
             case Playing: case ReEntry : {
-                list.draw(g);
+                forwardModel.draw(g);
                 break;
             }
 
@@ -184,49 +182,46 @@ public class GameState {
         }
     }
 
-    private void makeAsteroids(int nAsteroids) {
-        // System.out.println("Making nAsteroids: " + nAsteroids);
-        Vector2d centre = new Vector2d(width / 2, height / 2);
-        while (list.nAsteroids() < nAsteroids) {
-            // choose a random position and velocity
-            Vector2d s = new Vector2d(rand.nextDouble() * width,
-                    rand.nextDouble() * height);
-            Vector2d v = new Vector2d(rand.nextGaussian(), rand.nextGaussian());
-            if (s.dist(centre) > safeRadius && v.mag() > 0.5) {
-                // Asteroid a = new Asteroid(this, s, v, 0);
-
-                // these move in interesting ways ...
-                // Asteroid a = new LissajousAsteroid(this, s, v, 0);
-                Asteroid a = new Asteroid(this, s, v, 0);
-                list.objects.add(a);
-            }
-        }
-        // System.out.println("Made " + list.objects.size());
-//        System.out.println(list.objects);
-    }
-
-    private void makeColumns(int nColumns) {
-        Vector2d centre = new Vector2d(width / 2, height / 2);
-        // assumes that the game object list is currently empty
-        for (int i=0; i<nColumns; i++) {
-            list.objects.add(new Column(this, i));
-        }
-    }
+//    private void makeAsteroids(int nAsteroids) {
+//        // System.out.println("Making nAsteroids: " + nAsteroids);
+//        Vector2d centre = new Vector2d(width / 2, height / 2);
+//        while (forwardModel.nAsteroids() < nAsteroids) {
+//            // choose a random position and velocity
+//            Vector2d s = new Vector2d(rand.nextDouble() * width,
+//                    rand.nextDouble() * height);
+//            Vector2d v = new Vector2d(rand.nextGaussian(), rand.nextGaussian());
+//            if (s.dist(centre) > safeRadius && v.mag() > 0.5) {
+//                // Asteroid a = new Asteroid(this, s, v, 0);
+//
+//                // these move in interesting ways ...
+//                // Asteroid a = new LissajousAsteroid(this, s, v, 0);
+//                double r = params.radii[0];
+//                Asteroid a = new Asteroid(s, v, 0, r);
+//                forwardModel.addAsteroid(a);
+//            }
+//        }
+//    }
+//
+//    private void makeColumns(int nColumns) {
+//        Vector2d centre = new Vector2d(width / 2, height / 2);
+//        // assumes that the gameState object list is currently empty
+//        for (int i=0; i<nColumns; i++) {
+//            list.objects.add(new Column(this, i));
+//        }
+//    }
 
     public boolean gameOn() {
         return state != State.GameOver;
     }
 
-    public void add(GameObject ob) {
-        list.add(ob);
-    }
+
 
     public void makeShip() {
-        ship = new Ship(this,
+        Ship ship = new Ship(this,
                 new Vector2d(width / 2, height / 2),
                 new Vector2d(),
                 new Vector2d(0, -1));
-        add(ship);
+        forwardModel.setShip(ship);
     }
 
     public void shipDeath() {
@@ -235,31 +230,13 @@ public class GameState {
 
     // public asteroidDeath()
 
-
-    public void asteroidDeath(Asteroid a) {
-
-        // if we still have smaller ones to
-        // work through then do so
-        // otherwise do nothing
-        // score += asteroidScore;
-        if (a.index < params.radii.length - 1) {
-            // add some new ones at this position
-            for (int i=0; i<nSplits; i++) {
-                Vector2d v1 = a.v.copy().add(rand.nextGaussian(), rand.nextGaussian());
-                Asteroid a1 = new Asteroid(this, a.s.copy(), v1, a.index + 1);
-                list.add(a1);
-            }
-        }
-        incScore(asteroidScore[a.index]);
+    public double getScore() {
+        return forwardModel.score;
     }
 
-
-    // need a similar way to indicate the clearance of a column pipe
-
-    private void incScore(int s) {
-        score += s;
-        if ( (score -s) % lifeThreshold > score % lifeThreshold ) {
-            nLives++;
-        }
+    @Override
+    public boolean isTerminal() {
+        return false;
     }
+
 }

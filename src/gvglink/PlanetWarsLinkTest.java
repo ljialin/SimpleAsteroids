@@ -73,6 +73,7 @@ public class PlanetWarsLinkTest {
 
         Agent evoAgent = new controllers.multiPlayer.ea.Agent(state.copy(), timer, evoAlg, idPlayer1, nEvals);
         evoAgent.sequenceLength = 20;
+        evoAgent.setUseShiftBuffer(true);
         player1 = evoAgent;
 
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, evoAlg2, idPlayer2, nEvals);

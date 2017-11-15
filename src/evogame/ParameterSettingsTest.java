@@ -35,7 +35,7 @@ public class ParameterSettingsTest {
         int nLives = 5;
         boolean visible = true;
         int nTicks = 10000;
-        GameState gameState = new GameState(params, startLevel, nLives);
+        GameState gameState = new GameState().setParams(params).initForwardModel();
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();
@@ -43,7 +43,7 @@ public class ParameterSettingsTest {
         System.out.println(t);
 
 
-        System.out.println(gameState.score);
+        // System.out.println(gameState.score);
 
 
 

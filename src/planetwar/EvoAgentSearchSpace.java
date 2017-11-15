@@ -21,7 +21,7 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
 
     double[] pointMutationRate = {0.0, 1.0, 2.0, 3.0};
     boolean[] flipAtLeastOneBit = {false, true};
-    boolean[] useShiftBuffer = {false};
+    boolean[] useShiftBuffer = {false, true};
     int[] nResamples = {1, 3};
     int[] seqLength = {5, 10, 15, 20};
 

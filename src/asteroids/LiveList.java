@@ -16,7 +16,7 @@ import static asteroids.Constants.*;
 
 public class LiveList {
     List<GameObject> objects;
-    int n = 0;
+    // int n = 0;
 
     public LiveList() {
         objects = new LinkedList<GameObject>();
@@ -26,14 +26,16 @@ public class LiveList {
         // interesting point here: would normally need to copy all of them,
         // but what about the ship?  The ship has already been copied!
         LiveList ll = new LiveList();
-        
+
         for (GameObject ob : objects) {
             if (ob instanceof Missile)
-                System.out.println("Found a missile in the main list copy!");
-            if ( !(ob instanceof Ship) ){
-                ll.objects.add(ob);
-            }
+                // System.out.println("Found a missile in the main list copy!");
+                if (!(ob instanceof Ship)) {
+                    ll.objects.add(ob);
+                }
         }
+
+        // System.out.println(this.nMissiles() + " versus " + ll.nMissiles());
 
         return ll;
     }
@@ -54,16 +56,31 @@ public class LiveList {
         return n;
     }
 
-    public synchronized void update() {
+    public synchronized int nMissiles() {
+        int n = 0;
+        for (GameObject ob : objects) {
+            if (ob instanceof Missile) n++;
+        }
+        return n;
+    }
+
+    public synchronized void update(GameState gameState, Action action) {
         // update them
         // System.out.println("In update(): " + n);
+        // System.out.println("Missiles: " + nMissiles());
 
         // use this iteration method to avoid ConcurrentModificationExceptions
         int nObjects = objects.size();
 
-        for (int i=0; i<nObjects; i++) {
+        // action only applies to the ship
+        for (int i = 0; i < nObjects; i++) {
             GameObject ob = objects.get(i);
-            ob.update();
+            ob.update(gameState);
+            if (ob instanceof Ship) {
+                Ship ship = (Ship) ob;
+                ship.update(action);
+                // System.out.println("Updated: " + action);
+            }
             wrap(ob);
             checkCollision(ob);
         }
@@ -75,11 +92,18 @@ public class LiveList {
         for (GameObject ob : objects) {
             if (!ob.dead()) {
                 pending.add(ob);
+                if (ob instanceof Ship) {
+                    Ship ship = (Ship) ob;
+                    if (ship.pending != null) {
+                        pending.add(ship.pending);
+                        ship.pending = null;
+                    }
+                }
             }
         }
         objects = pending;
         // copy pending list back to objects
-        n++;
+        // n++;
         // System.out.println("nObjects = " + objects.size());
     }
 
@@ -87,21 +111,24 @@ public class LiveList {
         objects.add(ob);
     }
 
-    public synchronized void moveAsteroids() {
+    public synchronized void moveAsteroids(GameState gameState) {
         // update them
         // System.out.println("In update(): " + n);
         for (GameObject ob : objects) {
             if (ob instanceof Asteroid) {
-                ob.update();
+                ob.update(gameState);
                 wrap(ob);
             }
         }
     }
 
     public void checkCollision(GameObject actor) {
-        // check with all other game objects
+        // check with all other gameState objects
         // but use a hack to only consider interesting interactions
         // e.g. asteroids do not collide with themselves
+        if (actor instanceof Missile) {
+            // System.out.println("Missile!!!: " + actor);
+        }
         if (!actor.dead() &&
                 (actor instanceof Missile
                         || actor instanceof Ship)) {

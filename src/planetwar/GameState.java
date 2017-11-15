@@ -40,7 +40,7 @@ import java.util.Random;
  */
 
 
-public class GameState {
+public class GameState implements AbstractGameState{
 
     public static Random random = new Random();
 
@@ -113,6 +113,7 @@ public class GameState {
         return this.setNPlanets(10).setAlternateOwnerships().setRandomGrowthRates();
     }
 
+    @Override
     public GameState copy() {
         GameState gs = new GameState();
         gs.nPlanets = this.nPlanets;
@@ -126,9 +127,6 @@ public class GameState {
 
         gs.buffers[0] = this.buffers[0];
         gs.buffers[1] = this.buffers[1];
-
-        // todo: finish off the copy mechanism here
-
 
         return gs;
     }
@@ -200,6 +198,7 @@ public class GameState {
     }
 
 
+    @Override
     public GameState next(int[] actions) {
 
         // need to make these for each player
@@ -272,6 +271,7 @@ public class GameState {
 
     public static boolean includeBuffersInScore = true;
 
+    @Override
     public double getScore() {
         double score = 0;
         for (double x : planets) {
@@ -290,7 +290,16 @@ public class GameState {
         return (int) (score * 10);
     }
 
+    public boolean isTerminal() {
+        // should do a better check really, but for now just return false
+        return false;
+    }
+
     public int getGameTick() {
         return nTicks;
+    }
+
+    public int nActions() {
+        return 5;
     }
 }

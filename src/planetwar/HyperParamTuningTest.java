@@ -26,7 +26,7 @@ public class HyperParamTuningTest {
         // evoAlg = new SlidingMeanEDA();
         // evoAlg = new GridSearch();
         StatSummary ss = new StatSummary("Overall results: " + evoAlg.getClass().getSimpleName());
-        int nTrials = 5;
+        int nTrials = 3;
         for (int i=0; i<nTrials; i++) {
             ss.add(runTrial(evoAlg));
         }
@@ -35,10 +35,7 @@ public class HyperParamTuningTest {
         System.out.println("Total time for experiment: " + timer);
     }
 
-
     public static double runTrial(EvoAlg evoAlg) {
-
-        // ok, so the idea here is to modify ...
 
         EvoAgentSearchSpace eval = new EvoAgentSearchSpace();
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));

@@ -1,6 +1,8 @@
 package planetwar;
 
 import evodef.PluginEvaluator;
+import plot.NullPlayoutPlotter;
+import plot.PlayoutPlotterInterface;
 
 import java.util.Random;
 
@@ -20,12 +22,18 @@ public class ActionSequencer implements PluginEvaluator {
         System.out.println("Final fitness: " + fitness);
     }
 
-    GameState initialState, terminalState;
+    AbstractGameState initialState, terminalState;
     int playerId;
 
     // double
+    PlayoutPlotterInterface playoutPlotter;
 
-    public ActionSequencer setGameState(GameState gameState) {
+    public ActionSequencer() {
+        // don't plot the playouts by default
+        playoutPlotter = new NullPlayoutPlotter();
+    }
+
+    public ActionSequencer setGameState(AbstractGameState gameState) {
         // actually makes a copy of it to avoid modifying the original
         this.initialState = gameState.copy();
         return this;
@@ -36,7 +44,7 @@ public class ActionSequencer implements PluginEvaluator {
         return this;
     }
 
-    public GameState getTerminalState() {
+    public AbstractGameState getTerminalState() {
         return terminalState;
     }
 
@@ -63,21 +71,25 @@ public class ActionSequencer implements PluginEvaluator {
     public ActionSequencer actVersusAgent(int[] seq, int playerId) {
         // careful, this may not be copiing the game state ...
         terminalState = initialState.copy();
+        playoutPlotter.startPlayout(terminalState.getScore());
+
         int[] actions = new int[2];
         for (int a : seq) {
             actions[playerId] = a;
-            actions[1 - playerId] = GameState.doNothing;
+            actions[1 - playerId] = opponent.getAction(terminalState, 1-playerId);
             terminalState.next(actions);
+            playoutPlotter.addScore(terminalState.getScore());
         }
         // System.out.println("Terminal score: " + terminalState.getScore());
+        playoutPlotter.plotPlayout();
         return this;
     }
 
     @Override
     public double fitness(int[] solution) {
-        // double rawScore = actVersusDoNothing(solution, playerId).terminalState.getScore();
-        // should this be negated for the minimising player
-        double rawScore = actVersusAgent(solution, playerId).terminalState.getScore();
+        double rawScore = actVersusAgent(
+                solution, playerId).terminalState.getScore();
         return playerId == 0 ? rawScore : -rawScore;
     }
+
 }

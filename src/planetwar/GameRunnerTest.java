@@ -24,7 +24,7 @@ public class GameRunnerTest {
         SimpleGA simpleGA = new SimpleGA().setPopulationSize(20);
 
         EvoAgent evoAgent1 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength);
-        // evoAgent1.setUseShiftBuffer(false);
+        evoAgent1.setUseShiftBuffer(true);
         // evoAgent1.u
 
         // evoAgent1.setOpponent(new RandomAgent()).setUseShiftBuffer(false);

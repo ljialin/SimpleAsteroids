@@ -46,16 +46,16 @@ public class SimpleEvaluator implements GameEvaluator {
         GameParameters params = new GameParameters().injectValues(evoParams);
         boolean visible = false;
         int nTicks = 1000;
-        GameState gameState = new GameState(params, startLevel, nLives);
+        GameState gameState = new GameState().setParams(params).initForwardModel();
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();
         game.run(nTicks);
         System.out.println(t);
 
-        System.out.println(gameState.score);
+        System.out.println(gameState.getScore());
 
-        return gameState.score;
+        return gameState.getScore();
     }
 
 

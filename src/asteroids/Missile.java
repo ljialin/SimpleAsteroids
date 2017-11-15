@@ -18,7 +18,16 @@ public class Missile extends GameObject {
     }
 
     @Override
+    public void update(GameState gameState) {
+        // System.out.println("Updating missile: " + this);
+        if (!dead()) {
+            s.add(v);
+            ttl--;
+        }
+    }
+
     public void update() {
+        // System.out.println("Updating missile: " + this);
         if (!dead()) {
             s.add(v);
             ttl--;
@@ -45,4 +54,8 @@ public class Missile extends GameObject {
     }
 
 
+    public Missile copy() {
+        Missile missile = new Missile(s, v, ttl, (int) r);
+        return missile;
+    }
 }

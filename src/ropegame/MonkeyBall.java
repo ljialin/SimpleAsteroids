@@ -1,6 +1,5 @@
 package ropegame;
 
-import asteroids.GameObject;
 import math.Vector2d;
 
 import java.awt.*;

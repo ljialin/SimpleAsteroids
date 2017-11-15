@@ -12,7 +12,7 @@ public class RandomAgent implements SimplePlayerInterface {
     }
 
     @Override
-    public int getAction(GameState gameState, int playerId) {
+    public int getAction(AbstractGameState gameState, int playerId) {
         return random.nextInt(GameState.nActions);
     }
 

@@ -13,7 +13,8 @@ public class LissajousAsteroid extends Asteroid {
 
 
     public LissajousAsteroid(GameState game, Vector2d s, Vector2d v, int index) {
-        super(game, s, v, index);
+        // this is a bit broken, does not vary the size depending on the index
+        super(s, v, index, 10);
     }
 
     public boolean wrappable() { return true; }
