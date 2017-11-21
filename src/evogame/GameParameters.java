@@ -33,7 +33,7 @@ public class GameParameters {
 
     public int shipSize = 30;
 
-    public double shipLoss = 0.1;
+    public double shipLoss = 0.02;
     public double shipSteer = 1;
 
 

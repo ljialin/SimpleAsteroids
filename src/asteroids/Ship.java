@@ -33,7 +33,7 @@ public class Ship extends GameObject {
     Color color = Color.white;
     boolean thrusting = false;
 
-    static double gravity = 0.01;
+    static double gravity = 0.00;
 
     public Action action;
     public GameState game;
@@ -126,7 +126,7 @@ public class Ship extends GameObject {
             releaseVelocity = Math.min(releaseVelocity, maxRelease);
             m.v.add(d, releaseVelocity);
             // make it clear the ship
-            m.s.add(m.v, (r() + game.params.missileRadius) * 1.5 / m.v.mag());
+            // m.s.add(m.v, (r() + game.params.missileRadius) * 0.5 / m.v.mag());
             releaseVelocity = 0;
             // got it! - it adds it to the old version of the gameState
             pending = m;

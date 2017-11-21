@@ -40,6 +40,7 @@ public class PlayoutPlotter implements PlayoutPlotterInterface {
     @Override
     public PlayoutPlotter startPlayout(double currentScore) {
         this.currentScore = currentScore;
+        // scores.reset();
         linePlot = new LinePlot().setRandomColor();
         linePlot.add(currentScore);
         linePlots.add(linePlot);
@@ -62,7 +63,7 @@ public class PlayoutPlotter implements PlayoutPlotterInterface {
         // avoid concurrent modification exceptions
         // linePlots = new ArrayList<>();
         int max = Math.max((int) scores.max(), 5);
-        int min = Math.min((int) scores.min(), -5);
+        int min = (int) scores.min(); // Math.min((int) scores.min(), -5);
         lineChart.yAxis = new LineChartAxis(new double[]{min, (min + max) / 2, max});
         lineChart.repaint();
         return this;

@@ -37,6 +37,9 @@ public class Game {
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();
+
+        System.out.println("Level = " + gameState.forwardModel.level);
+
         game.run(nTicks);
         System.out.println(t);
 
@@ -68,6 +71,7 @@ public class Game {
             // controller = new KeyController();
         } else {
             controller = new RotateAndShoot();
+            controller = getEvoAgent();
         }
         // controller = new RotateAndShoot();
         if (controller instanceof KeyController) {
@@ -81,8 +85,8 @@ public class Game {
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
-        int nEvals = 30;
-        int seqLength = 80;
+        int nEvals = 20;
+        int seqLength = 20;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();
@@ -105,9 +109,9 @@ public class Game {
             // gameState.ship.action = controller.action(gameState);
             Action action = controller.action(gameState);
             gameState.update(action);
-            if (copyTest)
+            if (copyTest) {
                 gameState = gameState.copy();
-
+            }
 
             // System.out.println("3: " + gameState.ship.action);
             // System.out.println();

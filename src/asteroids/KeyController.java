@@ -32,13 +32,13 @@ public class KeyController extends KeyAdapter
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_UP) {
-            action.thrust = 5;
+            action.thrust = ActionAdapter.thrust;
         }
         if (key == KeyEvent.VK_LEFT) {
-            action.turn = -5;
+            action.turn = -ActionAdapter.turn;
         }
         if (key == KeyEvent.VK_RIGHT) {
-            action.turn = 5;
+            action.turn = ActionAdapter.turn;
         }
         if (key == KeyEvent.VK_SPACE) {
             action.shoot = true;

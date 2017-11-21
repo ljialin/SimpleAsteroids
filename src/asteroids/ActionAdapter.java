@@ -7,6 +7,9 @@ import java.util.Arrays;
 public class ActionAdapter {
     Action[] actions;
 
+    public static double thrust = 2;
+    public static double turn = 5;
+
     public ActionAdapter() {
         // currently the options to set parameters is not used
         setParams(null);
@@ -14,8 +17,8 @@ public class ActionAdapter {
 
     public ActionAdapter setParams(GameParameters params) {
         boolean[] fires = {false, true};
-        double[] thrusts = {0, 2};
-        double[] turns = {-7, 0, 7};
+        double[] thrusts = {0, thrust};
+        double[] turns = {-turn, 0, turn};
         int n = fires.length * thrusts.length * turns.length;
         int ix = 0;
         actions = new Action[n];

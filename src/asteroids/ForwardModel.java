@@ -14,7 +14,7 @@ public class ForwardModel {
 
     static int missileCost = -10;
     // limit on number of active missiles
-    static int liveMissileLimit = 2;
+    static int liveMissileLimit = 5;
 
     GameState gameState;
 
@@ -186,7 +186,8 @@ public class ForwardModel {
         if (a.index < gameState.params.radii.length - 1) {
             // add some new ones at this position
             for (int i=0; i<nSplits; i++) {
-                Vector2d v1 = a.v.copy().add(rand.nextGaussian(), rand.nextGaussian());
+                Vector2d v1 = a.v.copy().add(
+                        rand.nextGaussian(), rand.nextGaussian());
 
                 double r = gameState.params.radii[a.index+1];
                 Asteroid splitRock = new Asteroid(a.s.copy(), v1,a.index + 1, r);
@@ -217,6 +218,8 @@ public class ForwardModel {
         makeAsteroids(level);
     }
 
+    static double rockSpeed = 2.0;
+
     public void makeAsteroids(int nAsteroids) {
         // System.out.println("Making nAsteroids: " + nAsteroids);
         // asteroids = new ArrayList<>();
@@ -231,6 +234,7 @@ public class ForwardModel {
 
                 // these move in interesting ways ...
                 // Asteroid a = new LissajousAsteroid(this, s, v, 0);
+                v.mul(rockSpeed);
                 double r = gameState.params.radii[0];
                 Asteroid a = new Asteroid(s, v, 0, r);
                 this.addAsteroid(a);

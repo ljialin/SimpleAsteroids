@@ -3,6 +3,8 @@ package planetwar;
 
 // for multi-player game
 
+import java.util.List;
+
 public interface AbstractGameState {
 
     AbstractGameState copy();
@@ -14,6 +16,8 @@ public interface AbstractGameState {
     double getScore();
 
     boolean isTerminal();
+
+    // List<Object> getGameState();
 
 }
 

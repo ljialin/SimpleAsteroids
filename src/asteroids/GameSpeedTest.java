@@ -24,7 +24,7 @@ public class GameSpeedTest {
 
         GameParameters params = new GameParameters().injectValues(new DefaultParams());
         GameState gameState = new GameState().setParams(params);
-        gameState.initialLevel = 3;
+        gameState.initialLevel = 5;
         Game game = new Game(gameState, visible);
         gameState.forwardModel.nLives = nLives;
 
