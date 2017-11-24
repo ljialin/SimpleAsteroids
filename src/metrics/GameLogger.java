@@ -8,7 +8,11 @@ import planetwar.AbstractGameState;
  *  Different methods should probably be in different
  *  */
 public interface GameLogger {
-    public void logAction(AbstractGameState state,
+
+
+
+
+    public GameLogger logAction(AbstractGameState state,
                           int[] actions,
                           GameEvent[] events);
 

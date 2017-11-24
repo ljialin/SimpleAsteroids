@@ -86,7 +86,7 @@ public class Game {
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
         int nEvals = 20;
-        int seqLength = 20;
+        int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();

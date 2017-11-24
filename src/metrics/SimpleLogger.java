@@ -24,8 +24,9 @@ public class SimpleLogger implements GameLogger {
     }
 
     @Override
-    public void logAction(AbstractGameState state, int[] actions, GameEvent[] events) {
+    public GameLogger logAction(AbstractGameState state, int[] actions, GameEvent[] events) {
         currentPlot.add(state.getScore());
+        return this;
     }
 
 
