@@ -47,6 +47,12 @@ public class NTuple {
 
         nt.printNonEmpty();
 
+        System.out.println();
+        System.out.println("Maximum values (in bits): ");
+        System.out.println("Integer: " + Math.log(Integer.MAX_VALUE) / Math.log(2));
+        System.out.println("Long: " + Math.log(Long.MAX_VALUE) / Math.log(2));
+        System.out.println("Double: " + Math.log(Double.MAX_VALUE) / Math.log(2));
+
     }
 
     public NTuple(SearchSpace searchSpace, int[] tuple) {
@@ -61,10 +67,11 @@ public class NTuple {
 
         // clear out all the memory - just make a new structure
 
-        if (spaceSize() > sizeLimit) {
+        double searchSpaceSize = spaceSize();
+        if (searchSpaceSize > sizeLimit) {
             ntMap = new HashMap<>();
         } else {
-            ntArray = new StatSummary[spaceSize()];
+            ntArray = new StatSummary[(int) spaceSize()];
         }
     }
 
@@ -74,7 +81,7 @@ public class NTuple {
 
     SearchSpace searchSpace;
     int[] tuple;
-    HashMap<Integer, StatSummary> ntMap;
+    HashMap<Double, StatSummary> ntMap;
     StatSummary[] ntArray;
 
     int nSamples;
@@ -106,7 +113,7 @@ public class NTuple {
                 }
             }
         } else {
-            for (Integer key : ntMap.keySet()) {
+            for (Double key : ntMap.keySet()) {
                 StatSummary ss = ntMap.get(key);
                 System.out.println(key + "\t " + ss.n() + "\t " + ss.mean());
             }
@@ -119,13 +126,13 @@ public class NTuple {
      * @return
      */
     public StatSummary getStatsForceCreate(int[] x) {
-        int address = address(x);
+        double address = address(x);
         if (ntArray != null) {
-            StatSummary ss = ntArray[address];
+            StatSummary ss = ntArray[(int) address];
             if (ss == null) {
                 ss = new StatSummary();
                 nEntries++;
-                ntArray[address] = ss;
+                ntArray[(int) address] = ss;
             }
             return ss;
         } else {
@@ -140,9 +147,9 @@ public class NTuple {
     }
 
     public StatSummary getStats(int[] x) {
-        int address = address(x);
+        double address = address(x);
         if (ntArray != null) {
-            return ntArray[address];
+            return ntArray[(int) address];
         } else {
             return ntMap.get(address);
         }
@@ -152,7 +159,7 @@ public class NTuple {
         return nSamples;
     }
 
-    public int address(int[] x) {
+    public double address(int[] x) {
 
         // iterate over each of the tuple's dimensions
         // and calculate the address by adding in the value
@@ -163,8 +170,8 @@ public class NTuple {
                     searchSpace.nDims() + " : " + x.length);
         }
 
-        int prod = 1;
-        int addr = 0;
+        double prod = 1;
+        double addr = 0;
         for (int i : tuple) { //  i<tuple.length; i++) {
             if (x[i] >= searchSpace.nValues(i)) {
                 throw new RuntimeException("Dimension exceeded: " + i + " : " + x[i] + " : " + searchSpace.nValues(i));
@@ -176,18 +183,20 @@ public class NTuple {
     }
 
 
-
-
     /**
      *
      * @return the size of the search space
      */
-    public int spaceSize() {
-        int size = 1;
-        for (int i : tuple) {
-            size *= searchSpace.nValues(i);
-        }
-        return size;
+    public double spaceSize() {
+        return SearchSpaceUtil.size(searchSpace);
+
+        // the old version based on Integers could overflow ...
+//
+//        int size = 1;
+//        for (int i : tuple) {
+//            size *= searchSpace.nValues(i);
+//        }
+//        return size;
     }
 
     public String toString() {

@@ -15,7 +15,6 @@ import java.util.Random;
  */
 public class NTupleSystemTest {
 
-
     static Random rand = new Random();
     static int nDims = 10;
 
@@ -26,9 +25,7 @@ public class NTupleSystemTest {
 
     public static void main(String[] args) {
 
-
         // NTupleSystem nts = new NTupleSystem(new TenSpace(nDims, 2));
-
         int m = 2;
 
         FitnessSpace evalTrue = new EvalNoisyWinRate(nDims, m);

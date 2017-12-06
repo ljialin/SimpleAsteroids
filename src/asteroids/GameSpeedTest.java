@@ -13,7 +13,6 @@ public class GameSpeedTest {
 
     // why could that be?
 
-
     public static void main(String[] args) {
         ElapsedTimer timer = new ElapsedTimer();
 

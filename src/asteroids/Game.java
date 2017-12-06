@@ -3,6 +3,7 @@ package asteroids;
 import evodef.EvoAlg;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
+import ntuple.SlidingMeanEDA;
 import planetwar.EvoAgent;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
@@ -85,6 +86,8 @@ public class Game {
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
+        // evoAlg = new SlidingMeanEDA();
+
         int nEvals = 20;
         int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
@@ -98,15 +101,6 @@ public class Game {
         int i = 0;
         while (gameState.gameOn() && ++i < maxTicks) {
 
-            // check that copying works!
-            // question: what part of the gameState state is not being copied correctly?
-            // The Ship perhaps?
-            // System.out.println("Tick: " + i);
-
-            // System.out.println("1: " + gameState.ship.action);
-            // System.out.println("2: " + gameState.ship.action);
-
-            // gameState.ship.action = controller.action(gameState);
             Action action = controller.action(gameState);
             gameState.update(action);
             if (copyTest) {

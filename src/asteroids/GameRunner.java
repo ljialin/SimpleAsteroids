@@ -1,8 +1,11 @@
 package asteroids;
 
 import evodef.EvoAlg;
+import evogame.DefaultParams;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
+import ntuple.NTupleBanditEA;
+import ntuple.SlidingMeanEDA;
 import planetwar.EvoAgent;
 import planetwar.SimplePlayerInterface;
 import utilities.ElapsedTimer;
@@ -32,7 +35,7 @@ public class GameRunner {
     }
 
     public static StatSummary runTrials(SimplePlayerInterface agent, int nTicks, int nTrials) {
-        StatSummary ss = new StatSummary("Score stats: " + agent.getClass().getSimpleName());
+        StatSummary ss = new StatSummary("Score stats: " + agent.toString());
         for (int i=0; i<nTrials; i++) {
             double score = runTrial(agent, nTicks);
             System.out.println(i + "\t " + score);
@@ -44,13 +47,16 @@ public class GameRunner {
     public static double runTrial(SimplePlayerInterface agent, int nTicks) {
         GameState gameState = new GameState();
         gameState.initialLevel = 5;
-        gameState.setParams(new GameParameters()).initForwardModel();
+        gameState.initialLives = 3;
+        GameParameters params = new GameParameters().injectValues(new DefaultParams());
+        gameState.setParams(params).initForwardModel();
+
 
         gameState.state = State.Playing;
         System.out.println("Level = " + gameState.forwardModel.level);
         // gameState.forwardModel
 
-        while (nTicks-- > 0 && gameState.state != State.GameOver) {
+        while (nTicks-- > 0 && gameState.gameOn()) {
             int action = agent.getAction(gameState.copy(), 0);
             int[] actions = {action};
             gameState.next(actions);
@@ -62,8 +68,10 @@ public class GameRunner {
     public static EvoAgent getEvoAgent() {
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
+        // evoAlg = new SlidingMeanEDA();
+        evoAlg = new NTupleBanditEA();
 
-        int nEvals = 50;
+        int nEvals = 20;
         int seqLength = 100;
 
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
