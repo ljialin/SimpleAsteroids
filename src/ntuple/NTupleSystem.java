@@ -172,7 +172,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
         for (NTuple nTuple : tuples) {
             StatSummary ss = nTuple.getStats(p);
             if (ss != null) {
-                System.out.format("NTuple Lut Size: %5d\t n: %d,\t mean: %.3f\n", nTuple.spaceSize(), ss.n(), ss.mean());
+                System.out.format("NTuple Lut Size: %.0f\t n: %d,\t mean: %.3f\n", nTuple.spaceSize(), ss.n(), ss.mean());
             } else {
                 System.out.println("No data yet");
             }

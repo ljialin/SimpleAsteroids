@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by simonmarklucas on 14/08/2016.
  */
-public class Eval2DNonLinear implements NoisySolutionEvaluator, SearchSpace {
+public class Eval2DNonLinear implements NoisySolutionEvaluator, SearchSpace , FitnessSpace {
 
     public static void main(String[] args) {
         Eval2DNonLinear problem = new Eval2DNonLinear(5, 0);
@@ -54,6 +54,8 @@ public class Eval2DNonLinear implements NoisySolutionEvaluator, SearchSpace {
         return tot;
     }
 
+    boolean trap = true;
+
     @Override
     public Double trueFitness(int[] a) {
         double x = a[0];
@@ -61,8 +63,16 @@ public class Eval2DNonLinear implements NoisySolutionEvaluator, SearchSpace {
         return f(x,y) / optimalIfKnown();
     }
 
-    public double f(double x, double y) {
-        return x + 2 * y - x * y;
+    public double f(double x, double y)
+    {
+        if (false && trap && x == m-1 && y == m-1 ) {
+            return m;
+        } else if (trap && x == 0 && y == 0) {
+            return 2 * m;
+        } else  {
+            return x + y;
+        }
+//         return x + 2 * y - x * y;
     }
 
     @Override

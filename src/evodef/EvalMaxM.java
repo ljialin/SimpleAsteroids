@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by simonmarklucas on 14/08/2016.
  */
-public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
+public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpace {
 
     int nDims;
     int m;
@@ -27,6 +27,13 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
         this.m = m;
         this.noise = noise;
         logger = new EvolutionLogger();
+    }
+
+    boolean trap = false;
+
+    public EvalMaxM setTrap(boolean trap) {
+        this.trap = trap;
+        return this;
     }
 
     @Override
@@ -50,6 +57,9 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace {
 //            // System.out.println("Stumbled on opt: " + Arrays.toString(a));
 //        }
         boolean isOptimal = isOptimal(a);
+        if (trap && isOptimal) {
+            tot = 0;
+        }
         tot += noise * random.nextGaussian();
 
         logger.log(tot, a, isOptimal);
