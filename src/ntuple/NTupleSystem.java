@@ -60,7 +60,7 @@ public class NTupleSystem implements FitnessLandscapeModel {
     // n-tuples to add
     public NTupleSystem addTuples() {
         add1Tuples();
-        add2Tuples();
+        // add2Tuples();
         // add3Tuples();
         //
         //

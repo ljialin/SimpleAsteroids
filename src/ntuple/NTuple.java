@@ -109,7 +109,8 @@ public class NTuple {
             for (int i=0; i<ntArray.length; i++) {
                 if (ntArray[i] != null) {
                     StatSummary ss = ntArray[i];
-                    System.out.println(i + "\t " + ss.n() + "\t " + ss.mean());
+                    // System.out.println(i + "\t " + ss.n() + "\t " + ss.mean());
+                    System.out.format("%d\t %.2f\t %d\n", i, ss.mean(), ss.n());
                 }
             }
         } else {
@@ -188,15 +189,13 @@ public class NTuple {
      * @return the size of the search space
      */
     public double spaceSize() {
-        return SearchSpaceUtil.size(searchSpace);
+        // return SearchSpaceUtil.size(searchSpace);
 
-        // the old version based on Integers could overflow ...
-//
-//        int size = 1;
-//        for (int i : tuple) {
-//            size *= searchSpace.nValues(i);
-//        }
-//        return size;
+        double size = 1;
+        for (int i : tuple) {
+            size *= searchSpace.nValues(i);
+        }
+        return size;
     }
 
     public String toString() {

@@ -48,7 +48,7 @@ public class NTupleSystemTest {
         int nPoints = 1000;
         nPoints = (int) SearchSpaceUtil.size(nts.searchSpace);
 
-        nPoints /= 5;
+        nPoints *= 10000;
         // nPoints
 
         for (int i=0; i<nPoints; i++) {

@@ -69,7 +69,11 @@ public class Eval2DNonLinear implements NoisySolutionEvaluator, SearchSpace , Fi
             return m;
         } else if (trap && x == 0 && y == 0) {
             return 2 * m;
-        } else  {
+        }
+        else if (trap && (x == 0) && (y == 0)) {
+            return 0;
+        }
+        else  {
             return x + y;
         }
 //         return x + 2 * y - x * y;
