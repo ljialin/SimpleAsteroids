@@ -1,12 +1,19 @@
 package bandits;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import evodef.SolutionEvaluator;
 import evomaze.MazeView;
 import evomaze.ShortestPathTest;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by simonmarklucas on 27/05/2016.
@@ -20,7 +27,7 @@ public class BanditEA {
 
     SolutionEvaluator evaluator = null;
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  throws Exception {
 
         // the number of bandits is equal to the size of the array
         int nBandits = 400;
@@ -33,8 +40,24 @@ public class BanditEA {
 
     }
 
-    public static StatSummary runTrials(int nBandits, int nTrials) {
+    static int[][] toSquareArray(int[] a) {
+        int len = (int) Math.sqrt(a.length);
+        int[][] m = new int[len][len];
+        for (int i=0; i<a.length; i++) {
+            m[i%len][i/len] = a[i];
+        }
+        return m;
+    }
+
+    public static StatSummary runTrials(int nBandits, int nTrials) throws Exception {
         StatSummary ss = new StatSummary();
+
+        ArrayList<int[][]> examples = new ArrayList<>();
+
+
+        // System.out.println(examples);
+
+
 
         for (int i=0; i<nTrials; i++) {
 
@@ -50,12 +73,34 @@ public class BanditEA {
                 // ss.add(ea.trialsSoFar);
             }
             ss.add(ea.evaluate(ea.genome));
+            System.out.println("Checking fitness: " + ea.evaluate(ea.genome));
+            examples.add(toSquareArray(ea.genome.toArray()));
 
         }
+
+        System.out.println("Created mazes");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        String out = gson.toJson(examples);
+        System.out.println("Created JSON String");
+
+        // System.out.println(out);
+
+        String outputFile = "data/mazes.json";
+        PrintWriter writer = new PrintWriter(outputFile);
+
+        writer.print(out);
+        writer.close();
+
+        System.out.println("Wrote file with " + examples.size() + " examples");
+
+
 
         return ss;
 
     }
+
+
 
     // use these instance variables to track whether
     // a run is successful and the number of evaluations used
