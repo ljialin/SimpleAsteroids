@@ -81,7 +81,7 @@ public class AsteroidsTest {
 
         // Mutator.totalRandomChaosMutation = true;
 
-        Agent.useShiftBuffer = false;
+        Agent.useShiftBuffer = true;
 
         controllers.singlePlayer.ea.Agent.SEQUENCE_LENGTH = 200;
         // player = new controllers.singlePlayer.ea.Agent(stateObs, timer, evoAlg, nEvals);
