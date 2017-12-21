@@ -1,6 +1,5 @@
 package asteroids;
 
-import evogame.DefaultParams;
 import evogame.GameParameters;
 import math.Vector2d;
 import planetwar.AbstractGameState;
@@ -9,7 +8,7 @@ import java.awt.*;
 
 import static asteroids.Constants.*;
 
-public class GameState implements AbstractGameState {
+public class AsteroidsGameState implements AbstractGameState {
 
     public int initialLives = 3;
     public int initialLevel = 3;
@@ -24,7 +23,7 @@ public class GameState implements AbstractGameState {
 
     static ActionAdapter actionAdapter = new ActionAdapter();
 
-    public GameState() {
+    public AsteroidsGameState() {
         // setParams(new GameParameters().injectValues(new DefaultParams()));
     }
 
@@ -32,12 +31,12 @@ public class GameState implements AbstractGameState {
         return actionAdapter.actions.length;
     }
 
-    public GameState setParams(GameParameters params) {
+    public AsteroidsGameState setParams(GameParameters params) {
         this.params = params;
         return this;
     }
 
-    public GameState initForwardModel() {
+    public AsteroidsGameState initForwardModel() {
         forwardModel = new ForwardModel().setGameState(this);
         forwardModel.level = initialLevel;
         forwardModel.nLives = initialLives;
@@ -47,8 +46,8 @@ public class GameState implements AbstractGameState {
         return this;
     }
 
-    public GameState copy() {
-        GameState gs = new GameState();
+    public AsteroidsGameState copy() {
+        AsteroidsGameState gs = new AsteroidsGameState();
         gs.state = state;
         gs.nextState = nextState;
         gs.message = message;
@@ -73,7 +72,7 @@ public class GameState implements AbstractGameState {
     // advance it to the next state
 
     public void update(Action action) {
-        // System.out.println("GameState.update() " + state + " : " + action);
+        // System.out.println("AsteroidsGameState.update() " + state + " : " + action);
         switch (state) {
             case WaitingToStart: {
                 if (action.shoot)
@@ -154,7 +153,7 @@ public class GameState implements AbstractGameState {
         // gameState state tie in with what is drawn!
         // simple but not wholly satisfying is to use
         // another switch statement
-        // System.out.println("GameState.draw()");
+        // System.out.println("AsteroidsGameState.draw()");
         switch (state) {
             case WaitingToStart: {
                 View.messageScreen(g, "Hit Space Bar To Start");

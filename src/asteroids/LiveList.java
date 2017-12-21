@@ -64,7 +64,7 @@ public class LiveList {
         return n;
     }
 
-    public synchronized void update(GameState gameState, Action action) {
+    public synchronized void update(AsteroidsGameState gameState, Action action) {
         // update them
         // System.out.println("In update(): " + n);
         // System.out.println("Missiles: " + nMissiles());
@@ -111,7 +111,7 @@ public class LiveList {
         objects.add(ob);
     }
 
-    public synchronized void moveAsteroids(GameState gameState) {
+    public synchronized void moveAsteroids(AsteroidsGameState gameState) {
         // update them
         // System.out.println("In update(): " + n);
         for (GameObject ob : objects) {

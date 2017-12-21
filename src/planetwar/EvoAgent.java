@@ -25,7 +25,7 @@ public class EvoAgent implements SimplePlayerInterface {
     SimpleGameAdapter simpleGameAdapter;
     RegularSearchSpace searchSpace;
 
-    // static int nActions = GameState.nActions;
+    // static int nActions = AsteroidsGameState.nActions;
     int sequenceLength = 20;
     public boolean useShiftBuffer = true;
     int[] solution;

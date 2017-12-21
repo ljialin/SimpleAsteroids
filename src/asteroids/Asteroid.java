@@ -4,7 +4,6 @@ import math.Vector2d;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.Arrays;
 
 
 import static asteroids.Constants.*;
@@ -23,7 +22,7 @@ public class Asteroid extends GameObject {
     // they are not necessary, not really
     // can manage all the collisions at gameState level instead
     // and then tell the objects whether to die etc
-    // GameState gameState;
+    // AsteroidsGameState gameState;
 
     public Asteroid(Vector2d s, Vector2d v, int index, double r) {
         super(s, v);
@@ -94,7 +93,7 @@ public class Asteroid extends GameObject {
         g.setTransform(at);
     }
 
-    public void update(GameState gameState) {
+    public void update(AsteroidsGameState gameState) {
         s.add(v);
         rot += rotRate;
 //        if (dead) {

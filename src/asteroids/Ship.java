@@ -36,7 +36,7 @@ public class Ship extends GameObject {
     static double gravity = 0.00;
 
     public Action action;
-    public GameState game;
+    public AsteroidsGameState game;
 
     // a ship fires a missile this way
     public Missile pending;
@@ -45,7 +45,7 @@ public class Ship extends GameObject {
     public Vector2d d;
 
 
-    public Ship(GameState game, Vector2d s, Vector2d v, Vector2d d) {
+    public Ship(AsteroidsGameState game, Vector2d s, Vector2d v, Vector2d d) {
         super(new Vector2d(s), new Vector2d(v));
         this.game = game;
         loss = game.params.shipLoss;
@@ -80,7 +80,7 @@ public class Ship extends GameObject {
         // System.out.println("Reset the ship ");
     }
 
-    public void update(GameState gameState) {
+    public void update(AsteroidsGameState gameState) {
         // do nothing here, wait for the action call instead
         // update(action);
     }

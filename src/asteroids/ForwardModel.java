@@ -16,7 +16,7 @@ public class ForwardModel {
     // limit on number of active missiles
     static int liveMissileLimit = 5;
 
-    GameState gameState;
+    AsteroidsGameState gameState;
 
     Ship ship;
     ArrayList<Missile> missiles;
@@ -31,7 +31,7 @@ public class ForwardModel {
         missiles = new ArrayList<>();
     }
 
-    public ForwardModel setGameState(GameState gameState) {
+    public ForwardModel setGameState(AsteroidsGameState gameState) {
         this.gameState = gameState;
         return this;
     }
@@ -270,14 +270,14 @@ public class ForwardModel {
         missiles.clear();
     }
 
-    public void moveAsteroids(GameState gameState) {
+    public void moveAsteroids(AsteroidsGameState gameState) {
         for (Asteroid asteroid : asteroids) {
             asteroid.update(gameState);
         }
     }
 
     static double safeDistance = 100;
-    public void makeSafe(GameState gameState) {
+    public void makeSafe(AsteroidsGameState gameState) {
         for (Asteroid asteroid : asteroids) {
             while (ship.s.dist(asteroid.s) < safeDistance) {
                 Vector2d s = new Vector2d(rand.nextDouble() * width,

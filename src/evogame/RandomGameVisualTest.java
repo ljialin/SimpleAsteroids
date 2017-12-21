@@ -23,7 +23,7 @@ public class RandomGameVisualTest {
         int nLives = 5;
         boolean visible = true;
         int nTicks = 10000;
-        GameState gameState = new GameState().setParams(params).initForwardModel();
+        AsteroidsGameState gameState = new AsteroidsGameState().setParams(params).initForwardModel();
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();
@@ -40,7 +40,7 @@ public class RandomGameVisualTest {
         int nLives = 5;
         boolean visible = true;
         int nTicks = 10000;
-        GameState gameState = new GameState().setParams(params);
+        AsteroidsGameState gameState = new AsteroidsGameState().setParams(params);
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();

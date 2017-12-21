@@ -2,7 +2,6 @@ package asteroids;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import static asteroids.Constants.*;
 
 /**
  * Created by Simon M. Lucas
@@ -20,7 +19,7 @@ public class KeyController extends KeyAdapter
         action = new Action();
     }
 
-    public Action action(GameState game) {
+    public Action action(AsteroidsGameState game) {
         // this is defined to comply with the standard interface
         return action;
     }

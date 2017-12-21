@@ -1,7 +1,5 @@
 package asteroids;
 
-import battle.SimpleBattleState;
-import evodef.GameActionSpaceAdapterMulti;
 import math.Vector2d;
 
 import javax.swing.*;
@@ -22,7 +20,7 @@ public class View extends JComponent {
     int scale;
     // static int carSize = 5;
     static Color bg = black;
-    GameState gameState;
+    AsteroidsGameState gameState;
     // Font font;
 
     Ship ship;
@@ -32,7 +30,7 @@ public class View extends JComponent {
     ArrayList<int[]> playouts;
 
 
-    public View(GameState gameState) {
+    public View(AsteroidsGameState gameState) {
         this.gameState = gameState;
         scale = size.width - 2 * offset;
         ship = new Ship(gameState, new Vector2d(), new Vector2d(), new Vector2d());

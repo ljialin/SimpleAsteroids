@@ -46,7 +46,7 @@ public class SimpleEvaluator implements GameEvaluator {
         GameParameters params = new GameParameters().injectValues(evoParams);
         boolean visible = false;
         int nTicks = 1000;
-        GameState gameState = new GameState().setParams(params).initForwardModel();
+        AsteroidsGameState gameState = new AsteroidsGameState().setParams(params).initForwardModel();
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();

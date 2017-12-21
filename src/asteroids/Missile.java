@@ -4,8 +4,6 @@ import math.Vector2d;
 
 import java.awt.*;
 
-import static asteroids.Constants.*;
-
 public class Missile extends GameObject {
 
     int ttl;
@@ -18,7 +16,7 @@ public class Missile extends GameObject {
     }
 
     @Override
-    public void update(GameState gameState) {
+    public void update(AsteroidsGameState gameState) {
         // System.out.println("Updating missile: " + this);
         if (!dead()) {
             s.add(v);

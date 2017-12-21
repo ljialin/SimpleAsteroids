@@ -16,7 +16,7 @@ public class EvoAgentAdapter implements Controller {
     }
 
     @Override
-    public Action action(GameState game) {
+    public Action action(AsteroidsGameState game) {
         return actionAdapter.getAction(agent.getAction(game, 0));
     }
 

@@ -19,7 +19,7 @@ public class EvoAgentTest {
         int nLives = 3000;
 
         GameParameters params = new GameParameters().injectValues(new DefaultParams());
-        GameState gameState = new GameState().setParams(params);
+        AsteroidsGameState gameState = new AsteroidsGameState().setParams(params);
         gameState.initialLevel = 3;
         Game game = new Game(gameState, visible);
         gameState.forwardModel.nLives = nLives;

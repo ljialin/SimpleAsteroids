@@ -1,7 +1,7 @@
 package evogame;
 
+import asteroids.AsteroidsGameState;
 import asteroids.Game;
-import asteroids.GameState;
 import utilities.ElapsedTimer;
 
 /**
@@ -35,7 +35,7 @@ public class ParameterSettingsTest {
         int nLives = 5;
         boolean visible = true;
         int nTicks = 10000;
-        GameState gameState = new GameState().setParams(params).initForwardModel();
+        AsteroidsGameState gameState = new AsteroidsGameState().setParams(params).initForwardModel();
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();

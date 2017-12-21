@@ -55,7 +55,7 @@ public class GameParameters {
         shipSteer = values.getShipSteerStep();
 
         // returning the object allows method call chaining
-        // see usage in constructor of GameState
+        // see usage in constructor of AsteroidsGameState
         return this;
 
     }

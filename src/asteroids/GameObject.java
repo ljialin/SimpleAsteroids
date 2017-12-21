@@ -15,7 +15,7 @@ public abstract class GameObject {
         this.v = new Vector2d(v);
     }
 
-    public abstract void update(GameState gameState);
+    public abstract void update(AsteroidsGameState gameState);
     public abstract void draw(Graphics2D g);
 
     public abstract boolean dead();

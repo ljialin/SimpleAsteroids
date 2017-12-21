@@ -13,7 +13,7 @@ public class RotateAndShoot implements Controller {
         action = new Action();
     }
 
-    public Action action(GameState game) {
+    public Action action(AsteroidsGameState game) {
         action.thrust = 2.0;
         action.shoot = true;
         action.turn = 1;

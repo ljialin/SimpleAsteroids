@@ -12,7 +12,7 @@ import java.util.Random;
 public class TwoPlayerTest {
 
     public static void main(String[] args) throws Exception {
-        // GameState game = new GameState().setNPlanets(10).setRandomOwnerships().setRandomGrowthRates();
+        // AsteroidsGameState game = new AsteroidsGameState().setNPlanets(10).setRandomOwnerships().setRandomGrowthRates();
         GameState game = new GameState().defaultState(); // .setNPlanets(10).setDOwnerships().setRandomGrowthRates();
 
         PlanetWarView view = new PlanetWarView(game);
@@ -39,11 +39,11 @@ public class TwoPlayerTest {
 
             p1 = evoAgent.getAction(game, 0);
 
-            // p1 = random.nextInt(GameState.nActions);
+            // p1 = random.nextInt(AsteroidsGameState.nActions);
 
             p2 = controller.action(game);
 
-            // p2 = GameState.doNothing;
+            // p2 = AsteroidsGameState.doNothing;
             int[] a = new int[]{p1, p2};
             game.next(a);
             // game.update();

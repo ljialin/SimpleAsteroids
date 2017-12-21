@@ -1,8 +1,6 @@
 package test;
 
-import asteroids.GameState;
 import battle.SimpleBattleState;
-import core.game.StateObservationMulti;
 import utilities.ElapsedTimer;
 
 /**
@@ -22,7 +20,7 @@ public class GameCopyTest {
         // StateObservationMulti game = new SimpleBattleState();
         SimpleBattleState game = new SimpleBattleState();
 
-        // GameState game = new GameState(3);
+        // AsteroidsGameState game = new AsteroidsGameState(3);
 
         for (int i=0; i<nCopies; i++) {
 

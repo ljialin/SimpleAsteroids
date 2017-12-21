@@ -84,8 +84,8 @@ public class GameState implements AbstractGameState{
         for (int i=0; i<nTicks; i++) {
             int a1 = random.nextInt(GameState.nActions);
             int a2 = random.nextInt(GameState.nActions);
-//            a1 = GameState.doNothing;
-//            a2 = GameState.doNothing;
+//            a1 = AsteroidsGameState.doNothing;
+//            a2 = AsteroidsGameState.doNothing;
             int[] actions = new int[]{a1, a2};
             gameState.next(actions);
             // gameState.update();

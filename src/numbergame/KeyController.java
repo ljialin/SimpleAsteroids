@@ -1,8 +1,5 @@
 package numbergame;
 
-import asteroids.Action;
-import asteroids.GameState;
-import asteroids.Ship;
 import core.game.StateObservationMulti;
 import ontology.Types;
 

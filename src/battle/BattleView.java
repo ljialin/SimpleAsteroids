@@ -1,24 +1,17 @@
 package battle;
 
-import asteroids.GameState;
-import asteroids.Ship;
 import evodef.EvoAlg;
-import evodef.EvolutionLogger;
 import evodef.GameActionSpaceAdapterMulti;
-import evodef.SearchSpaceUtil;
 import math.Vector2d;
-import ntuple.TenSpace;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
 
 import static asteroids.Constants.*;
-import static java.awt.Color.black;
 import static battle.BattleGameParameters.*;
 
 public class BattleView extends JComponent {

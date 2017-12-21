@@ -5,7 +5,6 @@ import evogame.DefaultParams;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
-import ntuple.SlidingMeanEDA;
 import planetwar.EvoAgent;
 import planetwar.SimplePlayerInterface;
 import utilities.ElapsedTimer;
@@ -45,7 +44,7 @@ public class GameRunner {
     }
 
     public static double runTrial(SimplePlayerInterface agent, int nTicks) {
-        GameState gameState = new GameState();
+        AsteroidsGameState gameState = new AsteroidsGameState();
         gameState.initialLevel = 5;
         gameState.initialLives = 3;
         GameParameters params = new GameParameters().injectValues(new DefaultParams());

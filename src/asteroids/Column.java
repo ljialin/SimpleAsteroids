@@ -5,15 +5,13 @@ import math.Vector2d;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Rectangle2D;
 
 import static asteroids.Constants.*;
 
 public class Column extends GameObject implements PolyContains {
     static Stroke stroke = new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
     boolean dead;
-    GameState game;
+    AsteroidsGameState game;
 
     static double minGap = 0.2;
     static double maxGap = 0.4;
@@ -22,7 +20,7 @@ public class Column extends GameObject implements PolyContains {
     Path2D upper, lower;
 
 
-    public Column(GameState game, int index) {
+    public Column(AsteroidsGameState game, int index) {
         super(new Vector2d(width + index * width/4, 0), new Vector2d(-1, 0));
         this.game = game;
         setRandPaths();
@@ -79,7 +77,7 @@ public class Column extends GameObject implements PolyContains {
         g.setTransform(at);
     }
 
-    public void update(GameState gameState) {
+    public void update(AsteroidsGameState gameState) {
         s.add(v);
         if (s.x < 0) {
             s.x = width * 5 / 4 ;

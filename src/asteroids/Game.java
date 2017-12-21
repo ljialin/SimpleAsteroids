@@ -3,7 +3,6 @@ package asteroids;
 import evodef.EvoAlg;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
-import ntuple.SlidingMeanEDA;
 import planetwar.EvoAgent;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
@@ -13,7 +12,7 @@ import static asteroids.Constants.*;
 public class Game {
 
     View view;
-    GameState gameState;
+    AsteroidsGameState gameState;
     JEasyFrame frame;
     public Controller controller;
 
@@ -33,8 +32,8 @@ public class Game {
         int startLevel = 4;
         int nLives = 5;
         GameParameters params = new GameParameters();
-        // GameState gameState = new GameState(params, startLevel, nLives);
-        GameState gameState = new GameState().setParams(params).initForwardModel();
+        // AsteroidsGameState gameState = new AsteroidsGameState(params, startLevel, nLives);
+        AsteroidsGameState gameState = new AsteroidsGameState().setParams(params).initForwardModel();
         Game game = new Game(gameState, visible);
 
         ElapsedTimer t = new ElapsedTimer();
@@ -56,10 +55,10 @@ public class Game {
 
     public Game(boolean visible) {
 
-        this(new GameState(), visible);
+        this(new AsteroidsGameState(), visible);
     }
 
-    public Game(GameState gameState, boolean visible) {
+    public Game(AsteroidsGameState gameState, boolean visible) {
         this.gameState = gameState;
         // gameState.setParams(new GameParameters());
         gameState.initForwardModel();

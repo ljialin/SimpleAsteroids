@@ -160,7 +160,7 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
             // the idea is that we'll pad out the
             int myAction = actions[i];
             int opAction = random.nextInt(obs.getAvailableActions(opponentID).size());
-            // opAction = GameState.doNothing;
+            // opAction = AsteroidsGameState.doNothing;
             Types.ACTIONS[] acts = new Types.ACTIONS[2];
             acts[playerID] = gvgaiActions[myAction];
             acts[opponentID] = gvgaiActions[opAction];
