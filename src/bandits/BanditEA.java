@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import evodef.SolutionEvaluator;
 import evomaze.MazeView;
 import evomaze.ShortestPathTest;
+import ntuple.ConvNTuple;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
@@ -27,16 +28,33 @@ public class BanditEA {
 
     SolutionEvaluator evaluator = null;
 
+
+    // 50000 gives good results on a 20x20 grid
+    // set lower to see some poor examples
+
+    static int nEvals = 10000;
+
+
+    static ConvNTuple convNTuple;
+    static int reportFrequency = 100;
+
     public static void main(String[] args)  throws Exception {
 
         // the number of bandits is equal to the size of the array
         int nBandits = 400;
 
-        int nTrials = 30;
+        int nTrials = 10;
+
+        int imageSize = (int) Math.sqrt(nBandits);
+
+        int filterSize = 10;
+        convNTuple = new ConvNTuple().setImageDimensions(imageSize, imageSize);
+        convNTuple.setFilterDimensions(filterSize, filterSize);
+        convNTuple.setStride(2).setMValues(2);
+        convNTuple.makeIndicies();
+
 
         System.out.println(runTrials(nBandits, nTrials));
-
-
 
     }
 
@@ -65,7 +83,6 @@ public class BanditEA {
 
             ea.evaluator = new ShortestPathTest();
 
-            int nEvals = 50000;
             ElapsedTimer t = new ElapsedTimer();
             ea.run(nEvals);
             System.out.println(t);
@@ -195,6 +212,7 @@ public class BanditEA {
         return tot;
     }
 
+
     private double externalEvaluation(BanditArray genome) {
 //        int[] bits = new int[genome.nBandits];
 //
@@ -204,9 +222,27 @@ public class BanditEA {
 //
 
 
-        double value = evaluator.evaluate(genome.toArray());
+
+        int[] x = genome.toArray();
+        double value = evaluator.evaluate(x);
+
+        // we want to add this, but also do some more...
+
+
+        if (convNTuple.nSamples() % reportFrequency == 0) {
+            System.out.format("True value v. estimate:  %.1f\t %.1f\n", value, convNTuple.getMeanEstimate(x));
+            System.out.println("Exploration stats: ");
+            System.out.println(convNTuple.getNoveltyStats(x));
+            System.out.println();
+        }
+
+        convNTuple.addPoint(x, value);
+
+
         // System.out.println(Arrays.toString(bits));
         // System.out.println("Fitness = " + value);
         return value;
+
+
     }
 }
