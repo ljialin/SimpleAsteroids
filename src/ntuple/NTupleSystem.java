@@ -40,7 +40,7 @@ import java.util.List;
     // todo there is something strange that happens when NTuples are created
     // something like making the StatSummary objects seems really slow
 
-public class NTupleSystem implements FitnessLandscapeModel {
+public class NTupleSystem implements BanditLandscapeModel {
 
     static int minTupleSize = 1;
 
@@ -50,8 +50,8 @@ public class NTupleSystem implements FitnessLandscapeModel {
     ArrayList<NTuple> tuples;
     UrnSystem urnSystem;
 
-    public NTupleSystem(SearchSpace searchSpace) {
-        this.searchSpace = searchSpace;
+    public NTupleSystem() {
+        // this.searchSpace = searchSpace;
         tuples = new ArrayList<>();
         sampledPoints = new ArrayList<>();
     }
@@ -67,6 +67,18 @@ public class NTupleSystem implements FitnessLandscapeModel {
         addNTuple();
         // urnSystem = new UrnSystem();
         return this;
+    }
+
+    @Override
+    public BanditLandscapeModel setSearchSpace(SearchSpace searchSpace) {
+        this.searchSpace = searchSpace;
+        addTuples();
+        return this;
+    }
+
+    @Override
+    public SearchSpace getSearchSpace() {
+        return searchSpace;
     }
 
     @Override

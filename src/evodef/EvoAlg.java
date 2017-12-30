@@ -1,5 +1,6 @@
 package evodef;
 
+import ntuple.BanditLandscapeModel;
 import ntuple.NTupleSystem;
 
 /**
@@ -14,8 +15,8 @@ public interface EvoAlg {
     // seed the algorithm with a specified point in the search space
     void setInitialSeed(int[] seed);
     int[] runTrial(SolutionEvaluator evaluator, int nEvals);
-    void setModel(NTupleSystem nTupleSystem);
-    NTupleSystem getModel();
+    void setModel(BanditLandscapeModel nTupleSystem);
+    BanditLandscapeModel getModel();
 
     EvolutionLogger getLogger();
     void setSamplingRate(int samplingRate);

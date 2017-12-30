@@ -6,6 +6,7 @@ import evodef.SolutionEvaluator;
 import evomaze.MazeView;
 import evomaze.ShortestPathTest;
 import ntuple.ConvNTuple;
+import ntuple.RankCorrelation;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
@@ -36,7 +37,7 @@ public class BanditEA {
 
 
     static ConvNTuple convNTuple;
-    static int reportFrequency = 100;
+    static int reportFrequency = 10;
 
     public static void main(String[] args)  throws Exception {
 
@@ -47,7 +48,7 @@ public class BanditEA {
 
         int imageSize = (int) Math.sqrt(nBandits);
 
-        int filterSize = 10;
+        int filterSize = 4;
         convNTuple = new ConvNTuple().setImageDimensions(imageSize, imageSize);
         convNTuple.setFilterDimensions(filterSize, filterSize);
         convNTuple.setStride(2).setMValues(2);
@@ -67,6 +68,8 @@ public class BanditEA {
         return m;
     }
 
+    static RankCorrelation rankCorrelation;
+
     public static StatSummary runTrials(int nBandits, int nTrials) throws Exception {
         StatSummary ss = new StatSummary();
 
@@ -75,6 +78,7 @@ public class BanditEA {
 
         // System.out.println(examples);
 
+        rankCorrelation = new RankCorrelation();
 
 
         for (int i=0; i<nTrials; i++) {
@@ -92,6 +96,9 @@ public class BanditEA {
             ss.add(ea.evaluate(ea.genome));
             System.out.println("Checking fitness: " + ea.evaluate(ea.genome));
             examples.add(toSquareArray(ea.genome.toArray()));
+
+            System.out.println("Rank correlation check:");
+            rankCorrelation.rankCorrelation();
 
         }
 
@@ -212,6 +219,9 @@ public class BanditEA {
         return tot;
     }
 
+    static int index = 0;
+
+
 
     private double externalEvaluation(BanditArray genome) {
 //        int[] bits = new int[genome.nBandits];
@@ -230,10 +240,19 @@ public class BanditEA {
 
 
         if (convNTuple.nSamples() % reportFrequency == 0) {
-            System.out.format("True value v. estimate:  %.1f\t %.1f\n", value, convNTuple.getMeanEstimate(x));
-            System.out.println("Exploration stats: ");
-            System.out.println(convNTuple.getNoveltyStats(x));
-            System.out.println();
+            double estimate = convNTuple.getMeanEstimate(x);
+
+            // the line below is to check that we get a rank correlation close to zero when
+            // using a random estimate
+            // would normally be commented out
+            // estimate = Math.random();
+
+            rankCorrelation.add(index++, value, estimate);
+
+//            System.out.format("True value v. estimate:  %.1f\t %.1f\n", value, estimate);
+//            System.out.println("Exploration stats: ");
+//            System.out.println(convNTuple.getNoveltyStats(x));
+//            System.out.println();
         }
 
         convNTuple.addPoint(x, value);

@@ -31,8 +31,9 @@ public class NTupleSystemTest {
         FitnessSpace evalTrue = new EvalNoisyWinRate(nDims, m);
         FitnessSpace evalNoisy = new EvalNoisyWinRate(nDims, m, 1.0);
 
-        NTupleSystem nts = new NTupleSystem(evalNoisy);
-        nts.addTuples();
+        NTupleSystem nts = new NTupleSystem();
+        nts.setSearchSpace(evalNoisy);
+        // nts.addTuples();
         // nts.printSummaryReport();
 
         // nts = new NTupleSystem(BattleGameSearchSpace.getSearchSpace());
@@ -48,7 +49,7 @@ public class NTupleSystemTest {
         int nPoints = 1000;
         nPoints = (int) SearchSpaceUtil.size(nts.searchSpace);
 
-        nPoints *= 10000;
+        nPoints *= 100;
         // nPoints
 
         for (int i=0; i<nPoints; i++) {
@@ -91,6 +92,12 @@ public class NTupleSystemTest {
         // ensure we sample all the points in the search space when testing
         nPoints = (int) SearchSpaceUtil.size(nts.searchSpace);
 
+        // the rank correlation was originally computed in-ine in the code,
+        // but this method has now been superceded by a separate utility class
+        // whose use is also demonstrated
+
+        RankCorrelation rc = new RankCorrelation();
+
 
         for (int i=0; i<nPoints; i++) {
             int[] p = SearchSpaceUtil.randomPoint(nts.searchSpace);
@@ -110,6 +117,7 @@ public class NTupleSystemTest {
                 double trueVal = evalTrue.evaluate(p);
                 double diff = Math.abs(trueVal - value);
 
+                rc.add(i, value, trueVal);
                 ss.add(diff);
                 // System.out.format("%d\t %.34f\t %.4f\n", i, value, trueVal);
                 trueRank.add(trueVal, i);
@@ -131,7 +139,7 @@ public class NTupleSystemTest {
         double sumSquaredDiff = 0;
 
         for (int i=0; i<nPoints; i++) {
-            System.out.println(i + "\t " + trueRank.getRank(i) + "\t " + estRank.getRank(i));
+            // System.out.println(i + "\t " + trueRank.getRank(i) + "\t " + estRank.getRank(i));
             int[] x = SearchSpaceUtil.nthPoint(nts.searchSpace, i);
             // System.out.println(Arrays.toString(nts.getExplorationVector(x)) + " : " + nts.getExplorationEstimate(x));
             // System.out.println();
@@ -141,6 +149,12 @@ public class NTupleSystemTest {
         // System.out.println("diffSum = " + sumSquaredDiff);
         double spearmanCoefficient = 1 - sumSquaredDiff * 6 / (nPoints * nPoints * nPoints - nPoints);
         System.out.format("Spearman correlation = %.4f\n", spearmanCoefficient);
+
+        System.out.println("And the RankCorrelation utility class test: ");
+
+
+        double rankCorrelation = rc.rankCorrelation();
+        System.out.println("RC = " + rankCorrelation);
 
 
         // nts.printDetailedReport();

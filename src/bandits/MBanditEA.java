@@ -6,6 +6,7 @@ import evodef.SearchSpace;
 import evodef.SolutionEvaluator;
 import evomaze.MazeView;
 import evomaze.ShortestPathTest;
+import ntuple.BanditLandscapeModel;
 import ntuple.NTupleSystem;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
@@ -30,14 +31,14 @@ public class MBanditEA implements EvoAlg {
     }
 
 
-    NTupleSystem model;
+    BanditLandscapeModel model;
     @Override
-    public void setModel(NTupleSystem nTupleSystem) {
+    public void setModel(BanditLandscapeModel nTupleSystem) {
         this.model = nTupleSystem;
     }
 
     @Override
-    public NTupleSystem getModel() {
+    public BanditLandscapeModel getModel() {
         return model;
     }
 

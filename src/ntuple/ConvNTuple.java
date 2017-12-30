@@ -5,13 +5,16 @@ package ntuple;
 // it actually uses a standard N-Tuple, but via a convolutional expansion of the input
 
 
+import evodef.SearchSpace;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class ConvNTuple implements FitnessLandscapeModel {
+public class ConvNTuple implements BanditLandscapeModel {
+
+    double epsilon = 0.1;
 
     public static void main(String[] args) {
         ConvNTuple convNTuple = new ConvNTuple().setImageDimensions(20, 20);
@@ -37,10 +40,10 @@ public class ConvNTuple implements FitnessLandscapeModel {
 
     int mValues; // number of values possible in each image pixel / tile
 
-    int[] tuple;
     HashMap<Double, StatSummary> ntMap;
 
     int nSamples;
+    SearchSpace searchSpace;
 
     public ConvNTuple reset() {
         nSamples = 0;
@@ -48,6 +51,16 @@ public class ConvNTuple implements FitnessLandscapeModel {
         return this;
     }
 
+
+    public BanditLandscapeModel setSearchSpace(SearchSpace searchSpace) {
+        this.searchSpace = searchSpace;
+        return this;
+    }
+
+    @Override
+    public SearchSpace getSearchSpace() {
+        return searchSpace;
+    }
 
     public ConvNTuple setImageDimensions(int imageWidth, int imageHeight) {
         this.imageWidth = imageWidth;
@@ -199,10 +212,25 @@ public class ConvNTuple implements FitnessLandscapeModel {
 
     @Override
     public double getExplorationEstimate(int[] x) {
-        return 0;
+        // StatSummary ssTot = new StatSummary();
+        StatSummary exploreStats = new StatSummary();
+        for (int[] index : indices) {
+            double address = address(x, index);
+            StatSummary ss = ntMap.get(address);
+            if (ss != null) {
+                exploreStats.add(explore(ss.n()));
+            } else {
+                exploreStats.add(explore(0));
+            }
+        }
+        return exploreStats.mean();
+    }
+
+    double k = 2.0;
+
+    public double explore(int n_i) {
+        return k * Math.sqrt(Math.log(nSamples) / (epsilon + n_i));
     }
 
 }
-
-
 

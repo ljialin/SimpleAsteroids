@@ -4,6 +4,7 @@ import evodef.*;
 import evogame.Mutator;
 import evomaze.MazeView;
 import evomaze.ShortestPathTest;
+import ntuple.BanditLandscapeModel;
 import ntuple.NTupleSystem;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
@@ -144,15 +145,15 @@ public class SimpleRMHC implements EvoAlg {
         return bestYet;
     }
 
-    NTupleSystem model;
+    BanditLandscapeModel model;
 
     @Override
-    public void setModel(NTupleSystem nTupleSystem) {
+    public void setModel(BanditLandscapeModel nTupleSystem) {
         this.model = nTupleSystem;
     }
 
     @Override
-    public NTupleSystem getModel() {
+    public BanditLandscapeModel getModel() {
         return model;
     }
 
@@ -168,7 +169,7 @@ public class SimpleRMHC implements EvoAlg {
         }
         if (model != null) {
             // System.out.println("Added summary");
-            model.addSummary(sol, ss);
+            // model.addSummary(sol, ss);
         }
         return ss;
     }

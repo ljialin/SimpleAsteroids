@@ -1,6 +1,7 @@
 package ga;
 
 import evodef.*;
+import ntuple.BanditLandscapeModel;
 import ntuple.NTupleSystem;
 import utilities.Picker;
 import utilities.StatSummary;
@@ -74,12 +75,12 @@ public class GridSearch implements EvoAlg {
     }
 
     @Override
-    public void setModel(NTupleSystem nTupleSystem) {
+    public void setModel(BanditLandscapeModel nTupleSystem) {
 
     }
 
     @Override
-    public NTupleSystem getModel() {
+    public BanditLandscapeModel getModel() {
         return null;
     }
 

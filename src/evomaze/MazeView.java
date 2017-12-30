@@ -37,7 +37,7 @@ public class MazeView extends JComponent {
     }
 
     public static void main(String[] args) {
-        int n = 64;
+        int n = 400;
         int[] bits = new int[n];
         Random random = new Random();
         for (int i=0; i<n; i++) {

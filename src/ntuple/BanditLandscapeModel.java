@@ -1,17 +1,24 @@
 package ntuple;
 
+import evodef.SearchSpace;
+
 /**
  * Created by sml on 19/01/2017.
  */
 
 
-public interface FitnessLandscapeModel {
+public interface BanditLandscapeModel {
+
+    BanditLandscapeModel setSearchSpace(SearchSpace searchSpace);
+
+    SearchSpace getSearchSpace();
+
     void addPoint(int[] p, double value);
 
     // careful - this can be slow - it iterates over all points in the search space!
     int[] getBestSolution();
 
-    // get best iof sampled is the default choice
+    // get best of sampled is the default choice
     int[] getBestOfSampled();
 
     // including the neighbours is more expensive but less
@@ -26,6 +33,7 @@ public interface FitnessLandscapeModel {
     // for the exploration term will be high, but small epsilon
     // prevents overflow
     double getExplorationEstimate(int[] x);
+
 }
 
 

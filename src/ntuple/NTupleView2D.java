@@ -1,17 +1,11 @@
 package ntuple;
 
-import bandits.BanditEA;
 import evodef.SolutionEvaluator;
 import math.BanditEquations;
-import math.Vector2d;
-import ropegame.RopeGameState;
 import utilities.StatSummary;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
@@ -116,11 +110,12 @@ public class NTupleView2D extends JComponent {
     }
 
     private void setupNTuples() {
-        System.out.println(banditEA.nTupleSystem);
+        System.out.println(banditEA.banditLandscapeModel);
         try {
-            xn = banditEA.nTupleSystem.tuples.get(0);
-            yn = banditEA.nTupleSystem.tuples.get(1);
-            xyn = banditEA.nTupleSystem.tuples.get(2);
+            NTupleSystem nts = (NTupleSystem) banditEA.banditLandscapeModel;
+            xn = nts.tuples.get(0);
+            yn = nts.tuples.get(1);
+            xyn = nts.tuples.get(2);
         } catch (Exception e) {
             e.printStackTrace();
         }

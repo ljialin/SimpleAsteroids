@@ -137,12 +137,12 @@ public class SlidingMeanEDA implements EvoAlg {
     }
 
     @Override
-    public void setModel(NTupleSystem nTupleSystem) {
+    public void setModel(BanditLandscapeModel nTupleSystem) {
 
     }
 
     @Override
-    public NTupleSystem getModel() {
+    public BanditLandscapeModel getModel() {
         return null;
     }
 
@@ -166,24 +166,6 @@ public class SlidingMeanEDA implements EvoAlg {
         }
         return ss;
     }
-
-
-    //            int[] x = randBitVec(pVec);
-//            int[] y = randBitVec(pVec);
-//
-//            if (nSamples == 1) {
-//                xFit = evaluator.evaluate(x);
-//                yFit = evaluator.evaluate(y);
-//            } else {
-//                xFit = fitness(evaluator, x).mean();
-//                yFit = fitness(evaluator, y).mean();
-//            }
-//
-//            if (xFit > yFit) {
-//                updatePVec(pVec, x, y);
-//            } else {
-//                updatePVec(pVec, y, x);
-//            }
 
 
 }

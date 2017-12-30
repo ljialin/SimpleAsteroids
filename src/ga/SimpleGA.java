@@ -2,6 +2,7 @@ package ga;
 
 import evodef.*;
 import evogame.Mutator;
+import ntuple.BanditLandscapeModel;
 import ntuple.NTupleSystem;
 import utilities.StatSummary;
 
@@ -200,12 +201,12 @@ public class SimpleGA implements EvoAlg {
     }
 
     @Override
-    public void setModel(NTupleSystem nTupleSystem) {
+    public void setModel(BanditLandscapeModel nTupleSystem) {
 
     }
 
     @Override
-    public NTupleSystem getModel() {
+    public BanditLandscapeModel getModel() {
         return null;
     }
 

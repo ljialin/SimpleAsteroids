@@ -1,6 +1,7 @@
 package eda;
 
 import evodef.*;
+import ntuple.BanditLandscapeModel;
 import ntuple.GeneArrayMeanModel;
 import ntuple.NTupleSystem;
 import ntuple.ScoredVec;
@@ -141,12 +142,12 @@ public class RankCorrelationEDA implements EvoAlg {
 
 
     @Override
-    public void setModel(NTupleSystem nTupleSystem) {
+    public void setModel(BanditLandscapeModel nTupleSystem) {
 
     }
 
     @Override
-    public NTupleSystem getModel() {
+    public BanditLandscapeModel getModel() {
         return null;
     }
 

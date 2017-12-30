@@ -235,12 +235,12 @@ public class CompactSlidingGA implements EvoAlg {
 
 
     @Override
-    public void setModel(NTupleSystem nTupleSystem) {
+    public void setModel(BanditLandscapeModel nTupleSystem) {
 
     }
 
     @Override
-    public NTupleSystem getModel() {
+    public BanditLandscapeModel getModel() {
         return null;
     }
 

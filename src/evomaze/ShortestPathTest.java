@@ -18,7 +18,7 @@ import static evomaze.Constants.*;
  */
 public class ShortestPathTest implements SolutionEvaluator, SearchSpace {
     public static void main(String[] args) {
-        int n = 64;
+        int n = 16;
 
         int nReps = 5;
 
@@ -82,8 +82,15 @@ public class ShortestPathTest implements SolutionEvaluator, SearchSpace {
     public double evaluate(int[] bits) {
         Integer shortestPath = findShortestPath(bits);
 
-        if (shortestPath == null) return 0;
-        else return shortestPath;
+        int fitness;
+        if (shortestPath == null) fitness = 0;
+        else fitness = shortestPath;
+
+        // add the fitness to the model
+
+        logger.log(fitness, bits, false);
+
+        return fitness;
 
     }
 
@@ -99,7 +106,7 @@ public class ShortestPathTest implements SolutionEvaluator, SearchSpace {
 
     @Override
     public int nEvals() {
-        return 2;
+        return logger.nEvals();
     }
 
     EvolutionLogger logger = new EvolutionLogger();

@@ -33,7 +33,7 @@ public class BanditLandscapeEATest {
         // to the algorithm to get updates as it runs
         int[] solution = banditEA.runTrial(problem, nEvals);
 
-        report(problem, banditEA.nTupleSystem);
+        // report(problem, banditEA.banditLandscapeModel);
 
         System.out.println();
 

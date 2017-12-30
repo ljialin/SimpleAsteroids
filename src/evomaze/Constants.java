@@ -7,8 +7,8 @@ import graph.Vertex;
  */
 public interface Constants {
     Vertex from = new Vertex(1, 1);
-    Vertex to = new Vertex(18, 18);
+    Vertex to = new Vertex(2, 2);
 
 
-    int nBits = 400;
+    int nBits = (to.x + 2) * (to.y * 2);
 }

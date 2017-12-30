@@ -18,7 +18,8 @@ public class SmallSystemTest {
         FitnessSpace evalTrue = new EvalNoisyWinRate(nDims, m);
         FitnessSpace evalNoisy = new EvalNoisyWinRate(nDims, m, 1.0);
 
-        NTupleSystem nts = new NTupleSystem(evalNoisy);
+        NTupleSystem nts = new NTupleSystem();
+        nts.setSearchSpace(evalNoisy);
         nts.addTuples();
 
         nts.addPoint(new int[]{1, 2, 3, 4, 0}, 1);

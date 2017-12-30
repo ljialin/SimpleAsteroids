@@ -76,7 +76,9 @@ public class TestEA {
             ElapsedTimer t = new ElapsedTimer();
             evaluator.reset();
 
-            ea.setModel(new NTupleSystem(evaluator.searchSpace()).addTuples());
+            NTupleSystem nts = new NTupleSystem();
+            nts.setSearchSpace(evaluator.searchSpace());
+            ea.setModel(nts);
 
             ea.runTrial(evaluator, nFitnessEvals);
 
@@ -95,7 +97,7 @@ public class TestEA {
             ss.add(trueFit);
             ssOpt.add( trueFit == evaluator.searchSpace().nDims() ? 1 : 0 );
 
-            NTupleSystem nts =  ea.getModel();
+            // NTupleSystem nts =  ea.getModel();
             // nts.printDetailedReport();
             if (nts != null) {
                 double ntFit = noiseFree.evaluate(nts.getBestSolution());
