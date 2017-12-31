@@ -20,6 +20,8 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     double epsilon = 0.1;
 
+    double defaultMeanEstimate = 0;
+
     public static void main(String[] args) {
         int w = 20, h = 20;
         int filterWidth = 6, filterHeight = 6;
@@ -35,7 +37,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         // now put some random data in to it
         ElapsedTimer timer = new ElapsedTimer();
 
-        int nPoints = 10000;
+        int nPoints = 100;
         int nDims = w * h;
         Random random = new Random();
         for (int i=0; i<nPoints; i++) {
@@ -78,6 +80,8 @@ public class ConvNTuple implements BanditLandscapeModel {
         System.out.println();
         rankCorrelation.rankCorrelation();
         System.out.println();
+        System.out.println("Indexes used: " + ntMap.size());
+        System.out.println();
     }
 
     public void report() {
@@ -88,6 +92,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         }
         System.out.println("Error Stats");
         System.out.println(errorStats);
+        System.out.println("Indexes used: " + ntMap.size());
     }
 
     private int countOnes(int[] a) {
@@ -124,7 +129,8 @@ public class ConvNTuple implements BanditLandscapeModel {
     SearchSpace searchSpace;
 
     public ConvNTuple reset() {
-        nSamples = 0;
+        // avoid taking log of zero
+        nSamples = 1;
         ntMap = new HashMap<>();
         solutions = new ArrayList<>();
         picker = new Picker<>();
@@ -281,7 +287,7 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     @Override
     public Double getMeanEstimate(int[] x) {
-        StatSummary ssTot = new StatSummary();
+        StatSummary ssTot = new StatSummary("Summary stats exploit");
         for (int[] index : indices) {
             double address = address(x, index);
             StatSummary ss = ntMap.get(address);
@@ -291,10 +297,10 @@ public class ConvNTuple implements BanditLandscapeModel {
                 } else {
                     ssTot.add(ss.mean());
                 }
-
             }
         }
-//        System.out.println("Summary stats");
+        // need to cope with an empty summary
+        if (ssTot.n() == 0) ssTot.add(defaultMeanEstimate);
 //        System.out.println(ssTot);
 //        System.out.println();
         return ssTot.mean();
@@ -327,6 +333,7 @@ public class ConvNTuple implements BanditLandscapeModel {
                 exploreStats.add(explore(0));
             }
         }
+        // System.out.println("Explore stats n() " + exploreStats.n() + " : " + exploreStats.mean());
         return exploreStats.mean();
     }
 

@@ -3,6 +3,7 @@ package bandits;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import evodef.SolutionEvaluator;
+import evomaze.Constants;
 import evomaze.MazeView;
 import evomaze.ShortestPathTest;
 import ntuple.ConvNTuple;
@@ -33,7 +34,7 @@ public class BanditEA {
     // 50000 gives good results on a 20x20 grid
     // set lower to see some poor examples
 
-    static int nEvals = 1000;
+    static int nEvals = 500;
 
 
     static ConvNTuple convNTuple;
@@ -42,7 +43,7 @@ public class BanditEA {
     public static void main(String[] args)  throws Exception {
 
         // the number of bandits is equal to the size of the array
-        int nBandits = 36;
+        int nBandits = Constants.nBits;
 
         int nTrials = 10;
 

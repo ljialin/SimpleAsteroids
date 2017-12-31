@@ -2,6 +2,7 @@ package ntuple;
 
 import evodef.SearchSpaceUtil;
 import utilities.Picker;
+import utilities.StatSummary;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -18,10 +19,14 @@ public class EvaluateChoices {
 
     BanditLandscapeModel banditLandscapeModel;
     double kExplore;
+    StatSummary exploreStats, exploitStats, combined;
 
     public EvaluateChoices(BanditLandscapeModel banditLandscapeModel, double kExplore) {
         this.banditLandscapeModel = banditLandscapeModel;
         this.kExplore = kExplore;
+        exploitStats = new StatSummary("Exploit");
+        exploreStats = new StatSummary("Explore");
+        combined = new StatSummary("Combined");
     }
 
     Picker<int[]> picker = new Picker<int[]>(Picker.MAX_FIRST);
@@ -50,15 +55,24 @@ public class EvaluateChoices {
         }
         double exploit = banditLandscapeModel.getMeanEstimate(p);
         double explore = banditLandscapeModel.getExplorationEstimate(p);
+        exploitStats.add(exploit);
+        exploreStats.add(explore);
 
         // add small random noise to break ties
         double combinedValue = exploit + kExplore * explore +
                 random.nextDouble() * epsilon;
+        combined.add(combinedValue);
 //        System.out.format("\t %d\t %d\t %.2f\t %.2f\t %.2f\n", i, j,
 //                exploit, explore, combinedValue);
         // System.out.println(exploit + " : " + explore);
         nNeighbours++;
         picker.add(combinedValue, p);
+    }
+    public void report() {
+        System.out.println(exploitStats);
+        System.out.println(exploreStats);
+        System.out.println(combined);
+        System.out.println();
     }
 
     public int n() {

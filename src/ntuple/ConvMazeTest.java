@@ -33,7 +33,7 @@ public class ConvMazeTest {
     // 50000 gives good results on a 20x20 grid
     // set lower to see some poor examples
 
-    static int nEvals = 1000;
+    static int nEvals = 512;
 
 
     static ConvNTuple convNTuple;
@@ -46,13 +46,14 @@ public class ConvMazeTest {
         int nDimensions = Constants.nBits;
         System.out.println("n dimensions = " + nDimensions);
 
-        int nTrials = 5;
+        int nTrials = 1;
 
         int imageSize = (int) Math.sqrt(nDimensions);
 
-        int filterSize = 6;
+        int filterSizeX = 3;
+        int filterSizeY = 3;
         convNTuple = new ConvNTuple().setImageDimensions(imageSize, imageSize);
-        convNTuple.setFilterDimensions(filterSize, filterSize);
+        convNTuple.setFilterDimensions(filterSizeX, filterSizeY);
         convNTuple.setStride(2).setMValues(2);
         convNTuple.makeIndicies();
 
@@ -80,12 +81,9 @@ public class ConvMazeTest {
         StatSummary ss = new StatSummary();
 
         ArrayList<int[][]> examples = new ArrayList<>();
-
-
         // System.out.println(examples);
 
         rankCorrelation = new RankCorrelation();
-
 
         for (int i=0; i<nTrials; i++) {
 
@@ -93,7 +91,9 @@ public class ConvMazeTest {
             System.out.println("N DIMS = " + evaluator.searchSpace().nDims());
             ElapsedTimer t = new ElapsedTimer();
             NTupleBanditEA nTupleBanditEA = new NTupleBanditEA().setKExplore(nDimenions);
+            nTupleBanditEA.setKExplore(1).setNeighbours(50);
 
+            convNTuple.reset();
             nTupleBanditEA.setModel(convNTuple);
             // nTupleBanditEA.s
             int[] solution = nTupleBanditEA.runTrial(evaluator, nEvals);
@@ -132,8 +132,6 @@ public class ConvMazeTest {
         return ss;
 
     }
-
-
 
     // use these instance variables to track whether
     // a run is successful and the number of evaluations used

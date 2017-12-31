@@ -49,6 +49,16 @@ public class NTupleBanditEA implements EvoAlg {
         return this;
     }
 
+    public NTupleBanditEA setReportFrequency(int reportFrequency) {
+        this.reportFrequency = reportFrequency;
+        return this;
+    }
+
+    public NTupleBanditEA setNeighbours(int nNeighbours) {
+        this.nNeighbours = nNeighbours;
+        return this;
+    }
+
     StatSummary fitness(SolutionEvaluator evaluator, int[] sol) {
         StatSummary ss = new StatSummary();
         for (int i = 0; i < nSamples; i++) {
@@ -70,7 +80,7 @@ public class NTupleBanditEA implements EvoAlg {
 
     public NTupleView2D view;
 
-    static int reportFrequency = 1000;
+    int reportFrequency = 10000;
 
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {
@@ -160,6 +170,8 @@ public class NTupleBanditEA implements EvoAlg {
                 int[] pp = mutator.randMut(p);
                 evc.add(pp);
             }
+
+            // evc.report();
 
             // now set the next point to explore
             p = evc.picker.getBest();
