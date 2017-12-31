@@ -43,7 +43,7 @@ public class Mutator {
     public double pointProb;
     static Random random = new Random();
 
-    public static boolean totalRandomChaosMutation = true;
+    public static boolean totalRandomChaosMutation = false;
     public static double defaultPointProb = 1.0;
     public static boolean flipAtLeastOneValueDefault = true;
 
@@ -58,7 +58,7 @@ public class Mutator {
     }
 
     public int[] randMut(int[] v) {
-        // note: the algorithm ensures that at least of the bits is different in the returned array
+        // note: the algorithm ensures that at least one of the bits is different in the returned array
         if (totalRandomChaosMutation) {
             return SearchSpaceUtil.randomPoint(searchSpace);
         }

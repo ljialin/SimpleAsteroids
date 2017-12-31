@@ -33,7 +33,7 @@ public class BanditEA {
     // 50000 gives good results on a 20x20 grid
     // set lower to see some poor examples
 
-    static int nEvals = 10000;
+    static int nEvals = 1000;
 
 
     static ConvNTuple convNTuple;
@@ -42,7 +42,7 @@ public class BanditEA {
     public static void main(String[] args)  throws Exception {
 
         // the number of bandits is equal to the size of the array
-        int nBandits = 400;
+        int nBandits = 36;
 
         int nTrials = 10;
 

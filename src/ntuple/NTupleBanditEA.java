@@ -44,6 +44,11 @@ public class NTupleBanditEA implements EvoAlg {
     public NTupleBanditEA() {
     }
 
+    public NTupleBanditEA setKExplore(double kExplore) {
+        this.kExplore = kExplore;
+        return this;
+    }
+
     StatSummary fitness(SolutionEvaluator evaluator, int[] sol) {
         StatSummary ss = new StatSummary();
         for (int i = 0; i < nSamples; i++) {
@@ -65,7 +70,7 @@ public class NTupleBanditEA implements EvoAlg {
 
     public NTupleView2D view;
 
-    static int reportFrequency = 1;
+    static int reportFrequency = 1000;
 
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {
@@ -128,6 +133,10 @@ public class NTupleBanditEA implements EvoAlg {
 
             if (reportFrequency > 0 && evaluator.nEvals() % reportFrequency == 0) {
                 System.out.format("Iteration: %d\t %.1f\n", evaluator.nEvals(), fitness);
+                System.out.println(evaluator.logger().ss);
+                System.out.println();
+                // System.out.println(p.length);
+                // System.out.println(p);
             }
 
 

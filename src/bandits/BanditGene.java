@@ -35,8 +35,8 @@ public class BanditGene {
     }
 
     public void randomize() {
-        x = 0 ; // random.nextInt(nArms);
-        // x = random.nextInt(nArms);
+        // x = 0 ; // random.nextInt(nArms);
+        x = random.nextInt(nArms);
     }
 
     public void mutate() {

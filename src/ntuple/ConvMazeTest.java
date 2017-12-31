@@ -13,6 +13,7 @@ import utilities.StatSummary;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -32,7 +33,7 @@ public class ConvMazeTest {
     // 50000 gives good results on a 20x20 grid
     // set lower to see some poor examples
 
-    static int nEvals = 10000;
+    static int nEvals = 1000;
 
 
     static ConvNTuple convNTuple;
@@ -45,11 +46,11 @@ public class ConvMazeTest {
         int nDimensions = Constants.nBits;
         System.out.println("n dimensions = " + nDimensions);
 
-        int nTrials = 3;
+        int nTrials = 5;
 
         int imageSize = (int) Math.sqrt(nDimensions);
 
-        int filterSize = 4;
+        int filterSize = 6;
         convNTuple = new ConvNTuple().setImageDimensions(imageSize, imageSize);
         convNTuple.setFilterDimensions(filterSize, filterSize);
         convNTuple.setStride(2).setMValues(2);
@@ -58,6 +59,7 @@ public class ConvMazeTest {
         ConvMazeTest convMazeTest = new ConvMazeTest(nDimensions);
 
         System.out.println(convMazeTest.runTrials(nDimensions, nTrials));
+        // System.out.println("HashMap: " + convNTuple.ntMap);
 
     }
 
@@ -88,19 +90,25 @@ public class ConvMazeTest {
         for (int i=0; i<nTrials; i++) {
 
             evaluator = new ShortestPathTest();
-            ConvMazeTest convMazeTest = new ConvMazeTest(nDimenions);
+            System.out.println("N DIMS = " + evaluator.searchSpace().nDims());
             ElapsedTimer t = new ElapsedTimer();
-            NTupleBanditEA nTupleBanditEA = new NTupleBanditEA();
+            NTupleBanditEA nTupleBanditEA = new NTupleBanditEA().setKExplore(nDimenions);
 
             nTupleBanditEA.setModel(convNTuple);
             // nTupleBanditEA.s
             int[] solution = nTupleBanditEA.runTrial(evaluator, nEvals);
+            System.out.println("Solution array: " + Arrays.toString(solution));
             System.out.println(t);
-            ss.add(evaluator.evaluate(solution));
-            System.out.println("Checking fitness: " + evaluator.evaluate(solution));
+            double fitness = evaluator.evaluate(solution);
+            ss.add(fitness);
+            System.out.println("Checking fitness: " + fitness);
             examples.add(toSquareArray(solution));
             System.out.println("Rank correlation check:");
-            rankCorrelation.rankCorrelation();
+            // rankCorrelation.rankCorrelation();
+
+            convNTuple.report(evaluator);
+            MazeView.showMaze(solution, "" + fitness);
+
         }
 
         if (createFiles) {

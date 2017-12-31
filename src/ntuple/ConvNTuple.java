@@ -6,24 +6,94 @@ package ntuple;
 
 
 import evodef.SearchSpace;
+import evodef.SolutionEvaluator;
+import utilities.ElapsedTimer;
+import utilities.Picker;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 public class ConvNTuple implements BanditLandscapeModel {
 
     double epsilon = 0.1;
 
     public static void main(String[] args) {
-        ConvNTuple convNTuple = new ConvNTuple().setImageDimensions(20, 20);
-        convNTuple.setFilterDimensions(8, 8);
+        int w = 20, h = 20;
+        int filterWidth = 6, filterHeight = 6;
+        ConvNTuple convNTuple = new ConvNTuple().setImageDimensions(w, h);
+        convNTuple.setFilterDimensions(filterWidth, filterHeight);
         convNTuple.setMValues(2).setStride(2);
 
         convNTuple.makeIndicies();
 
         System.out.println("Address space size: " + convNTuple.addressSpaceSize());
+        // System.out.println("Mean of empty summary: " + new StatSummary().mean());
+
+        // now put some random data in to it
+        ElapsedTimer timer = new ElapsedTimer();
+
+        int nPoints = 10000;
+        int nDims = w * h;
+        Random random = new Random();
+        for (int i=0; i<nPoints; i++) {
+            double p = random.nextDouble();
+            // now make a random array with this P(x==1)
+            int[] x = new int[nDims];
+            int tot = 0;
+            for (int j=0; j<nDims; j++) {
+                int z = random.nextDouble() < p ? 1 : 0;
+                x[j] = z;
+                tot += z;
+            }
+            convNTuple.addPoint(x, tot);
+        }
+
+        // now iterate over all the values in there
+        System.out.println("Training finished: ");
+        System.out.println(timer);
+
+        convNTuple.report();
+        System.out.println(timer);
+
+        // now make some random points
+
+    }
+
+    public void report(SolutionEvaluator evaluator) {
+        StatSummary errorStats = new StatSummary();
+        RankCorrelation rankCorrelation = new RankCorrelation();
+        int index = 0;
+        for (int[] p : solutions) {
+            // System.out.println(countOnes(p) + " : " + getMeanEstimate(p) + " : " + Arrays.toString(p));
+            double fitness = evaluator.evaluate(p);
+            double estimate = getMeanEstimate(p);
+            errorStats.add(Math.abs(fitness - estimate));
+            rankCorrelation.add(index++, fitness, estimate);
+        }
+        System.out.println("Error Stats");
+        System.out.println(errorStats);
+        System.out.println();
+        rankCorrelation.rankCorrelation();
+        System.out.println();
+    }
+
+    public void report() {
+        StatSummary errorStats = new StatSummary();
+        for (int[] p : solutions) {
+            // System.out.println(countOnes(p) + " : " + getMeanEstimate(p) + " : " + Arrays.toString(p));
+            errorStats.add(Math.abs(countOnes(p) - getMeanEstimate(p)));
+        }
+        System.out.println("Error Stats");
+        System.out.println(errorStats);
+    }
+
+    private int countOnes(int[] a) {
+        int tot = 0;
+        for (int x : a) tot += x;
+        return tot;
     }
 
     // self explanatory variables
@@ -42,12 +112,22 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     HashMap<Double, StatSummary> ntMap;
 
+    // store every solution ever sampled, ready to return the best one when ready
+    // since the fitness estimate is always being updated, best to do all these at the end
+
+    ArrayList<int[]> solutions;
+    private Picker<int[]> picker;
+
+
+
     int nSamples;
     SearchSpace searchSpace;
 
     public ConvNTuple reset() {
         nSamples = 0;
         ntMap = new HashMap<>();
+        solutions = new ArrayList<>();
+        picker = new Picker<>();
         return this;
     }
 
@@ -100,8 +180,8 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     public ConvNTuple makeIndicies() {
         indices = new ArrayList<>();
-        for (int i = 0; i < imageWidth - filterWidth; i += stride) {
-            for (int j = 0; j < imageHeight - filterHeight; j += stride) {
+        for (int i = 0; i <= imageWidth - filterWidth; i += stride) {
+            for (int j = 0; j <= imageHeight - filterHeight; j += stride) {
                 // i and j are the start points in the image
                 // but we need to iterate over all the filter positions
                 // for each start point we create an array of filter sample points in image vector coordinates
@@ -142,11 +222,14 @@ public class ConvNTuple implements BanditLandscapeModel {
         // iterate over all the indices
         // calculate an address for each one
 
+        // System.out.println(" ADDING A POINT !!!!!!!!!!!!!!!!!!!!!!");
         for (int[] index : indices) {
             double address = address(p, index);
             StatSummary ss = getStatsForceCreate(address);
             ss.add(value);
         }
+        solutions.add(p);
+        picker.add(value, p);
         nSamples++;
     }
 
@@ -162,6 +245,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         StatSummary ss = ntMap.get(address);
         if (ss == null) {
             ss = new StatSummary();
+
             ntMap.put(address, ss);
         }
         return ss;
@@ -170,18 +254,30 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     @Override
     public int[] getBestSolution() {
-        return new int[0];
+        throw new RuntimeException("Not yet implemented");
+    }
+
+    public int[] getBestOfAllSampled() {
+        Picker<int[]> picker = new Picker<>();
+        for (int[] a : solutions) {
+            // System.out.println(getMeanEstimate(a) + " : " + Arrays.toString(a));
+            picker.add(getMeanEstimate(a), a);
+        }
+        // System.out.println();
+        return picker.getBest();
     }
 
     @Override
     public int[] getBestOfSampled() {
-        return new int[0];
+        return picker.getBest();
     }
 
     @Override
     public int[] getBestOfSampledPlusNeighbours(int nNeighbours) {
-        return new int[0];
+        throw new RuntimeException("Not yet implemented");
     }
+
+    public boolean useWeightedMean = false;
 
     @Override
     public Double getMeanEstimate(int[] x) {
@@ -189,10 +285,18 @@ public class ConvNTuple implements BanditLandscapeModel {
         for (int[] index : indices) {
             double address = address(x, index);
             StatSummary ss = ntMap.get(address);
-            if (ss != null) {
-                ssTot.add(ss.mean());
+            if (ss != null && ss.n() > 0) {
+                if (useWeightedMean) {
+                    ssTot.add(ss);
+                } else {
+                    ssTot.add(ss.mean());
+                }
+
             }
         }
+//        System.out.println("Summary stats");
+//        System.out.println(ssTot);
+//        System.out.println();
         return ssTot.mean();
     }
 

@@ -23,6 +23,7 @@ public class MazeView extends JComponent {
     public MazeView(int[] bits) {
         this.bits = bits;
         squareSize = (int) Math.sqrt(bits.length);
+        System.out.println("Made a MazeView: " + getPreferredSize() + " : " + squareSize);
     }
 
     public static void showMaze(int[] bits, String title) {
@@ -59,12 +60,9 @@ public class MazeView extends JComponent {
 
         System.out.println(new ShortestPath().runShortestPath(graph, from, to));
 
-
-
-
     }
 
-    int cellSize = 10;  // cell size in pixels
+    int cellSize = 20;  // cell size in pixels
 
     int[] bits;
 
@@ -73,6 +71,7 @@ public class MazeView extends JComponent {
     List<Vertex> path;
 
     public void paintComponent(Graphics go) {
+        // System.out.println("Painting: " + getPreferredSize());
         Graphics2D g = (Graphics2D) go;
 
 //        g.setColor(Color.red);
