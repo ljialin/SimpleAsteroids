@@ -64,7 +64,12 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     }
 
+    boolean verbose = false;
     public void report(SolutionEvaluator evaluator) {
+        System.out.println();
+        System.out.println("Indexes used: " + ntMap.size());
+        System.out.println();
+        if (!verbose) return;
         StatSummary errorStats = new StatSummary();
         RankCorrelation rankCorrelation = new RankCorrelation();
         int index = 0;
@@ -79,9 +84,6 @@ public class ConvNTuple implements BanditLandscapeModel {
         System.out.println(errorStats);
         System.out.println();
         rankCorrelation.rankCorrelation();
-        System.out.println();
-        System.out.println("Indexes used: " + ntMap.size());
-        System.out.println();
     }
 
     public void report() {

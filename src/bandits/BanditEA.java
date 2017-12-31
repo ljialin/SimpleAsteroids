@@ -34,7 +34,7 @@ public class BanditEA {
     // 50000 gives good results on a 20x20 grid
     // set lower to see some poor examples
 
-    static int nEvals = 500;
+    static int nEvals = 10000;
 
 
     static ConvNTuple convNTuple;
@@ -55,9 +55,7 @@ public class BanditEA {
         convNTuple.setStride(2).setMValues(2);
         convNTuple.makeIndicies();
 
-
         System.out.println(runTrials(nBandits, nTrials));
-
     }
 
     static int[][] toSquareArray(int[] a) {
@@ -180,7 +178,7 @@ public class BanditEA {
 
         System.out.println("Best solution: " + bestYet);
 
-        String title = "BanditEA: " + evaluate(genome);
+        String title = "" + evaluate(genome) + "Bandit EA";
         MazeView.showMaze(genome.toArray(), title);
 
         return genome;

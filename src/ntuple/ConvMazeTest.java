@@ -22,7 +22,6 @@ import java.util.Random;
 public class ConvMazeTest {
     int nDimenions;
     int mValues = 2;
-    BanditArray genome;
     static Random rand = new Random();
     // static double noiseStdDev = 0.78 / Math.sqrt(2);
     static double noiseStdDev = 0.1;
@@ -33,7 +32,7 @@ public class ConvMazeTest {
     // 50000 gives good results on a 20x20 grid
     // set lower to see some poor examples
 
-    static int nEvals = 512;
+    static int nEvals = 10000;
 
 
     static ConvNTuple convNTuple;
@@ -46,12 +45,12 @@ public class ConvMazeTest {
         int nDimensions = Constants.nBits;
         System.out.println("n dimensions = " + nDimensions);
 
-        int nTrials = 1;
+        int nTrials = 10;
 
         int imageSize = (int) Math.sqrt(nDimensions);
 
-        int filterSizeX = 3;
-        int filterSizeY = 3;
+        int filterSizeX = 4;
+        int filterSizeY = 4;
         convNTuple = new ConvNTuple().setImageDimensions(imageSize, imageSize);
         convNTuple.setFilterDimensions(filterSizeX, filterSizeY);
         convNTuple.setStride(2).setMValues(2);
@@ -84,6 +83,7 @@ public class ConvMazeTest {
         // System.out.println(examples);
 
         rankCorrelation = new RankCorrelation();
+        ElapsedTimer timer = new ElapsedTimer();
 
         for (int i=0; i<nTrials; i++) {
 
@@ -91,7 +91,7 @@ public class ConvMazeTest {
             System.out.println("N DIMS = " + evaluator.searchSpace().nDims());
             ElapsedTimer t = new ElapsedTimer();
             NTupleBanditEA nTupleBanditEA = new NTupleBanditEA().setKExplore(nDimenions);
-            nTupleBanditEA.setKExplore(1).setNeighbours(50);
+            nTupleBanditEA.setKExplore(10).setNeighbours(50);
 
             convNTuple.reset();
             nTupleBanditEA.setModel(convNTuple);
@@ -108,6 +108,7 @@ public class ConvMazeTest {
 
             convNTuple.report(evaluator);
             MazeView.showMaze(solution, "" + fitness);
+            System.out.println(timer);
 
         }
 
