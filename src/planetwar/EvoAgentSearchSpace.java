@@ -22,8 +22,8 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
     double[] pointMutationRate = {0.0, 1.0, 2.0, 3.0};
     boolean[] flipAtLeastOneBit = {false, true};
     boolean[] useShiftBuffer = {false, true};
-    int[] nResamples = {1, 3};
-    int[] seqLength = {5, 10, 15, 20};
+    int[] nResamples = {1, 2, 3};
+    int[] seqLength = {5, 10, 15, 20, 50};
 
 
     public static int tickBudget = 2000;
@@ -147,7 +147,7 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
         System.out.println("Fitness: " + (int) fitness + " : " + value);
         System.out.println();
 
-        return value;
+        return -value;
     }
 
     @Override
