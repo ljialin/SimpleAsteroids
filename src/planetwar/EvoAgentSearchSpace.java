@@ -121,14 +121,14 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
         EvoAlg evoAlgOpponent = new SimpleRMHC();
 
         // set up some defaults for opponent
-        int nOpponentEvals = 200;
-        int opponentSeqLength = 10;
+        int nOpponentEvals = 400;
+        int opponentSeqLength = 5;
 
         EvoAgent evoOpponent =
                 new EvoAgent().setEvoAlg(evoAlgOpponent, nOpponentEvals).setSequenceLength(opponentSeqLength);
 
         // setting to false provides a much weaker opponent
-        evoOpponent.setUseShiftBuffer(false);
+        evoOpponent.setUseShiftBuffer(true);
 
         // now run a game and return the result
 
@@ -147,7 +147,7 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
         System.out.println("Fitness: " + (int) fitness + " : " + value);
         System.out.println();
 
-        return -value;
+        return value;
     }
 
     @Override
