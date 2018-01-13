@@ -83,8 +83,6 @@ public class AgentEvaluator implements NoisySolutionEvaluator {
 
         // AbstractMultiPlayer player2;
 
-
-
         int idPlayer1 = 0;
         int idPlayer2 = 1;
 

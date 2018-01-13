@@ -14,13 +14,13 @@ public class EvoAgentTest {
         ElapsedTimer timer = new ElapsedTimer();
 
         boolean visible = false;
-        int nTicks = 20000;
+        int nTicks = 1000;
         int startLevel = 1;
-        int nLives = 3000;
+        int nLives = 3;
 
         GameParameters params = new GameParameters().injectValues(new DefaultParams());
         AsteroidsGameState gameState = new AsteroidsGameState().setParams(params);
-        gameState.initialLevel = 3;
+        gameState.initialLevel = 5;
         Game game = new Game(gameState, visible);
         gameState.forwardModel.nLives = nLives;
 

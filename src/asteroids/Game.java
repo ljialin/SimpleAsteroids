@@ -3,6 +3,7 @@ package asteroids;
 import evodef.EvoAlg;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
+import ntuple.SlidingMeanEDA;
 import planetwar.EvoAgent;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
@@ -85,10 +86,10 @@ public class Game {
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
-        // evoAlg = new SlidingMeanEDA();
+        evoAlg = new SlidingMeanEDA();
 
         int nEvals = 20;
-        int seqLength = 100;
+        int seqLength = 20;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();
