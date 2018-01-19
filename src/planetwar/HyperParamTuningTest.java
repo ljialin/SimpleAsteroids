@@ -16,19 +16,19 @@ import java.util.Arrays;
 public class HyperParamTuningTest {
 
 
-    static int nEvals = 200;
-    static int nChecks = 100;
+    static int nEvals = 100;
+    static int nChecks = 50;
     public static void main(String[] args) {
 
         ElapsedTimer timer = new ElapsedTimer();
 
         EvoAlg evoAlg = new CompactSlidingGA();
-        NTupleBanditEA nTupleBanditEA = new NTupleBanditEA();
+        NTupleBanditEA nTupleBanditEA = new NTupleBanditEA().setReportFrequency(10);
         evoAlg = nTupleBanditEA;
         // evoAlg = new SlidingMeanEDA();
         // evoAlg = new GridSearch();
         StatSummary ss = new StatSummary("Overall results: " + evoAlg.getClass().getSimpleName());
-        int nTrials = 3;
+        int nTrials = 1;
         for (int i=0; i<nTrials; i++) {
             ss.add(runTrial(evoAlg));
             try {
@@ -43,7 +43,8 @@ public class HyperParamTuningTest {
 
     public static double runTrial(EvoAlg evoAlg) {
 
-        EvoAgentSearchSpace eval = new EvoAgentSearchSpace();
+        // EvoAgentSearchSpace eval = new EvoAgentSearchSpace();
+        EvoAgentSearchSpaceAsteroids eval = new EvoAgentSearchSpaceAsteroids();
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
 
         int[] solution = evoAlg.runTrial(eval, nEvals);
@@ -64,4 +65,6 @@ public class HyperParamTuningTest {
         // but also find out the details
         return ss.mean();
     }
+
+    public static double runChecks()
 }

@@ -70,7 +70,7 @@ public class AsteroidsTest {
 
         // player = discountOlmcts;
 
-        int nResamples = 2;
+        int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
         int nEvals = 20;
@@ -83,9 +83,9 @@ public class AsteroidsTest {
 
         Agent.useShiftBuffer = true;
 
-        controllers.singlePlayer.ea.Agent.SEQUENCE_LENGTH = 200;
-        // player = new controllers.singlePlayer.ea.Agent(stateObs, timer, evoAlg, nEvals);
-        player = new controllers.singlePlayer.ea.Agent(stateObs, timer);
+        controllers.singlePlayer.ea.Agent.SEQUENCE_LENGTH = 100;
+        player = new controllers.singlePlayer.ea.Agent(stateObs, timer, evoAlg, nEvals);
+        // player = new controllers.singlePlayer.ea.Agent(stateObs, timer);
 
 
         nestedMC.maxRolloutLength = 5;
@@ -109,7 +109,7 @@ public class AsteroidsTest {
 
         View view = new View(stateObs.state);
         // set view to null to run fast with no visuals
-        // view = null;
+        view = null;
 
         JEasyFrame frame;
         if (view != null) {
