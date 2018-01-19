@@ -24,6 +24,7 @@ public class AsteroidsLinkState
 
     public static int totalGameTicks = 0;
     public static int totalGameCopies = 0;
+    public static int defaultStartLevel = 5;
 
     // this class is already 2-player ready
     AsteroidsGameState state;
@@ -51,7 +52,7 @@ public class AsteroidsLinkState
     }
 
     public AsteroidsLinkState() {
-        this(new AsteroidsGameState().setParams(params).initForwardModel(), 0, 0);
+        this(new AsteroidsGameState().setParams(params).initForwardModel().setLevel(defaultStartLevel), 0, 0);
     }
 
     int score;
@@ -61,6 +62,8 @@ public class AsteroidsLinkState
         this.state = state;
         this.score = score;
         this.tick = tick;
+        // state.initialLevel = defaultStartLevel;
+        // System.out.println();
     }
 
     public StateObservation copy() {

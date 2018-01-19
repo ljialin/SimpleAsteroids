@@ -23,7 +23,7 @@ public class SingleTreeNode
     protected double[] bounds = new double[]{Double.MAX_VALUE, -Double.MAX_VALUE};
     public int childIdx;
 
-    public static double scoreDiscountFactor = 0.8;
+    public static double scoreDiscountFactor = 0.999;
     public static boolean useScoreDiscount = true;
 
     public int num_actions;
@@ -32,7 +32,9 @@ public class SingleTreeNode
     public static StatSummary rollOutScores = new StatSummary();
 
 
-    public int ROLLOUT_DEPTH = 10;
+    // changed to a
+    public static int DEFAULT_ROLLOUT_DEPTH = 10;
+    public int ROLLOUT_DEPTH = DEFAULT_ROLLOUT_DEPTH;
     public double K = Math.sqrt(2);
 
     public static StateObservation rootState;
@@ -64,8 +66,8 @@ public class SingleTreeNode
         int numIters = 0;
 
         int remainingLimit = 10;
-        while(remaining > 2*avgTimeTaken && remaining > remainingLimit){
-        //while(numIters < Agent.MCTS_ITERATIONS){
+        // while(remaining > 2*avgTimeTaken && remaining > remainingLimit){
+        while(numIters < Agent.MCTS_ITERATIONS){
 
             StateObservation state = rootState.copy();
 

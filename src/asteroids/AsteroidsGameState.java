@@ -11,7 +11,7 @@ import static asteroids.Constants.*;
 public class AsteroidsGameState implements AbstractGameState {
 
     public int initialLives = 3;
-    public int initialLevel = 3;
+    public int initialLevel = 5;
     public ForwardModel forwardModel;
 
     State state, nextState;
@@ -43,6 +43,11 @@ public class AsteroidsGameState implements AbstractGameState {
         forwardModel.makeAsteroids();
         makeShip();
         state = State.WaitingToStart;
+        return this;
+    }
+
+    public AsteroidsGameState setLevel(int level) {
+        forwardModel.level = level;
         return this;
     }
 

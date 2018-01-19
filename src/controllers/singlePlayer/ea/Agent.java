@@ -133,6 +133,7 @@ public class Agent extends AbstractPlayer {
         milliTimer.add(milli);
         diffTimer.add(nano - milli);
 
+        // System.out.println(useShiftBuffer);
         return actions[action];
     }
 

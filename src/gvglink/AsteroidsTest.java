@@ -2,12 +2,15 @@ package gvglink;
 
 import altgame.SimpleMaxGame;
 import asteroids.View;
+import controllers.singlePlayer.discountOLMCTS.SingleTreeNode;
 import controllers.singlePlayer.ea.Agent;
 import core.game.StateObservation;
 import core.player.AbstractPlayer;
 import evodef.EvoAlg;
+import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
+import ntuple.SlidingMeanEDA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 import utilities.ElapsedTimer;
@@ -29,7 +32,7 @@ public class AsteroidsTest {
     public static void main(String[] args) throws Exception {
         StatSummary ss = new StatSummary();
 
-        int nTrials = 3;
+        int nTrials = 10;
         for (int i=0; i<nTrials; i++) {
             ss.add(runOnce());
             System.out.println();
@@ -40,12 +43,15 @@ public class AsteroidsTest {
 
         System.out.println(ss);
 
+        // System.out.println(Agent.useShiftBuffer);
+
     }
 
     public static double runOnce()  throws Exception {
         // make an agent to test
 
 
+        // AsteroidsLinkState.defaultStartLevel = 1;
         AsteroidsLinkState stateObs = new AsteroidsLinkState();
 
         System.out.println(stateObs.getGameScore());
@@ -65,10 +71,20 @@ public class AsteroidsTest {
                 new controllers.singlePlayer.nestedMC.Agent(stateObs, timer);
 
 
+        int depth = 100;
 
-        player = olmcts;
+        int ticks = 2000;
+        controllers.singlePlayer.discountOLMCTS.SingleTreeNode.DEFAULT_ROLLOUT_DEPTH = depth;
+        SingleTreeNode.scoreDiscountFactor = 0.999;
+        SingleTreeNode.useScoreDiscount = true;
+        controllers.singlePlayer.discountOLMCTS.SingleTreeNode.DEFAULT_ROLLOUT_DEPTH = depth;
+        controllers.singlePlayer.discountOLMCTS.Agent.MCTS_ITERATIONS = ticks / depth;
 
-        // player = discountOlmcts;
+
+
+        // player = olmcts;
+
+        player = discountOlmcts;
 
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
@@ -79,21 +95,23 @@ public class AsteroidsTest {
 
         // evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        // Mutator.totalRandomChaosMutation = true;
+        // evoAlg = new SlidingMeanEDA();
+
+        Mutator.totalRandomChaosMutation = true;
 
         Agent.useShiftBuffer = true;
 
-        controllers.singlePlayer.ea.Agent.SEQUENCE_LENGTH = 100;
-        // player = new controllers.singlePlayer.ea.Agent(stateObs, timer, evoAlg, nEvals);
+        controllers.singlePlayer.ea.Agent.SEQUENCE_LENGTH = ticks / nEvals;
+        player = new controllers.singlePlayer.ea.Agent(stateObs, timer, evoAlg, nEvals);
         // player = new controllers.singlePlayer.ea.Agent(stateObs, timer);
 
 
-        nestedMC.maxRolloutLength = 5;
-        nestedMC.nestDepth = 5;
+//        nestedMC.maxRolloutLength = 5;
+//        nestedMC.nestDepth = 5;
 
         // player = nestedMC;
 
-        int thinkingTime = 40; // in milliseconds
+        int thinkingTime = 10; // in milliseconds
         int delay = 20;
 
         // player = new controllers.singlePlayer.sampleRandom.Agent(stateObs, timer);
@@ -138,6 +156,7 @@ public class AsteroidsTest {
 
         System.out.println(t);
 
+        System.out.println("Agent of type: " + player.getClass().getSimpleName());
         return stateObs.getGameScore();
     }
 }
