@@ -2,6 +2,7 @@ package asteroids;
 
 import evodef.EvoAlg;
 import evogame.GameParameters;
+import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.SlidingMeanEDA;
 import planetwar.EvoAgent;
@@ -84,12 +85,25 @@ public class Game {
         //
         // todo Add in the code t make this
         int nResamples = 1;
-        EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
-        evoAlg = new SlidingMeanEDA();
+
+        Mutator mutator = new Mutator(null);
+
+        // setting to true may give best performance
+        mutator.totalRandomChaosMutation = true;
+
+        SimpleRMHC simpleRMHC = new SimpleRMHC();
+        simpleRMHC.setSamplingRate(nResamples);
+        simpleRMHC.setMutator(mutator);
+
+        EvoAlg evoAlg = simpleRMHC;
+
+
+
+        // evoAlg = new SlidingMeanEDA();
 
         int nEvals = 20;
-        int seqLength = 20;
+        int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();

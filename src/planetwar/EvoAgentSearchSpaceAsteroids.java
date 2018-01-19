@@ -6,6 +6,8 @@ import evogame.DefaultParams;
 import evogame.GameParameters;
 import evogame.Mutator;
 import ga.SimpleRMHC;
+import ntuple.CompactSlidingGA;
+import ntuple.SlidingMeanEDA;
 
 /**
  *   Note: this code needs refactoring to remove the solution evaluator (in this case
@@ -25,13 +27,23 @@ public class EvoAgentSearchSpaceAsteroids implements NoisySolutionEvaluator, Sea
 
         System.out.println();
         System.out.println("Size: " + SearchSpaceUtil.size(searchSpace));
+
+        NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
+        System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
+
+        int[] solution = {1, 1, 1, 0, 5};
+
+        System.out.println("Checking fitness");
+        HyperParamTuningTest.runChecks(eval, solution);
+        searchSpace.report(solution);
+
     }
 
     double[] pointMutationRate = {0.0, 1.0, 2.0, 3.0};
     boolean[] flipAtLeastOneBit = {false, true};
     boolean[] useShiftBuffer = {false, true};
     int[] nResamples = {1, 2, 3};
-    int[] seqLength = {5, 10, 15, 20, 50};
+    int[] seqLength = {5, 10, 15, 20, 50, 100, 150};
 
 
     public static int tickBudget = 2000;
@@ -120,13 +132,18 @@ public class EvoAgentSearchSpaceAsteroids implements NoisySolutionEvaluator, Sea
         Mutator mutator = new Mutator(null);
         mutator.pointProb = pointMutationRate[x[pointMutationRateIndex]];
         mutator.flipAtLeastOneValue = flipAtLeastOneBit[x[flipAtLeastOneBitIndex]];
+
+        // setting to true may give best performance
         mutator.totalRandomChaosMutation = false;
 
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples[x[nResamplesIndex]]);
         simpleRMHC.setMutator(mutator);
 
+        EvoAlg sliding = new SlidingMeanEDA();
+
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(simpleRMHC, getNEvals(x));
+        // EvoAgent evoAgent = new EvoAgent().setEvoAlg(sliding, getNEvals(x));
         evoAgent.setUseShiftBuffer(useShiftBuffer[x[useShiftBufferIndex]]);
         evoAgent.setSequenceLength(seqLength[x[seqLengthIndex]]);
 

@@ -2,6 +2,7 @@ package planetwar;
 
 import evodef.EvalMaxM;
 import evodef.EvoAlg;
+import evodef.NoisySolutionEvaluator;
 import evodef.SearchSpaceUtil;
 import ga.GridSearch;
 import ga.SimpleGASearchSpace;
@@ -17,7 +18,7 @@ public class HyperParamTuningTest {
 
 
     static int nEvals = 100;
-    static int nChecks = 50;
+    static int nChecks = 30;
     public static void main(String[] args) {
 
         ElapsedTimer timer = new ElapsedTimer();
@@ -43,14 +44,18 @@ public class HyperParamTuningTest {
 
     public static double runTrial(EvoAlg evoAlg) {
 
-        // EvoAgentSearchSpace eval = new EvoAgentSearchSpace();
-        EvoAgentSearchSpaceAsteroids eval = new EvoAgentSearchSpaceAsteroids();
+        // NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
+        NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
 
         int[] solution = evoAlg.runTrial(eval, nEvals);
 
         System.out.println("Checking fitness");
+        return runChecks(eval, solution);
 
+    }
+
+    public static double runChecks(NoisySolutionEvaluator eval, int[] solution) {
         ElapsedTimer timer = new ElapsedTimer();
         StatSummary ss = new StatSummary("Mean fitness");
         System.out.println("Running checks: " + nChecks);
@@ -60,11 +65,10 @@ public class HyperParamTuningTest {
         System.out.println(ss);
         System.out.println("Checks complete: " + timer.toString());
         System.out.println("Solution: " + Arrays.toString(solution));
-        System.out.println(eval.report(solution));
+        // System.out.println(eval.report(solution));
 
         // but also find out the details
         return ss.mean();
-    }
 
-    public static double runChecks()
+    }
 }
