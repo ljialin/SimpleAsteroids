@@ -84,7 +84,7 @@ public class AsteroidsTest {
         Agent.useShiftBuffer = true;
 
         controllers.singlePlayer.ea.Agent.SEQUENCE_LENGTH = 100;
-        player = new controllers.singlePlayer.ea.Agent(stateObs, timer, evoAlg, nEvals);
+        // player = new controllers.singlePlayer.ea.Agent(stateObs, timer, evoAlg, nEvals);
         // player = new controllers.singlePlayer.ea.Agent(stateObs, timer);
 
 
@@ -93,7 +93,7 @@ public class AsteroidsTest {
 
         // player = nestedMC;
 
-        int thinkingTime = 10; // in milliseconds
+        int thinkingTime = 40; // in milliseconds
         int delay = 20;
 
         // player = new controllers.singlePlayer.sampleRandom.Agent(stateObs, timer);
@@ -103,7 +103,7 @@ public class AsteroidsTest {
         Random random = new Random();
 
         // this is how many steps we'll take in the actual game ...
-        int nSteps = 500;
+        int nSteps = 1000;
 
         ElapsedTimer t = new ElapsedTimer();
 
