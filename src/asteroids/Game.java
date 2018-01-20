@@ -146,7 +146,6 @@ public class Game {
             EvoAgent evoAgent = (EvoAgent) adapter.agent;
             view.playouts = evoAgent.evoAlg.getLogger().solutions;
         }
-
     }
 
     public void sleep() {
