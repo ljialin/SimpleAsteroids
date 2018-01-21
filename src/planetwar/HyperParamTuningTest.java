@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class HyperParamTuningTest {
 
 
-    static int nEvals = 100;
+    static int nEvals = 50;
     static int nChecks = 30;
     public static void main(String[] args) {
 

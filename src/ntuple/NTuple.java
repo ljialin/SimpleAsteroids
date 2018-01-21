@@ -150,7 +150,8 @@ public class NTuple {
     public String paramString(Param[] params, int[] ind) {
         StringBuffer sb = new StringBuffer();
         for (int i =0; i<ind.length; i++) {
-            sb.append(params[tuple[i]].getValue(ind[ind.length-1-i]) + "\t ");
+            // sb.append(params[tuple[i]].getValue(ind[ind.length-1-i]) + "\t ");
+            sb.append(params[tuple[i]].getValue(ind[i]) + "\t ");
         }
         return sb.toString();
     }
@@ -221,18 +222,20 @@ public class NTuple {
     public int[] getIndices(int x) {
 
         int[] ind = new int[tuple.length];
-        int ix = ind.length-1;
+        // int ix = ind.length-1;
+        int ix = 0; // ind.length-1;
         try {
             for (int i : tuple) {
                 // number of dimensions in this position
                 int d = searchSpace.nValues(i);
                 // take this off
-                ind[ix--] = x % d;
+                ind[ix++] = x % d;
                 x /= d;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        // int
         return ind;
     }
 
