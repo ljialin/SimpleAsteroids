@@ -46,6 +46,8 @@ public class EvoAgentSearchSpaceAsteroids implements NoisySolutionEvaluator, Sea
     int[] seqLength = {5, 10, 15, 20, 50, 100, 150};
 
 
+
+
     public static int tickBudget = 2000;
 
     int[] nValues = new int[]{pointMutationRate.length, flipAtLeastOneBit.length,

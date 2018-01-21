@@ -1,6 +1,7 @@
 package ntuple;
 
 import evodef.*;
+import ntuple.params.Param;
 import utilities.*;
 
 import java.util.ArrayList;
@@ -307,8 +308,17 @@ public class NTupleSystem implements BanditLandscapeModel {
             System.out.println();
         }
         System.out.format("GridModel has %d tuples.\n", tuples.size());
-
     }
+
+    public void printDetailedReport(Param[] params) {
+        System.out.format("Search space has %d dimensions\n", searchSpace.nDims());
+        for (NTuple nt : tuples) {
+            nt.printNonEmpty(params);
+            System.out.println();
+        }
+        System.out.format("GridModel has %d tuples.\n", tuples.size());
+    }
+
 
     // note that there is a smarter way to add different n-tuples, but this way is easiest
 

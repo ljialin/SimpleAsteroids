@@ -33,7 +33,7 @@ public class HyperParamTuningTest {
         for (int i=0; i<nTrials; i++) {
             ss.add(runTrial(evoAlg));
             try {
-                ((NTupleSystem) nTupleBanditEA.banditLandscapeModel).printDetailedReport();
+                ((NTupleSystem) nTupleBanditEA.banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpace().getParams());
             } catch (Exception e){};
         }
 
@@ -44,8 +44,8 @@ public class HyperParamTuningTest {
 
     public static double runTrial(EvoAlg evoAlg) {
 
-        // NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
-        NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
+        NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
+        // NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
 
         int[] solution = evoAlg.runTrial(eval, nEvals);

@@ -5,6 +5,10 @@ import evogame.Mutator;
 import ga.SimpleGA;
 import ga.SimpleRMHC;
 import ntuple.SlidingMeanEDA;
+import ntuple.params.BooleanParam;
+import ntuple.params.DoubleParam;
+import ntuple.params.IntegerParam;
+import ntuple.params.Param;
 
 public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace {
 
@@ -17,6 +21,16 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
 
         System.out.println();
         System.out.println("Size: " + SearchSpaceUtil.size(searchSpace));
+    }
+
+    public Param[] getParams() {
+        return new Param[]{
+                new DoubleParam().setArray(pointMutationRate).setName("Point Mutation Rate"),
+                new BooleanParam().setArray(flipAtLeastOneBit).setName("Flip at least one bit?"),
+                new BooleanParam().setArray(useShiftBuffer).setName("Use shift Buffer?"),
+                new IntegerParam().setArray(nResamples).setName("nResamples"),
+                new IntegerParam().setArray(seqLength).setName("sequence length"),
+        };
     }
 
     double[] pointMutationRate = {0.0, 1.0, 2.0, 3.0};

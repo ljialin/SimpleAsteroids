@@ -3,6 +3,7 @@ package ntuple;
 import evodef.SearchSpace;
 import evodef.SearchSpaceUtil;
 import gvglink.BattleGameSearchSpace;
+import ntuple.params.Param;
 import utilities.StatSummary;
 
 import java.util.Arrays;
@@ -121,6 +122,39 @@ public class NTuple {
         }
     }
 
+    public void printNonEmpty(Param[] params) {
+        for (int i : tuple) {
+            System.out.println(params[i].getName() + "\t ");
+        }
+        System.out.println();
+        if (ntArray != null) {
+            for (int i=0; i<ntArray.length; i++) {
+                if (ntArray[i] != null) {
+                    StatSummary ss = ntArray[i];
+                    // System.out.println(i + "\t " + ss.n() + "\t " + ss.mean());
+                    int[] ind = getIndices(i);
+                    System.out.println(Arrays.toString(ind));
+                    System.out.println(paramString(params, ind));
+                    System.out.format("%d\t %.2f\t %d\n", i, ss.mean(), ss.n());
+                    System.out.println();
+                }
+            }
+        } else {
+            for (Double key : ntMap.keySet()) {
+                StatSummary ss = ntMap.get(key);
+                System.out.println(key + "\t " + ss.n() + "\t " + ss.mean());
+            }
+        }
+    }
+
+    public String paramString(Param[] params, int[] ind) {
+        StringBuffer sb = new StringBuffer();
+        for (int i =0; i<ind.length; i++) {
+            sb.append(params[tuple[i]].getValue(ind[ind.length-1-i]) + "\t ");
+        }
+        return sb.toString();
+    }
+
     /**
      * Get stats but force creation if it does not already exists
      * @param x
@@ -182,6 +216,27 @@ public class NTuple {
         }
         return addr;
     }
+
+    // note can only handle small sizes
+    public int[] getIndices(int x) {
+
+        int[] ind = new int[tuple.length];
+        int ix = ind.length-1;
+        try {
+            for (int i : tuple) {
+                // number of dimensions in this position
+                int d = searchSpace.nValues(i);
+                // take this off
+                ind[ix--] = x % d;
+                x /= d;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return ind;
+    }
+
+
 
 
     /**
