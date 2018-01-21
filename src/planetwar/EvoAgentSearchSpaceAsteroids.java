@@ -8,6 +8,10 @@ import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactSlidingGA;
 import ntuple.SlidingMeanEDA;
+import ntuple.params.BooleanParam;
+import ntuple.params.DoubleParam;
+import ntuple.params.IntegerParam;
+import ntuple.params.Param;
 
 /**
  *   Note: this code needs refactoring to remove the solution evaluator (in this case
@@ -44,6 +48,16 @@ public class EvoAgentSearchSpaceAsteroids implements NoisySolutionEvaluator, Sea
     boolean[] useShiftBuffer = {false, true};
     int[] nResamples = {1, 2, 3};
     int[] seqLength = {5, 10, 15, 20, 50, 100, 150};
+
+    public Param[] getParams() {
+        return new Param[]{
+                new DoubleParam().setArray(pointMutationRate).setName("Point Mutation Rate"),
+                new BooleanParam().setArray(flipAtLeastOneBit).setName("Flip at least one bit?"),
+                new BooleanParam().setArray(useShiftBuffer).setName("Use shift Buffer?"),
+                new IntegerParam().setArray(nResamples).setName("nResamples"),
+                new IntegerParam().setArray(seqLength).setName("sequence length"),
+        };
+    }
 
 
 
