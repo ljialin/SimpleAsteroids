@@ -6,6 +6,7 @@ package gvglink;
 
 import controllers.singlePlayer.ea.Agent;
 import core.ArcadeMachine;
+import core.competition.CompetitionParameters;
 import evodef.EvoAlg;
 import ntuple.SlidingMeanEDA;
 import tools.ElapsedCpuTimer;
@@ -95,6 +96,10 @@ public class Test
         // ArcadeMachine.playOneGame(game, level1, recordActionsFile, seed);
 
         core.competition.CompetitionParameters.TIMER_TYPE = ElapsedCpuTimer.TimerType.WALL_TIME;
+
+
+        CompetitionParameters.LEVEL_ACTION_TIME = 10000000;  // TIME_CONSTRAINED = false;
+        CompetitionParameters.LEVEL_ACTION_TIME_DISQ = 10000000;  // TIME_CONSTRAINED = false;
 
         // 2. This plays a game in a level by the controller.
 
