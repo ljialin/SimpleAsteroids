@@ -9,6 +9,7 @@ import ga.SimpleGASearchSpace;
 import ntuple.CompactSlidingGA;
 import ntuple.NTupleBanditEA;
 import ntuple.NTupleSystem;
+import ntuple.SlidingMeanEDA;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
@@ -17,8 +18,8 @@ import java.util.Arrays;
 public class HyperParamTuningTest {
 
 
-    static int nEvals = 50;
-    static int nChecks = 30;
+    static int nEvals = 2 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpace().searchSpace());
+    static int nChecks = 100;
     public static void main(String[] args) {
 
         ElapsedTimer timer = new ElapsedTimer();
@@ -27,9 +28,9 @@ public class HyperParamTuningTest {
         NTupleBanditEA nTupleBanditEA = new NTupleBanditEA().setReportFrequency(10);
         evoAlg = nTupleBanditEA;
         // evoAlg = new SlidingMeanEDA();
-        // evoAlg = new GridSearch();
+        evoAlg = new GridSearch();
         StatSummary ss = new StatSummary("Overall results: " + evoAlg.getClass().getSimpleName());
-        int nTrials = 1;
+        int nTrials = 10;
         for (int i=0; i<nTrials; i++) {
             ss.add(runTrial(evoAlg));
             try {
@@ -37,6 +38,7 @@ public class HyperParamTuningTest {
             } catch (Exception e){};
         }
 
+        System.out.println("nEvals per run" + nEvals);
         System.out.println(ss);
         System.out.println("Total time for experiment: " + timer);
 
