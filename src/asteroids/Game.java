@@ -102,8 +102,8 @@ public class Game {
 
         // evoAlg = new SlidingMeanEDA();
 
-        int nEvals = 9;
-        int seqLength = 100;
+        int nEvals = 20;
+        int seqLength = 20;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();

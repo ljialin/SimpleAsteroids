@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class HyperParamTuningTest {
 
 
-    static int nEvals = 50;
+    static int nEvals = 100;
     static int nChecks = 30;
     public static void main(String[] args) {
 
@@ -25,6 +25,7 @@ public class HyperParamTuningTest {
 
         EvoAlg evoAlg = new CompactSlidingGA();
         NTupleBanditEA nTupleBanditEA = new NTupleBanditEA().setReportFrequency(10);
+        nTupleBanditEA.setSamplingRate(1);
         evoAlg = nTupleBanditEA;
         // evoAlg = new SlidingMeanEDA();
         // evoAlg = new GridSearch();

@@ -37,7 +37,7 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
     boolean[] flipAtLeastOneBit = {false, true};
     boolean[] useShiftBuffer = {false, true};
     int[] nResamples = {1, 2, 3};
-    int[] seqLength = {5, 10, 15, 20, 50};
+    int[] seqLength = {5, 10, 15, 20, 50, 100};
 
 
     public static int tickBudget = 2000;
