@@ -209,9 +209,9 @@ public class ConvNTuple implements BanditLandscapeModel {
                 indices.add(a);
             }
         }
-        // reset the stats after making new indices
-        reset();
-        System.out.println("Made index vectors: " + indices.size());
+        // DO NOT reset the stats after making new indices
+        // reset();
+        // System.out.println("Made index vectors: " + indices.size());
         return this;
     }
 
@@ -236,13 +236,14 @@ public class ConvNTuple implements BanditLandscapeModel {
                         filterIndex++;
                     }
                 }
-                System.out.println(Arrays.toString(a));
+                // System.out.println(Arrays.toString(a));
                 indices.add(a);
             }
         }
-        // reset the stats after making new indices
-        reset();
-        System.out.println("Made index vectors: " + indices.size());
+        // do NOT reset the stats after making new indices
+
+        // reset();
+        // System.out.println("Made index vectors: " + indices.size());
         return this;
     }
 

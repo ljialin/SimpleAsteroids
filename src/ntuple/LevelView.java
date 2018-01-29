@@ -37,6 +37,16 @@ public class LevelView extends JComponent {
         return tiles;
     }
 
+    public static int[][] toRect(int[] x, int w, int h) {
+        int[][] tiles = new int[w][h];
+        for (int i=0; i<w; i++) {
+            for (int j=0; j<h; j++) {
+                tiles[i][j] = x[i + j * w];
+            }
+        }
+        return tiles;
+    }
+
     public LevelView(int[][] tiles) {
         this.tiles = tiles;
         width = tiles.length;
@@ -45,6 +55,11 @@ public class LevelView extends JComponent {
 
     public static void showMaze(int[][] tiles, String title) {
         LevelView levelView = new LevelView(tiles);
+        new JEasyFrame(levelView, title);
+    }
+
+    public static void showMaze(int[] tiles, int w, int h, String title) {
+        LevelView levelView = new LevelView(toRect(tiles, w, h));
         new JEasyFrame(levelView, title);
     }
 
