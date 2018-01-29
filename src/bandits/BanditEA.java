@@ -11,12 +11,9 @@ import ntuple.RankCorrelation;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Created by simonmarklucas on 27/05/2016.
@@ -53,7 +50,7 @@ public class BanditEA {
         convNTuple = new ConvNTuple().setImageDimensions(imageSize, imageSize);
         convNTuple.setFilterDimensions(filterSize, filterSize);
         convNTuple.setStride(2).setMValues(2);
-        convNTuple.makeIndicies();
+        convNTuple.makeIndices();
 
         System.out.println(runTrials(nBandits, nTrials));
     }

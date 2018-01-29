@@ -22,7 +22,7 @@ public class LevelView extends JComponent {
     int[][] tiles;
 
     static Color[] colors = {
-            Color.red, Color.black, Color.white,
+            Color.white, Color.black, Color.red,
     };
 
     static Random random = new Random();

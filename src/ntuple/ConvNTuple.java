@@ -29,7 +29,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         convNTuple.setFilterDimensions(filterWidth, filterHeight);
         convNTuple.setMValues(2).setStride(2);
 
-        convNTuple.makeIndicies();
+        convNTuple.makeIndices();
 
         System.out.println("Address space size: " + convNTuple.addressSpaceSize());
         // System.out.println("Mean of empty summary: " + new StatSummary().mean());
@@ -186,7 +186,7 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     ArrayList<int[]> indices;
 
-    public ConvNTuple makeIndicies() {
+    public ConvNTuple makeIndices() {
         indices = new ArrayList<>();
         for (int i = 0; i <= imageWidth - filterWidth; i += stride) {
             for (int j = 0; j <= imageHeight - filterHeight; j += stride) {
@@ -200,6 +200,37 @@ public class ConvNTuple implements BanditLandscapeModel {
                     for (int l = 0; l < filterHeight; l++) {
                         int x = i + k;
                         int y = j + l;
+                        int ix = x + imageWidth * y;
+                        a[filterIndex] = ix;
+                        filterIndex++;
+                    }
+                }
+                System.out.println(Arrays.toString(a));
+                indices.add(a);
+            }
+        }
+        // reset the stats after making new indices
+        reset();
+        System.out.println("Made index vectors: " + indices.size());
+        return this;
+    }
+
+    public ConvNTuple makeWrapAroundIndices() {
+        indices = new ArrayList<>();
+        // the iteration now is for i and j up to the edge of the image
+        // we then calculate the indices modulo this
+        for (int i = 0; i < imageWidth; i += stride) {
+            for (int j = 0; j < imageHeight; j += stride) {
+                // i and j are the start points in the image
+                // but we need to iterate over all the filter positions
+                // for each start point we create an array of filter sample points in image vector coordinates
+                // first calculate the image x,y points, then map them to the one-d vector coords
+                int[] a = new int[filterWidth * filterHeight];
+                int filterIndex = 0;
+                for (int k = 0; k < filterWidth; k++) {
+                    for (int l = 0; l < filterHeight; l++) {
+                        int x = (i + k) % imageWidth;
+                        int y = (j + l) % imageHeight;
                         int ix = x + imageWidth * y;
                         a[filterIndex] = ix;
                         filterIndex++;
@@ -320,6 +351,39 @@ public class ConvNTuple implements BanditLandscapeModel {
             }
         }
         return ssTot;
+    }
+
+    /**
+     *
+     * @param x: probe image vector
+     * @return quality of fit to trained distribution
+     */
+    // note that epsilon is the punishment for included non-observed values
+    // it is the KL Divergence between the two distributions
+
+    public double getKLDivergence(int[] x, double epsilon) {
+        double divKL = 0;
+        double totSamples = nSamples * indices.size();
+        double p = 1.0 / indices.size();
+        double penaltyKL = p * Math.log(p / epsilon);
+//        System.out.println("Tot samples = " + totSamples);
+//        System.out.println("P = " + p);
+        for (int[] index : indices) {
+            double address = address(x, index);
+            StatSummary ss = ntMap.get(address);
+            if (ss != null) {
+                double q = ss.n() / totSamples;
+                double kl = p * Math.log(p/q);
+//                System.out.println("q = " + q);
+//                System.out.println(kl);
+                divKL += kl;
+            } else {
+//                System.out.println(penaltyKL);
+                divKL += penaltyKL;
+            }
+//            System.out.println();
+        }
+        return divKL;
     }
 
     @Override

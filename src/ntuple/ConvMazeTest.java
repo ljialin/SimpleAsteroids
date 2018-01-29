@@ -1,7 +1,5 @@
 package ntuple;
 
-import bandits.BanditArray;
-import bandits.BanditGene;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import evodef.SolutionEvaluator;
@@ -54,7 +52,7 @@ public class ConvMazeTest {
         convNTuple = new ConvNTuple().setImageDimensions(imageSize, imageSize);
         convNTuple.setFilterDimensions(filterSizeX, filterSizeY);
         convNTuple.setStride(2).setMValues(2);
-        convNTuple.makeIndicies();
+        convNTuple.makeIndices();
 
         ConvMazeTest convMazeTest = new ConvMazeTest(nDimensions);
 
