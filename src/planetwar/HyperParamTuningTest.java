@@ -18,36 +18,52 @@ import java.util.Arrays;
 public class HyperParamTuningTest {
 
 
-    static int nEvals = 2 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpace().searchSpace());
+    static int nEvals = 1 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpaceAsteroids().searchSpace());
     static int nChecks = 100;
+    static int nTrials = 10;
+
     public static void main(String[] args) {
 
-        ElapsedTimer timer = new ElapsedTimer();
 
-        EvoAlg evoAlg = new CompactSlidingGA();
-        NTupleBanditEA nTupleBanditEA = new NTupleBanditEA().setReportFrequency(10);
-        evoAlg = nTupleBanditEA;
-        // evoAlg = new SlidingMeanEDA();
-        evoAlg = new GridSearch();
+//        EvoAlg evoAlg = new CompactSlidingGA();
+//        NTupleBanditEA nTupleBanditEA = new NTupleBanditEA().setReportFrequency(10);
+//        evoAlg = nTupleBanditEA;
+//        // evoAlg = new SlidingMeanEDA();
+//        // evoAlg = new GridSearch();
+
+        EvoAlg[] evoAlgs = {
+                new NTupleBanditEA().setKExplore(5000),
+                new GridSearch(),
+                new CompactSlidingGA(),
+        };
+
+        for (EvoAlg evoAlg : evoAlgs) {
+            runTrials(evoAlg);
+        }
+
+
+    }
+
+    public static void runTrials(EvoAlg evoAlg) {
+        ElapsedTimer timer = new ElapsedTimer();
         StatSummary ss = new StatSummary("Overall results: " + evoAlg.getClass().getSimpleName());
-        int nTrials = 10;
-        for (int i=0; i<nTrials; i++) {
-            ss.add(runTrial(evoAlg));
+        for (int i = 0; i < nTrials; i++) {
             try {
-                ((NTupleSystem) nTupleBanditEA.banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpace().getParams());
-            } catch (Exception e){};
+                ss.add(runTrial(evoAlg));
+                ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpaceAsteroids().getParams());
+            } catch (Exception e) {
+            }
         }
 
         System.out.println("nEvals per run" + nEvals);
         System.out.println(ss);
         System.out.println("Total time for experiment: " + timer);
-
     }
 
     public static double runTrial(EvoAlg evoAlg) {
 
-        NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
-        // NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
+        // NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
+        NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
 
         int[] solution = evoAlg.runTrial(eval, nEvals);
@@ -61,7 +77,7 @@ public class HyperParamTuningTest {
         ElapsedTimer timer = new ElapsedTimer();
         StatSummary ss = new StatSummary("Mean fitness");
         System.out.println("Running checks: " + nChecks);
-        for (int i=0; i<nChecks; i++) {
+        for (int i = 0; i < nChecks; i++) {
             ss.add(eval.evaluate(solution));
         }
         System.out.println(ss);

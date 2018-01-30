@@ -30,8 +30,6 @@ public class EvolvePatternTest {
             ElapsedTimer timer = new ElapsedTimer();
             results.add(ept.runTrial(evoAlg, nEvals));
             System.out.println(timer);
-
-
         }
     }
 
