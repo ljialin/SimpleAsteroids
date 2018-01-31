@@ -171,8 +171,8 @@ public class EvoAgentSearchSpaceAsteroids implements NoisySolutionEvaluator, Sea
 
         logger.log(fitness, x, false);
 
-        System.out.println("Fitness: " + (int) fitness + " : " + fitness);
-        System.out.println();
+//        System.out.println("Fitness: " + (int) fitness + " : " + fitness);
+//        System.out.println();
 
         return fitness;
     }
