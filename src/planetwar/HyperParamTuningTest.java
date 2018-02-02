@@ -18,7 +18,8 @@ import java.util.Arrays;
 public class HyperParamTuningTest {
 
 
-    static int nEvals = 1 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpaceAsteroids().searchSpace());
+//     static int nEvals = 1 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpaceAsteroids().searchSpace());
+    static int nEvals = 1 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpace().searchSpace());
     static int nChecks = 100;
     static int nTrials = 10;
 
@@ -32,9 +33,10 @@ public class HyperParamTuningTest {
 //        // evoAlg = new GridSearch();
 
         EvoAlg[] evoAlgs = {
-                new NTupleBanditEA().setKExplore(5000),
+                new NTupleBanditEA().setKExplore(1),
                 new GridSearch(),
-                new CompactSlidingGA(),
+                // new CompactSlidingGA(),
+                new SlidingMeanEDA(),
         };
 
         for (EvoAlg evoAlg : evoAlgs) {
@@ -50,7 +52,8 @@ public class HyperParamTuningTest {
         for (int i = 0; i < nTrials; i++) {
             try {
                 ss.add(runTrial(evoAlg));
-                ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpaceAsteroids().getParams());
+//                 ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpaceAsteroids().getParams());
+                ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpace().getParams());
             } catch (Exception e) {
             }
         }
@@ -62,8 +65,8 @@ public class HyperParamTuningTest {
 
     public static double runTrial(EvoAlg evoAlg) {
 
-        // NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
-        NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
+        NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
+        // NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
 
         int[] solution = evoAlg.runTrial(eval, nEvals);

@@ -135,8 +135,10 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
         EvoAlg evoAlgOpponent = new SimpleRMHC();
 
         // set up some defaults for opponent
-        int nOpponentEvals = 400;
-        int opponentSeqLength = 5;
+
+        // previously 400 and 5 respectively
+        int nOpponentEvals = 2000;
+        int opponentSeqLength = 10;
 
         EvoAgent evoOpponent =
                 new EvoAgent().setEvoAlg(evoAlgOpponent, nOpponentEvals).setSequenceLength(opponentSeqLength);

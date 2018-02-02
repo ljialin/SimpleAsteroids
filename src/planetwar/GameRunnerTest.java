@@ -66,6 +66,4 @@ public class GameRunnerTest {
         // System.out.println(evoAlg2.pVec);
 
     }
-
-
 }

@@ -34,8 +34,10 @@ public class Mutator {
         mutator1.pointProb = 3.0;
         System.out.println(mutator1);
 
-        Mutator mutator2 = new Mutator(new EvalMaxM(1, 3));
-        System.out.println(Arrays.toString(mutator2.randMut(new int[]{0})));
+        Mutator mutator2 = new Mutator(new EvalMaxM(50, 2));
+        mutator2.pointProb = 5;
+        System.out.println(mutator2);
+        System.out.println(Arrays.toString(mutator2.randMut(new int[mutator2.searchSpace.nDims()])));
 
     }
 
