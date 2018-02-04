@@ -6,7 +6,7 @@ import evogame.DefaultParams;
 import evogame.GameParameters;
 import evogame.Mutator;
 import ga.SimpleRMHC;
-import ntuple.CompactSlidingGA;
+import hyperopt.HyperParamTuneRunner;
 import ntuple.SlidingMeanEDA;
 import ntuple.params.BooleanParam;
 import ntuple.params.DoubleParam;
@@ -20,7 +20,7 @@ import ntuple.params.Param;
  *   This has been done in a non-ideal way for now to get it working quickly.
  */
 
-public class EvoAgentSearchSpaceAsteroids implements NoisySolutionEvaluator, SearchSpace {
+public class EvoAgentSearchSpaceAsteroids implements  AnnotatedFitnessSpace {
 
     public static void main(String[] args) {
         EvoAgentSearchSpaceAsteroids searchSpace = new EvoAgentSearchSpaceAsteroids();
@@ -32,13 +32,13 @@ public class EvoAgentSearchSpaceAsteroids implements NoisySolutionEvaluator, Sea
         System.out.println();
         System.out.println("Size: " + SearchSpaceUtil.size(searchSpace));
 
-        NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
+        AnnotatedFitnessSpace eval = new EvoAgentSearchSpaceAsteroids();
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
 
         int[] solution = {1, 1, 1, 0, 5};
 
         System.out.println("Checking fitness");
-        HyperParamTuningTest.runChecks(eval, solution);
+        new HyperParamTuneRunner().runChecks(eval, solution, 5);
         searchSpace.report(solution);
 
     }
@@ -103,15 +103,6 @@ public class EvoAgentSearchSpaceAsteroids implements NoisySolutionEvaluator, Sea
 //        return this;
 //    }
 
-    @Override
-    public Boolean isOptimal(int[] solution) {
-        return null;
-    }
-
-    @Override
-    public Double trueFitness(int[] solution) {
-        return null;
-    }
 
     @Override
     public int nDims() {

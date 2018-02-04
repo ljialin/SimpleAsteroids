@@ -20,7 +20,7 @@ public class GameLog {
 
     public GameLog setInitialGrowthRate(double initialGrowthRate) {
         this.initialGrowthRate = initialGrowthRate;
-        System.out.println("Initial growth rate: " + initialGrowthRate);
+        // System.out.println("Initial growth rate: " + initialGrowthRate);
         return this;
     }
 
