@@ -10,7 +10,7 @@ import ntuple.params.DoubleParam;
 import ntuple.params.IntegerParam;
 import ntuple.params.Param;
 
-public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace {
+public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
 
     public static void main(String[] args) {
         EvoAgentSearchSpace searchSpace = new EvoAgentSearchSpace();
@@ -81,15 +81,6 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
 //        return this;
 //    }
 
-    @Override
-    public Boolean isOptimal(int[] solution) {
-        return null;
-    }
-
-    @Override
-    public Double trueFitness(int[] solution) {
-        return null;
-    }
 
     @Override
     public int nDims() {
@@ -103,10 +94,12 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
 
     int innerEvals = 2000;
 
-    int nEvals = 0;
+    // int nEvals = 0;
     @Override
     public void reset() {
-        nEvals = 0;
+
+        // nEvals = 0;
+        logger.reset();
     }
 
 
@@ -137,8 +130,8 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
         // set up some defaults for opponent
 
         // previously 400 and 5 respectively
-        int nOpponentEvals = 2000;
-        int opponentSeqLength = 10;
+        int nOpponentEvals = 400;
+        int opponentSeqLength = 5;
 
         EvoAgent evoOpponent =
                 new EvoAgent().setEvoAlg(evoAlgOpponent, nOpponentEvals).setSequenceLength(opponentSeqLength);
@@ -160,8 +153,8 @@ public class EvoAgentSearchSpace implements NoisySolutionEvaluator, SearchSpace 
         if (fitness < 0) value = -1;
         logger.log(fitness, x, false);
 
-        System.out.println("Fitness: " + (int) fitness + " : " + value);
-        System.out.println();
+        // System.out.println("Fitness: " + (int) fitness + " : " + value);
+        // System.out.println();
 
         return value;
     }
