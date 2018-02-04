@@ -15,6 +15,8 @@ public class TwoPlayerTest {
         // AsteroidsGameState game = new AsteroidsGameState().setNPlanets(10).setRandomOwnerships().setRandomGrowthRates();
         GameState game = new GameState().defaultState(); // .setNPlanets(10).setDOwnerships().setRandomGrowthRates();
 
+        GameState.includeBuffersInScore = false;
+
         PlanetWarView view = new PlanetWarView(game);
         JEasyFrame frame = new JEasyFrame(view, "Test View");
         KeyController controller = new KeyController();
@@ -31,10 +33,10 @@ public class TwoPlayerTest {
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();
 
-        int delay = 1000;
+        int delay = 10;
         GameActionSpaceAdapterMulti.visual = true;
         Random random = new Random();
-        for (int i=0; i<500; i++) {
+        for (int i=0; i<50; i++) {
             int p1, p2;
 
             p1 = evoAgent.getAction(game, 0);

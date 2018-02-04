@@ -1,12 +1,14 @@
 package hyperopt;
 
 import planetwar.EvoAgentSearchSpace;
+import planetwar.GameState;
 import utilities.ElapsedTimer;
 
 public class TestSolutionPlanetWars {
     public static void main(String[] args) {
 
         // use this code to re-rest a particular point in the search space
+        GameState.includeBuffersInScore = false;
         int[] solution = {2, 1, 1, 0, 1};
         int nChecks = 100;
         ElapsedTimer timer = new ElapsedTimer();
