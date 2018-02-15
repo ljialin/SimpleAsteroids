@@ -55,7 +55,7 @@ public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
     // NoisySolutionEvaluator problemEvaluator;
 
     // log the solutions found
-    EvolutionLogger logger;
+    public EvolutionLogger logger;
 
     public EvoAgentSearchSpace() {
         this.logger = new EvolutionLogger();
@@ -151,7 +151,7 @@ public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
 
         if (fitness > 0) value = 1;
         if (fitness < 0) value = -1;
-        logger.log(fitness, x, false);
+        logger.log(value, x, false);
 
         // System.out.println("Fitness: " + (int) fitness + " : " + value);
         // System.out.println();

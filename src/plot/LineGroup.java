@@ -38,13 +38,14 @@ public class LineGroup {
         return this;
     }
 
-    private void add(double x, int i) {
+    public LineGroup add(double x, int i) {
         // add enough new stat summaries
         while (stats.size() <= i) {
             stats.add(new StatSummary());
         }
         // now we can just add it
         stats.get(i).add(x);
+        return this;
     }
 
     public ArrayList<StatSummary> getLineStats() {

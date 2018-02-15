@@ -44,8 +44,6 @@ public class GameRunnerTest {
         evoAgent2.setUseShiftBuffer(false);
         p2 = evoAgent2;
 
-
-
         // p2 = new RandomAgent();
 
         gameRunner.setPlayers(p1, p2);
@@ -59,7 +57,6 @@ public class GameRunnerTest {
         gameRunner.playGames(nGames);
 
         // now access the game logs to plot the scores
-
 
         gameRunner.plotGameScores();
 

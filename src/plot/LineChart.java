@@ -19,8 +19,9 @@ public class LineChart extends JComponent {
     Dimension d;
     Color fg = Color.white;
     public Color bg = Color.black; // new Color( 200, 200, 255 );
-    public Color plotBG = Color.white;
-    Color tickColor = new Color(200, 200, 200, 200);
+    public Color plotBG = Color.yellow;
+    public Color tickColor = new Color(200, 200, 200, 200);
+    public Color envelopeColor = new Color(128, 128, 128, 200);
 
     ArrayList<LinePlot> lines;
     ArrayList<LineGroup> lineGroups;
@@ -174,9 +175,14 @@ public class LineChart extends JComponent {
             sx = xAxis.range;
 
         } else {
+            sx.add(0);
             for (LinePlot line : lines) {
                 // for sx we are only interested in the number of points on each line
                 sx.add(line.getData().size());
+            }
+            for (LineGroup lineGroup : lineGroups) {
+                // for sx we are only interested in the number of points on each line
+                sx.add(lineGroup.stats.size());
             }
         }
 
@@ -185,6 +191,12 @@ public class LineChart extends JComponent {
         } else {
             for (LinePlot line : lines) {
                 sy.add(line.sy);
+            }
+            for (LineGroup lineGroup : lineGroups) {
+                // for sx we are only interested in the number of points on each line
+                for (StatSummary ss : lineGroup.stats) {
+                    sy.add(ss);
+                }
             }
         }
 
@@ -412,7 +424,7 @@ public class LineChart extends JComponent {
             }
 
             env.closePath();
-            g.setColor(new Color(255, 255, 255, 100));
+            g.setColor(envelopeColor);
             g.fill(env);
 
 

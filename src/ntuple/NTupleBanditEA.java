@@ -92,7 +92,7 @@ public class NTupleBanditEA implements EvoAlg {
         Mutator mutator = new Mutator(searchSpace);
 
         nNeighbours = (int) Math.min(nNeighbours, SearchSpaceUtil.size(searchSpace) / 4);
-        // System.out.println("Set neighbours to: " + nNeighbours);
+        System.out.println("Set neighbours to: " + nNeighbours);
 
         // create an NTuple fitness landscape model
         if (banditLandscapeModel == null) {
@@ -149,7 +149,6 @@ public class NTupleBanditEA implements EvoAlg {
                 // System.out.println(p);
             }
 
-
             ElapsedTimer t = new ElapsedTimer();
 
             banditLandscapeModel.addPoint(p, fitness);
@@ -164,7 +163,6 @@ public class NTupleBanditEA implements EvoAlg {
             // depending on the mutation function, some of the neighbours could be far away
             // or some of them could be duplicates - duplicates a bit wasteful so filter these
             // out - repeat until we have the required number of unique neighbours
-
 
             while (evc.n() < nNeighbours) {
                 int[] pp = mutator.randMut(p);
@@ -195,7 +193,6 @@ public class NTupleBanditEA implements EvoAlg {
         logger.keepBest(solution, evaluator.evaluate(solution));
         return solution;
     }
-
 
     @Override
     public void setModel(BanditLandscapeModel banditLandscapeModel) {
