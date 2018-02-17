@@ -55,7 +55,7 @@ public class HyperParamTuneRunner {
                 e.printStackTrace();
             }
         }
-        
+
         lineChart.addLineGroup(sampleEvolution);
         if (plotChecks > 0) lineChart.addLineGroup(bestGuess);
         new JEasyFrame(lineChart, "Sample Evolution");

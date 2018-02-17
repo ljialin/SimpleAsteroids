@@ -38,7 +38,7 @@ public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
     boolean[] useShiftBuffer = {false, true};
     int[] nResamples = {1, 2, 3};
     // int[] seqLength = {5, 10, 15, 20, 50};
-    int[] seqLength = {5, 10, 15, 20, 25, 30, 40, 50};
+    int[] seqLength = {5, 10, 15, 20, 25, 30};
 
 
     public static int tickBudget = 2000;

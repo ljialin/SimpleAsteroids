@@ -51,7 +51,7 @@ public class EvolutionLogger {
                 firstHit = fa.size();
         }
         fa.add(fitness);
-        solutions.add(solution);
+        solutions.add(copy(solution));
         ss.add(fitness);
         // System.out.println(solutions.size());
     }
@@ -82,9 +82,7 @@ public class EvolutionLogger {
     }
 
     public void logBestYest(int[] solution) {
-        int[] x = new int[solution.length];
-        for (int i=0; i<x.length; i++) x[i] = solution[i];
-        bestYetSolutions.add(x);
+        bestYetSolutions.add(copy(solution));
     }
 
     public double finalFitness() {
@@ -109,6 +107,12 @@ public class EvolutionLogger {
         bestGen = 0;
         nOptimal = 0;
         firstHit = null;
+    }
+
+    int[] copy (int[] x) {
+        int[] y = new int[x.length];
+        for (int i=0; i<x.length; i++) y[i] = x[i];
+        return y;
     }
 }
 

@@ -94,6 +94,9 @@ public class NTupleBanditEA implements EvoAlg {
         nNeighbours = (int) Math.min(nNeighbours, SearchSpaceUtil.size(searchSpace) / 4);
         System.out.println("Set neighbours to: " + nNeighbours);
 
+        // force creation
+
+        banditLandscapeModel = null;
         // create an NTuple fitness landscape model
         if (banditLandscapeModel == null) {
             System.out.println("Creating new model");

@@ -22,7 +22,7 @@ public class TestHyperParamPlanetWars {
                 ntbea,
         };
 
-        int nChecks = 0;
+        int nChecks = 50;
         int nEvals = 200;
         int nTrials = 5;
 
