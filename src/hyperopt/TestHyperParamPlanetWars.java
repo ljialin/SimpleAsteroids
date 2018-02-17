@@ -23,8 +23,8 @@ public class TestHyperParamPlanetWars {
         };
 
         int nChecks = 0;
-        int nEvals = 100;
-        int nTrials = 10;
+        int nEvals = 200;
+        int nTrials = 30;
 
         ElapsedTimer timer = new ElapsedTimer();
 
@@ -39,7 +39,7 @@ public class TestHyperParamPlanetWars {
             runner.nChecks = nChecks;
             runner.nTrials = nTrials;
             runner.nEvals = nEvals;
-            runner.plotChecks = 10;
+            runner.plotChecks = 20;
             AnnotatedFitnessSpace testPlanetWars = new EvoAgentSearchSpace();
             runner.runTrials(evoAlg, testPlanetWars );
         }

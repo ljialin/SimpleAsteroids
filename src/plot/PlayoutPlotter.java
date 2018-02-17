@@ -27,10 +27,13 @@ public class PlayoutPlotter implements PlayoutPlotterInterface {
      */
     @Override
     public PlayoutPlotter startPlot(int sequenceLength) {
-        lineChart = new LineChart().setBG(Color.blue);
+        lineChart = new LineChart().setBG(Color.gray);
         lineChart.xAxis = new LineChartAxis(new double[]{0, sequenceLength / 2, sequenceLength});
         lineChart.yAxis = new LineChartAxis(new double[]{-50, -25, 0, 25, 50});
-        lineChart.plotBG = Color.blue;
+        lineChart.setYLabel("Expected Score");
+        lineChart.setXLabel("Rollout Depth");
+        lineChart.plotBG = Color.white;
+
         frame = new JEasyFrame(lineChart, "Fitness versus depth");
         scores = new StatSummary();
         linePlots = new ArrayList<>();
@@ -64,7 +67,7 @@ public class PlayoutPlotter implements PlayoutPlotterInterface {
         // linePlots = new ArrayList<>();
         int max = Math.max((int) scores.max(), 5);
         int min = (int) scores.min(); // Math.min((int) scores.min(), -5);
-        lineChart.yAxis = new LineChartAxis(new double[]{min, (min + max) / 2, max});
+        lineChart.yAxis = new LineChartAxis(new double[]{min, max});
         lineChart.repaint();
         return this;
     }
