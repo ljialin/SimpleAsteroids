@@ -64,6 +64,10 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     }
 
+    public ConvNTuple() {
+        // reset();
+    }
+
     boolean verbose = false;
     public void report(SolutionEvaluator evaluator) {
         System.out.println();

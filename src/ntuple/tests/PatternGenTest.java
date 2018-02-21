@@ -13,6 +13,7 @@ public class PatternGenTest {
         ConvNTuple convNTuple = new ConvNTuple().setImageDimensions(w, h);
         convNTuple.setFilterDimensions(filterWidth, filterHeight);
         convNTuple.setMValues(3).setStride(1);
+        convNTuple.reset();
 
         convNTuple.makeWrapAroundIndices();
 
