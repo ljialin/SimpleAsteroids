@@ -82,7 +82,8 @@ public class EvolutionLogger {
     }
 
     public void logBestYest(int[] solution) {
-        bestYetSolutions.add(copy(solution));
+        // bestYetSolutions.add(copy(solution));
+        bestYetSolutions.add(solution);
     }
 
     public double finalFitness() {
