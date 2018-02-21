@@ -4,6 +4,7 @@ import utilities.JEasyFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -24,6 +25,18 @@ public class LevelView extends JComponent {
     static Color[] colors = {
             Color.white, Color.black, Color.red,
     };
+
+    HashMap<Integer,Color> colorMap;
+
+    public LevelView setColorMap(HashMap<Integer, Color> colorMap) {
+        this.colorMap = colorMap;
+        return this;
+    }
+
+    public LevelView setCellSize(int cellSize) {
+        this.cellSize = cellSize;
+        return this;
+    }
 
     static Random random = new Random();
 
@@ -67,7 +80,15 @@ public class LevelView extends JComponent {
         Graphics2D g = (Graphics2D) go;
         for (int x=0; x<width; x++) {
             for (int y=0; y<height; y++) {
-                g.setColor(colors[tiles[x][y]]);
+                if (colorMap != null) {
+                    try {
+                        g.setColor(colorMap.get(tiles[x][y]));
+                    } catch (Exception e) {
+                        g.setColor(Color.white);
+                    }
+                } else {
+                    g.setColor(colors[tiles[x][y]]);
+                }
                 g.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
             }
         }

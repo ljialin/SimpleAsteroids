@@ -3,7 +3,10 @@ package levelgen;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
+import ntuple.LevelView;
+import utilities.JEasyFrame;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -15,7 +18,7 @@ import java.util.Scanner;
 
 public class MarioReader {
 
-    static Map<Character, Integer> tiles = new HashMap();
+    public static Map<Character, Integer> tiles = new HashMap();
 
     static {
         tiles.put('X', 0);
@@ -31,10 +34,58 @@ public class MarioReader {
         tiles.put('o', 10);
     }
 
+    public static HashMap<Integer, Color> tileColors = new HashMap();
+
+    static {
+        tileColors.put(0, Color.darkGray);
+        tileColors.put(1, Color.darkGray);
+        tileColors.put(2, new Color( 126,192,238));
+        tileColors.put(3, Color.darkGray);
+        tileColors.put(4, Color.darkGray);
+        tileColors.put(5, Color.darkGray);
+        tileColors.put(6, Color.darkGray);
+        tileColors.put(7, Color.darkGray);
+        tileColors.put(8, Color.darkGray);
+        tileColors.put(9, Color.darkGray);
+        tileColors.put(10, Color.yellow);
+    }
+
     static int targetWidth = 28;
 
     public static void main(String[] args) throws Exception {
 
+        showLevels();
+
+        // createLevels();
+
+    }
+
+    public static void showLevels() throws Exception {
+        // String inputFile = "data/mario/example.txt";
+
+        String inputDirectory = "data/mario/levels/";
+
+        String outputFile = "data/mario/example.json";
+
+        // need to iterate over all the files in a directory
+
+        File file = new File(inputDirectory);
+        String[] fileList = file.list();
+
+        for (String inputFile : fileList) {
+            try {
+                System.out.println("Reading: " + inputFile);
+                int[][] level = readLevel(new Scanner(new FileInputStream(inputDirectory + inputFile)));
+                LevelView levelView = new LevelView(flip(level)).setColorMap(tileColors).setCellSize(10);
+                new JEasyFrame(levelView, inputFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public static void createLevels() throws Exception {
         // String inputFile = "data/mario/example.txt";
 
         String inputDirectory = "data/mario/levels/";
@@ -77,6 +128,16 @@ public class MarioReader {
 
         System.out.println("Wrote file with " + examples.size() + " examples");
 
+    }
+
+    public static int[][] flip(int[][] x) {
+        int[][] y = new int[x[0].length][x.length];
+        for (int i=0; i<x.length; i++) {
+            for (int j=0; j<x[0].length; j++) {
+                y[j][i] = x[i][j];
+            }
+        }
+        return y;
     }
 
     static void addData(ArrayList<int[][]> examples, int[][] level) {
