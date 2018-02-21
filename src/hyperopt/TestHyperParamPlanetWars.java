@@ -24,7 +24,7 @@ public class TestHyperParamPlanetWars {
 
         int nChecks = 50;
         int nEvals = 200;
-        int nTrials = 5;
+        int nTrials = 1;
 
         ElapsedTimer timer = new ElapsedTimer();
 
@@ -44,7 +44,7 @@ public class TestHyperParamPlanetWars {
             runner.runTrials(evoAlg, testPlanetWars );
         }
 
-        // System.out.println(ntbea.);
+        // System.out.println(ntbea.getModel().s);
         System.out.println("Time for all experiments: " + timer);
     }
 }

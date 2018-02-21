@@ -50,7 +50,7 @@ public class HyperParamTuneRunner {
                 plotFitnessEvolution(annotatedFitnessSpace.logger(), annotatedFitnessSpace, plotChecks);
                 // annotatedFitnessSpace.logger()
 //                 ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpaceAsteroids().getParams());
-                // ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(annotatedFitnessSpace.getParams());
+                ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(annotatedFitnessSpace.getParams());
             } catch (Exception e) {
                 e.printStackTrace();
             }
