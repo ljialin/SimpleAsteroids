@@ -38,16 +38,16 @@ public class MarioReader {
 
     static {
         tileColors.put(0, Color.darkGray);
-        tileColors.put(1, Color.darkGray);
+        tileColors.put(1, Color.yellow);
         tileColors.put(2, new Color( 126,192,238));
-        tileColors.put(3, Color.darkGray);
-        tileColors.put(4, Color.darkGray);
-        tileColors.put(5, Color.darkGray);
-        tileColors.put(6, Color.darkGray);
-        tileColors.put(7, Color.darkGray);
-        tileColors.put(8, Color.darkGray);
-        tileColors.put(9, Color.darkGray);
-        tileColors.put(10, Color.yellow);
+        tileColors.put(3, Color.red);
+        tileColors.put(4, Color.blue);
+        tileColors.put(5, Color.magenta);
+        tileColors.put(6, Color.green);
+        tileColors.put(7, Color.black);
+        tileColors.put(8, new Color(178,34,34));
+        tileColors.put(9, new Color(165, 42, 42));
+        tileColors.put(10, Color.pink);
     }
 
     static int targetWidth = 28;
