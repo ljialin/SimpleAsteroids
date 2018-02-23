@@ -1,9 +1,11 @@
 package ntuple;
 
+import levelgen.MarioReader;
 import utilities.JEasyFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -67,12 +69,17 @@ public class LevelView extends JComponent {
     }
 
     public static void showMaze(int[][] tiles, String title) {
-        LevelView levelView = new LevelView(tiles);
+        LevelView levelView = new LevelView(tiles).setColorMap(MarioReader.tileColors);
         new JEasyFrame(levelView, title);
     }
 
     public static void showMaze(int[] tiles, int w, int h, String title) {
         LevelView levelView = new LevelView(toRect(tiles, w, h));
+        new JEasyFrame(levelView, title);
+    }
+
+    public static void showMaze(int[] tiles, int w, int h, String title, HashMap<Integer,Color> tileMap) {
+        LevelView levelView = new LevelView(toRect(tiles, w, h)).setColorMap(tileMap);
         new JEasyFrame(levelView, title);
     }
 

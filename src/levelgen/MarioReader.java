@@ -166,7 +166,7 @@ public class MarioReader {
         return vec;
     }
 
-    static int[][] readLevel(Scanner scanner) throws Exception {
+    public static int[][] readLevel(Scanner scanner) throws Exception {
         String line;
         ArrayList<String> lines = new ArrayList<>();
         int width = 0;
