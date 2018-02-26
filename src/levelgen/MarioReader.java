@@ -36,6 +36,7 @@ public class MarioReader {
 
     public static HashMap<Integer, Color> tileColors = new HashMap();
 
+    public static int border = 11;
     static {
         tileColors.put(0, Color.darkGray);
         tileColors.put(1, Color.yellow);
@@ -48,6 +49,7 @@ public class MarioReader {
         tileColors.put(8, new Color(178,34,34));
         tileColors.put(9, new Color(165, 42, 42));
         tileColors.put(10, Color.pink);
+        tileColors.put(border, Color.cyan);
     }
 
     static int targetWidth = 28;

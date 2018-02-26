@@ -39,6 +39,15 @@ public class Mutator {
         System.out.println(mutator2);
         System.out.println(Arrays.toString(mutator2.randMut(new int[mutator2.searchSpace.nDims()])));
 
+        Mutator mutator3 = new Mutator(new EvalMaxM(10, 10));
+        mutator3.setSwap(true);
+
+        System.out.println();
+        int[] x = new int[]{0, 1, 2, 3, 4 ,5};
+        // x = mutator3.swapMutation(x);
+        x = mutator3.randMut(x);
+        System.out.println(Arrays.toString(x));
+
     }
 
     // this will be set each time a Mutator is created
@@ -59,8 +68,40 @@ public class Mutator {
         flipAtLeastOneValue = flipAtLeastOneValueDefault;
     }
 
+    boolean swapMutation = false;
+
+    public int[] swapMutation(int[] a) {
+
+        int[] x = new int[a.length];
+
+        // first of all make a copy
+
+        for (int i=0; i<a.length; i++) {
+            x[i] = a[i];
+        }
+
+        // now pick two to swap
+
+        int ix1 = random.nextInt(x.length);
+        int ix2 = random.nextInt(x.length);
+
+        x[ix1] = a[ix2];
+        x[ix2] = a[ix1];
+
+        return x;
+
+    }
+
+    public Mutator setSwap(boolean swapMutation) {
+        this.swapMutation = swapMutation;
+        return this;
+    }
+
     public int[] randMut(int[] v) {
         // note: the algorithm ensures that at least one of the bits is different in the returned array
+        if (swapMutation) {
+            return swapMutation(v);
+        }
         if (totalRandomChaosMutation) {
             return SearchSpaceUtil.randomPoint(searchSpace);
         }

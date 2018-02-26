@@ -68,6 +68,18 @@ public class LevelView extends JComponent {
         height = tiles[0].length;
     }
 
+    public LevelView setTiles(int[][] tiles) {
+        this.tiles = tiles;
+        repaint();
+        return this;
+    }
+
+    public LevelView setTiles(int[] tiles) {
+        this.tiles = toRect(tiles, width, height);
+        repaint();
+        return this;
+    }
+
     public static void showMaze(int[][] tiles, String title) {
         LevelView levelView = new LevelView(tiles).setColorMap(MarioReader.tileColors);
         new JEasyFrame(levelView, title);

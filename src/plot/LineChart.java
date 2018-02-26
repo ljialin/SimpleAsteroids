@@ -479,7 +479,7 @@ public class LineChart extends JComponent {
     Color labelColor = fg;
 
     private int getFontSize(Dimension size) {
-        return (int) (2.1 * size.getHeight() * tickHeight);
+        return (int) (1.8 * size.getHeight() * tickHeight);
     }
 
     private void drawTicks(Graphics2D g, Dimension size) {
@@ -503,6 +503,14 @@ public class LineChart extends JComponent {
                 Rectangle2D rect = g.getFontMetrics().getStringBounds(xLabel, g);
                 // use a drawString method for now
                 int sx = (int) (xMap.map(x) - rect.getWidth() / 2);
+
+                // but we need to check that the right of the string does not go off the edge of the screen
+
+                int margin = 10;
+                int overshoot = (int) ((rect.getWidth() + sx) - size.getWidth());
+                if (overshoot > - margin)
+                    sx -= (overshoot + margin);
+
                 int sy = (int) (plotBottom - rect.getCenterY() - size.getHeight() * labelGap);
                 g.setColor(labelColor);
                 drawInvertedString(g, xLabel, sx, sy);

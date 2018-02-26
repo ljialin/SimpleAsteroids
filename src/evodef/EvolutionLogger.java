@@ -53,6 +53,8 @@ public class EvolutionLogger {
         fa.add(fitness);
         solutions.add(copy(solution));
         ss.add(fitness);
+        if (listener != null)
+            listener.update(this, solution, fitness);
         // System.out.println(solutions.size());
     }
 
@@ -85,6 +87,13 @@ public class EvolutionLogger {
         // bestYetSolutions.add(copy(solution));
         bestYetSolutions.add(solution);
     }
+
+    EvolutionListener listener;
+    public EvolutionLogger setListener(EvolutionListener listener) {
+        this.listener = listener;
+        return this;
+    }
+
 
     public double finalFitness() {
         return finalFitness;

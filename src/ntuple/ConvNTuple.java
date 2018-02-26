@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class ConvNTuple implements BanditLandscapeModel {
 
-    double epsilon = 0.1;
+    double epsilon = 0.00001;
 
     double defaultMeanEstimate = 0;
 
@@ -190,6 +190,9 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     ArrayList<int[]> indices;
 
+    // todo: add a filter gap parameter as well to allow
+    //
+
     public ConvNTuple makeIndices() {
         indices = new ArrayList<>();
         for (int i = 0; i <= imageWidth - filterWidth; i += stride) {
@@ -209,7 +212,7 @@ public class ConvNTuple implements BanditLandscapeModel {
                         filterIndex++;
                     }
                 }
-                System.out.println(Arrays.toString(a));
+                // System.out.println(Arrays.toString(a));
                 indices.add(a);
             }
         }
@@ -371,7 +374,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         double divKL = 0;
         double totSamples = nSamples * indices.size();
         double p = 1.0 / indices.size();
-        double penaltyKL = p * Math.log(p / epsilon);
+        double penaltyKL = p * Math.log((p + epsilon) / epsilon);
 //        System.out.println("Tot samples = " + totSamples);
 //        System.out.println("P = " + p);
         for (int[] index : indices) {
@@ -379,7 +382,7 @@ public class ConvNTuple implements BanditLandscapeModel {
             StatSummary ss = ntMap.get(address);
             if (ss != null) {
                 double q = ss.n() / totSamples;
-                double kl = p * Math.log(p/q);
+                double kl = p * Math.log((p+epsilon)/(q+epsilon));
 //                System.out.println("q = " + q);
 //                System.out.println(kl);
                 divKL += kl;
@@ -391,6 +394,20 @@ public class ConvNTuple implements BanditLandscapeModel {
         }
         return divKL;
     }
+
+    public void sanityReport() {
+        // wrote this to fix a bug in the getKLDivergence method
+        // but may be not needed
+        double totSamples = nSamples * indices.size();
+        double p = 1.0 / indices.size();
+        double penaltyKL = p * Math.log((p + epsilon) / epsilon);
+
+        int realTot = 0;
+        // for (StatSummary ss : indices.)
+
+    }
+
+
 
     @Override
     public double getExplorationEstimate(int[] x) {

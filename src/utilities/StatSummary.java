@@ -1,17 +1,18 @@
 
 package utilities;
 
+import java.util.List;
+
 /**
- This class is used to model the statistics
- of a fix of numbers.  For the statistics
- we choose here it is not necessary to store
- all the numbers - just keeping a running total
- of how many, the sum and the sum of the squares
- is sufficient (plus max and min, for max and min).
-
-  This is a simpler version of StatisticalSummary that does
- not include statistical tests, or the Watch class.
-
+ * This class is used to model the statistics
+ * of a fix of numbers.  For the statistics
+ * we choose here it is not necessary to store
+ * all the numbers - just keeping a running total
+ * of how many, the sum and the sum of the squares
+ * is sufficient (plus max and min, for max and min).
+ * <p>
+ * This is a simpler version of StatisticalSummary that does
+ * not include statistical tests, or the Watch class.
  */
 
 public class StatSummary {
@@ -76,6 +77,7 @@ public class StatSummary {
 
 
     static String strictMessage = "No values in summary";
+
     public double max() {
         if (strict && n < 1) throw new RuntimeException(strictMessage);
         return max;
@@ -131,7 +133,7 @@ public class StatSummary {
         return sd() / Math.sqrt(n);
     }
 
-    public void add(StatSummary ss) {
+    public StatSummary add(StatSummary ss) {
         // implications for Watch?
         n += ss.n;
         sum += ss.sum;
@@ -139,47 +141,58 @@ public class StatSummary {
         max = Math.max(max, ss.max);
         min = Math.min(min, ss.min);
         valid = false;
+        return this;
     }
 
-    public void add(double d) {
+    public StatSummary add(double d) {
         n++;
         sum += d;
         sumsq += d * d;
         min = Math.min(min, d);
         max = Math.max(max, d);
         valid = false;
+        return this;
     }
 
     // note: this method removes from mean and standard deviation
     // but cannot efficently adjudt min and max
     public void removeFromMean(double d) {
-        if (n<1) {
+        if (n < 1) {
             n--;
             sum -= d;
-            sumsq -= d*d;
+            sumsq -= d * d;
             valid = false;
         }
     }
 
-    public void add(Number n) {
+    public StatSummary add(Number n) {
         add(n.doubleValue());
+        return this;
     }
 
-//    public void add(double[] d) {
+    //    public void add(double[] d) {
 //        for (int i = 0; i < d.length; i++) {
 //            add(d[i]);
 //        }
 //    }
 //
-    public void add(double... xa) {
+    public StatSummary add(double... xa) {
         for (double x : xa) {
             add(x);
         }
+        return this;
+    }
+
+    public StatSummary add(List<Double> xa) {
+        for (double x : xa) {
+            add(x);
+        }
+        return this;
     }
 
     public String toString() {
         String s = (name == null) ? "" : name + "\n";
-        s +=  " min = " + min() + "\n" +
+        s += " min = " + min() + "\n" +
                 " max = " + max() + "\n" +
                 " ave = " + mean() + "\n" +
                 " sd  = " + sd() + "\n" +
