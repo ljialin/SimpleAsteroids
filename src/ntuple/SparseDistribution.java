@@ -6,75 +6,40 @@ import java.util.HashMap;
 
 public class SparseDistribution {
 
-    public static void main(String[] args) {
-
-        SparseDistribution p = new SparseDistribution();
-        SparseDistribution q = new SparseDistribution();
-
-        p.add(10, 2);
-        p.add(20, 5);
-        p.add(30, 1);
-
-        q.add(10);
-        q.add(20);
-        q.add(30);
-
-        System.out.println(klDiv(p, p));
-        System.out.println(klDiv(p, q));
-        System.out.println();
-        System.out.println(klDiv(q, p));
-        System.out.println(klDiv(q, q));
-
-        System.out.println();
-        System.out.println(klDivSymmetric(p, q));
-        System.out.println(klDivSymmetric(q, p));
-
-    }
-
-
     double epsilon = 1e-20;
 
-    HashMap<Double, StatSummary> statMap;
+    HashMap<Integer, StatSummary> statMap;
     int tot = 0;
 
     public SparseDistribution() {
         statMap = new HashMap<>();
     }
 
-    public SparseDistribution add(double x) {
-        add(x, 1);
-        return this;
-    }
-
-    public SparseDistribution add(double x, double p) {
+    public SparseDistribution add(int x) {
         StatSummary ss = statMap.get(x);
         if (ss == null) {
             ss = new StatSummary();
             statMap.put(x, ss);
         }
-        ss.add(p);
-        tot+=p;
+        ss.add(1);
+        tot++;
         return this;
     }
 
-    public double getProb(Double key) {
+    public double getProb(Integer key) {
         StatSummary ss = statMap.get(key);
         if (ss != null) {
-            return epsilon + ss.sum() / tot;
+            return ss.n() / tot;
         } else {
             return epsilon;
         }
-    }
-
-    public static double klDivSymmetric(SparseDistribution pDis, SparseDistribution qDis) {
-        return klDiv(pDis, qDis) + klDiv(qDis, pDis);
     }
 
     public static double klDiv(SparseDistribution pDis, SparseDistribution qDis) {
         double tot = 0;
         // iterate only over the values in p
         // since any ones not in p will have a contribution of zero
-        for (Double key : pDis.statMap.keySet()) {
+        for (Integer key : pDis.statMap.keySet()) {
             double p = pDis.getProb(key);
             double q = qDis.getProb(key);
             // epsilon is already included in the getProb function
@@ -82,4 +47,5 @@ public class SparseDistribution {
         }
         return tot;
     }
+
 }
