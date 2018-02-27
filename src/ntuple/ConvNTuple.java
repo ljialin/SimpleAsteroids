@@ -71,7 +71,7 @@ public class ConvNTuple implements BanditLandscapeModel {
     boolean verbose = false;
     public void report(SolutionEvaluator evaluator) {
         System.out.println();
-        System.out.println("Indexes used: " + ntMap.size());
+        System.out.println("Indexes used: " + sampleDis.statMap.size());
         System.out.println();
         if (!verbose) return;
         StatSummary errorStats = new StatSummary();
@@ -98,7 +98,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         }
         System.out.println("Error Stats");
         System.out.println(errorStats);
-        System.out.println("Indexes used: " + ntMap.size());
+        System.out.println("Indexes used: " + sampleDis.statMap.size());
     }
 
     private int countOnes(int[] a) {
@@ -121,7 +121,9 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     int mValues; // number of values possible in each image pixel / tile
 
-    HashMap<Double, StatSummary> ntMap;
+    // HashMap<Double, StatSummary> ntMap;
+
+    SparseDistribution sampleDis;
 
     // store every solution ever sampled, ready to return the best one when ready
     // since the fitness estimate is always being updated, best to do all these at the end
@@ -137,7 +139,8 @@ public class ConvNTuple implements BanditLandscapeModel {
     public ConvNTuple reset() {
         // avoid taking log of zero
         nSamples = 1;
-        ntMap = new HashMap<>();
+        // ntMap = new HashMap<>();
+        sampleDis = new SparseDistribution();
         solutions = new ArrayList<>();
         picker = new Picker<>();
         return this;
@@ -272,8 +275,9 @@ public class ConvNTuple implements BanditLandscapeModel {
         // System.out.println(" ADDING A POINT !!!!!!!!!!!!!!!!!!!!!!");
         for (int[] index : indices) {
             double address = address(p, index);
-            StatSummary ss = getStatsForceCreate(address);
-            ss.add(value);
+            sampleDis.add(address);
+//            StatSummary ss = getStatsForceCreate(address);
+//            ss.add(value);
         }
         solutions.add(p);
         picker.add(value, p);
@@ -285,19 +289,19 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
     public int nEntries() {
-        return ntMap.keySet().size();
+        return sampleDis.tot; // .keySet().size();
     }
 
-    public StatSummary getStatsForceCreate(double address) {
-        // System.out.println(ntMap);
-        StatSummary ss = ntMap.get(address);
-        if (ss == null) {
-            ss = new StatSummary();
-
-            ntMap.put(address, ss);
-        }
-        return ss;
-    }
+//    public StatSummary getStatsForceCreate(double address) {
+//        // System.out.println(ntMap);
+//        StatSummary ss = ntMap.get(address);
+//        if (ss == null) {
+//            ss = new StatSummary();
+//
+//            ntMap.put(address, ss);
+//        }
+//        return ss;
+//    }
 
 
     @Override
@@ -332,7 +336,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         StatSummary ssTot = new StatSummary("Summary stats exploit");
         for (int[] index : indices) {
             double address = address(x, index);
-            StatSummary ss = ntMap.get(address);
+            StatSummary ss = sampleDis.statMap.get(address);
             if (ss != null && ss.n() > 0) {
                 if (useWeightedMean) {
                     ssTot.add(ss);
@@ -352,7 +356,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         StatSummary ssTot = new StatSummary();
         for (int[] index : indices) {
             double address = address(x, index);
-            StatSummary ss = ntMap.get(address);
+            StatSummary ss = sampleDis.statMap.get(address);
             if (ss != null) {
                 ssTot.add(ss.n());
             } else {
@@ -371,29 +375,33 @@ public class ConvNTuple implements BanditLandscapeModel {
     // it is the KL Divergence between the two distributions
 
     public double getKLDivergence(int[] x, double epsilon) {
-        double divKL = 0;
-        double totSamples = nSamples * indices.size();
-        double p = 1.0 / indices.size();
-        double penaltyKL = p * Math.log((p + epsilon) / epsilon);
-//        System.out.println("Tot samples = " + totSamples);
-//        System.out.println("P = " + p);
+        // create a new SampleDis for this image
+        SparseDistribution qDis = new SparseDistribution();
         for (int[] index : indices) {
             double address = address(x, index);
-            StatSummary ss = ntMap.get(address);
-            if (ss != null) {
-                double q = ss.n() / totSamples;
-                double kl = p * Math.log((p+epsilon)/(q+epsilon));
-//                System.out.println("q = " + q);
-//                System.out.println(kl);
-                divKL += kl;
-            } else {
-//                System.out.println(penaltyKL);
-                divKL += penaltyKL;
-            }
-//            System.out.println();
+            qDis.add(address);
         }
-        return divKL;
+        return SparseDistribution.klDivSymmetric(sampleDis, qDis);
     }
+
+//    public double getKLDivergence(int[] x, double epsilon) {
+//        double divKL = 0;
+//        double totSamples = nSamples * indices.size();
+//        double p = 1.0 / indices.size();
+//        double penaltyKL = p * Math.log((p + epsilon) / epsilon);
+//        for (int[] index : indices) {
+//            double address = address(x, index);
+//            StatSummary ss = ntMap.get(address);
+//            if (ss != null) {
+//                double q = ss.n() / totSamples;
+//                double kl = p * Math.log((p+epsilon)/(q+epsilon));
+//                divKL += kl;
+//            } else {
+//                divKL += penaltyKL;
+//            }
+//        }
+//        return divKL;
+//    }
 
     public void sanityReport() {
         // wrote this to fix a bug in the getKLDivergence method
@@ -407,15 +415,13 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     }
 
-
-
     @Override
     public double getExplorationEstimate(int[] x) {
         // StatSummary ssTot = new StatSummary();
         StatSummary exploreStats = new StatSummary();
         for (int[] index : indices) {
             double address = address(x, index);
-            StatSummary ss = ntMap.get(address);
+            StatSummary ss = sampleDis.statMap.get(address);
             if (ss != null) {
                 exploreStats.add(explore(ss.n()));
             } else {
@@ -433,4 +439,3 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
 }
-

@@ -26,12 +26,8 @@ import static levelgen.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 30, imageHeight = 20;
-<<<<<<< HEAD
-    static int filterWidth = 2, filterHeight = 2;
-=======
-    static int filterWidth = 4, filterHeight = 4;
->>>>>>> 8be8d8be72e5a798048b396efc82b397f44d71b9
+    static int imageWidth = 30, imageHeight = 16;
+    static int filterWidth = 3, filterHeight = 3;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
@@ -46,9 +42,9 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         Mutator mutator = new Mutator(null);
         mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 2;
+        mutator.pointProb = 1;
 
-        mutator.setSwap(true);
+        // mutator.setSwap(true);
         simpleRMHC.setMutator(mutator);
 
         EvoAlg evoAlg = simpleRMHC;
@@ -80,6 +76,16 @@ public class EvolveMarioLevelTest implements EvolutionListener {
             new JEasyFrame(levelView, inputFile);
         }
         return level;
+    }
+
+    public int[][] subSample(int[][] a, int x, int y, int w, int h) {
+        int[][] b = new int[w][h];
+        for (int i=0; i<w; i++) {
+            for (int j=0; j<h; j++) {
+                b[i][j] = a[x+i][y+j];
+            }
+        }
+        return b;
     }
 
     public static int[][] border(int[][] a) {
@@ -133,11 +139,18 @@ public class EvolveMarioLevelTest implements EvolutionListener {
             ea.setInitialSeed(generateSeed(sample));
         }
         SolutionEvaluator evaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
+
+        double fitnessFull = evaluator.evaluate(flatten(sample));
+        String labelFull = String.format("Fitness: %.6f", fitnessFull);
+
+        LevelView.showMaze(flatten(sample), sample.length, sample[0].length, labelFull, tileColors);
+        showSamples(sample, evaluator);
+
         evaluator.logger().setListener(this);
         int[] solution = ea.runTrial(evaluator, nEvals);
 
         // can set entire solution to the most likely individual
-        solution = setAll(solution, 2);
+        // solution = setAll(solution, 2);
 
         double fitness = evaluator.evaluate(solution);
         String label = String.format("Fitness: %.6f", fitness);
@@ -145,7 +158,29 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // solution = flatten(toRect())
         plotData(evaluator.logger().fa);
         LevelView.showMaze(solution, imageWidth, imageHeight, label, tileColors);
+
+        showSamples(sample, evaluator);
+
         return fitness;
+    }
+
+    private void showSamples(int[][] sample, SolutionEvaluator solutionEvaluator) {
+
+        int gap=20;
+        System.out.println("Sample Width: " + sample.length);
+
+
+        for (int x=0; x<sample.length - imageWidth; x+=gap) {
+            int[] sub = flatten(subSample(sample, x, 0, imageWidth, imageHeight));
+            double fitness = solutionEvaluator.evaluate(sub);
+            String label = String.format("Fitness: %.6f", fitness);
+            LevelView.showMaze(sub, imageWidth, imageHeight, label, tileColors);
+        }
+
+        // also show a full sample
+
+        // double fullFit = s
+
     }
 
     static Random random = new Random();
@@ -222,6 +257,21 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         System.out.println("Training finished: ");
         System.out.println(timer);
 
+        // now check the klDiv
+
+        System.out.println("Divergence = " + convNTuple.getKLDivergence(x, 1e-20));
+
+        // now add some random noise
+
+        for (int i=0; i<x.length; i++) {
+            if (random.nextDouble() < 0.01) {
+                x[i] = 0;
+            }
+        }
+
+        System.out.println("Divergence = " + convNTuple.getKLDivergence(x, 1e-20));
+
+
         // convNTuple.report();
         // System.out.println(timer);
 
@@ -269,4 +319,3 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         levelFrame.setTitle(String.format("Evals: %d;\t fitness: %.3f", logger.nEvals(), fitness));
     }
 }
-
