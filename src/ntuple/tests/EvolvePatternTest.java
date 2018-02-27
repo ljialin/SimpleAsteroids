@@ -51,7 +51,7 @@ public class EvolvePatternTest {
 
     public static ConvNTuple getTrainedConvNTuple() {
         int w = 4, h = 4;
-        int filterWidth = 2, filterHeight = 2;
+        int filterWidth = 3, filterHeight = 2;
         ConvNTuple convNTuple = new ConvNTuple().setImageDimensions(w, h);
         convNTuple.setFilterDimensions(filterWidth, filterHeight);
         convNTuple.setMValues(3).setStride(1);

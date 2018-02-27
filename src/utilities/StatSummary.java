@@ -95,6 +95,11 @@ public class StatSummary {
         return mean;
     }
 
+    public double sum() {
+        if (strict && n < 1) throw new RuntimeException(strictMessage);
+        return sum;
+    }
+
     // returns the sum of the squares of the differences
     //  between the mean and the ith values
     public double sumSquareDiff() {

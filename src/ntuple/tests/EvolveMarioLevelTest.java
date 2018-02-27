@@ -27,7 +27,7 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 30, imageHeight = 20;
-    static int filterWidth = 4, filterHeight = 4;
+    static int filterWidth = 3, filterHeight = 3;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
@@ -42,9 +42,9 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         Mutator mutator = new Mutator(null);
         mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 2;
+        mutator.pointProb = 1;
 
-        mutator.setSwap(true);
+        // mutator.setSwap(true);
         simpleRMHC.setMutator(mutator);
 
         EvoAlg evoAlg = simpleRMHC;
@@ -133,7 +133,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         int[] solution = ea.runTrial(evaluator, nEvals);
 
         // can set entire solution to the most likely individual
-        solution = setAll(solution, 2);
+        // solution = setAll(solution, 2);
 
         double fitness = evaluator.evaluate(solution);
         String label = String.format("Fitness: %.6f", fitness);
