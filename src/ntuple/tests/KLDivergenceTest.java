@@ -13,6 +13,7 @@ public class KLDivergenceTest {
             // System.out.format("%.4f\t %.4f\t %.4f\n", p, q, d);
             q *= fac;
         }
+
         double[] pa = {0.0, 0.29, 0.71};
         double[] qa = {0.1, 0.30, 0.60};
 
@@ -33,7 +34,7 @@ public class KLDivergenceTest {
             totp += p[i];
             totq += q[i];
         }
-        System.out.println("Check totals: " + totp + " : " + totq);
+        // System.out.println("Check totals: " + totp + " : " + totq);
         return tot;
     }
 
