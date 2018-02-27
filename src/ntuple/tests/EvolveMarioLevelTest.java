@@ -27,7 +27,7 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 30, imageHeight = 20;
-    static int filterWidth = 3, filterHeight = 3;
+    static int filterWidth = 2, filterHeight = 2;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
