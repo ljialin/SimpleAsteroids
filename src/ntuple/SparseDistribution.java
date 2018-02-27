@@ -35,7 +35,6 @@ public class SparseDistribution {
         }
     }
 
-
     public static double klDiv(SparseDistribution pDis, SparseDistribution qDis) {
         double tot = 0;
         // iterate only over the values in p
