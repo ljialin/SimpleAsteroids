@@ -141,7 +141,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         SolutionEvaluator evaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
 
         double fitnessFull = evaluator.evaluate(flatten(sample));
-        String labelFull = String.format("Fitness: %.6f", fitnessFull);
+        String labelFull = String.format("Sample Fitness: %.6f", fitnessFull);
 
         LevelView.showMaze(flatten(sample), sample.length, sample[0].length, labelFull, tileColors);
         showSamples(sample, evaluator);
@@ -270,6 +270,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         }
 
         System.out.println("Divergence = " + convNTuple.getKLDivergence(x, 1e-20));
+
 
 
         // convNTuple.report();
