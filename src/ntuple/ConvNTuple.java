@@ -96,8 +96,8 @@ public class ConvNTuple implements BanditLandscapeModel {
             // System.out.println(countOnes(p) + " : " + getMeanEstimate(p) + " : " + Arrays.toString(p));
             errorStats.add(Math.abs(countOnes(p) - getMeanEstimate(p)));
         }
-        System.out.println("Error Stats");
-        System.out.println(errorStats);
+//        System.out.println("Error Stats");
+//        System.out.println(errorStats);
         System.out.println("Indexes used: " + sampleDis.statMap.size());
     }
 
@@ -123,7 +123,7 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     // HashMap<Double, StatSummary> ntMap;
 
-    SparseDistribution sampleDis;
+    public SparseDistribution sampleDis;
 
     // store every solution ever sampled, ready to return the best one when ready
     // since the fitness estimate is always being updated, best to do all these at the end
@@ -179,7 +179,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         return this;
     }
 
-    private double address(int[] image, int[] index) {
+    public double address(int[] image, int[] index) {
         // System.out.println(image.length);
         double prod = 1;
         double addr = 0;
@@ -191,7 +191,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         return addr;
     }
 
-    ArrayList<int[]> indices;
+    public ArrayList<int[]> indices;
 
     // todo: add a filter gap parameter as well to allow
     //
@@ -267,6 +267,8 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
 
+    boolean storeIndexArrays = true;
+
     @Override
     public void addPoint(int[] p, double value) {
         // iterate over all the indices
@@ -282,6 +284,23 @@ public class ConvNTuple implements BanditLandscapeModel {
         solutions.add(p);
         picker.add(value, p);
         nSamples++;
+        if (storeIndexArrays) {
+            addIndexArrays(p);
+        }
+        // return this;
+    }
+
+    public void addIndexArrays(int[] p) {
+        // iterate over all the indices
+        // create an array of values for each one
+
+        for (int[] index : indices) {
+            int[] values = new int[index.length];
+            for (int i=0; i<index.length; i++) {
+                values[i] = p[index[i]];
+            }
+            sampleDis.addValueArray(address(p, index), values);
+        }
     }
 
     public int nSamples() {

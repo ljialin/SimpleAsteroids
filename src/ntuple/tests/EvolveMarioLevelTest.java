@@ -9,6 +9,7 @@ import ga.SimpleRMHC;
 import levelgen.MarioReader;
 import ntuple.ConvNTuple;
 import ntuple.LevelView;
+import ntuple.operator.ConvMutator;
 import plot.LineChart;
 import plot.LineChartAxis;
 import utilities.ElapsedTimer;
@@ -26,7 +27,7 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 30, imageHeight = 16;
-    static int filterWidth = 5, filterHeight = 5;
+    static int filterWidth = 3, filterHeight = 3;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
@@ -44,22 +45,22 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         mutator.pointProb = 1;
 
         mutator.setSwap(true);
+
         simpleRMHC.setMutator(mutator);
 
-        EvoAlg evoAlg = simpleRMHC;
+        // EvoAlg evoAlg = simpleRMHC;
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 200000;
+        int nEvals = 500;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
             ElapsedTimer timer = new ElapsedTimer();
-            results.add(evolver.runTrial(evoAlg, nEvals, level));
+            results.add(evolver.runTrial(simpleRMHC, nEvals, level));
             System.out.println(timer);
         }
     }
-
 
     public static int[][] getAndShowLevel(boolean show) throws Exception {
         String inputFile = "data/mario/levels/mario-3-1.txt";
@@ -122,11 +123,17 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         }
     }
 
-    public double runTrial(EvoAlg ea, int nEvals, int[][] sample) {
+    // this should really take any type of EA, but at the moment it
+    // is restricted to the SimpleRMHC to allow a bespoke mutation operator
+    // to be plugged in
+    public double runTrial(SimpleRMHC ea, int nEvals, int[][] sample) {
         int nDims = imageWidth * imageHeight;
         int mValues = distinctValues(sample);
         ConvNTuple convNTuple = getTrainedConvNTuple(sample, mValues);
         System.out.println("nSamples: " + convNTuple.nSamples());
+
+        // set the "clever" mutation operator
+        ea.setMutator(new ConvMutator().setConvNTuple(convNTuple));
 
         if (useInitialSeed) {
             ea.setInitialSeed(generateSeed(sample));
@@ -254,16 +261,16 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         System.out.println("Divergence = " + convNTuple.getKLDivergence(x, 1e-20));
 
-        // now add some random noise
-
-        for (int i=0; i<x.length; i++) {
-            if (random.nextDouble() < 0.01) {
-                x[i] = 0;
-            }
-        }
-
-        System.out.println("Divergence = " + convNTuple.getKLDivergence(x, 1e-20));
-
+//        // now add some random noise
+//
+//        for (int i=0; i<x.length; i++) {
+//            if (random.nextDouble() < 0.01) {
+//                x[i] = 0;
+//            }
+//        }
+//
+//        System.out.println("Divergence = " + convNTuple.getKLDivergence(x, 1e-20));
+//
 
 
         // convNTuple.report();
@@ -296,7 +303,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     // without slowing down the evolution too much
 
     // a figure of 5,000 may be reasonable
-    static int freq = 5000;
+    static int freq = 500;
     LevelView levelView;
     JEasyFrame levelFrame;
 

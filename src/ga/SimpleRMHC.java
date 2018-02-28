@@ -56,9 +56,9 @@ public class SimpleRMHC implements EvoAlg {
         this.seed = seed;
     }
 
-    DefaultMutator mutator;
+    Mutator mutator;
 
-    public SimpleRMHC setMutator(DefaultMutator mutator) {
+    public SimpleRMHC setMutator(Mutator mutator) {
         this.mutator = mutator;
         return this;
     }

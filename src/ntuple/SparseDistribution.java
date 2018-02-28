@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 public class SparseDistribution {
 
+
+
     public static void main(String[] args) {
 
         SparseDistribution p = new SparseDistribution();
@@ -34,11 +36,13 @@ public class SparseDistribution {
 
     double epsilon = 1e-20;
 
-    HashMap<Double, StatSummary> statMap;
+    public HashMap<Double, StatSummary> statMap;
+    public HashMap<Double, int[]> valueArrays;
     int tot = 0;
 
     public SparseDistribution() {
         statMap = new HashMap<>();
+        valueArrays = new HashMap<>();
     }
 
     public SparseDistribution add(double x) {
@@ -57,6 +61,11 @@ public class SparseDistribution {
         return this;
     }
 
+    public SparseDistribution addValueArray(double x, int[] a) {
+        valueArrays.put(x, a);
+        return this;
+    }
+
     public double getProb(Double key) {
         StatSummary ss = statMap.get(key);
         if (ss != null) {
@@ -64,6 +73,14 @@ public class SparseDistribution {
         } else {
             return epsilon;
         }
+    }
+
+    public static double klDiv(double p, double q) {
+        return p * (Math.log(p / q));
+    }
+
+    public static double klDivSymmetric(double p, double q) {
+        return p * Math.log(p / q) + q * Math.log(q/p);
     }
 
     public static double klDivSymmetric(SparseDistribution pDis, SparseDistribution qDis) {
