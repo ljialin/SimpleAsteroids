@@ -1,16 +1,12 @@
 package gvglink;
 
-import altgame.SimpleMaxGame;
 import asteroids.View;
 import controllers.singlePlayer.discountOLMCTS.SingleTreeNode;
 import controllers.singlePlayer.ea.Agent;
-import core.game.StateObservation;
 import core.player.AbstractPlayer;
 import evodef.EvoAlg;
-import evogame.Mutator;
+import evodef.DefaultMutator;
 import ga.SimpleRMHC;
-import ntuple.NTupleBanditEA;
-import ntuple.SlidingMeanEDA;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 import utilities.ElapsedTimer;
@@ -97,7 +93,7 @@ public class AsteroidsTest {
 
         // evoAlg = new SlidingMeanEDA();
 
-        Mutator.totalRandomChaosMutation = true;
+        DefaultMutator.totalRandomChaosMutation = true;
 
         Agent.useShiftBuffer = true;
 

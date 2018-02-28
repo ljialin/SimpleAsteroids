@@ -4,7 +4,7 @@ import asteroids.AsteroidsGameState;
 import evodef.*;
 import evogame.DefaultParams;
 import evogame.GameParameters;
-import evogame.Mutator;
+import evodef.DefaultMutator;
 import ga.SimpleRMHC;
 import hyperopt.HyperParamTuneRunner;
 import ntuple.SlidingMeanEDA;
@@ -136,7 +136,7 @@ public class EvoAgentSearchSpaceAsteroids implements  AnnotatedFitnessSpace {
         AsteroidsGameState gameState = new AsteroidsGameState().setParams(params).initForwardModel();
 
         // search space will need to be set before use
-        Mutator mutator = new Mutator(null);
+        DefaultMutator mutator = new DefaultMutator(null);
         mutator.pointProb = pointMutationRate[x[pointMutationRateIndex]];
         mutator.flipAtLeastOneValue = flipAtLeastOneBit[x[flipAtLeastOneBitIndex]];
 

@@ -1,13 +1,11 @@
 package ga;
 
 import evodef.*;
-import evogame.Mutator;
+import evodef.DefaultMutator;
 import ntuple.BanditLandscapeModel;
-import ntuple.NTupleSystem;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -97,12 +95,12 @@ public class SimpleGA implements EvoAlg {
     static Random rand = new Random();
 
 
-    Mutator mutator;
+    DefaultMutator mutator;
 
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {
         this.evaluator = evaluator;
-        mutator = new Mutator(evaluator.searchSpace());
+        mutator = new DefaultMutator(evaluator.searchSpace());
 
         initPop();
         // System.out.println(pop.size() + " : " + popSize);

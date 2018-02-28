@@ -1,12 +1,8 @@
 package planetwar;
 
 import asteroids.AsteroidsGameState;
-import evodef.EvoAlg;
 import evogame.DefaultParams;
 import evogame.GameParameters;
-import evogame.Mutator;
-import ga.SimpleRMHC;
-import ntuple.SlidingMeanEDA;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 

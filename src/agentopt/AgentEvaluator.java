@@ -77,7 +77,7 @@ public class AgentEvaluator implements NoisySolutionEvaluator {
 
         GameActionSpaceAdapterMulti.useHeuristic = false;
 
-        // Mutator.totalRandomChaosMutation = false;
+        // DefaultMutator.totalRandomChaosMutation = false;
 
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
 

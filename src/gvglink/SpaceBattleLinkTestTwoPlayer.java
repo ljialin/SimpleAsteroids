@@ -6,7 +6,6 @@ import core.game.StateObservationMulti;
 import core.player.AbstractMultiPlayer;
 import evodef.EvoAlg;
 import evodef.GameActionSpaceAdapterMulti;
-import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.CompactSlidingModelGA;
 import ntuple.NTupleBanditEA;
@@ -74,7 +73,7 @@ public class SpaceBattleLinkTestTwoPlayer {
 
         GameActionSpaceAdapterMulti.useHeuristic = false;
 
-        // Mutator.totalRandomChaosMutation = false;
+        // DefaultMutator.totalRandomChaosMutation = false;
 
         // // supercl
         // StateObservation stateObs = linkState;

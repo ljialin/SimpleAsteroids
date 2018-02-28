@@ -4,14 +4,11 @@ import altgame.SimpleMaxGame;
 import battle.BattleGameParameters;
 import battle.BattleView;
 import battle.SampleEvolvedParams;
-import controllers.singlePlayer.discountOLMCTS.SingleMCTSPlayer;
-import controllers.singlePlayer.discountOLMCTS.SingleTreeNode;
 import controllers.singlePlayer.ea.Agent;
 import core.game.StateObservation;
 import core.player.AbstractPlayer;
 import evodef.EvoAlg;
 import evodef.GameActionSpaceAdapter;
-import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
 import ontology.Types;
@@ -68,7 +65,7 @@ public class SpaceBattleLinkTest {
         // set some parameters for the experiment
         GameActionSpaceAdapter.useHeuristic = false;
         Agent.useShiftBuffer = true;
-        // Mutator.totalRandomChaosMutation = false;
+        // DefaultMutator.totalRandomChaosMutation = false;
 
 
 

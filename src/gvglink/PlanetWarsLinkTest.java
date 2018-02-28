@@ -3,16 +3,9 @@ package gvglink;
 import controllers.multiPlayer.ea.Agent;
 import core.player.AbstractMultiPlayer;
 import evodef.EvoAlg;
-import evodef.GameActionSpaceAdapter;
 import evodef.GameActionSpaceAdapterMulti;
-import evogame.Mutator;
 import ga.SimpleRMHC;
-import ntuple.CompactSlidingModelGA;
-import ntuple.NTupleBanditEA;
-import ntuple.SlidingMeanEDA;
 import ontology.Types;
-import planetwar.GameState;
-import planetwar.KeyController;
 import planetwar.PlanetWarView;
 import tools.ElapsedCpuTimer;
 import utilities.JEasyFrame;
@@ -49,7 +42,7 @@ public class PlanetWarsLinkTest {
 
         AbstractMultiPlayer player1, player2;
         GameActionSpaceAdapterMulti.visual = true;
-        // Mutator.totalRandomChaosMutation = true;
+        // DefaultMutator.totalRandomChaosMutation = true;
 
 //        controllers.singlePlayer.sampleOLMCTS.Agent olmcts =
 //                new controllers.singlePlayer.sampleOLMCTS.Agent(linkState, timer);

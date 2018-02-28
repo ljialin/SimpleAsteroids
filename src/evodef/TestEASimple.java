@@ -1,6 +1,5 @@
 package evodef;
 
-import evogame.Mutator;
 import ntuple.*;
 import plot.LineChart;
 import plot.LinePlot;
@@ -49,8 +48,8 @@ public class TestEASimple {
             // just add a new log method to the logger
 
             useFirstHit = false;
-            // Mutator.flipAtLeastOneValueDefault = true;
-            // Mutator.defaultPointProb = 1.0;
+            // DefaultMutator.flipAtLeastOneValueDefault = true;
+            // DefaultMutator.defaultPointProb = 1.0;
 
             // select which one to use
             // solutionEvaluator = new EvalMaxM(nDims, mValues, noise);
@@ -60,15 +59,15 @@ public class TestEASimple {
             System.out.println("Running experiment with following settings:");
             System.out.println("Solution evaluator: " + solutionEvaluator.getClass());
             System.out.format("Use first hitting time    :\t %s\n", useFirstHit);
-            System.out.format("RMHC: (flip at least one) :\t %s\n", Mutator.flipAtLeastOneValueDefault);
-            System.out.format("Point mutation probability:\t %.4f\n", Mutator.defaultPointProb / nDims);
+            System.out.format("RMHC: (flip at least one) :\t %s\n", DefaultMutator.flipAtLeastOneValueDefault);
+            System.out.format("Point mutation probability:\t %.4f\n", DefaultMutator.defaultPointProb / nDims);
 
             ElapsedTimer t = new ElapsedTimer();
 
 //        StatSummary nt = testNTupleBanditEA(nTrialsNTupleBanditEA);
 //        System.out.println(t);
 
-            // Mutator.totalRandomChaosMutation = true;
+            // DefaultMutator.totalRandomChaosMutation = true;
 
             int defaultK = 2000;
 

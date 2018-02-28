@@ -1,10 +1,9 @@
 package asteroids;
 
 import evodef.EvoAlg;
+import evodef.DefaultMutator;
 import evogame.GameParameters;
-import evogame.Mutator;
 import ga.SimpleRMHC;
-import ntuple.SlidingMeanEDA;
 import planetwar.EvoAgent;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
@@ -87,7 +86,7 @@ public class Game {
         int nResamples = 1;
 
 
-        Mutator mutator = new Mutator(null);
+        DefaultMutator mutator = new DefaultMutator(null);
 
         // setting to true may give best performance
         mutator.totalRandomChaosMutation = true;

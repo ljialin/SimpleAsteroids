@@ -3,9 +3,8 @@ package gvglink;
 import core.game.StateObservationMulti;
 import core.player.AbstractMultiPlayer;
 import evodef.EvoAlg;
-import evogame.Mutator;
+import evodef.DefaultMutator;
 import ga.SimpleRMHC;
-import ntuple.NTupleBanditEA;
 import numbergame.DiffGame;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
@@ -47,7 +46,7 @@ public class TestDiffGame {
         DiffGame.minscore = 0;
         StateObservationMulti stateObs = new DiffGame();
 
-        Mutator.totalRandomChaosMutation = false;
+        DefaultMutator.totalRandomChaosMutation = false;
 
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
 

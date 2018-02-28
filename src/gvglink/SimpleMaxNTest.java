@@ -5,7 +5,6 @@ import controllers.singlePlayer.ea.Agent;
 import core.game.StateObservation;
 import core.player.AbstractPlayer;
 import evodef.EvoAlg;
-import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
 import ontology.Types;
@@ -74,7 +73,7 @@ public class SimpleMaxNTest {
 
         evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
 
-        // Mutator.totalRandomChaosMutation = true;
+        // DefaultMutator.totalRandomChaosMutation = true;
 
         Agent.useShiftBuffer = false;
 

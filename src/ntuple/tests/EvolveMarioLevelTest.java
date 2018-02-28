@@ -4,7 +4,7 @@ import evodef.EvoAlg;
 import evodef.EvolutionListener;
 import evodef.EvolutionLogger;
 import evodef.SolutionEvaluator;
-import evogame.Mutator;
+import evodef.DefaultMutator;
 import ga.SimpleRMHC;
 import levelgen.MarioReader;
 import ntuple.ConvNTuple;
@@ -15,7 +15,6 @@ import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +39,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         int nTrials = 1;
 
         SimpleRMHC simpleRMHC = new SimpleRMHC();
-        Mutator mutator = new Mutator(null);
+        DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
         mutator.pointProb = 1;
 

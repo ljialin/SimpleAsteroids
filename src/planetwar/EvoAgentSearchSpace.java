@@ -1,10 +1,8 @@
 package planetwar;
 
 import evodef.*;
-import evogame.Mutator;
-import ga.SimpleGA;
+import evodef.DefaultMutator;
 import ga.SimpleRMHC;
-import ntuple.SlidingMeanEDA;
 import ntuple.params.BooleanParam;
 import ntuple.params.DoubleParam;
 import ntuple.params.IntegerParam;
@@ -113,7 +111,7 @@ public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
         GameRunner gameRunner = new GameRunner();
 
         // search space will need to be set before use
-        Mutator mutator = new Mutator(null);
+        DefaultMutator mutator = new DefaultMutator(null);
         mutator.pointProb = pointMutationRate[x[pointMutationRateIndex]];
         mutator.flipAtLeastOneValue = flipAtLeastOneBit[x[flipAtLeastOneBitIndex]];
         mutator.totalRandomChaosMutation = false;

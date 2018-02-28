@@ -1,12 +1,8 @@
 package ga;
 
 import evodef.*;
-import evogame.Mutator;
-import evomaze.MazeView;
-import evomaze.ShortestPathTest;
+import evodef.DefaultMutator;
 import ntuple.BanditLandscapeModel;
-import ntuple.NTupleSystem;
-import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
 import java.util.Random;
@@ -60,9 +56,9 @@ public class SimpleRMHC implements EvoAlg {
         this.seed = seed;
     }
 
-    Mutator mutator;
+    DefaultMutator mutator;
 
-    public SimpleRMHC setMutator(Mutator mutator) {
+    public SimpleRMHC setMutator(DefaultMutator mutator) {
         this.mutator = mutator;
         return this;
     }
@@ -79,7 +75,7 @@ public class SimpleRMHC implements EvoAlg {
 
         // create a mutator if it has not already been made
         if (mutator == null)
-            mutator = new Mutator(searchSpace);
+            mutator = new DefaultMutator(searchSpace);
         else
             mutator.setSearchSpace(searchSpace);
 

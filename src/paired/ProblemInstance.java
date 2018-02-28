@@ -3,7 +3,7 @@ package paired;
 import evodef.EvalMaxM;
 import evodef.NoisySolutionEvaluator;
 import evodef.SearchSpaceUtil;
-import evogame.Mutator;
+import evodef.DefaultMutator;
 import ntuple.ScoredVec;
 
 import java.util.ArrayList;
@@ -50,11 +50,11 @@ public class ProblemInstance {
     public ProblemInstance useVecsAroundRandomPoint() {
         scoredVecs = new ArrayList<>();
         int[] px = SearchSpaceUtil.randomPoint(evaluator.searchSpace());
-        Mutator mutator = new Mutator(evaluator.searchSpace());
+        DefaultMutator mutator = new DefaultMutator(evaluator.searchSpace());
         mutator.pointProb = 0.0; // 1.0; // 3 / n;
         // mutator
-        Mutator.flipAtLeastOneValueDefault = true;
-        Mutator.totalRandomChaosMutation = false;
+        DefaultMutator.flipAtLeastOneValueDefault = true;
+        DefaultMutator.totalRandomChaosMutation = false;
 
         for (int i = 0; i < k; i++) {
             // int[] p = SearchSpaceUtil.randomPoint(searchSpace);

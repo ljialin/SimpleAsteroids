@@ -1,11 +1,9 @@
 package gvglink;
 
-import altgame.SimpleMaxGame;
 import controllers.singlePlayer.ea.Agent;
 import core.game.StateObservation;
 import core.player.AbstractPlayer;
 import evodef.EvoAlg;
-import evogame.Mutator;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
 import ntuple.SlidingMeanEDA;
@@ -75,7 +73,7 @@ public class SimpleGridTest {
         evoAlg = new NTupleBanditEA(kExplore, nNeighbours);
         evoAlg = new SlidingMeanEDA();
 
-        // Mutator.totalRandomChaosMutation = false;
+        // DefaultMutator.totalRandomChaosMutation = false;
 
         Agent.useShiftBuffer = true;
 

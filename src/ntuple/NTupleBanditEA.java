@@ -1,11 +1,9 @@
 package ntuple;
 
 import evodef.*;
-import evogame.Mutator;
+import evodef.DefaultMutator;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
-
-import java.util.Arrays;
 
 /**
  * Created by sml on 09/01/2017.
@@ -89,7 +87,7 @@ public class NTupleBanditEA implements EvoAlg {
         // set  up some convenient references
         SearchSpace searchSpace = evaluator.searchSpace();
         EvolutionLogger logger = evaluator.logger();
-        Mutator mutator = new Mutator(searchSpace);
+        DefaultMutator mutator = new DefaultMutator(searchSpace);
 
         nNeighbours = (int) Math.min(nNeighbours, SearchSpaceUtil.size(searchSpace) / 4);
         System.out.println("Set neighbours to: " + nNeighbours);

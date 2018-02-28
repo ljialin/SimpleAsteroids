@@ -2,18 +2,12 @@ package gvglink;
 
 import asteroids.View;
 import controllers.singlePlayer.discountOLMCTS.SingleTreeNode;
-import controllers.singlePlayer.ea.Agent;
 import core.player.AbstractPlayer;
-import evodef.EvoAlg;
-import evogame.Mutator;
-import ga.SimpleRMHC;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
-
-import java.util.Random;
 
 public class AsteroidsSimpleTest {
 
