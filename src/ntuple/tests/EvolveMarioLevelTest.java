@@ -55,13 +55,10 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
-
             ElapsedTimer timer = new ElapsedTimer();
             results.add(evolver.runTrial(evoAlg, nEvals, level));
-
             System.out.println(timer);
         }
-
     }
 
 
@@ -125,9 +122,6 @@ public class EvolveMarioLevelTest implements EvolutionListener {
             System.out.println(Arrays.toString(a));
         }
     }
-
-
-
 
     public double runTrial(EvoAlg ea, int nEvals, int[][] sample) {
         int nDims = imageWidth * imageHeight;
