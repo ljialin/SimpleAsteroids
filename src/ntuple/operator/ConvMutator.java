@@ -29,12 +29,7 @@ import java.util.Random;
     The choice aims to find the one from the sample set that has the greatest mismatch i.e.
     between how frequent it should be compared to how frequent it actually is
 
- 4. The set of values associated there are copied across
-
-
-
-
-
+ 4. The set of values associated there are copied across.
 
  */
 
@@ -49,6 +44,8 @@ public class ConvMutator implements Mutator {
         this.convNTuple = convNTuple;
         return this;
     }
+
+    boolean verbose = false;
 
     @Override
     public int[] randMut(int[] x) {
@@ -74,7 +71,9 @@ public class ConvMutator implements Mutator {
 
         Picker<int[]> toReplace = new Picker<>(Picker.MAX_FIRST);
 
-        System.out.println("Searching for replacement indices:");
+        if (verbose) {
+            System.out.println("Searching for replacement indices:");
+        }
 
         for (int[] a : convNTuple.indices) {
             double key = convNTuple.address(x, a);
@@ -89,10 +88,12 @@ public class ConvMutator implements Mutator {
             // was not likely in the sample
             // add some random noise to make it give varied results even when the
             // image is all sky, for example
-            double misfitScore = q/(p + 1) + noiseLevel * random.nextDouble();
+            double misfitScore = q * Math.log(q/p) + noiseLevel * random.nextDouble();
 
             // don't know why this should be inverted
-            misfitScore = 1 / misfitScore;
+            // misfitScore = 1 / misfitScore;
+
+            misfitScore = random.nextDouble();
 
             // System.out.format("\t %.4f\t %.4f\t %.4f\t %s\n", p, q, misfitScore, Arrays.toString(a));
 
@@ -109,10 +110,13 @@ public class ConvMutator implements Mutator {
         // System.out.println();
 
         int[] replacementIndices = toReplace.getBest();
-        System.out.format("To replace, picked: %s : %.4f\n", Arrays.toString(replacementIndices), toReplace.getBestScore());
-        System.out.println();
 
-        System.out.println("Searching for replacement values");
+        if (verbose) {
+            System.out.format("To replace, picked: %s : %.4f\n", Arrays.toString(replacementIndices), toReplace.getBestScore());
+            System.out.println();
+
+            System.out.println("Searching for replacement values");
+        }
         // now find out the one to replace it with
         Picker<Double> filler = new Picker<>(Picker.MAX_FIRST);
         for (Double key : convNTuple.sampleDis.statMap.keySet()) {
@@ -120,7 +124,8 @@ public class ConvMutator implements Mutator {
             double q = qDis.getProb(key);
 
             
-            double fillScore = p/(q+1) + noiseLevel * random.nextDouble();
+            double fillScore = p * Math.log(p/q) + noiseLevel * random.nextDouble();
+            fillScore = random.nextDouble();
             filler.add(fillScore , key);
 
             // System.out.format("\t %.4f\t %.4f\t %.4f\t %s\n", p, q, fillScore, Arrays.toString(convNTuple.sampleDis.valueArrays.get(key)));
@@ -139,9 +144,11 @@ public class ConvMutator implements Mutator {
         int[] values = convNTuple.sampleDis.valueArrays.get(fillKey);
 
 
-        System.out.println("Old values: " + Arrays.toString(oldValues));
-        System.out.format("Picked replacement values: %s : %.4f\n", Arrays.toString(values), filler.getBestScore());
-        System.out.println();
+        if (verbose) {
+            System.out.println("Old values: " + Arrays.toString(oldValues));
+            System.out.format("Picked replacement values: %s : %.4f\n", Arrays.toString(values), filler.getBestScore());
+            System.out.println();
+        }
 
         // now go ahead and copy the values in
 
@@ -156,8 +163,9 @@ public class ConvMutator implements Mutator {
 //            y[i] = 2;
 //        }
 
-        System.out.format("Fitness changed from %.3f to %.3f\n\n", convNTuple.getKLDivergence(x, 0), convNTuple.getKLDivergence(y, 0));
-
+        if (verbose) {
+            System.out.format("Fitness changed from %.3f to %.3f\n\n", convNTuple.getKLDivergence(x, 0), convNTuple.getKLDivergence(y, 0));
+        }
         return y;
 
     }

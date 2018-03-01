@@ -27,7 +27,7 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 30, imageHeight = 16;
-    static int filterWidth = 3, filterHeight = 3;
+    static int filterWidth = 7, filterHeight = 7;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
@@ -52,7 +52,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 500;
+        int nEvals = 50000;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
@@ -303,7 +303,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     // without slowing down the evolution too much
 
     // a figure of 5,000 may be reasonable
-    static int freq = 500;
+    static int freq = 1000;
     LevelView levelView;
     JEasyFrame levelFrame;
 
