@@ -34,7 +34,7 @@ public class SparseDistribution {
     }
 
 
-    double epsilon = 1e-3;
+    double epsilon = 1e-1;
 
     public HashMap<Double, StatSummary> statMap;
     public HashMap<Double, int[]> valueArrays;

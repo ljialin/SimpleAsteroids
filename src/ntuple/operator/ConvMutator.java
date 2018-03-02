@@ -36,7 +36,7 @@ import java.util.Random;
 public class ConvMutator implements Mutator {
 
     static Random random = new Random();
-    static double noiseLevel = 1e-1;
+    static double noiseLevel = 1e-0;
 
     ConvNTuple convNTuple;
 
@@ -90,12 +90,13 @@ public class ConvMutator implements Mutator {
             // was not likely in the sample
             // add some random noise to make it give varied results even when the
             // image is all sky, for example
+
             double misfitScore = q * Math.log(q/p) + noiseLevel * random.nextDouble();
 
             // don't know why this should be inverted
             // misfitScore = 1 / misfitScore;
 
-            misfitScore = random.nextDouble();
+            // misfitScore = random.nextDouble();
 
             // System.out.format("\t %.4f\t %.4f\t %.4f\t %s\n", p, q, misfitScore, Arrays.toString(a));
 
@@ -119,7 +120,12 @@ public class ConvMutator implements Mutator {
 
             System.out.println("Searching for replacement values");
         }
+
+
+
         // now find out the one to replace it with
+
+
         Picker<Double> filler = new Picker<>(Picker.MAX_FIRST);
         for (Double key : convNTuple.sampleDis.statMap.keySet()) {
             double p = convNTuple.sampleDis.getProb(key);
@@ -129,7 +135,7 @@ public class ConvMutator implements Mutator {
             double fillScore = p * Math.log(p/q) + noiseLevel * random.nextDouble();
 
 
-            fillScore = random.nextDouble();
+            // fillScore = random.nextDouble();
             filler.add(fillScore , key);
 
             // System.out.format("\t %.4f\t %.4f\t %.4f\t %s\n", p, q, fillScore, Arrays.toString(convNTuple.sampleDis.valueArrays.get(key)));
