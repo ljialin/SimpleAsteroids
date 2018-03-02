@@ -6,7 +6,9 @@ import com.google.gson.stream.JsonWriter;
 import ntuple.LevelView;
 import utilities.JEasyFrame;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -36,6 +38,11 @@ public class MarioReader {
 
     public static HashMap<Integer, Color> tileColors = new HashMap();
 
+    public static HashMap<Integer,BufferedImage> icons = new HashMap();
+    static {
+        readIcons();
+    }
+
     public static int border = 11;
     static {
         tileColors.put(0, Color.darkGray);
@@ -56,9 +63,27 @@ public class MarioReader {
 
     public static void main(String[] args) throws Exception {
 
-        showLevels();
+        // showLevels();
 
         // createLevels();
+
+        System.out.println("Icons: " + icons);
+
+    }
+
+    public static void readIcons() {
+
+        for (int i=0; i<=10; i++) {
+            try {
+                String filename = String.format("sprites/mario/encoding_%d.png", i);
+                // System.out.println("Reading: " + filename);
+                BufferedImage img = ImageIO.read(new File(filename));
+                icons.put(i, img);
+            } catch (Exception ex) {
+
+                // System.out.println(ex);
+            }
+        }
 
     }
 

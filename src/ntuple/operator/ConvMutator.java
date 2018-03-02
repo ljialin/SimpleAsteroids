@@ -3,6 +3,7 @@ package ntuple.operator;
 import evodef.DefaultMutator;
 import evodef.Mutator;
 import evodef.SearchSpace;
+import levelgen.MarioReader;
 import ntuple.ConvNTuple;
 import ntuple.SparseDistribution;
 import utilities.Picker;
@@ -38,10 +39,18 @@ public class ConvMutator implements Mutator {
     static Random random = new Random();
     static double noiseLevel = 1e-0;
 
+    boolean forceBorder = true;
+    static int borderValue = MarioReader.border;
+
     ConvNTuple convNTuple;
 
     public ConvMutator setConvNTuple(ConvNTuple convNTuple) {
         this.convNTuple = convNTuple;
+        return this;
+    }
+
+    public ConvMutator setForceBorder(boolean forceBorder) {
+        this.forceBorder = forceBorder;
         return this;
     }
 
@@ -166,6 +175,10 @@ public class ConvMutator implements Mutator {
             y[replacementIndices[i]] = values[i];
         }
 
+        if (forceBorder) {
+            writeBorder(y);
+        }
+
 
 
         // trying to fix bug: see effect of setting everything to sky
@@ -178,6 +191,15 @@ public class ConvMutator implements Mutator {
         }
         return y;
 
+    }
+
+    public void writeBorder(int[] y) {
+        int w = convNTuple.imageWidth, h = convNTuple.imageHeight;
+        for (int i=0; i<y.length; i++) {
+            if (i % w == 0 || i % w == (w-1) || i / w == 0 || i / w == (h-1)) {
+                y[i] = borderValue;
+            }
+        }
     }
 
     @Override

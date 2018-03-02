@@ -108,9 +108,9 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
     // self explanatory variables
-    int imageWidth, imageHeight;
+    public int imageWidth, imageHeight;
 
-    int filterWidth, filterHeight;
+    public int filterWidth, filterHeight;
 
     // vecLength should be equal to imageWidth * imageHeight
     // images will often be passed as 1-d vectors, which is faster

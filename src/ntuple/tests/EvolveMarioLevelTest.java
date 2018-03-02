@@ -27,7 +27,7 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 40, imageHeight = 16;
-    static int filterWidth = 5, filterHeight = 5;
+    static int filterWidth = 6, filterHeight = 16;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
@@ -52,7 +52,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 50000;
+        int nEvals = 10000;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
@@ -140,11 +140,15 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         }
         SolutionEvaluator evaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
 
-        double fitnessFull = evaluator.evaluate(flatten(sample));
-        String labelFull = String.format("Sample Fitness: %.6f", fitnessFull);
+
+        SolutionEvaluator trainingEvaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
+
+
+        double fitnessFull = trainingEvaluator.evaluate(flatten(sample));
+        String labelFull = String.format("Full Width Training Sample: %.6f", fitnessFull);
 
         LevelView.showMaze(flatten(sample), sample.length, sample[0].length, labelFull, tileColors);
-        showSamples(sample, evaluator);
+        showSamples(sample, trainingEvaluator);
 
         evaluator.logger().setListener(this);
         int[] solution = ea.runTrial(evaluator, nEvals);
@@ -173,7 +177,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         for (int x=0; x<sample.length - imageWidth; x+=gap) {
             int[] sub = flatten(subSample(sample, x, 0, imageWidth, imageHeight));
             double fitness = solutionEvaluator.evaluate(sub);
-            String label = String.format("Fitness: %.6f", fitness);
+            String label = String.format("Sample Slice Fitness: %.6f", fitness);
             LevelView.showMaze(sub, imageWidth, imageHeight, label, tileColors);
         }
 
