@@ -62,6 +62,7 @@ public class ConvMutator implements Mutator {
         // we alerady have the p distribution
 
         // also need the q distribution to see which ones differ the most
+        // this is the distribution of keys in the evolved image
 
         SparseDistribution qDis = new SparseDistribution();
         for (int[] index : convNTuple.indices) {
@@ -69,6 +70,7 @@ public class ConvMutator implements Mutator {
             qDis.add(key);
         }
 
+        // create a picker object to find the best one
         Picker<int[]> toReplace = new Picker<>(Picker.MAX_FIRST);
 
         if (verbose) {
@@ -125,6 +127,8 @@ public class ConvMutator implements Mutator {
 
             
             double fillScore = p * Math.log(p/q) + noiseLevel * random.nextDouble();
+
+
             fillScore = random.nextDouble();
             filler.add(fillScore , key);
 

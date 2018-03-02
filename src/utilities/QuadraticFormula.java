@@ -8,7 +8,10 @@ public class QuadraticFormula {
     public static void main(String[] args) {
 
         // QuadraticFormula qf = new QuadraticFormula(1, -5, 1);
-        QuadraticFormula qf = new QuadraticFormula(-3, 12, -11);
+        // QuadraticFormula qf = new QuadraticFormula(-3, 12, -11);
+        QuadraticFormula qf = new QuadraticFormula(3, -52, 160);
+
+
 
         System.out.println(qf.root1());
         System.out.println(qf.root2());
