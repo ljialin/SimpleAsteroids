@@ -6,8 +6,6 @@ import java.util.HashMap;
 
 public class SparseDistribution {
 
-
-
     public static void main(String[] args) {
 
         SparseDistribution p = new SparseDistribution();

@@ -17,6 +17,8 @@ public class KLDivergenceTest {
         double[] pa = {0.0, 0.29, 0.71};
         double[] qa = {0.1, 0.30, 0.60};
 
+        epsilon = 1e-10;
+
         double pq = div(pa, qa);
         double qp = div(qa, pa);
         System.out.println();
@@ -41,6 +43,7 @@ public class KLDivergenceTest {
     static double epsilon = 1e-20;
 
     static double div (double p, double q) {
+        if (p == 0) return 0;
         double kl = p * Math.log((p+epsilon)/(q + epsilon));
         return kl;
     }
