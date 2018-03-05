@@ -63,7 +63,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     }
 
     public static int[][] getAndShowLevel(boolean show) throws Exception {
-        String inputFile = "data/mario/levels/mario-3-1.txt";
+        String inputFile = "data/mario/levels/mario-2-1.txt";
 
         System.out.println("Reading: " + inputFile);
         int[][] level = flip(readLevel(new Scanner(new FileInputStream(inputFile))));
@@ -129,6 +129,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     public double runTrial(SimpleRMHC ea, int nEvals, int[][] sample) {
         int nDims = imageWidth * imageHeight;
         int mValues = distinctValues(sample);
+        System.out.println("Distinct values = " + mValues);
         ConvNTuple convNTuple = getTrainedConvNTuple(sample, mValues);
         System.out.println("nSamples: " + convNTuple.nSamples());
 

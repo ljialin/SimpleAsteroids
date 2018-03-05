@@ -2,6 +2,7 @@ package ntuple;
 
 import utilities.StatSummary;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class SparseDistribution {
@@ -31,8 +32,7 @@ public class SparseDistribution {
 
     }
 
-
-    double epsilon = 1e-3;
+    double epsilon = 1e-1;
 
     public HashMap<Double, StatSummary> statMap;
     public HashMap<Double, int[]> valueArrays;
@@ -60,6 +60,14 @@ public class SparseDistribution {
     }
 
     public SparseDistribution addValueArray(double x, int[] a) {
+        // check that we're doing this correctly i.e. be alert
+        // for any collisions
+        int[] b = valueArrays.get(x);
+        if (b != null && !Arrays.equals(a, b)) {
+            System.out.println("Collision between: ");
+            System.out.println(Arrays.toString(a));
+            System.out.println(Arrays.toString(b));
+        }
         valueArrays.put(x, a);
         return this;
     }

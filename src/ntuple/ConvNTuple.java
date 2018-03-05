@@ -191,6 +191,12 @@ public class ConvNTuple implements BanditLandscapeModel {
         return addr;
     }
 
+//    public String toString(int[] image, int[] index) {
+//        char[] chars = new char[index.length];
+//
+//
+//    }
+
     public ArrayList<int[]> indices;
 
     // todo: add a filter gap parameter as well to allow

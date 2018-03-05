@@ -60,6 +60,8 @@ public class ConvMutator implements Mutator {
     public int[] randMut(int[] x) {
         int[] y = new int[x.length];
 
+        writeBorder(x);
+        // forceBorder(y);
         // copy the solution
         for (int i=0; i<x.length; i++) {
             y[i] = x[i];
@@ -82,7 +84,19 @@ public class ConvMutator implements Mutator {
                 nExist++;
             }
         }
-        System.out.format("%d / % d\n", nExist, convNTuple.indices.size());
+
+        int[] leftTiles = convNTuple.indices.get(0);
+        System.out.println(Arrays.toString(leftTiles));
+
+        int[] v1 = sampleValues(x, leftTiles);
+        double leftKey = convNTuple.address(x, leftTiles);
+        int[] v2 = convNTuple.sampleDis.valueArrays.get(leftKey);
+
+        System.out.println("Evolved: " + Arrays.toString(v1));
+        System.out.println("Stored:  " + Arrays.toString(v2));
+        System.out.println("Key:     " + leftKey);
+        System.out.format("%d / % d (available: %d) \n ", nExist, convNTuple.indices.size(), convNTuple.sampleDis.statMap.size() );
+        System.out.println();
 
         // create a picker object to find the best one
         Picker<int[]> toReplace = new Picker<>(Picker.MAX_FIRST);
@@ -181,6 +195,7 @@ public class ConvMutator implements Mutator {
         }
 
         if (forceBorder) {
+            // System.out.println("Forcing border");
             writeBorder(y);
         }
 
@@ -196,6 +211,13 @@ public class ConvMutator implements Mutator {
         }
         return y;
 
+    }
+
+    int[] sampleValues(int[] x, int[] ix) {
+        int[] v = new int[ix.length];
+        for (int i=0; i<ix.length; i++)
+            v[i] = x[ix[i]];
+        return v;
     }
 
     public void writeBorder(int[] y) {
