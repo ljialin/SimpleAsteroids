@@ -129,6 +129,7 @@ public class LevelView extends JComponent {
                         g.setColor(Color.white);
                     }
                 } else {
+                    // System.out.println(tiles[x][y]);
                     g.setColor(colors[tiles[x][y]]);
                 }
                 if (!foundIcon) {

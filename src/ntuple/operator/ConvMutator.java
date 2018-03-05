@@ -5,6 +5,8 @@ import evodef.Mutator;
 import evodef.SearchSpace;
 import levelgen.MarioReader;
 import ntuple.ConvNTuple;
+import ntuple.Pattern;
+import ntuple.PatternDistribution;
 import ntuple.SparseDistribution;
 import utilities.Picker;
 
@@ -39,7 +41,7 @@ public class ConvMutator implements Mutator {
     static Random random = new Random();
     static double noiseLevel = 1e-1;
 
-    boolean forceBorder = true;
+    boolean forceBorder = false;
     static int borderValue = MarioReader.border;
 
     ConvNTuple convNTuple;
@@ -60,7 +62,7 @@ public class ConvMutator implements Mutator {
     public int[] randMut(int[] x) {
         int[] y = new int[x.length];
 
-        writeBorder(x);
+        // writeBorder(x);
         // forceBorder(y);
         // copy the solution
         for (int i=0; i<x.length; i++) {
@@ -75,10 +77,10 @@ public class ConvMutator implements Mutator {
         // also need the q distribution to see which ones differ the most
         // this is the distribution of keys in the evolved image
 
-        SparseDistribution qDis = new SparseDistribution();
+        PatternDistribution qDis = new PatternDistribution();
         int nExist = 0;
         for (int[] index : convNTuple.indices) {
-            double key = convNTuple.address(x, index);
+            Pattern key = new Pattern().setPattern(x, index);
             qDis.add(key);
             if (convNTuple.sampleDis.statMap.containsKey(key)) {
                 nExist++;
@@ -86,17 +88,17 @@ public class ConvMutator implements Mutator {
         }
 
         int[] leftTiles = convNTuple.indices.get(0);
-        System.out.println(Arrays.toString(leftTiles));
+        // System.out.println(Arrays.toString(leftTiles));
 
-        int[] v1 = sampleValues(x, leftTiles);
-        double leftKey = convNTuple.address(x, leftTiles);
-        int[] v2 = convNTuple.sampleDis.valueArrays.get(leftKey);
-
-        System.out.println("Evolved: " + Arrays.toString(v1));
-        System.out.println("Stored:  " + Arrays.toString(v2));
-        System.out.println("Key:     " + leftKey);
+//        int[] v1 = sampleValues(x, leftTiles);
+//        double leftKey = convNTuple.address(x, leftTiles);
+//        int[] v2 = convNTuple.sampleDis.valueArrays.get(leftKey);
+//
+//        System.out.println("Evolved: " + Arrays.toString(v1));
+//        System.out.println("Stored:  " + Arrays.toString(v2));
+//        System.out.println("Key:     " + leftKey);
         System.out.format("%d / % d (available: %d) \n ", nExist, convNTuple.indices.size(), convNTuple.sampleDis.statMap.size() );
-        System.out.println();
+//        System.out.println();
 
         // create a picker object to find the best one
         Picker<int[]> toReplace = new Picker<>(Picker.MAX_FIRST);
@@ -105,8 +107,8 @@ public class ConvMutator implements Mutator {
             System.out.println("Searching for replacement indices:");
         }
 
-        for (int[] a : convNTuple.indices) {
-            double key = convNTuple.address(x, a);
+        for (int[] index : convNTuple.indices) {
+            Pattern key = new Pattern().setPattern(x, index);
 
             // the key thing now is to pick the one that is most replaceable
             // for each key find the degree of mismatch
@@ -124,11 +126,11 @@ public class ConvMutator implements Mutator {
             // don't know why this should be inverted
             // misfitScore = 1 / misfitScore;
 
-            // misfitScore = random.nextDouble();
+            misfitScore = random.nextDouble();
 
             // System.out.format("\t %.4f\t %.4f\t %.4f\t %s\n", p, q, misfitScore, Arrays.toString(a));
 
-            toReplace.add(misfitScore, a);
+            toReplace.add(misfitScore, index);
             // we are looking for keys that are over-represented in the image x
             // this could mean that it never occurs in the sampleDis
             // or just that it occurs less frequently
@@ -154,8 +156,8 @@ public class ConvMutator implements Mutator {
         // now find out the one to replace it with
 
 
-        Picker<Double> filler = new Picker<>(Picker.MAX_FIRST);
-        for (Double key : convNTuple.sampleDis.statMap.keySet()) {
+        Picker<Pattern> filler = new Picker<>(Picker.MAX_FIRST);
+        for (Pattern key : convNTuple.sampleDis.statMap.keySet()) {
             double p = convNTuple.sampleDis.getProb(key);
             double q = qDis.getProb(key);
 
@@ -163,7 +165,7 @@ public class ConvMutator implements Mutator {
             double fillScore = p * Math.log(p/q) + noiseLevel * random.nextDouble();
 
 
-            // fillScore = random.nextDouble();
+            fillScore = random.nextDouble();
             filler.add(fillScore , key);
 
             // System.out.format("\t %.4f\t %.4f\t %.4f\t %s\n", p, q, fillScore, Arrays.toString(convNTuple.sampleDis.valueArrays.get(key)));
@@ -178,8 +180,8 @@ public class ConvMutator implements Mutator {
         }
 
         // we now have the one to modify
-        Double fillKey = filler.getBest();
-        int[] values = convNTuple.sampleDis.valueArrays.get(fillKey);
+        Pattern fillKey = filler.getBest();
+        int[] values = fillKey.v;
 
 
         if (verbose) {

@@ -123,7 +123,7 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     // HashMap<Double, StatSummary> ntMap;
 
-    public SparseDistribution sampleDis;
+    public PatternDistribution sampleDis;
 
     // store every solution ever sampled, ready to return the best one when ready
     // since the fitness estimate is always being updated, best to do all these at the end
@@ -140,7 +140,7 @@ public class ConvNTuple implements BanditLandscapeModel {
         // avoid taking log of zero
         nSamples = 1;
         // ntMap = new HashMap<>();
-        sampleDis = new SparseDistribution();
+        sampleDis = new PatternDistribution();
         solutions = new ArrayList<>();
         picker = new Picker<>();
         return this;
@@ -282,17 +282,16 @@ public class ConvNTuple implements BanditLandscapeModel {
 
         // System.out.println(" ADDING A POINT !!!!!!!!!!!!!!!!!!!!!!");
         for (int[] index : indices) {
-            double address = address(p, index);
-            sampleDis.add(address);
-//            StatSummary ss = getStatsForceCreate(address);
-//            ss.add(value);
+            // double address = address(p, index);
+            Pattern pattern = new Pattern().setPattern(p, index);
+            sampleDis.add(pattern);
         }
         solutions.add(p);
         picker.add(value, p);
         nSamples++;
-        if (storeIndexArrays) {
-            addIndexArrays(p);
-        }
+//        if (storeIndexArrays) {
+//            addIndexArrays(p);
+//        }
         // return this;
     }
 
@@ -305,7 +304,7 @@ public class ConvNTuple implements BanditLandscapeModel {
             for (int i=0; i<index.length; i++) {
                 values[i] = p[index[i]];
             }
-            sampleDis.addValueArray(address(p, index), values);
+            // sampleDis.addValueArray(address(p, index), values);
         }
     }
 
@@ -401,12 +400,13 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     public double getKLDivergence(int[] x, double epsilon) {
         // create a new SampleDis for this image
-        SparseDistribution qDis = new SparseDistribution();
+        PatternDistribution qDis = new PatternDistribution();
         for (int[] index : indices) {
-            double address = address(x, index);
-            qDis.add(address);
+            // double address = address(x, index);
+            Pattern pattern = new Pattern().setPattern(x, index);
+            qDis.add(pattern);
         }
-        return SparseDistribution.klDivSymmetric(sampleDis, qDis);
+        return PatternDistribution.klDivSymmetric(sampleDis, qDis);
     }
 
 //    public double getKLDivergence(int[] x, double epsilon) {

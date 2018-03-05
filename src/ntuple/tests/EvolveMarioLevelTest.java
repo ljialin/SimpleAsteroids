@@ -26,8 +26,8 @@ import static levelgen.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 40, imageHeight = 16;
-    static int filterWidth = 3, filterHeight = 3;
+    static int imageWidth = 50, imageHeight = 16;
+    static int filterWidth = 4, filterHeight = 16;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
@@ -42,7 +42,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 1;
+        mutator.pointProb = 2;
 
         mutator.setSwap(true);
 
@@ -52,7 +52,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 2000;
+        int nEvals = 10000;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
@@ -60,6 +60,52 @@ public class EvolveMarioLevelTest implements EvolutionListener {
             results.add(evolver.runTrial(simpleRMHC, nEvals, level));
             System.out.println(timer);
         }
+    }
+
+    // this should really take any type of EA, but at the moment it
+    // is restricted to the SimpleRMHC to allow a bespoke mutation operator
+    // to be plugged in
+    public double runTrial(SimpleRMHC ea, int nEvals, int[][] sample) {
+        int nDims = imageWidth * imageHeight;
+        int mValues = distinctValues(sample);
+        System.out.println("Distinct values = " + mValues);
+        ConvNTuple convNTuple = getTrainedConvNTuple(sample, mValues);
+        System.out.println("nSamples: " + convNTuple.nSamples());
+
+        // set the "clever" mutation operator
+        ea.setMutator(new ConvMutator().setConvNTuple(convNTuple).setForceBorder(true));
+
+        if (useInitialSeed) {
+            ea.setInitialSeed(generateSeed(sample));
+        }
+        SolutionEvaluator evaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
+
+
+        SolutionEvaluator trainingEvaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
+
+
+        double fitnessFull = trainingEvaluator.evaluate(flatten(sample));
+        String labelFull = String.format("Full Width Training Sample: %.6f", fitnessFull);
+
+        LevelView.showMaze(flatten(sample), sample.length, sample[0].length, labelFull, tileColors);
+        showSamples(sample, trainingEvaluator);
+
+        evaluator.logger().setListener(this);
+        int[] solution = ea.runTrial(evaluator, nEvals);
+
+        // can set entire solution to the most likely individual
+        // solution = setAll(solution, 2);
+
+        double fitness = evaluator.evaluate(solution);
+        String label = String.format("Fitness: %.6f", fitness);
+
+        // solution = flatten(toRect())
+        plotData(evaluator.logger().fa);
+        LevelView.showMaze(solution, imageWidth, imageHeight, label, tileColors);
+
+        // showSamples(sample, evaluator);
+
+        return fitness;
     }
 
     public static int[][] getAndShowLevel(boolean show) throws Exception {
@@ -121,52 +167,6 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         for (int[] a : level) {
             System.out.println(Arrays.toString(a));
         }
-    }
-
-    // this should really take any type of EA, but at the moment it
-    // is restricted to the SimpleRMHC to allow a bespoke mutation operator
-    // to be plugged in
-    public double runTrial(SimpleRMHC ea, int nEvals, int[][] sample) {
-        int nDims = imageWidth * imageHeight;
-        int mValues = distinctValues(sample);
-        System.out.println("Distinct values = " + mValues);
-        ConvNTuple convNTuple = getTrainedConvNTuple(sample, mValues);
-        System.out.println("nSamples: " + convNTuple.nSamples());
-
-        // set the "clever" mutation operator
-        ea.setMutator(new ConvMutator().setConvNTuple(convNTuple));
-
-        if (useInitialSeed) {
-            ea.setInitialSeed(generateSeed(sample));
-        }
-        SolutionEvaluator evaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
-
-
-        SolutionEvaluator trainingEvaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
-
-
-        double fitnessFull = trainingEvaluator.evaluate(flatten(sample));
-        String labelFull = String.format("Full Width Training Sample: %.6f", fitnessFull);
-
-        LevelView.showMaze(flatten(sample), sample.length, sample[0].length, labelFull, tileColors);
-        showSamples(sample, trainingEvaluator);
-
-        evaluator.logger().setListener(this);
-        int[] solution = ea.runTrial(evaluator, nEvals);
-
-        // can set entire solution to the most likely individual
-        // solution = setAll(solution, 2);
-
-        double fitness = evaluator.evaluate(solution);
-        String label = String.format("Fitness: %.6f", fitness);
-
-        // solution = flatten(toRect())
-        plotData(evaluator.logger().fa);
-        LevelView.showMaze(solution, imageWidth, imageHeight, label, tileColors);
-
-        // showSamples(sample, evaluator);
-
-        return fitness;
     }
 
     private void showSamples(int[][] sample, SolutionEvaluator solutionEvaluator) {

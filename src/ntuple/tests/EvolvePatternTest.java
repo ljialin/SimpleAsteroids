@@ -7,6 +7,7 @@ import ntuple.CompactSlidingGA;
 import ntuple.ConvNTuple;
 import ntuple.LevelView;
 import ntuple.SlidingMeanEDA;
+import ntuple.operator.ConvMutator;
 import plot.LineChart;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
@@ -21,10 +22,11 @@ public class EvolvePatternTest {
     public static void main(String[] args) {
 
         int nTrials = 1;
-        EvoAlg evoAlg = new SimpleRMHC();
+        SimpleRMHC evoAlg = new SimpleRMHC();
+        evoAlg.setMutator(new ConvMutator());
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
-        int nEvals = 100000;
+        int nEvals = 50000;
         StatSummary results = new StatSummary();
         EvolvePatternTest ept = new EvolvePatternTest();
         for (int i=0; i<nTrials; i++) {
@@ -36,14 +38,17 @@ public class EvolvePatternTest {
         }
     }
 
-    public double runTrial(EvoAlg ea, int nEvals) {
+    public double runTrial(SimpleRMHC ea, int nEvals) {
         ConvNTuple convNTuple = getTrainedConvNTuple();
+        ea.setMutator(new ConvMutator().setConvNTuple(convNTuple));
         int nDims = imageWidth * imageHeight;
         int mValues = 3;
         SolutionEvaluator evaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
         int[] solution = ea.runTrial(evaluator, nEvals);
         double fitness = evaluator.evaluate(solution);
         String label = String.format("Fitness: %.6f", fitness);
+        System.out.println(label);
+        System.out.println(Arrays.toString(solution));
         LevelView.showMaze(solution, imageWidth, imageHeight, label);
         new JEasyFrame(LineChart.easyPlot(evaluator.logger().fa), "Evolution of Fitness");
         return fitness;
