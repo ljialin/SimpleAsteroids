@@ -37,7 +37,7 @@ import java.util.Random;
 public class ConvMutator implements Mutator {
 
     static Random random = new Random();
-    static double noiseLevel = 1e-0;
+    static double noiseLevel = 1e-1;
 
     boolean forceBorder = true;
     static int borderValue = MarioReader.border;
@@ -74,10 +74,15 @@ public class ConvMutator implements Mutator {
         // this is the distribution of keys in the evolved image
 
         SparseDistribution qDis = new SparseDistribution();
+        int nExist = 0;
         for (int[] index : convNTuple.indices) {
             double key = convNTuple.address(x, index);
             qDis.add(key);
+            if (convNTuple.sampleDis.statMap.containsKey(key)) {
+                nExist++;
+            }
         }
+        System.out.format("%d / % d\n", nExist, convNTuple.indices.size());
 
         // create a picker object to find the best one
         Picker<int[]> toReplace = new Picker<>(Picker.MAX_FIRST);
