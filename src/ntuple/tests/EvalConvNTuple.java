@@ -48,6 +48,7 @@ public class EvalConvNTuple implements SolutionEvaluator, SearchSpace, FitnessSp
         boolean isOptimal = fitness == 0;
         logger.log(fitness, x, isOptimal);
         return fitness + noiseLevel * random.nextGaussian();
+        // return Math.random();
     }
 
     @Override

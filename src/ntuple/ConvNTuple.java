@@ -406,6 +406,7 @@ public class ConvNTuple implements BanditLandscapeModel {
             Pattern pattern = new Pattern().setPattern(x, index);
             qDis.add(pattern);
         }
+        // return Math.random();
         return PatternDistribution.klDivSymmetric(sampleDis, qDis);
     }
 
