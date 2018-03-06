@@ -39,7 +39,7 @@ public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
     int[] seqLength = {5, 10, 15, 20, 25, 30};
 
 
-    public static int tickBudget = 2000;
+    public static int tickBudget = 400;
 
     int[] nValues = new int[]{pointMutationRate.length, flipAtLeastOneBit.length,
             useShiftBuffer.length, nResamples.length, seqLength.length};
@@ -91,7 +91,7 @@ public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
         return nValues[i];
     }
 
-    int innerEvals = 2000;
+    // int innerEvals = 2000;
 
     // int nEvals = 0;
     @Override

@@ -135,7 +135,7 @@ public class NTuple {
                     int[] ind = getIndices(i);
                     System.out.println(Arrays.toString(ind));
                     System.out.println(paramString(params, ind));
-                    System.out.format("%d\t %.2f\t %d\n", i, ss.mean(), ss.n());
+                    System.out.format("%d\t %.2f\t %.3f\t %d\n", i, ss.mean(), ss.stdErr(), ss.n());
                     System.out.println();
                 }
             }

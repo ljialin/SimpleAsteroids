@@ -5,7 +5,7 @@ import utilities.StatSummary;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Pattern {
+public class Pattern implements Comparable<Pattern> {
 
     public static void main(String[] args) {
         int[] x = {0, 1, 2, 3, 3};
@@ -56,9 +56,8 @@ public class Pattern {
         }
     }
 
-    public int compareTo(Object pattern) {
+    public int compareTo(Pattern p) {
         try {
-            Pattern p = (Pattern) pattern;
             // now iterate over all the values
             for (int i=0; i<v.length; i++) {
                 if (v[i] > p.v[i]) {

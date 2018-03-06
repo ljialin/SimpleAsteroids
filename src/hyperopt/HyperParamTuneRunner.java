@@ -157,6 +157,7 @@ public class HyperParamTuneRunner {
         return match.mean();
     }
 
+    int[] solution;
     public double runTrial(EvoAlg evoAlg, AnnotatedFitnessSpace eval) {
 
         // NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
@@ -166,7 +167,7 @@ public class HyperParamTuneRunner {
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
 
         eval.reset();
-        int[] solution = evoAlg.runTrial(eval, nEvals);
+        solution = evoAlg.runTrial(eval, nEvals);
 
         plotConvergence(eval.logger(), solution);
         System.out.println("Checking fitness");

@@ -57,6 +57,9 @@ public class GameState implements AbstractGameState{
 
     public static int nActions = 5;
 
+    public static boolean includeBuffersInScore = true;
+
+
     int nTicks;
 
     // todo: check that the copy function works properly ...
@@ -269,7 +272,6 @@ public class GameState implements AbstractGameState{
     public static boolean invadeAll = true;
     public static boolean remove50perCent = true;
 
-    public static boolean includeBuffersInScore = true;
 
     @Override
     public double getScore() {

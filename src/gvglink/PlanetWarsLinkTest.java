@@ -29,7 +29,9 @@ public class PlanetWarsLinkTest {
     public static void main(String[] args) throws Exception {
 
         PlanetWarsLinkState state = new PlanetWarsLinkState();
+        // state.state.
 
+        state.state.includeBuffersInScore = false;
         PlanetWarView view = null;
         view = new PlanetWarView(state.state);
         JEasyFrame frame = new JEasyFrame(view, "Test View");
@@ -83,7 +85,7 @@ public class PlanetWarsLinkTest {
 
         // player1 =
         int thinkingTime = 5; // in milliseconds
-        int delay = 1000;
+        int delay = 200;
 
         // player = new controllers.singlePlayer.sampleRandom.Agent(stateObs, timer);
 
