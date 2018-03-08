@@ -58,6 +58,11 @@ public class GameState implements AbstractGameState{
     public static int nActions = 5;
 
     public static boolean includeBuffersInScore = true;
+    public static boolean wrapAround = true;
+    public static boolean invadeAll = true;
+    public static boolean remove50perCent = true;
+
+
 
 
     int nTicks;
@@ -217,14 +222,27 @@ public class GameState implements AbstractGameState{
         return this;
     }
 
+    int limit(int x) {
+        if (x < 0) return 0;
+        if (x > nPlanets-1) x = nPlanets-1;
+        return x;
+    }
+
     public GameState next(int action, int playerId) {
         switch (action) {
             case incFocus: {
-                focii[playerId] = (focii[playerId] + 1) % nPlanets;
+                focii[playerId] = focii[playerId] + 1;
+                if (wrapAround) focii[playerId] %= nPlanets;
+                else focii[playerId] = limit(focii[playerId]);
                 break;
             }
             case decFocus: {
-                focii[playerId] = (focii[playerId] - 1 + nPlanets) % nPlanets;
+                focii[playerId] = focii[playerId] - 1;
+                if (wrapAround) {
+                     focii[playerId] = (focii[playerId] + nPlanets) % nPlanets;
+                } else {
+                    focii[playerId] = limit((focii[playerId]));
+                }
                 break;
             }
             case incBuffer: {
@@ -268,9 +286,6 @@ public class GameState implements AbstractGameState{
         }
         return this;
     }
-
-    public static boolean invadeAll = true;
-    public static boolean remove50perCent = true;
 
 
     @Override
