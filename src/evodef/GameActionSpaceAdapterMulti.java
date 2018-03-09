@@ -140,19 +140,25 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
         LinePlot linePlot = null;
         if (visual) {
             if (lineChart == null) {
-                lineChart = new LineChart().setBG(Color.blue);
+                lineChart = new LineChart().setBG(Color.gray);
                 lineChart.xAxis = new LineChartAxis(new double[]{0, sequenceLength/2, sequenceLength});
                 lineChart.yAxis = new LineChartAxis(new double[]{-50, -25, 0, 25, 50});
-                lineChart.plotBG = Color.blue;
-                frame = new JEasyFrame(lineChart, "Fitness versus depth");
+                lineChart.plotBG = Color.white;
+                lineChart.setYLabel("Score");
+                lineChart.setXLabel("Rollout depth");
+                frame = new JEasyFrame(lineChart, "Score versus depth");
             }
-            float grey = (nEvals % 100) / 100.0f;
-            linePlot = new LinePlot().setColor(new Color(grey, grey, grey));
+            float grey = (nEvals % 100) / 150.0f;
+            // add in a zero for the first element of the plot, since there
+            // will be zero difference before any action has been taken
+            linePlot = new LinePlot().setColor(new Color(grey, grey, grey)).add(0);
             // linePlot = new LinePlot().setColor(Color.red);
 
         }
 
 
+        // add this in for the plot
+        // deltas.add(0);
         for (int i=0; i<actions.length; i++) {
 
             // Note here that we need to look at the advance method which takes multiple players

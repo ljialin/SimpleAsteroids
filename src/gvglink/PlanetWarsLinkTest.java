@@ -31,12 +31,12 @@ public class PlanetWarsLinkTest {
         PlanetWarsLinkState state = new PlanetWarsLinkState();
         // state.state.
 
-        state.state.includeBuffersInScore = false;
+        state.state.includeBuffersInScore = true;
 
 
         PlanetWarView view = null;
         view = new PlanetWarView(state.state);
-        JEasyFrame frame = new JEasyFrame(view, "Test View");
+        JEasyFrame frame = new JEasyFrame(view, "Simple Planet Wars");
 //        KeyController controller = new KeyController();
 //        frame.addKeyListener(controller);
 
@@ -46,6 +46,7 @@ public class PlanetWarsLinkTest {
 
         AbstractMultiPlayer player1, player2;
         GameActionSpaceAdapterMulti.visual = true;
+
         // DefaultMutator.totalRandomChaosMutation = true;
 
 //        controllers.singlePlayer.sampleOLMCTS.Agent olmcts =
@@ -56,8 +57,8 @@ public class PlanetWarsLinkTest {
 
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
 
-        // player2 = new controllers.multiPlayer.discountOLMCTS.Agent(state.copy(), timer, idPlayer2);
-        player2 = new controllers.multiPlayer.sampleOLMCTS.Agent(state.copy(), timer, idPlayer2);
+        player2 = new controllers.multiPlayer.discountOLMCTS.Agent(state.copy(), timer, idPlayer2);
+        // player2 = new controllers.multiPlayer.sampleOLMCTS.Agent(state.copy(), timer, idPlayer2);
 
         // try the evolutionary players
 
@@ -77,7 +78,7 @@ public class PlanetWarsLinkTest {
         // player2 = new controllers.multiPlayer.ea.Agent(linkState, timer, new SimpleRMHC(nResamples), idPlayer2, nEvals);
 
         // player1 = new controllers.multiPlayer.smlrand.Agent();
-        player2 = new controllers.multiPlayer.smlrand.Agent();
+        // player2 = new controllers.multiPlayer.smlrand.Agent();
         // player2 = new controllers.multiPlayer.doNothing.Agent(state, timer, 1);
 
         // EvoAlg evoAlg2 = new SimpleRMHC(2);
@@ -116,7 +117,10 @@ public class PlanetWarsLinkTest {
             // System.out.println("Game tick: " + i);
         }
         System.out.println("Game Score: " + state.getGameScore());
+        // System.out.println("MCTS Evals: " + TreeNode);
     }
+
+
 
 
 }
