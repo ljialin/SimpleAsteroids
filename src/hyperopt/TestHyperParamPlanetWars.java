@@ -16,6 +16,7 @@ public class TestHyperParamPlanetWars {
 
         NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(1);
         GameState.includeBuffersInScore = false;
+
         EvoAgentSearchSpace.tickBudget = 2000;
 
 
@@ -26,8 +27,10 @@ public class TestHyperParamPlanetWars {
                 ntbea,
         };
 
-        int nChecks = 100;
+        int nChecks = 50;
+
         int nEvals = 200;
+
         int nTrials = 1;
 
         ElapsedTimer timer = new ElapsedTimer();

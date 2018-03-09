@@ -32,13 +32,15 @@ public class PlanetWarsLinkTest {
         // state.state.
 
         state.state.includeBuffersInScore = false;
+
+
         PlanetWarView view = null;
         view = new PlanetWarView(state.state);
         JEasyFrame frame = new JEasyFrame(view, "Test View");
 //        KeyController controller = new KeyController();
 //        frame.addKeyListener(controller);
 
-        // now p;ay
+        // now play
         Random random = new Random();
 
 
