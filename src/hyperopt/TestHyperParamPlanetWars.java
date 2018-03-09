@@ -15,7 +15,7 @@ public class TestHyperParamPlanetWars {
     public static void main(String[] args) {
 
         NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(1);
-        GameState.includeBuffersInScore = false;
+        GameState.includeBuffersInScore = true;
 
         EvoAgentSearchSpace.tickBudget = 2000;
 
