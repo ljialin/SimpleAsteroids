@@ -8,7 +8,7 @@ import ntuple.SlidingMeanEDA;
 public class GameRunnerTest {
     public static void main(String[] args) {
 
-        GameState.includeBuffersInScore = true;
+        GameState.includeBuffersInScore = false;
         GameRunner gameRunner = new GameRunner().setLength(200);
 
         SimplePlayerInterface p1, p2;

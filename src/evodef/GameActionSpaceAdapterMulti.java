@@ -151,7 +151,7 @@ public class GameActionSpaceAdapterMulti implements FitnessSpace {
             float grey = (nEvals % 100) / 150.0f;
             // add in a zero for the first element of the plot, since there
             // will be zero difference before any action has been taken
-            linePlot = new LinePlot().setColor(new Color(grey, grey, grey)).add(0);
+            linePlot = new LinePlot().setColor(new Color(grey, grey, grey));
             // linePlot = new LinePlot().setColor(Color.red);
 
         }
