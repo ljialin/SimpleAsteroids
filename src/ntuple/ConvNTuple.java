@@ -5,6 +5,7 @@ package ntuple;
 // it actually uses a standard N-Tuple, but via a convolutional expansion of the input
 
 
+import evodef.BanditLandscapeModel;
 import evodef.SearchSpace;
 import evodef.SolutionEvaluator;
 import utilities.ElapsedTimer;
@@ -12,8 +13,6 @@ import utilities.Picker;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Random;
 
 public class ConvNTuple implements BanditLandscapeModel {

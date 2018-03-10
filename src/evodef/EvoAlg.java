@@ -1,8 +1,5 @@
 package evodef;
 
-import ntuple.BanditLandscapeModel;
-import ntuple.NTupleSystem;
-
 /**
  * Created by sml on 16/08/2016.
  *

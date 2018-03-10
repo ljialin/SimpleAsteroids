@@ -4,12 +4,7 @@ import evodef.EvoAlg;
 import evodef.EvolutionLogger;
 import evodef.SearchSpace;
 import evodef.SolutionEvaluator;
-import evomaze.MazeView;
-import evomaze.ShortestPathTest;
-import ntuple.BanditLandscapeModel;
-import ntuple.NTupleSystem;
-import utilities.ElapsedTimer;
-import utilities.StatSummary;
+import evodef.BanditLandscapeModel;
 
 import java.util.Random;
 

@@ -81,11 +81,11 @@ public class NTuple {
 
 
     SearchSpace searchSpace;
-    int[] tuple;
+    public int[] tuple;
     HashMap<Double, StatSummary> ntMap;
     StatSummary[] ntArray;
 
-    int nSamples;
+    public int nSamples;
     int nEntries;
 
 

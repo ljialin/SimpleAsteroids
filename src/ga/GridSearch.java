@@ -1,8 +1,7 @@
 package ga;
 
 import evodef.*;
-import ntuple.BanditLandscapeModel;
-import ntuple.NTupleSystem;
+import evodef.BanditLandscapeModel;
 import utilities.Picker;
 import utilities.StatSummary;
 

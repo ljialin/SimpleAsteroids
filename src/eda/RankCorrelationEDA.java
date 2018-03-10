@@ -1,9 +1,8 @@
 package eda;
 
 import evodef.*;
-import ntuple.BanditLandscapeModel;
+import evodef.BanditLandscapeModel;
 import ntuple.GeneArrayMeanModel;
-import ntuple.NTupleSystem;
 import ntuple.ScoredVec;
 import utilities.StatSummary;
 

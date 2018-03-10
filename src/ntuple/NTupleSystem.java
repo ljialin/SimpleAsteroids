@@ -71,6 +71,12 @@ public class NTupleSystem implements BanditLandscapeModel {
     }
 
     @Override
+    public BanditLandscapeModel reset() {
+        System.out.println("ntuple.NTupleSystem.reset() not yet implementedWarning");
+        return this;
+    }
+
+    @Override
     public BanditLandscapeModel setSearchSpace(SearchSpace searchSpace) {
         this.searchSpace = searchSpace;
         addTuples();

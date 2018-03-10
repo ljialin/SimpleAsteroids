@@ -43,7 +43,7 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
 
     @Override
     public Double optimalIfKnown() {
-        return (double) nDims * (m-1);
+        return (double) nDims * (m - 1);
     }
 
 
@@ -57,9 +57,9 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
 //            // System.out.println("Stumbled on opt: " + Arrays.toString(a));
 //        }
         boolean isOptimal = isOptimal(a);
-        if (trap && isOptimal) {
-            tot = 0;
-        }
+//        if (trap && isOptimal) {
+//            tot = 0;
+//        }
         tot += noise * random.nextGaussian();
 
         logger.log(tot, a, isOptimal);
@@ -69,11 +69,15 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
     @Override
     public Double trueFitness(int[] a) {
         double tot = 0;
-        for (int i=0; i<a.length; i++) {
-            if (a[i] <0 || a[i] >= m) {
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] < 0 || a[i] >= m) {
                 throw new RuntimeException("Value out of bounds: " + a[i]);
             }
             tot += a[i];
+        }
+        boolean isOptimal = isOptimal(a);
+        if (trap && isOptimal) {
+            tot = 0;
         }
         return tot; //  / optimalIfKnown();
     }
@@ -113,7 +117,9 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
 
     @Override
     public Boolean isOptimal(int[] solution) {
-        return trueFitness(solution) == solution.length * (m-1);
+        double tot = 0;
+        for (double x : solution) tot += x;
+        return tot == solution.length * (m - 1);
     }
 
 }

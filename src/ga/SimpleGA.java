@@ -2,7 +2,7 @@ package ga;
 
 import evodef.*;
 import evodef.DefaultMutator;
-import ntuple.BanditLandscapeModel;
+import evodef.BanditLandscapeModel;
 import utilities.StatSummary;
 
 import java.util.ArrayList;

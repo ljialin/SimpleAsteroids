@@ -1,4 +1,4 @@
-package ntuple;
+package ntbea;
 
 import evodef.BanditLandscapeModel;
 import evodef.SearchSpaceUtil;
@@ -16,7 +16,6 @@ public class EvaluateChoices {
 
     static Random random = new Random();
     static double epsilon = 1e-6;
-
 
     BanditLandscapeModel banditLandscapeModel;
     double kExplore;

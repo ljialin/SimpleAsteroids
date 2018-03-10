@@ -1,6 +1,4 @@
-package ntuple;
-
-import evodef.SearchSpace;
+package evodef;
 
 /**
  * Created by sml on 19/01/2017.
@@ -8,6 +6,9 @@ import evodef.SearchSpace;
 
 
 public interface BanditLandscapeModel {
+
+    // reset removes all data from the model
+    BanditLandscapeModel reset();
 
     BanditLandscapeModel setSearchSpace(SearchSpace searchSpace);
 
