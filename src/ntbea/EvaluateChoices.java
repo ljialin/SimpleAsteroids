@@ -15,7 +15,7 @@ import java.util.Set;
 public class EvaluateChoices {
 
     static Random random = new Random();
-    static double epsilon = 1e-6;
+    static double tieBreakNoiseLevel = 1e-6;
 
     BanditLandscapeModel banditLandscapeModel;
     double kExplore;
@@ -60,7 +60,7 @@ public class EvaluateChoices {
 
         // add small random noise to break ties
         double combinedValue = exploit + kExplore * explore +
-                random.nextDouble() * epsilon;
+                random.nextDouble() * tieBreakNoiseLevel;
         combined.add(combinedValue);
 //        System.out.format("\t %d\t %d\t %.2f\t %.2f\t %.2f\n", i, j,
 //                exploit, explore, combinedValue);

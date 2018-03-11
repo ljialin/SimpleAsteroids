@@ -19,6 +19,7 @@ public class NTupleSystemReport {
 //
 //    }
 //
+    
     public void report(int[] p) {
         for (NTuple nTuple : nTupleSystem.tuples) {
             StatSummary ss = nTuple.getStats(p);
@@ -42,6 +43,7 @@ public class NTupleSystemReport {
     public void printDetailedReport() {
         System.out.format("Search space has %d dimensions\n", nTupleSystem.searchSpace.nDims());
         for (NTuple nt : nTupleSystem.tuples) {
+            System.out.println("nPatterns observed: " + nt.ntMap.size());
             nt.printNonEmpty();
             System.out.println();
         }
