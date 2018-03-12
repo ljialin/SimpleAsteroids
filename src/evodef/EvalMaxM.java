@@ -66,6 +66,8 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
         return tot;
     }
 
+    // double trapDepth =
+
     @Override
     public Double trueFitness(int[] a) {
         double tot = 0;
@@ -78,6 +80,7 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
         boolean isOptimal = isOptimal(a);
         if (trap && isOptimal) {
             tot = 0;
+            // tot -= a.length;
         }
         return tot; //  / optimalIfKnown();
     }

@@ -14,11 +14,13 @@ public class BanditLandscapeEATest {
         int nDims = 5;
         int mValues = 4;
         double noiseLevel = 1.0;
+        double kExplore = 200;
+        boolean useTrap = true;
         // EvalMaxM is like Noisy OneMax but generalised to M values
         // instead of binary
-        EvalMaxM problem = new EvalMaxM(nDims, mValues, noiseLevel).setTrap(true);
+        EvalMaxM problem = new EvalMaxM(nDims, mValues, noiseLevel).setTrap(useTrap);
 
-        NTupleBanditEA banditEA = new NTupleBanditEA().setKExplore(5);
+        NTupleBanditEA banditEA = new NTupleBanditEA().setKExplore(kExplore);
 
         // set a particlar NTuple System as the model
         // if this is not set, then it will use a default model
@@ -31,7 +33,7 @@ public class BanditLandscapeEATest {
         banditEA.setModel(model);
 
         ElapsedTimer timer = new ElapsedTimer();
-        int nEvals = 2000;
+        int nEvals = 1000;
         int[] solution = banditEA.runTrial(problem, nEvals);
 
         System.out.println("Report: ");
@@ -46,6 +48,7 @@ public class BanditLandscapeEATest {
         System.out.println();
         System.out.println("Solution returned: " + Arrays.toString(solution));
         System.out.println("Solution fitness:  " + problem.trueFitness(solution));
+        System.out.println("k Explore: " + banditEA.kExplore);
         System.out.println(timer);
     }
 }
