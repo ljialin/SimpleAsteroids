@@ -168,7 +168,7 @@ public class NTupleSystem implements BanditLandscapeModel {
         return tot / vec.length;
     }
 
-    static double epsilon = 0.1;
+    static double epsilon = 0.001;
 
     public double[] getExplorationVector(int[] x) {
         // idea is simple: we just provide a summary over all

@@ -65,10 +65,6 @@ public class NTuple {
         ntMap = new HashMap<>();
     }
 
-    // for more than this we'll use a HashMap
-    static int sizeLimit = 1200;
-
-
     public void add(int[] x, double v) {
         // for each address that occurs, we're going to store something
         StatSummary ss = getStatsForceCreate(x);

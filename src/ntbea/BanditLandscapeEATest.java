@@ -18,7 +18,7 @@ public class BanditLandscapeEATest {
         // instead of binary
         EvalMaxM problem = new EvalMaxM(nDims, mValues, noiseLevel).setTrap(true);
 
-        NTupleBanditEA banditEA = new NTupleBanditEA().setKExplore(0.5);
+        NTupleBanditEA banditEA = new NTupleBanditEA().setKExplore(5);
 
         // set a particlar NTuple System as the model
         // if this is not set, then it will use a default model
@@ -27,15 +27,21 @@ public class BanditLandscapeEATest {
         model.use1Tuple = true;
         model.use2Tuple = false;
         model.useNTuple = true;
+
         banditEA.setModel(model);
 
         ElapsedTimer timer = new ElapsedTimer();
-        int nEvals = 500;
+        int nEvals = 2000;
         int[] solution = banditEA.runTrial(problem, nEvals);
 
         System.out.println("Report: ");
         new NTupleSystemReport().setModel(model).printDetailedReport();
         new NTupleSystemReport().setModel(model).printSummaryReport();
+
+        System.out.println("Model created: ");
+        System.out.println(model);
+        System.out.println("Model used: ");
+        System.out.println(banditEA.getModel());
 
         System.out.println();
         System.out.println("Solution returned: " + Arrays.toString(solution));
