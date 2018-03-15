@@ -41,27 +41,33 @@ public class HyperParamTuneRunner {
         return this;
     }
 
+    public boolean verbose = false;
+
     public void runTrials(EvoAlg evoAlg, AnnotatedFitnessSpace annotatedFitnessSpace) {
         ElapsedTimer timer = new ElapsedTimer();
         StatSummary ss = new StatSummary("Overall results: " + evoAlg.getClass().getSimpleName());
         for (int i = 0; i < nTrials; i++) {
             try {
                 ss.add(runTrial(evoAlg, annotatedFitnessSpace));
-//                plotFitnessEvolution(annotatedFitnessSpace.logger(), annotatedFitnessSpace, plotChecks);
-                // annotatedFitnessSpace.logger()
+                if (verbose) {
+                    plotFitnessEvolution(annotatedFitnessSpace.logger(), annotatedFitnessSpace, plotChecks);
+                    // annotatedFitnessSpace.logger()
 //                 ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpaceAsteroids().getParams());
-                ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(annotatedFitnessSpace.getParams());
+                    ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(annotatedFitnessSpace.getParams());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-//        lineChart.addLineGroup(sampleEvolution);
-//        if (plotChecks > 0) lineChart.addLineGroup(bestGuess);
-//        new JEasyFrame(lineChart, "Sample Evolution");
-//        System.out.println("nEvals per run: " + nEvals);
-//        System.out.println(ss);
-//        System.out.println("Total time for experiment: " + timer);
+        if (verbose) {
+            lineChart.addLineGroup(sampleEvolution);
+            if (plotChecks > 0) lineChart.addLineGroup(bestGuess);
+            new JEasyFrame(lineChart, "Sample Evolution");
+        }
+        System.out.println("nEvals per run: " + nEvals);
+        System.out.println(ss);
+        System.out.println("Total time for experiment: " + timer);
     }
 
     private void plotFitnessEvolution(EvolutionLogger logger, AnnotatedFitnessSpace eval, int plotChecks) {
@@ -78,7 +84,7 @@ public class HyperParamTuneRunner {
         for (int[] solution : logger.bestYetSolutions) {
 //            System.out.println(Arrays.toString(solution));
             StatSummary ss = new StatSummary();
-            for (int i=0; i<plotChecks; i++)
+            for (int i = 0; i < plotChecks; i++)
                 ss.add(eval.evaluate(solution));
             bests.add(ss.mean());
         }
@@ -86,10 +92,6 @@ public class HyperParamTuneRunner {
             System.out.println("Bests: " + bests);
             bestGuess.add(bests);
         }
-
-
-
-
 
 
         // lineChart.addLine(new LinePlot().setData(data).setRandomColor());
@@ -123,9 +125,6 @@ public class HyperParamTuneRunner {
         }
 
 
-
-
-
         // LinePlot matchPlot = new LinePlot().
         LineGroup lgMatch = new LineGroup().setName("Best Match").setColor(Color.red).add(bestMatches);
         LineGroup lgCumul = new LineGroup().setName("Best Cumul").setColor(Color.black).add(bestCumulative);
@@ -143,7 +142,7 @@ public class HyperParamTuneRunner {
         lineChart.setXLabel("Iteration");
         lineChart.setYLabel("Candidate == solution");
         lineChart.yAxis = new LineChartAxis(new double[]{0, 1});
-        lineChart.xAxis = new LineChartAxis(new double[]{0, bestMatches.size()/2, bestMatches.size()});
+        lineChart.xAxis = new LineChartAxis(new double[]{0, bestMatches.size() / 2, bestMatches.size()});
 
         new JEasyFrame(lineChart, "NTBEA Best Guess Convergence");
     }
@@ -151,13 +150,14 @@ public class HyperParamTuneRunner {
     double match(int[] x, int[] y) {
         StatSummary match = new StatSummary();
         // count a one in each dimension of match, zero otherwise
-        for (int i=0; i<x.length; i++) {
+        for (int i = 0; i < x.length; i++) {
             match.add(x[i] == y[i] ? 1 : 0);
         }
         return match.mean();
     }
 
     int[] solution;
+
     public double runTrial(EvoAlg evoAlg, AnnotatedFitnessSpace eval) {
 
         // NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
@@ -169,7 +169,9 @@ public class HyperParamTuneRunner {
         eval.reset();
         solution = evoAlg.runTrial(eval, nEvals);
 
-//        plotConvergence(eval.logger(), solution);
+        if (verbose) {
+            plotConvergence(eval.logger(), solution);
+        }
         System.out.println("Checking fitness");
         return runChecks(eval, solution, nChecks);
 
