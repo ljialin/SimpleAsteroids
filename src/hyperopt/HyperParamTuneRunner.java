@@ -47,7 +47,7 @@ public class HyperParamTuneRunner {
         for (int i = 0; i < nTrials; i++) {
             try {
                 ss.add(runTrial(evoAlg, annotatedFitnessSpace));
-                plotFitnessEvolution(annotatedFitnessSpace.logger(), annotatedFitnessSpace, plotChecks);
+//                plotFitnessEvolution(annotatedFitnessSpace.logger(), annotatedFitnessSpace, plotChecks);
                 // annotatedFitnessSpace.logger()
 //                 ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpaceAsteroids().getParams());
                 ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(annotatedFitnessSpace.getParams());
@@ -56,12 +56,12 @@ public class HyperParamTuneRunner {
             }
         }
 
-        lineChart.addLineGroup(sampleEvolution);
-        if (plotChecks > 0) lineChart.addLineGroup(bestGuess);
-        new JEasyFrame(lineChart, "Sample Evolution");
-        System.out.println("nEvals per run: " + nEvals);
-        System.out.println(ss);
-        System.out.println("Total time for experiment: " + timer);
+//        lineChart.addLineGroup(sampleEvolution);
+//        if (plotChecks > 0) lineChart.addLineGroup(bestGuess);
+//        new JEasyFrame(lineChart, "Sample Evolution");
+//        System.out.println("nEvals per run: " + nEvals);
+//        System.out.println(ss);
+//        System.out.println("Total time for experiment: " + timer);
     }
 
     private void plotFitnessEvolution(EvolutionLogger logger, AnnotatedFitnessSpace eval, int plotChecks) {
@@ -69,14 +69,14 @@ public class HyperParamTuneRunner {
         // versus the solutions that were sampled
         ArrayList<Double> data = new ArrayList<>();
         data.addAll(logger.fa);
-        System.out.println(data);
-        System.out.println(data.size());
+//        System.out.println(data);
+//        System.out.println(data.size());
         sampleEvolution.add(data);
 
         ArrayList<Double> bests = new ArrayList<>();
         // now this will be slow, but for now just sample every now and then ...
         for (int[] solution : logger.bestYetSolutions) {
-            System.out.println(Arrays.toString(solution));
+//            System.out.println(Arrays.toString(solution));
             StatSummary ss = new StatSummary();
             for (int i=0; i<plotChecks; i++)
                 ss.add(eval.evaluate(solution));
@@ -169,7 +169,7 @@ public class HyperParamTuneRunner {
         eval.reset();
         solution = evoAlg.runTrial(eval, nEvals);
 
-        plotConvergence(eval.logger(), solution);
+//        plotConvergence(eval.logger(), solution);
         System.out.println("Checking fitness");
         return runChecks(eval, solution, nChecks);
 
@@ -178,11 +178,11 @@ public class HyperParamTuneRunner {
     public double runChecks(AnnotatedFitnessSpace eval, int[] solution, int nChecks) {
         ElapsedTimer timer = new ElapsedTimer();
         StatSummary ss = new StatSummary("Mean fitness");
-        System.out.println("Running checks: " + nChecks);
+//        System.out.println("Running checks: " + nChecks);
         for (int i = 0; i < nChecks; i++) {
             ss.add(eval.evaluate(solution));
         }
-        System.out.println(ss);
+//        System.out.println(ss);
         System.out.println("Checks complete: " + timer.toString());
         System.out.println("Solution: " + Arrays.toString(solution));
         System.out.println();

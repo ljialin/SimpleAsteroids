@@ -13,6 +13,8 @@ import utilities.ElapsedTimer;
 
 public class TestHyperParamPlanetWars {
     public static void main(String[] args) {
+        int nEvals = Integer.parseInt(args[0]);
+        System.out.println("Optimization budget: " + nEvals);
 
         NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(1);
         GameState.includeBuffersInScore = true;
@@ -27,22 +29,19 @@ public class TestHyperParamPlanetWars {
                 ntbea,
         };
 
-        int nChecks = 50;
-
-        int nEvals = 200;
-
+        int nChecks = 1;
         int nTrials = 1;
 
         ElapsedTimer timer = new ElapsedTimer();
 
         for (EvoAlg evoAlg : evoAlgs) {
-            LineChart lineChart = new LineChart();
-            lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2});
-            lineChart.setYLabel("Fitness");
+//            LineChart lineChart = new LineChart();
+//            lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2});
+//            lineChart.setYLabel("Fitness");
 
 
             HyperParamTuneRunner runner = new HyperParamTuneRunner();
-            runner.setLineChart(lineChart);
+//            runner.setLineChart(lineChart);
             runner.nChecks = nChecks;
             runner.nTrials = nTrials;
             runner.nEvals = nEvals;
@@ -55,7 +54,7 @@ public class TestHyperParamPlanetWars {
         }
 
         // System.out.println(ntbea.getModel().s);
-        System.out.println("Time for all experiments: " + timer);
+//        System.out.println("Time for all experiments: " + timer);
     }
 }
 
