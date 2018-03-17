@@ -15,7 +15,7 @@ import java.util.List;
  * not include statistical tests, or the Watch class.
  */
 
-public class StatSummary {
+public class StatSummary implements Comparable<StatSummary> {
 
 
     // following line can cause prog to hang - bug in Java?
@@ -207,5 +207,12 @@ public class StatSummary {
                 " n   = " + n;
         return s;
 
+    }
+
+    @Override
+    public int compareTo(StatSummary o) {
+        if (mean() > o.mean()) return 1;
+        if (mean() < o.mean()) return -1;
+        return 0;
     }
 }

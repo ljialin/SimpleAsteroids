@@ -188,6 +188,7 @@ public class HyperParamTuneRunner {
 //        System.out.println(ss);
         System.out.println("Checks complete: " + timer.toString());
         System.out.println("Solution: " + Arrays.toString(solution));
+        System.out.println(ss);
         System.out.println();
         // System.out.println(eval.report(solution));
 

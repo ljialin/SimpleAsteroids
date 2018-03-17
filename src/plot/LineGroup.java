@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class LineGroup {
     public String name;
-    ArrayList<StatSummary> stats;
+    public ArrayList<StatSummary> stats;
     public Color color = Color.white;
 
     public LineGroup() {
