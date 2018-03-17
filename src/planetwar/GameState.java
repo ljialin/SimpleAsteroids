@@ -88,6 +88,7 @@ public class GameState implements AbstractGameState {
         int terminals = 0;
 
         System.out.println(timer);
+
         for (int i = 0; i < nTicks; i++) {
             int a1 = random.nextInt(GameState.nActions);
             int a2 = random.nextInt(GameState.nActions);
@@ -100,8 +101,8 @@ public class GameState implements AbstractGameState {
             if (gameState.isTerminal()) {
                 terminals++;
             }
-
         }
+
         System.out.println(timer);
         System.out.println(Arrays.toString(gameState.planets));
         System.out.println(Arrays.toString(gameState.growthRates));

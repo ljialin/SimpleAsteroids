@@ -33,15 +33,15 @@ public class TestHyperParamPlanetWars {
                 // new GridSearch(),
                 // new CompactSlidingGA(),
                 // new SlidingMeanEDA(),
-                new SimpleGA(),
-                new SimpleRMHC(1),
-                new SimpleRMHC(2),
-                new SimpleRMHC(3),
+//                new SimpleGA(),
+//                new SimpleRMHC(1),
+//                new SimpleRMHC(2),
+//                new SimpleRMHC(5),
                 ntbea,
         };
 
-        int nChecks = 1;
-        int nTrials = 1;
+        int nChecks = 100;
+        int nTrials = 30;
 
         ElapsedTimer timer = new ElapsedTimer();
 

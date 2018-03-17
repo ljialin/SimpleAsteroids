@@ -39,8 +39,9 @@ public class GeneralGameRunnerTest {
 
 
         Agent evoAgent2 = new controllers.multiPlayer.ea.Agent(linkState.copy(), timer, evoAlg, idPlayer2, nEvals);
-        evoAgent2.sequenceLength = 20;
+        evoAgent2.sequenceLength = 10;
         // evoAgent2.setUseShiftBuffer(false);
+
         player2 = evoAgent2;
 
 

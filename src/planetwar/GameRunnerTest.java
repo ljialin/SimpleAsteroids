@@ -8,7 +8,7 @@ import ntuple.SlidingMeanEDA;
 public class GameRunnerTest {
     public static void main(String[] args) {
 
-        GameState.includeBuffersInScore = false;
+        GameState.includeBuffersInScore = true;
         GameRunner gameRunner = new GameRunner().setLength(200);
 
         SimplePlayerInterface p1, p2;
@@ -17,16 +17,21 @@ public class GameRunnerTest {
         // p2 = new DoNothingAgent();
 
         EvoAlg evoAlg1 = new SimpleRMHC();
+        // evoAlg1.mu
 
-        int nEvals = 100;
-        int seqLength = 20;
+        int nEvals1 = 200;
+        int seqLength1 = 10;
+
+        int nEvals2 = 400;
+        int seqLength2 = 5;
 
         SlidingMeanEDA evoAlg2 = new SlidingMeanEDA().setHistoryLength(40);
 
         SimpleGA simpleGA = new SimpleGA().setPopulationSize(20);
 
-        EvoAgent evoAgent1 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength);
+        EvoAgent evoAgent1 = new EvoAgent().setEvoAlg(evoAlg1, nEvals1).setSequenceLength(seqLength1);
         evoAgent1.setUseShiftBuffer(true);
+        // evoAgent1.mu
         // evoAgent1.u
 
         // evoAgent1.setOpponent(new RandomAgent()).setUseShiftBuffer(false);
@@ -37,13 +42,13 @@ public class GameRunnerTest {
 
         SimplePlayerInterface opponentModel;
         opponentModel = new DoNothingAgent();
-        // opponentModel = new RandomAgent();
+        opponentModel = new RandomAgent();
         // p2 = new EvoAgent().setEvoAlg(simpleGA, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
 
         // p2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals/2).setSequenceLength(seqLength*2).setOpponent(opponentModel);
-        EvoAgent evoAgent2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals).setSequenceLength(seqLength).setOpponent(opponentModel);
+        EvoAgent evoAgent2 = new EvoAgent().setEvoAlg(evoAlg1, nEvals2).setSequenceLength(seqLength2).setOpponent(opponentModel);
 
-        evoAgent2.setUseShiftBuffer(false);
+        evoAgent2.setUseShiftBuffer(true);
         p2 = evoAgent2;
 
         // p2 = new RandomAgent();
@@ -55,7 +60,7 @@ public class GameRunnerTest {
         // it will report the outcomes
 
 
-        int nGames = 50;
+        int nGames = 100;
         gameRunner.playGames(nGames);
 
         // now access the game logs to plot the scores

@@ -7,6 +7,7 @@ import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GameRunner {
@@ -112,8 +113,12 @@ public class GameRunner {
         String title = String.format("%s (%d) v. %s (%d)", p1.toString(), p1Wins,
                 p2.toString(), p2Wins);
         lineChart.setTitle(title);
+        lineChart.bg = Color.gray;
+        lineChart.plotBG = Color.white;
 
         double[] scoreTics = new  double[]{scores.min(), 0, scores.max()};
+        // double[] scoreTics = new  double[]{-100, 0, 1000, 2000 }; // scores.max()};
+
         lineChart.yAxis = new LineChartAxis(scoreTics);
         new JEasyFrame(lineChart, "Game Scores");
         return lineChart;

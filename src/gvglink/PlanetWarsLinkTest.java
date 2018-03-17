@@ -94,7 +94,7 @@ public class PlanetWarsLinkTest {
 
         // check that we can play the game
 
-        int nSteps = 100;
+        int nSteps = 200;
 
         for (int i = 0; i < nSteps; i++) {
 
