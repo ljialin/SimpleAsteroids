@@ -14,7 +14,7 @@ public class NTupleBanditEA implements EvoAlg {
     public BanditLandscapeModel banditLandscapeModel;
 
     // the exploration rate normally called K or C - called kExplore here for clarity
-    double kExplore = 100.0; // 1.0; // Math.sqrt(0.4);
+    public double kExplore = 100.0; // 1.0; // Math.sqrt(0.4);
     // the number of neighbours to explore around the current point each time
     // they are only explored IN THE FITNESS LANDSCAPE MODEL, not by sampling the fitness function
     int nNeighbours = 50;

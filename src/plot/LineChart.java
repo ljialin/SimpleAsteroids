@@ -413,13 +413,13 @@ public class LineChart extends JComponent {
             env.moveTo(xMap.map(0), yMap.map(data.get(0).mean()));
 
             // create the top of the envelope
-            for (int i = 1; i < data.size(); i++) {
+            for (int i = 0; i < data.size(); i++) {
                 env.lineTo(xMap.map(i), yMap.map(data.get(i).mean() + data.get(i).stdErr() * stdErrs));
             }
 
             // now work back along rhe bottom
 
-            for (int i = data.size() - 1; i > 0; i--) {
+            for (int i = data.size() - 1; i >= 0; i--) {
                 env.lineTo(xMap.map(i), yMap.map(data.get(i).mean() - data.get(i).stdErr() * stdErrs));
             }
 

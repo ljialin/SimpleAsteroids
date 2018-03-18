@@ -30,13 +30,13 @@ public class NTupleSystem implements BanditLandscapeModel {
 
     List<int[]> sampledPoints;
 
-    SearchSpace searchSpace;
-    ArrayList<NTuple> tuples;
+    public SearchSpace searchSpace;
+    public ArrayList<NTuple> tuples;
 
-    boolean use1Tuple = true;
-    boolean use2Tuple = true;
-    boolean use3Tuple = false;
-    boolean useNTuple = true;
+    public boolean use1Tuple = true;
+    public boolean use2Tuple = true;
+    public boolean use3Tuple = false;
+    public boolean useNTuple = true;
 
     public NTupleSystem() {
         // this.searchSpace = searchSpace;

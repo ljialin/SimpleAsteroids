@@ -47,7 +47,7 @@ public class NTuple {
 
     SearchSpace searchSpace;
     public int[] tuple;
-    HashMap<IntArrayPattern, StatSummary> ntMap;
+    public HashMap<IntArrayPattern, StatSummary> ntMap;
 
     public int nSamples;
     int nEntries;
