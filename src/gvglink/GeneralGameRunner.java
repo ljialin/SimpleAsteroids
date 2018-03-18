@@ -75,6 +75,7 @@ public class GeneralGameRunner {
     }
 
     static Random random = new Random();
+
     public GeneralGameRunner playGame() {
 
         StateObservationMulti currentGame = gameState.copy();

@@ -8,6 +8,13 @@ import ga.SimpleRMHC;
 import ntuple.SlidingMeanEDA;
 import tools.ElapsedCpuTimer;
 
+/**
+ *  This class illustrates using a link state in order to allow a GVGAI agent to
+ *  play a non-GVGAI game via the link state.
+ *
+ *  The GeneralGameRunner is the class that brings to two players together to play the game.
+ */
+
 public class GeneralGameRunnerTest {
     public static void main(String[] args) {
         PlanetWarsLinkState linkState = new PlanetWarsLinkState();
