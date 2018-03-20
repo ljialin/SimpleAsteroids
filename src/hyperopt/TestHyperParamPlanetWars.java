@@ -23,7 +23,7 @@ public class TestHyperParamPlanetWars {
 
         System.out.println("Optimization budget: " + nEvals);
 
-        NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(5);
+        NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(1);
         GameState.includeBuffersInScore = true;
 
         EvoAgentSearchSpace.tickBudget = 2000;
@@ -36,12 +36,12 @@ public class TestHyperParamPlanetWars {
 //                new SimpleGA(),
 //                new SimpleRMHC(1),
 //                new SimpleRMHC(2),
-                new SimpleRMHC(5),
-//                 ntbea,
+//                new SimpleRMHC(5),
+                 ntbea,
         };
 
         int nChecks = 100;
-        int nTrials = 30;
+        int nTrials = 1;
 
         ElapsedTimer timer = new ElapsedTimer();
 
@@ -52,6 +52,7 @@ public class TestHyperParamPlanetWars {
 
 
             HyperParamTuneRunner runner = new HyperParamTuneRunner();
+            runner.verbose = true;
 //            runner.setLineChart(lineChart);
             runner.nChecks = nChecks;
             runner.nTrials = nTrials;

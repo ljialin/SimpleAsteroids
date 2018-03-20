@@ -6,6 +6,7 @@ import evodef.EvoAlg;
 import evodef.GameActionSpaceAdapterMulti;
 import ga.SimpleRMHC;
 import ontology.Types;
+import planetwar.GameState;
 import planetwar.PlanetWarView;
 import tools.ElapsedCpuTimer;
 import utilities.JEasyFrame;
@@ -31,11 +32,11 @@ public class PlanetWarsLinkTest {
         PlanetWarsLinkState state = new PlanetWarsLinkState();
         // state.state.
 
-        state.state.includeBuffersInScore = true;
+        GameState.includeBuffersInScore = true;
 
 
         PlanetWarView view = null;
-        view = new PlanetWarView(state.state);
+        view = new PlanetWarView((GameState) state.state);
         JEasyFrame frame = new JEasyFrame(view, "Simple Planet Wars");
 //        KeyController controller = new KeyController();
 //        frame.addKeyListener(controller);
@@ -45,7 +46,7 @@ public class PlanetWarsLinkTest {
 
 
         AbstractMultiPlayer player1, player2;
-        GameActionSpaceAdapterMulti.visual = true;
+        GameActionSpaceAdapterMulti.visual = false;
 
         // DefaultMutator.totalRandomChaosMutation = true;
 
@@ -65,12 +66,12 @@ public class PlanetWarsLinkTest {
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
-        int nEvals = 100;
+        int nEvals = 200;
         // evoAlg = new SlidingMeanEDA().setHistoryLength(20);
 
 
         Agent evoAgent = new controllers.multiPlayer.ea.Agent(state.copy(), timer, evoAlg, idPlayer1, nEvals);
-        evoAgent.sequenceLength = 20;
+        evoAgent.sequenceLength = 10;
         evoAgent.setUseShiftBuffer(true);
         player1 = evoAgent;
 
@@ -95,6 +96,7 @@ public class PlanetWarsLinkTest {
         // check that we can play the game
 
         int nSteps = 200;
+        view = null;
 
         for (int i = 0; i < nSteps; i++) {
 
@@ -111,7 +113,7 @@ public class PlanetWarsLinkTest {
             state.advance(new Types.ACTIONS[]{action1, action2});
 
             if (view != null) {
-                view.update(state.state);
+                view.update((GameState) state.state);
                 Thread.sleep(delay);
             }
             // System.out.println("Game tick: " + i);

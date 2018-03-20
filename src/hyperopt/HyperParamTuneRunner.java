@@ -3,6 +3,7 @@ package hyperopt;
 import evodef.*;
 import ga.GridSearch;
 import ga.SimpleGASearchSpace;
+import ntbeaplot.Plotter;
 import ntuple.CompactSlidingGA;
 import ntuple.NTupleBanditEA;
 import ntuple.NTupleSystem;
@@ -54,7 +55,11 @@ public class HyperParamTuneRunner {
                     plotFitnessEvolution(annotatedFitnessSpace.logger(), annotatedFitnessSpace, plotChecks);
                     // annotatedFitnessSpace.logger()
 //                 ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpaceAsteroids().getParams());
-                    ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(annotatedFitnessSpace.getParams());
+                    NTupleSystem nTupleSystem = ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel);
+                    nTupleSystem.printDetailedReport(annotatedFitnessSpace.getParams());
+                    // new Plotter().setModel(nTupleSystem).defaultPlot().plot1Tuples();
+
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,6 +105,7 @@ public class HyperParamTuneRunner {
 
     private void plotConvergence(EvolutionLogger logger, int[] solution) {
         LineChart lineChart = new LineChart().setBG(Color.gray);
+        lineChart.plotBG = Color.white;
 
         // now the plots we will add are as follows
 

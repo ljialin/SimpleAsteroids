@@ -1,0 +1,1 @@
+hold ("on");x = -10:0.1:10;plot (x, sin (x));plot (x, cos (x));hold ("off");

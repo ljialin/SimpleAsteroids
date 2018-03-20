@@ -1,0 +1,11 @@
+x = [5 10 15 20 25 30];
+y = [0 0.5 0.4 0.3 0.2 0.2];
+y2 = [0.3 0.4 0.4 0.3 0.2 0.2];
+err = [0.1 0.1 0.1 0.1 0.1 0.1];
+hold ("on");
+errorbar(x, y, err);
+errorbar(x, y2, err);
+ylabel("Fitness", 'FontSize',14);
+title("Fitness versus sequence length", 'FontSize',14);
+xlabel("Sequence Length", 'FontSize',14);
+hold ("off");

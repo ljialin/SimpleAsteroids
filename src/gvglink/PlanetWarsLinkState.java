@@ -3,6 +3,7 @@ package gvglink;
 import battle.SimpleBattleState;
 import core.game.StateObservationMulti;
 import ontology.Types;
+import planetwar.AbstractGameState;
 import planetwar.GameState;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class PlanetWarsLinkState
     public static int nTicks = 0;
 
     // this class is already 2-player ready
-    public GameState state;
+    public AbstractGameState state;
 
     static ArrayList<Types.ACTIONS> actions = new ArrayList<>();
 
@@ -30,7 +31,6 @@ public class PlanetWarsLinkState
                 actions.add(a);
             }
         }
-
         // System.out.println("nActions = " + actions.size());
     }
 
@@ -46,18 +46,20 @@ public class PlanetWarsLinkState
     }
 
     public void setup(String actionFile, int randomSeed, boolean isHuman) {
-        this.state = state.defaultState();
+
+        // this.state = state.defaultState();
     }
 
-        static int nPlanets = 10;
+    static int nPlanets = 10;
 
-    public PlanetWarsLinkState(GameState state) {
+    public PlanetWarsLinkState(AbstractGameState state) {
         super(null);
         this.state = state;
         // state.setNPlanets(nPlanets).setAlternateOwnerships().setRandomGrowthRates();
     }
 
     public StateObservationMulti copy() {
+
         return new PlanetWarsLinkState(state.copy());
     }
 
@@ -80,6 +82,7 @@ public class PlanetWarsLinkState
 
 
     static Random random = new Random();
+
     /**
      * Sets a new seed for the forward model's random generator (creates a new object)
      *
@@ -89,7 +92,7 @@ public class PlanetWarsLinkState
 
         // state.random.setSeed(seed);
         // and generate a new default state
-        state = state.defaultState(seed);
+        // state = state.defaultState(seed);
     }
 
     /**
@@ -119,7 +122,6 @@ public class PlanetWarsLinkState
     }
 
 
-
     public int getNoPlayers() {
         return 2;
     }
@@ -141,7 +143,8 @@ public class PlanetWarsLinkState
     }
 
     public int getGameTick() {
-        return state.getGameTick();
+
+        return -1; // state.getGameTick();
     }
 
     /**
@@ -157,6 +160,7 @@ public class PlanetWarsLinkState
 
 
     static Types.WINNER[] noWinners = new Types.WINNER[]{Types.WINNER.NO_WINNER, Types.WINNER.NO_WINNER};
+
     public Types.WINNER[] getMultiGameWinner() {
         return noWinners;
     }

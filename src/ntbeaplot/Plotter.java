@@ -47,7 +47,7 @@ public class Plotter {
                     ssa.add(ss);
                     System.out.format("%s\t %d\t %.2f\t %.2f\n", key, ss.n(), ss.mean(), ss.stdErr());
                 }
-                System.out.println(ssa);
+                // System.out.println(ssa);
                 System.out.println();
                 // create a LineGroup
                 LineGroup lineGroup = new LineGroup().setColor(Color.black);

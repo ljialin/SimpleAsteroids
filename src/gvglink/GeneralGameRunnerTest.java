@@ -6,6 +6,7 @@ import evodef.EvoAlg;
 import evodef.GameActionSpaceAdapterMulti;
 import ga.SimpleRMHC;
 import ntuple.SlidingMeanEDA;
+import planetwar.GameState;
 import tools.ElapsedCpuTimer;
 
 /**
@@ -23,6 +24,8 @@ public class GeneralGameRunnerTest {
         AbstractMultiPlayer player1, player2;
         GameActionSpaceAdapterMulti.visual = false;
 
+        GameState.includeBuffersInScore = false;
+
         int idPlayer1 = 0;
         int idPlayer2 = 1;
 
@@ -31,7 +34,7 @@ public class GeneralGameRunnerTest {
         player1 = new controllers.multiPlayer.discountOLMCTS.Agent(linkState.copy(), timer, idPlayer1);
 
         // try the evolutionary players
-        GameActionSpaceAdapterMulti.visual = true;
+        // GameActionSpaceAdapterMulti.visual = true;
 
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
@@ -62,8 +65,9 @@ public class GeneralGameRunnerTest {
 
         runner.setPlayers(player1, player2);
 
-        int nGames = 50;
+        int nGames = 100;
         runner.playGames(nGames);
+        System.out.println(runner.scores);
 
 
     }

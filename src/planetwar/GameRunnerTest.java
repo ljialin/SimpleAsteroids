@@ -1,14 +1,17 @@
 package planetwar;
 
+import core.player.AbstractMultiPlayer;
 import evodef.EvoAlg;
 import ga.SimpleGA;
 import ga.SimpleRMHC;
+import gvglink.PlanetWarsLinkState;
 import ntuple.SlidingMeanEDA;
+import tools.ElapsedCpuTimer;
 
 public class GameRunnerTest {
     public static void main(String[] args) {
 
-        GameState.includeBuffersInScore = true;
+        GameState.includeBuffersInScore = false;
         GameRunner gameRunner = new GameRunner().setLength(200);
 
         SimplePlayerInterface p1, p2;
@@ -51,6 +54,9 @@ public class GameRunnerTest {
         evoAgent2.setUseShiftBuffer(true);
         p2 = evoAgent2;
 
+
+        p2 = getMCTSAgent(new GameState().defaultState(), 1);
+
         // p2 = new RandomAgent();
 
         gameRunner.setPlayers(p1, p2);
@@ -68,6 +74,16 @@ public class GameRunnerTest {
         gameRunner.plotGameScores();
 
         // System.out.println(evoAlg2.pVec);
+
+    }
+
+    static GVGAIWrapper getMCTSAgent(GameState gameState, int playerId) {
+        ElapsedCpuTimer timer = new ElapsedCpuTimer();
+        PlanetWarsLinkState linkState = new PlanetWarsLinkState(gameState);
+        AbstractMultiPlayer agent =
+                new controllers.multiPlayer.discountOLMCTS.Agent(linkState.copy(), timer, playerId);
+        GVGAIWrapper wrapper = new GVGAIWrapper().setAgent(agent);
+        return wrapper;
 
     }
 }

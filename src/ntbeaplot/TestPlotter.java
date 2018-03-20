@@ -13,7 +13,7 @@ public class TestPlotter {
         int nDims = 5;
         int mValues = 4;
         double noiseLevel = 1.0;
-        double kExplore = 20;
+        double kExplore = 1;
         boolean useTrap = true;
         // EvalMaxM is like Noisy OneMax but generalised to M values
         // instead of binary
