@@ -23,7 +23,7 @@ public class TestHyperParamPlanetWars {
 
         System.out.println("Optimization budget: " + nEvals);
 
-        NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(10);
+        NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(5);
         GameState.includeBuffersInScore = true;
 
         EvoAgentSearchSpace.tickBudget = 2000;
