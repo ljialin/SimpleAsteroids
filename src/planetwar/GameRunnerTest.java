@@ -66,7 +66,7 @@ public class GameRunnerTest {
         // it will report the outcomes
 
 
-        int nGames = 100;
+        int nGames = 20;
         gameRunner.playGames(nGames);
 
         // now access the game logs to plot the scores

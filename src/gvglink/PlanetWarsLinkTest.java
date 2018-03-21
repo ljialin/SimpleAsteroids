@@ -9,7 +9,9 @@ import ontology.Types;
 import planetwar.GameState;
 import planetwar.PlanetWarView;
 import tools.ElapsedCpuTimer;
+import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
+import utilities.StatSummary;
 
 import java.util.Random;
 
@@ -28,6 +30,19 @@ public class PlanetWarsLinkTest {
     // this is very easy to do - but question of whether we need a timed or instant movement...
 
     public static void main(String[] args) throws Exception {
+        int nTrials = 100;
+        ElapsedTimer timer = new ElapsedTimer();
+        StatSummary ss = new StatSummary();
+        for (int i=0; i<nTrials; i++) {
+            System.out.println("Game: " + i);
+            ss.add(runTest());
+            System.out.println();
+        }
+        System.out.println(ss);
+        System.out.println(timer);
+    }
+
+    public static double runTest() throws Exception {
 
         PlanetWarsLinkState state = new PlanetWarsLinkState();
         // state.state.
@@ -37,7 +52,7 @@ public class PlanetWarsLinkTest {
 
         PlanetWarView view = null;
         view = new PlanetWarView((GameState) state.state);
-        JEasyFrame frame = new JEasyFrame(view, "Simple Planet Wars");
+        // JEasyFrame frame = new JEasyFrame(view, "Simple Planet Wars");
 //        KeyController controller = new KeyController();
 //        frame.addKeyListener(controller);
 
@@ -66,12 +81,12 @@ public class PlanetWarsLinkTest {
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
 
-        int nEvals = 200;
+        int nEvals = 133;
         // evoAlg = new SlidingMeanEDA().setHistoryLength(20);
 
 
         Agent evoAgent = new controllers.multiPlayer.ea.Agent(state.copy(), timer, evoAlg, idPlayer1, nEvals);
-        evoAgent.sequenceLength = 10;
+        evoAgent.sequenceLength = 15;
         evoAgent.setUseShiftBuffer(true);
         player1 = evoAgent;
 
@@ -88,7 +103,7 @@ public class PlanetWarsLinkTest {
 
 
         // player1 =
-        int thinkingTime = 5; // in milliseconds
+        int thinkingTime = 50; // in milliseconds
         int delay = 200;
 
         // player = new controllers.singlePlayer.sampleRandom.Agent(stateObs, timer);
@@ -120,6 +135,7 @@ public class PlanetWarsLinkTest {
         }
         System.out.println("Game Score: " + state.getGameScore());
         // System.out.println("MCTS Evals: " + TreeNode);
+        return state.getGameScore() > 0 ? 1 : 0;
     }
 
 

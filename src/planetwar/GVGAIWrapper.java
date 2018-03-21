@@ -22,6 +22,7 @@ public class GVGAIWrapper implements SimplePlayerInterface {
     @Override
     public int getAction(AbstractGameState gameState, int playerId) {
         PlanetWarsLinkState linkState = new PlanetWarsLinkState(gameState);
+
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
         timer.setMaxTimeMillis(thinkingTime);
 
