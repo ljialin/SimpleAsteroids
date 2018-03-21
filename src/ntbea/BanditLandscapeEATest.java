@@ -14,7 +14,7 @@ public class BanditLandscapeEATest {
         int nDims = 5;
         int mValues = 4;
         double noiseLevel = 1.0;
-        double kExplore = 2;
+        double kExplore = 0.1;
         boolean useTrap = true;
         // EvalMaxM is like Noisy OneMax but generalised to M values
         // instead of binary
@@ -27,13 +27,13 @@ public class BanditLandscapeEATest {
         NTupleSystem model = new NTupleSystem();
         // set up a non-standard tuple pattern
         model.use1Tuple = true;
-        model.use2Tuple = false;
-        model.useNTuple = false;
+        model.use2Tuple = true;
+        model.useNTuple = true;
 
         banditEA.setModel(model);
 
         ElapsedTimer timer = new ElapsedTimer();
-        int nEvals = 200;
+        int nEvals = 2000;
         int[] solution = banditEA.runTrial(problem, nEvals);
 
         System.out.println("Report: ");

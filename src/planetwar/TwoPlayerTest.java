@@ -38,7 +38,7 @@ public class TwoPlayerTest {
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();
 
-        int delay = 100;
+        int delay = 2000;
         GameActionSpaceAdapterMulti.visual = true;
         Random random = new Random();
         for (int i=0; i<500; i++) {
