@@ -48,9 +48,12 @@ public class HyperParamTuneRunner {
         ElapsedTimer timer = new ElapsedTimer();
         StatSummary ss = new StatSummary("Overall results: " + evoAlg.getClass().getSimpleName());
         for (int i = 0; i < nTrials; i++) {
+            System.out.println();
             System.out.println("Running trial: " + (i+1));
             try {
                 ss.add(runTrial(evoAlg, annotatedFitnessSpace));
+                System.out.println("Stats so far");
+                System.out.println(ss);
                 if (verbose) {
                     plotFitnessEvolution(annotatedFitnessSpace.logger(), annotatedFitnessSpace, plotChecks);
                     // annotatedFitnessSpace.logger()
@@ -58,8 +61,6 @@ public class HyperParamTuneRunner {
                     NTupleSystem nTupleSystem = ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel);
                     nTupleSystem.printDetailedReport(annotatedFitnessSpace.getParams());
                     // new Plotter().setModel(nTupleSystem).defaultPlot().plot1Tuples();
-
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();

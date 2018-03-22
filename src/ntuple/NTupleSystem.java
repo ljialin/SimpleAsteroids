@@ -65,7 +65,7 @@ public class NTupleSystem implements BanditLandscapeModel {
         // add3Tuples();
         //
         //
-        addNTuple();
+        // addNTuple();
         // urnSystem = new UrnSystem();
         return this;
     }
