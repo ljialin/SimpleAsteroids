@@ -11,13 +11,15 @@ public class TestHyperParamPlanetWars_smac {
      */
     public static void main(String[] args) {
         AnnotatedFitnessSpace testPlanetWars = new EvoAgentSearchSpace();
-        int sum = 0;
-        for (int i=0; i<100; i++) {
-            double fitness = runTrial(testPlanetWars, args);
-            sum += fitness;
-//            System.out.println(fitness);
-        }
-        System.out.println(sum);
+        double res = runTrial(testPlanetWars, args);
+        System.out.println(res);
+//        int sum = 0;
+//        for (int i=0; i<100; i++) {
+//            double fitness = runTrial(testPlanetWars, args);
+//            sum += fitness;
+////            System.out.println(fitness);
+//        }
+//        System.out.println(sum);
     }
 
     /**
