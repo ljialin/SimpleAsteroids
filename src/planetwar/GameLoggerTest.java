@@ -49,7 +49,7 @@ public class GameLoggerTest {
         SimplePlayerInterface opponentModel;
         opponentModel = new RandomAgent();
 
-        p2 = getMCTSAgent(new GameState().defaultState(), 1);
+        // p2 = getMCTSAgent(new GameState().defaultState(), 1);
         p2 = evoAgent1;
         gameRunner.setPlayers(p1, p2);
         int nGames = 20;
@@ -61,13 +61,14 @@ public class GameLoggerTest {
         // System.out.println(p2);
     }
 
-    static GVGAIWrapper getMCTSAgent(GameState gameState, int playerId) {
-        ElapsedCpuTimer timer = new ElapsedCpuTimer();
-        PlanetWarsLinkState linkState = new PlanetWarsLinkState(gameState);
-        AbstractMultiPlayer agent =
-                new controllers.multiPlayer.discountOLMCTS.Agent(linkState.copy(), timer, playerId);
-        GVGAIWrapper wrapper = new GVGAIWrapper().setAgent(agent);
-        return wrapper;
-
-    }
+    // commented out for now, it's interesting but not necessary for illustration
+//    static GVGAIWrapper getMCTSAgent(GameState gameState, int playerId) {
+//        ElapsedCpuTimer timer = new ElapsedCpuTimer();
+//        PlanetWarsLinkState linkState = new PlanetWarsLinkState(gameState);
+//        AbstractMultiPlayer agent =
+//                new controllers.multiPlayer.discountOLMCTS.Agent(linkState.copy(), timer, playerId);
+//        GVGAIWrapper wrapper = new GVGAIWrapper().setAgent(agent);
+//        return wrapper;
+//
+//    }
 }

@@ -55,6 +55,11 @@ public class AbstractGameLogger implements SimplePlayerInterface {
 
 
     public String toString() {
-        return agent.toString() + "\n" + defaultLogger.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n"+agent+"\n");
+        for (SimplePlayerInterface shadow : shadows)
+            sb.append(shadow+"\n");
+        sb.append(defaultLogger + "\n");
+        return sb.toString();
     }
 }

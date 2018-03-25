@@ -7,4 +7,9 @@ public class DoNothingAgent implements SimplePlayerInterface {
         return GameState.doNothing;
     }
 
+    public String toString() {
+        return "Do Nothing Agent";
+    }
+
+
 }

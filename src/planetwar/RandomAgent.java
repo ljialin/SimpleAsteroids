@@ -16,4 +16,8 @@ public class RandomAgent implements SimplePlayerInterface {
         return random.nextInt(gameState.nActions());
     }
 
+    public String toString() {
+        return "Uniform Random Agent";
+    }
+
 }
