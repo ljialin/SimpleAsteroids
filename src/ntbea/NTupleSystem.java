@@ -179,9 +179,9 @@ public class NTupleSystem implements BanditLandscapeModel {
             NTuple tuple = tuples.get(i);
             StatSummary ss = tuple.getStats(x);
             if (ss != null) {
-                vec[i] = Math.log(1 + tuple.nSamples()) / (epsilon + ss.n());
+                vec[i] = Math.sqrt(Math.log(1 + tuple.nSamples()) / (epsilon + ss.n()));
             } else {
-                vec[i] = Math.log(1 + tuple.nSamples) / epsilon;
+                vec[i] = Math.sqrt(Math.log(1 + tuple.nSamples) / epsilon);
             }
         }
         return vec;
