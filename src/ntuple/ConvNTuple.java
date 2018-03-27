@@ -152,6 +152,12 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
     @Override
+    public BanditLandscapeModel setEpsilon(double epsilon) {
+        this.epsilon = epsilon;
+        return this;
+    }
+
+    @Override
     public SearchSpace getSearchSpace() {
         return searchSpace;
     }

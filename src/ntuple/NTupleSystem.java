@@ -84,6 +84,12 @@ public class NTupleSystem implements BanditLandscapeModel {
     }
 
     @Override
+    public BanditLandscapeModel setEpsilon(double epsilon) {
+        this.epsilon = epsilon;
+        return this;
+    }
+
+    @Override
     public SearchSpace getSearchSpace() {
         return searchSpace;
     }
@@ -207,7 +213,7 @@ public class NTupleSystem implements BanditLandscapeModel {
         return tot / vec.length;
     }
 
-    static double epsilon = 0.1;
+    double epsilon = 0.1;
 
     public double[] getExplorationVector(int[] x) {
         // idea is simple: we just provide a summary over all

@@ -27,6 +27,9 @@ import java.util.List;
 public class NTupleSystem implements BanditLandscapeModel {
 
     static int minTupleSize = 1;
+    static double defaultEpsilon = 0.5;
+
+    double epsilon = defaultEpsilon;
 
     List<int[]> sampledPoints;
 
@@ -59,6 +62,11 @@ public class NTupleSystem implements BanditLandscapeModel {
         if (use2Tuple) add2Tuples();
         if (use3Tuple) add3Tuples();
         if (useNTuple) addNTuple();
+        return this;
+    }
+
+    public NTupleSystem setEpsilon(double epsilon) {
+        this.epsilon = epsilon;
         return this;
     }
 
@@ -167,8 +175,6 @@ public class NTupleSystem implements BanditLandscapeModel {
         for (double e : vec) tot += e;
         return tot / vec.length;
     }
-
-    static double epsilon = 1;
 
     public double[] getExplorationVector(int[] x) {
         // idea is simple: we just provide a summary over all

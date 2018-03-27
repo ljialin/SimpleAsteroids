@@ -12,6 +12,8 @@ public interface BanditLandscapeModel {
 
     BanditLandscapeModel setSearchSpace(SearchSpace searchSpace);
 
+    BanditLandscapeModel setEpsilon(double epsilon);
+
     SearchSpace getSearchSpace();
 
     void addPoint(int[] p, double value);

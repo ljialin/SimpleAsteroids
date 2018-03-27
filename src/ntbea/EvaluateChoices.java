@@ -18,7 +18,7 @@ public class EvaluateChoices {
     static double tieBreakNoiseLevel = 1e-6;
 
     BanditLandscapeModel banditLandscapeModel;
-    double kExplore, epsilon;
+    double kExplore;
     StatSummary exploreStats, exploitStats, combined;
 
     public EvaluateChoices(BanditLandscapeModel banditLandscapeModel, double kExplore) {
@@ -35,6 +35,10 @@ public class EvaluateChoices {
     int nAttempts = 0;
     int nNeighbours = 0;
 
+    public EvaluateChoices setKExplore(double kExplore) {
+        this.kExplore = kExplore;
+        return this;
+    }
 
     // checking for uniqueness of neighbours can be expensive
     // so only do it if necessary (useful for small search spaces)

@@ -24,6 +24,8 @@ public class NTupleBanditEA implements EvoAlg {
     // of the points added during the search
     // this param controls the size of the neighbourhood
     int neighboursWhenFindingBest = 10;
+    static double defaultEpsilon = 0.5;
+    double epsilon = defaultEpsilon;
 
     public int nSamples = 1;
 
@@ -102,17 +104,16 @@ public class NTupleBanditEA implements EvoAlg {
         System.out.println("Set neighbours to: " + nNeighbours);
 
         if (banditLandscapeModel == null) {
-            System.out.println("NTupleBanditEA.runTrial: Creating new landscape model");
+            // System.out.println("NTupleBanditEA.runTrial: Creating new landscape model");
             banditLandscapeModel = new NTupleSystem().setSearchSpace(searchSpace);
         }
+        banditLandscapeModel.setEpsilon(epsilon);
 
         // create an NTuple fitness landscape model if needed
         if (resetModelEachRun) {
-            System.out.println("NTupleBanditEA.runTrial: resetting landscape model");
-
+            // System.out.println("NTupleBanditEA.runTrial: resetting landscape model");
             banditLandscapeModel.reset();
         }
-
 
         // then each time around the loop try the following
         // create a neighbourhood set of points and pick the best one that combines it's exploitation and evaluation scores
@@ -215,4 +216,8 @@ public class NTupleBanditEA implements EvoAlg {
         return evaluator.logger();
     }
 
+    public NTupleBanditEA setEpsilon(double epsilon) {
+        this.epsilon = epsilon;
+        return this;
+    }
 }
