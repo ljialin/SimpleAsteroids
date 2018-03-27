@@ -18,7 +18,7 @@ public class EvaluateChoices {
     static double tieBreakNoiseLevel = 1e-6;
 
     BanditLandscapeModel banditLandscapeModel;
-    double kExplore;
+    double kExplore, epsilon;
     StatSummary exploreStats, exploitStats, combined;
 
     public EvaluateChoices(BanditLandscapeModel banditLandscapeModel, double kExplore) {
