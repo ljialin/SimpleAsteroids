@@ -1,6 +1,10 @@
-package planetwar;
+package agents.evo;
 
+import agents.dummy.DoNothingAgent;
 import evodef.PluginEvaluator;
+import ggi.AbstractGameState;
+import ggi.SimplePlayerInterface;
+import planetwar.GameState;
 import plot.NullPlayoutPlotter;
 import plot.PlayoutPlotterInterface;
 
@@ -10,16 +14,16 @@ public class ActionSequencer implements PluginEvaluator {
 
     public static void main(String[] args) {
 
-        // fix a random seed to check repeatability
-        Random random = new Random(3);
-        GameState.random = random;
-
-        GameState gameState = new GameState().defaultState();
-        int[] seq = new int[]{0, 1, 2, 3, 4, 0, 1, 2, 2, 3, 4, 0, 1, 2, 1, 2, 3};
-        System.out.println("Initial fitness: " + gameState.getScore());
-        ActionSequencer actionSequencer = new ActionSequencer().setGameState(gameState).setPlayerId(0);
-        double fitness = actionSequencer.fitness(seq);
-        System.out.println("Final fitness: " + fitness);
+//        // fix a random seed to check repeatability
+//        Random random = new Random(3);
+//        GameState.random = random;
+//
+//        GameState gameState = new GameState().defaultState();
+//        int[] seq = new int[]{0, 1, 2, 3, 4, 0, 1, 2, 2, 3, 4, 0, 1, 2, 1, 2, 3};
+//        System.out.println("Initial fitness: " + gameState.getScore());
+//        ActionSequencer actionSequencer = new ActionSequencer().setGameState(gameState).setPlayerId(0);
+//        double fitness = actionSequencer.fitness(seq);
+//        System.out.println("Final fitness: " + fitness);
     }
 
     AbstractGameState initialState, terminalState;
@@ -48,18 +52,18 @@ public class ActionSequencer implements PluginEvaluator {
         return terminalState;
     }
 
-    public ActionSequencer actVersusDoNothing(int[] seq, int playerId) {
-        // careful, this may not be copiing the game state ...
-        terminalState = initialState.copy();
-        int[] actions = new int[2];
-        for (int a : seq) {
-            actions[playerId] = a;
-            actions[1 - playerId] = GameState.doNothing;
-            terminalState.next(actions);
-        }
-        // System.out.println("Terminal score: " + terminalState.getScore());
-        return this;
-    }
+//    public ActionSequencer actVersusDoNothing(int[] seq, int playerId) {
+//        // careful, this may not be copiing the game state ...
+//        terminalState = initialState.copy();
+//        int[] actions = new int[2];
+//        for (int a : seq) {
+//            actions[playerId] = a;
+//            actions[1 - playerId] = GameState.doNothing;
+//            terminalState.next(actions);
+//        }
+//        // System.out.println("Terminal score: " + terminalState.getScore());
+//        return this;
+//    }
 
     SimplePlayerInterface opponent = new DoNothingAgent();
 

@@ -1,19 +1,11 @@
 package hyperopt;
 
 import evodef.*;
-import ga.GridSearch;
-import ga.SimpleGASearchSpace;
-import ntbeaplot.Plotter;
-import ntuple.CompactSlidingGA;
 import ntuple.NTupleBanditEA;
 import ntuple.NTupleSystem;
-import ntuple.SlidingMeanEDA;
-import planetwar.EvoAgentSearchSpace;
-import planetwar.EvoAgentSearchSpaceAsteroids;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LineGroup;
-import plot.LinePlot;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
@@ -26,7 +18,7 @@ public class HyperParamTuneRunner {
 
 
     //     static int nEvals = 1 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpaceAsteroids().searchSpace());
-    public int nEvals = 100; // 1 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpace().searchSpace());
+    public int nEvals = 100; // 1 * (int) SearchSpaceUtil.size(new EvoAgentSearchSpacePlanetWars().searchSpace());
     public int nChecks = 100;
     public int nTrials = 10;
 
@@ -168,10 +160,10 @@ public class HyperParamTuneRunner {
 
     public double runTrial(EvoAlg evoAlg, AnnotatedFitnessSpace eval) {
 
-        // NoisySolutionEvaluator eval = new EvoAgentSearchSpace();
+        // NoisySolutionEvaluator eval = new EvoAgentSearchSpacePlanetWars();
         // NoisySolutionEvaluator eval = new EvoAgentSearchSpaceAsteroids();
 
-        // eval = new EvoAgentSearchSpace();
+        // eval = new EvoAgentSearchSpacePlanetWars();
         System.out.println("Search space size: " + SearchSpaceUtil.size(eval.searchSpace()));
 
         eval.reset();

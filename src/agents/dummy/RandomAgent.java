@@ -1,4 +1,7 @@
-package planetwar;
+package agents.dummy;
+
+import ggi.AbstractGameState;
+import ggi.SimplePlayerInterface;
 
 import java.util.Random;
 

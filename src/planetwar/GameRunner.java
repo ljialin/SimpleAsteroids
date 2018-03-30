@@ -1,5 +1,6 @@
 package planetwar;
 
+import ggi.SimplePlayerInterface;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LinePlot;

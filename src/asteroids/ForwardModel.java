@@ -16,6 +16,9 @@ public class ForwardModel {
     // limit on number of active missiles
     static int liveMissileLimit = 5;
 
+    public static int totalTicks = 0;
+    int nTicks = 0;
+
     AsteroidsGameState gameState;
 
     Ship ship;
@@ -43,6 +46,7 @@ public class ForwardModel {
 
     public ForwardModel copy() {
         ForwardModel fm = new ForwardModel();
+        fm.nTicks = nTicks;
         fm.score = this.score;
         fm.nLives = this.nLives;
         fm.ship = this.ship.copy();
@@ -67,6 +71,10 @@ public class ForwardModel {
         updateShip(action);
         updateMissiles();
         updateAsteroids();
+        nTicks++;
+        totalTicks++;
+//        System.out.println(nTicks + "\t " + totalTicks);
+
     }
 
     public void updateShip(Action action) {

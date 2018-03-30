@@ -2,15 +2,9 @@ package hyperopt;
 
 import evodef.AnnotatedFitnessSpace;
 import evodef.EvoAlg;
-import ga.SimpleGA;
-import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
-import ntuple.SlidingMeanEDA;
-import planetwar.EvoAgentSearchSpace;
-import planetwar.EvoAgentSearchSpaceAsteroids;
+import planetwar.EvoAgentSearchSpacePlanetWars;
 import planetwar.GameState;
-import plot.LineChart;
-import plot.LineChartAxis;
 import utilities.ElapsedTimer;
 
 public class TestHyperParamPlanetWars {
@@ -26,7 +20,7 @@ public class TestHyperParamPlanetWars {
         NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(1);
         GameState.includeBuffersInScore = true;
 
-        EvoAgentSearchSpace.tickBudget = 2000;
+        EvoAgentSearchSpacePlanetWars.tickBudget = 2000;
 
         EvoAlg[] evoAlgs = {
                 // new GridSearch(),
@@ -57,12 +51,12 @@ public class TestHyperParamPlanetWars {
             runner.nTrials = nTrials;
             runner.nEvals = nEvals;
             runner.plotChecks = 0;
-            AnnotatedFitnessSpace testPlanetWars = new EvoAgentSearchSpace();
+            AnnotatedFitnessSpace testPlanetWars = new EvoAgentSearchSpacePlanetWars();
             System.out.println("Testing: " + evoAlg);
             runner.runTrials(evoAlg, testPlanetWars);
             System.out.println("Finished testing: " + evoAlg);
             // note, this is a bit of a hack: it only reports the final solution
-            // System.out.println(new EvoAgentSearchSpace().report(runner.solution));
+            // System.out.println(new EvoAgentSearchSpacePlanetWars().report(runner.solution));
 
         }
 

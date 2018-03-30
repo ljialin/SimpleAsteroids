@@ -1,11 +1,11 @@
 package planetwar;
 
-import controllers.multiPlayer.ea.Agent;
 import core.player.AbstractMultiPlayer;
+import ggi.AbstractGameState;
+import ggi.SimplePlayerInterface;
 import gvglink.PlanetWarsLinkState;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
-import utilities.ElapsedTimer;
 
 public class GVGAIWrapper implements SimplePlayerInterface {
 

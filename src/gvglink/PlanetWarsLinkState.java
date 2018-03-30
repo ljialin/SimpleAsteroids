@@ -1,9 +1,8 @@
 package gvglink;
 
-import battle.SimpleBattleState;
 import core.game.StateObservationMulti;
 import ontology.Types;
-import planetwar.AbstractGameState;
+import ggi.AbstractGameState;
 import planetwar.GameState;
 
 import java.util.ArrayList;

@@ -1,9 +1,12 @@
-package planetwar;
+package agents.evo;
 
+import agents.dummy.DoNothingAgent;
 import evodef.EvoAlg;
 import evodef.RegularSearchSpace;
 import evodef.SearchSpaceUtil;
 import evodef.SimpleGameAdapter;
+import ggi.AbstractGameState;
+import ggi.SimplePlayerInterface;
 import plot.NullPlayoutPlotter;
 import plot.PlayoutPlotter;
 import plot.PlayoutPlotterInterface;
@@ -22,7 +25,7 @@ public class EvoAgent implements SimplePlayerInterface {
 
     ActionSequencer actionSequencer;
     public EvoAlg evoAlg;
-    SimpleGameAdapter simpleGameAdapter;
+    public SimpleGameAdapter simpleGameAdapter;
     RegularSearchSpace searchSpace;
 
     // static int nActions = AsteroidsGameState.nActions;

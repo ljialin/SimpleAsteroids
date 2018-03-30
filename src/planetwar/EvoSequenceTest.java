@@ -1,14 +1,13 @@
 package planetwar;
 
+import agents.evo.EvoAgent;
 import evodef.EvoAlg;
 import evodef.GameActionSpaceAdapterMulti;
 import ga.SimpleRMHC;
 import gvglink.PlanetWarsLinkState;
-import plot.LineChart;
 import utilities.JEasyFrame;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class EvoSequenceTest {
 

@@ -23,7 +23,7 @@ public class UCBTest {
 
     }
 
-    double epsilon = 1e-6;
+    double epsilon = 1e-0;
     double k = 1;
 
     double explore(double ni, double N) {

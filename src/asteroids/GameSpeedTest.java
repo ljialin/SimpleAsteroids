@@ -27,13 +27,20 @@ public class GameSpeedTest {
         Game game = new Game(gameState, visible);
         gameState.forwardModel.nLives = nLives;
 
-        Game.copyTest = true;
+        Game.copyTest = false;
 
         ElapsedTimer t = new ElapsedTimer();
         game.run(nTicks);
-        System.out.println(t);
+
+        gameState = gameState.copy();
+        System.out.println(ForwardModel.totalTicks);
+        System.out.println("nTicks:\t " + gameState.nTicks());
+        System.out.println("fTicks:\t " + gameState.forwardModel.nTicks);
+        System.out.println("t(ms):\t " + t);
 
         System.out.println(timer);
+        System.out.println(gameState.getScore());
+        System.out.println(gameState.isTerminal());
 
     }
 }

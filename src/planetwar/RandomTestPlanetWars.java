@@ -1,7 +1,10 @@
 package planetwar;
 
+import agents.dummy.RandomAgent;
+import agents.evo.EvoAgent;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
+import ggi.SimplePlayerInterface;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 

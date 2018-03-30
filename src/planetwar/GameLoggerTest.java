@@ -1,12 +1,11 @@
 package planetwar;
 
-import core.player.AbstractMultiPlayer;
+import agents.dummy.DoNothingAgent;
+import agents.dummy.RandomAgent;
+import agents.evo.EvoAgent;
 import evodef.EvoAlg;
-import ga.SimpleGA;
 import ga.SimpleRMHC;
-import gvglink.PlanetWarsLinkState;
-import ntuple.SlidingMeanEDA;
-import tools.ElapsedCpuTimer;
+import ggi.SimplePlayerInterface;
 
 public class GameLoggerTest {
     public static void main(String[] args) {

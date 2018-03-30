@@ -1,6 +1,8 @@
 package planetwar;
 
 
+import ggi.AbstractGameState;
+import ggi.SimplePlayerInterface;
 import logger.sample.DefaultLogger;
 
 import java.util.ArrayList;

@@ -4,7 +4,7 @@ import evodef.EvoAlg;
 import evodef.DefaultMutator;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
-import planetwar.EvoAgent;
+import agents.evo.EvoAgent;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 
@@ -72,7 +72,7 @@ public class Game {
             // controller = new KeyController();
         } else {
             controller = new RotateAndShoot();
-            controller = getEvoAgent();
+            // controller = getEvoAgent();
         }
         // controller = new RotateAndShoot();
         if (controller instanceof KeyController) {
@@ -133,7 +133,7 @@ public class Game {
                 sleep();
             }
         }
-        System.out.println("Ran for " + i + " gameState ticks");
+        System.out.println("Ran for " + i + " gameState ticks;  " + gameState.nTicks() + " fm ticks");
         System.out.println("Score = " + gameState.getScore());
     }
 

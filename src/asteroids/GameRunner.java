@@ -1,12 +1,13 @@
 package asteroids;
 
+import agents.dummy.RandomAgent;
 import evodef.EvoAlg;
 import evogame.DefaultParams;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
-import planetwar.EvoAgent;
-import planetwar.SimplePlayerInterface;
+import agents.evo.EvoAgent;
+import ggi.SimplePlayerInterface;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
@@ -79,7 +80,7 @@ public class GameRunner {
     }
 
     public static SimplePlayerInterface getRandomAgent() {
-        return new planetwar.RandomAgent();
+        return new RandomAgent();
     }
 
 

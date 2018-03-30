@@ -2,7 +2,7 @@ package asteroids;
 
 import evogame.GameParameters;
 import math.Vector2d;
-import planetwar.AbstractGameState;
+import ggi.AbstractGameState;
 
 import java.awt.*;
 
@@ -63,6 +63,7 @@ public class AsteroidsGameState implements AbstractGameState {
 
         gs.forwardModel = forwardModel.copy();
 
+
         return gs;
     }
 
@@ -70,6 +71,10 @@ public class AsteroidsGameState implements AbstractGameState {
     public AbstractGameState next(int[] actions) {
         update(actionAdapter.getAction(actions[0]));
         return this;
+    }
+
+    public int nTicks() {
+        return forwardModel.nTicks;
     }
 
 

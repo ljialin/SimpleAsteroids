@@ -1,8 +1,8 @@
 package gvglink;
 
 import core.player.AbstractMultiPlayer;
-import planetwar.AbstractGameState;
-import planetwar.SimplePlayerInterface;
+import ggi.AbstractGameState;
+import ggi.SimplePlayerInterface;
 
 
 /**

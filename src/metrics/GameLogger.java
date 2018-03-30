@@ -1,6 +1,6 @@
 package metrics;
 
-import planetwar.AbstractGameState;
+import ggi.AbstractGameState;
 
 
 /**

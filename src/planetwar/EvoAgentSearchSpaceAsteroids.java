@@ -1,5 +1,6 @@
 package planetwar;
 
+import agents.evo.EvoAgent;
 import asteroids.AsteroidsGameState;
 import evodef.*;
 import evogame.DefaultParams;
@@ -98,7 +99,7 @@ public class EvoAgentSearchSpaceAsteroids implements  AnnotatedFitnessSpace {
         return tickBudget / seqLength[solution[seqLengthIndex]];
     }
 
-//    public EvoAgentSearchSpace setEvaluator(NoisySolutionEvaluator problemEvaluator) {
+//    public EvoAgentSearchSpacePlanetWars setEvaluator(NoisySolutionEvaluator problemEvaluator) {
 //        this.problemEvaluator = problemEvaluator;
 //        return this;
 //    }

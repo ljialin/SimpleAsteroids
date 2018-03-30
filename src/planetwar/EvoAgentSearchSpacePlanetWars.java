@@ -1,5 +1,6 @@
 package planetwar;
 
+import agents.evo.EvoAgent;
 import evodef.*;
 import evodef.DefaultMutator;
 import ga.SimpleRMHC;
@@ -8,10 +9,10 @@ import ntuple.params.DoubleParam;
 import ntuple.params.IntegerParam;
 import ntuple.params.Param;
 
-public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
+public class EvoAgentSearchSpacePlanetWars implements AnnotatedFitnessSpace {
 
     public static void main(String[] args) {
-        EvoAgentSearchSpace searchSpace = new EvoAgentSearchSpace();
+        EvoAgentSearchSpacePlanetWars searchSpace = new EvoAgentSearchSpacePlanetWars();
 
         int[] point = SearchSpaceUtil.randomPoint(searchSpace);
 
@@ -56,7 +57,7 @@ public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
     // log the solutions found
     public EvolutionLogger logger;
 
-    public EvoAgentSearchSpace() {
+    public EvoAgentSearchSpacePlanetWars() {
         this.logger = new EvolutionLogger();
     }
 
@@ -75,7 +76,7 @@ public class EvoAgentSearchSpace implements AnnotatedFitnessSpace {
         return tickBudget / seqLength[solution[seqLengthIndex]];
     }
 
-//    public EvoAgentSearchSpace setEvaluator(NoisySolutionEvaluator problemEvaluator) {
+//    public EvoAgentSearchSpacePlanetWars setEvaluator(NoisySolutionEvaluator problemEvaluator) {
 //        this.problemEvaluator = problemEvaluator;
 //        return this;
 //    }
