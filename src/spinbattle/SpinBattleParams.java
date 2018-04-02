@@ -10,7 +10,9 @@ public class SpinBattleParams {
     }
 
     // of the arena
-    int width=700, height=400;
+    public int width=700, height=400;
+
+    public int maxTicks = 500;
 
     static Random random = new Random();
 
