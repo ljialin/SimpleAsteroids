@@ -26,7 +26,6 @@ public class GameCopyTest {
 
             game = game.copyState();
             // game = game.copy();
-
         }
 
         System.out.format("Made %d copies\n", nCopies);
