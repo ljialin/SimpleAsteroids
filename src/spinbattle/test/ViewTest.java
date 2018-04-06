@@ -8,8 +8,8 @@ import utilities.JEasyFrame;
 public class ViewTest {
     public static void main(String[] args) throws Exception {
         SpinBattleParams params = new SpinBattleParams();
-        SpinGameState gameState = new SpinGameState().setParams(params);
-        SpinBattleView view = new SpinBattleView().setParams(params);
+        SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
+        SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
 
         new JEasyFrame(view, "Spin Battle Game");
 

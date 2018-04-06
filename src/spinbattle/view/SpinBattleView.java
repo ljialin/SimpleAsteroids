@@ -1,7 +1,9 @@
 package spinbattle.view;
 
+import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
 import spinbattle.params.SpinBattleParams;
+import static spinbattle.params.Constants.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +14,13 @@ public class SpinBattleView extends JComponent {
     SpinGameState gameState;
     Color bg = Color.black;
     int nStars = 100;
+    Color[] playerColors = {
+            Color.getHSBColor(0.25f, 1, 1),
+            Color.getHSBColor(0.75f, 1, 1),
+            Color.lightGray
+    };
 
-    public SpinBattleView setParams(SpinGameState gameState) {
+    public SpinBattleView setGameState(SpinGameState gameState) {
         this.gameState = gameState;
         return this;
     }
@@ -36,17 +43,24 @@ public class SpinBattleView extends JComponent {
 
     public void paintComponent(Graphics go) {
         Graphics2D g = (Graphics2D) go;
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.fillRect(0, 0, getWidth(), getHeight());
         paintStars(g);
+        paintPlanets(g);
+    }
 
-
+    private void paintPlanets(Graphics2D g) {
+        for (Planet p : gameState.planets) {
+            g.setColor(playerColors[p.ownedBy]);
+            int rad = (int) (p.growthRate * growthRateToRadius);
+            g.fillOval((int) p.position.x, (int) p.position.y - rad, 2* rad, 2* rad);
+        }
     }
 
     ArrayList<Star> stars = new ArrayList();
 
     private void paintStars(Graphics2D g) {
         for (Star star : stars) star.draw(g);
-
     }
 
     class Star {

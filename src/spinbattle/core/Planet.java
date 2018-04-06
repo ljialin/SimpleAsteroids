@@ -1,18 +1,19 @@
 package spinbattle.core;
 
 import math.Vector2d;
+import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 
 
 public class Planet {
-    Vector2d position;
-    double rotation;
-    double rotationRate;
+    public Vector2d position;
+    public double rotation;
+    public double rotationRate;
 
-    double growthRate;
+    public double growthRate;
 
     double shipCount;
-    int ownedBy;
+    public int ownedBy;
     SpinBattleParams params;
 
     Planet processIncoming(double incomingShips, int playerId) {
@@ -41,6 +42,11 @@ public class Planet {
         return this;
     }
 
+    Planet setOwnership(int ownedBy) {
+        this.ownedBy = ownedBy;
+        return this;
+    }
+
     public Planet copy() {
         Planet planet = new Planet();
         planet.position = position.copy();
@@ -49,12 +55,17 @@ public class Planet {
         return planet;
     }
 
+    public Planet setRandomGrowthRate() {
+        growthRate = params.getRandom().nextDouble() * (params.maxGrowth - params.minGrowth) + params.minGrowth;
+        return this;
+    }
 
+    public int getRadius() {
+        return (int) (Constants.growthRateToRadius * growthRate);
+    }
 
-
-
-
-
-
+    public String toString() {
+        return position + " : " + ownedBy + " : " + getRadius();
+    }
 
 }

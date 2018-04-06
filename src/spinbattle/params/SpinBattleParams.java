@@ -13,9 +13,12 @@ public class SpinBattleParams {
     public int width=700, height=400;
 
     public int maxTicks = 500;
-    int nPlanets = 20;
+    public int nPlanets = 20;
 
-    int nNeutral = nPlanets - 2;
+    public int nNeutral = nPlanets - 2;
+
+    public double minGrowth = 0.05;
+    public double maxGrowth = 0.15;
 
     static Random random = new Random();
 
