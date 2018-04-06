@@ -1,6 +1,7 @@
-package spinbattle;
+package spinbattle.core;
 
 import ggi.AbstractGameState;
+import spinbattle.params.SpinBattleParams;
 
 public class SpinGameState implements AbstractGameState {
 
@@ -15,6 +16,7 @@ public class SpinGameState implements AbstractGameState {
     // may set a limit on the game length
     // this will be used in the isTerminal() method
     int maxTicks;
+    private SpinBattleParams params;
 
 
     @Override
@@ -41,4 +43,13 @@ public class SpinGameState implements AbstractGameState {
     public boolean isTerminal() {
         return false;
     }
+
+    public SpinGameState setParams(SpinBattleParams params) {
+        this.params = params;
+        return this;
+    }
+
+    // todo - set up the planets based on the params that have been passed
+
+
 }

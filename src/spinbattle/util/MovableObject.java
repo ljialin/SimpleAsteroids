@@ -1,4 +1,4 @@
-package spinbattle;
+package spinbattle.util;
 
 import math.Vector2d;
 

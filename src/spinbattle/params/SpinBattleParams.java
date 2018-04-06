@@ -1,4 +1,4 @@
-package spinbattle;
+package spinbattle.params;
 
 import java.util.Random;
 
@@ -13,10 +13,13 @@ public class SpinBattleParams {
     public int width=700, height=400;
 
     public int maxTicks = 500;
+    int nPlanets = 20;
+
+    int nNeutral = nPlanets - 2;
 
     static Random random = new Random();
 
-    Random getRandom() {
+    public Random getRandom() {
         return random;
     }
 

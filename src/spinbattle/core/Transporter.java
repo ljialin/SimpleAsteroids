@@ -1,6 +1,7 @@
-package spinbattle;
+package spinbattle.core;
 
-import math.Vector2d;
+import spinbattle.params.SpinBattleParams;
+import spinbattle.util.MovableObject;
 
 /**
  *  Interesting class: we model both the playerId of the ships,
@@ -17,8 +18,10 @@ public class Transporter {
     int playerId;
     double payLoad;
 
-    
-    Vector2d s;
-    Vector2d v;
+    MovableObject mo;
 
+    public Transporter next() {
+        mo.update();
+        return this;
+    }
 }

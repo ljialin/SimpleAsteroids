@@ -1,7 +1,7 @@
-package spinbattle;
+package spinbattle.core;
 
 import math.Vector2d;
-import static spinbattle.Constants.*;
+import spinbattle.params.SpinBattleParams;
 
 
 public class Planet {

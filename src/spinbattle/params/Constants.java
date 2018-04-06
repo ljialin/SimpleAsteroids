@@ -1,4 +1,4 @@
-package spinbattle;
+package spinbattle.params;
 
 public interface Constants {
 
