@@ -1,5 +1,6 @@
 package spinbattle.core;
 
+import levelgen.MarioReader;
 import math.Vector2d;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
@@ -12,7 +13,7 @@ public class Planet {
 
     public double growthRate;
 
-    double shipCount;
+    public double shipCount;
     public int ownedBy;
     SpinBattleParams params;
 
@@ -32,6 +33,13 @@ public class Planet {
         return this;
     }
 
+    Planet update() {
+        if (ownedBy != Constants.neutralPlayer) {
+            shipCount += growthRate;
+        }
+        return this;
+    }
+
     public Planet setParams(SpinBattleParams params) {
         this.params = params;
         return this;
@@ -44,6 +52,9 @@ public class Planet {
 
     Planet setOwnership(int ownedBy) {
         this.ownedBy = ownedBy;
+        // also set initial ships
+        shipCount = params.minInitialShips +
+                params.getRandom().nextInt(params.maxInitialShips - params.minInitialShips);
         return this;
     }
 

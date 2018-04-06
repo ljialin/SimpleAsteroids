@@ -14,6 +14,7 @@ public class ViewTest {
         new JEasyFrame(view, "Spin Battle Game");
 
         for (int i=0; i<1000; i++) {
+            gameState.next(null);
             view.repaint();
             Thread.sleep(20);
         }

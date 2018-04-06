@@ -20,6 +20,9 @@ public class SpinBattleParams {
     public double minGrowth = 0.05;
     public double maxGrowth = 0.15;
 
+    public int minInitialShips = 5;
+    public int maxInitialShips = 20;
+
     static Random random = new Random();
 
     public Random getRandom() {

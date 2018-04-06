@@ -30,7 +30,10 @@ public class SpinGameState implements AbstractGameState {
 
     @Override
     public AbstractGameState next(int[] actions) {
-        return null;
+        for (Planet p : planets) {
+            p.update();
+        }
+        return this;
     }
 
     @Override

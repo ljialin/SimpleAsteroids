@@ -3,6 +3,8 @@ package spinbattle.view;
 import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
 import spinbattle.params.SpinBattleParams;
+import spinbattle.util.DrawUtil;
+
 import static spinbattle.params.Constants.*;
 
 import javax.swing.*;
@@ -53,7 +55,8 @@ public class SpinBattleView extends JComponent {
         for (Planet p : gameState.planets) {
             g.setColor(playerColors[p.ownedBy]);
             int rad = (int) (p.growthRate * growthRateToRadius);
-            g.fillOval((int) p.position.x, (int) p.position.y - rad, 2* rad, 2* rad);
+            g.fillOval((int) p.position.x-rad, (int) p.position.y - rad, 2* rad, 2* rad);
+            DrawUtil.centreString(g, "" + (int) p.shipCount, p.position.x, p.position.y);
         }
     }
 
