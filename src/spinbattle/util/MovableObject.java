@@ -3,7 +3,8 @@ package spinbattle.util;
 import math.Vector2d;
 
 public class MovableObject {
-    Vector2d s, v;
+    public Vector2d s;
+    public Vector2d v;
 
     // may not need this...
     boolean isActive = false;
