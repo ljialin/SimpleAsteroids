@@ -2,6 +2,7 @@ package spinbattle.view;
 
 import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
+import spinbattle.core.Transporter;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.util.DrawUtil;
 
@@ -49,6 +50,7 @@ public class SpinBattleView extends JComponent {
         g.fillRect(0, 0, getWidth(), getHeight());
         paintStars(g);
         paintPlanets(g);
+        paintTransits(g);
     }
 
     private void paintPlanets(Graphics2D g) {
@@ -57,6 +59,18 @@ public class SpinBattleView extends JComponent {
             int rad = (int) (p.growthRate * growthRateToRadius);
             g.fillOval((int) p.position.x-rad, (int) p.position.y - rad, 2* rad, 2* rad);
             DrawUtil.centreString(g, "" + (int) p.shipCount, p.position.x, p.position.y);
+        }
+    }
+
+    private void paintTransits(Graphics2D g) {
+        for (Planet p : gameState.planets) {
+            Transporter t = p.getTransporter();
+            if (t != null && t.inTransit()) {
+                g.setColor(playerColors[t.ownedBy]);
+                int rad = (int) (t.payload);
+                g.fillRect((int) t.mo.s.x - rad, (int) t.mo.s.y - rad, 2 * rad, 2 * rad);
+                DrawUtil.centreString(g, "" + (int) t.payload, t.mo.s.x, t.mo.s.y);
+            }
         }
     }
 

@@ -18,7 +18,7 @@ public class SpinGameState implements AbstractGameState {
 
     // may set a limit on the game length
     // this will be used in the isTerminal() method
-    SpinBattleParams params;
+    public SpinBattleParams params;
 
     public ArrayList<Planet> planets;
 

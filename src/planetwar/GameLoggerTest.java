@@ -61,11 +61,11 @@ public class GameLoggerTest {
     }
 
     // commented out for now, it's interesting but not necessary for illustration
-//    static GVGAIWrapper getMCTSAgent(GameState gameState, int playerId) {
+//    static GVGAIWrapper getMCTSAgent(GameState gameState, int ownedBy) {
 //        ElapsedCpuTimer timer = new ElapsedCpuTimer();
 //        PlanetWarsLinkState linkState = new PlanetWarsLinkState(gameState);
 //        AbstractMultiPlayer agent =
-//                new controllers.multiPlayer.discountOLMCTS.Agent(linkState.copy(), timer, playerId);
+//                new controllers.multiPlayer.discountOLMCTS.Agent(linkState.copy(), timer, ownedBy);
 //        GVGAIWrapper wrapper = new GVGAIWrapper().setAgent(agent);
 //        return wrapper;
 //

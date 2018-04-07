@@ -52,13 +52,13 @@ public class ActionSequencer implements PluginEvaluator {
         return terminalState;
     }
 
-//    public ActionSequencer actVersusDoNothing(int[] seq, int playerId) {
+//    public ActionSequencer actVersusDoNothing(int[] seq, int ownedBy) {
 //        // careful, this may not be copiing the game state ...
 //        terminalState = initialState.copy();
 //        int[] actions = new int[2];
 //        for (int a : seq) {
-//            actions[playerId] = a;
-//            actions[1 - playerId] = GameState.doNothing;
+//            actions[ownedBy] = a;
+//            actions[1 - ownedBy] = GameState.doNothing;
 //            terminalState.next(actions);
 //        }
 //        // System.out.println("Terminal score: " + terminalState.getScore());

@@ -16,6 +16,7 @@ public class Planet {
     public double shipCount;
     public int ownedBy;
     SpinBattleParams params;
+    Transporter transit;
 
     Planet processIncoming(double incomingShips, int playerId) {
         if (ownedBy != playerId) {
@@ -36,6 +37,9 @@ public class Planet {
     Planet update() {
         if (ownedBy != Constants.neutralPlayer) {
             shipCount += growthRate;
+        }
+        if (transit != null) {
+            transit.next();
         }
         return this;
     }
@@ -79,4 +83,17 @@ public class Planet {
         return position + " : " + ownedBy + " : " + getRadius();
     }
 
+    public boolean transitReady() {
+        return transit == null && ownedBy != Constants.neutralPlayer;
+    }
+
+
+    public Transporter getTransporter() {
+        // neutral planets cannot release transporters
+        if (ownedBy == Constants.neutralPlayer) return null;
+        // if transit is null then make a new one
+        if (transit == null)
+            transit = new Transporter().setParent(this);
+        return transit;
+    }
 }
