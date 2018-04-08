@@ -10,6 +10,7 @@ public class Planet {
     public Vector2d position;
     public double rotation;
     public double rotationRate;
+    public int index;
 
     public double growthRate;
 
@@ -17,6 +18,23 @@ public class Planet {
     public int ownedBy;
     SpinBattleParams params;
     Transporter transit;
+
+    public Planet copy() {
+        Planet planet = new Planet();
+        // shallow copy position on the assumption that it will not change
+        planet.position = position;
+        planet.rotation = rotation;
+        planet.rotationRate = rotationRate;
+        planet.growthRate = growthRate;
+        planet.shipCount = shipCount;
+        planet.ownedBy = ownedBy;
+        planet.params = params;
+        planet.index = index;
+        if (transit !=  null)
+            planet.transit = transit.copy();
+        return planet;
+    }
+
 
     Planet processIncoming(double incomingShips, int playerId) {
         if (ownedBy != playerId) {
@@ -36,14 +54,14 @@ public class Planet {
         return this;
     }
 
-    public Planet update() {
+    public Planet update(SpinGameState gameState) {
         if (ownedBy != Constants.neutralPlayer) {
             shipCount += growthRate;
         }
         if (transit != null && transit.inTransit()) {
             transit.next();
             // check to see whether it has arrived and if return the target
-            Planet destination = params.getCollider().getPlanetInRange(transit);
+            Planet destination = params.getCollider().getPlanetInRange(gameState, transit);
 
             if (destination != null) {
                 // process the inbound
@@ -61,6 +79,11 @@ public class Planet {
         return this;
     }
 
+    public Planet setIndex(int index) {
+        this.index = index;
+        return this;
+    }
+
     Planet setRandomLocation(SpinBattleParams p) {
         position = new Vector2d(p.getRandom().nextDouble() * p.width, p.getRandom().nextDouble() * p.height);
         return this;
@@ -72,14 +95,6 @@ public class Planet {
         shipCount = params.minInitialShips +
                 params.getRandom().nextInt(params.maxInitialShips - params.minInitialShips);
         return this;
-    }
-
-    public Planet copy() {
-        Planet planet = new Planet();
-        planet.position = position.copy();
-        planet.rotation = rotation;
-        planet.rotationRate = rotationRate;
-        return planet;
     }
 
     public Planet setRandomGrowthRate() {
@@ -105,7 +120,7 @@ public class Planet {
         if (ownedBy == Constants.neutralPlayer) return null;
         // if transit is null then make a new one
         if (transit == null)
-            transit = new Transporter().setParent(this);
+            transit = new Transporter().setParent(index).setParams(params);
         return transit;
     }
 

@@ -3,6 +3,7 @@ package spinbattle.view;
 import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
 import spinbattle.core.Transporter;
+import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.util.DrawUtil;
 
@@ -67,7 +68,7 @@ public class SpinBattleView extends JComponent {
             Transporter t = p.getTransporter();
             if (t != null && t.inTransit()) {
                 g.setColor(playerColors[t.ownedBy]);
-                int rad = (int) (t.payload);
+                int rad = (int) (Constants.minTransitRadius + Math.sqrt(t.payload));
                 g.fillRect((int) t.mo.s.x - rad, (int) t.mo.s.y - rad, 2 * rad, 2 * rad);
                 DrawUtil.centreString(g, "" + (int) t.payload, t.mo.s.x, t.mo.s.y);
             }

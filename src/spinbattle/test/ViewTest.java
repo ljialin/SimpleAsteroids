@@ -19,8 +19,10 @@ public class ViewTest {
         for (int i=0; i<1000; i++) {
 
             gameState.next(null);
+            gameState = (SpinGameState) gameState.copy();
             launcher.makeTransits(gameState, Constants.playerOne);
             launcher.makeTransits(gameState, Constants.playerTwo);
+            view.setGameState(gameState);
             view.repaint();
             Thread.sleep(20);
         }

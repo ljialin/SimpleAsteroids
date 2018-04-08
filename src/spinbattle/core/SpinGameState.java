@@ -25,13 +25,22 @@ public class SpinGameState implements AbstractGameState {
 
     @Override
     public AbstractGameState copy() {
-        return null;
+        SpinGameState copy = new SpinGameState();
+        // just shallow-copy the params
+        copy.params = params;
+        copy.nTicks = nTicks;
+        // deep copy the planets
+        copy.planets = new ArrayList<>();
+        for (Planet p : planets) {
+            copy.planets.add(p.copy());
+        }
+        return copy;
     }
 
     @Override
     public AbstractGameState next(int[] actions) {
         for (Planet p : planets) {
-            p.update();
+            p.update(this);
         }
         nTicks++;
         totalTicks++;
@@ -68,9 +77,11 @@ public class SpinGameState implements AbstractGameState {
         planets = new ArrayList<>();
         int i=0;
         // set the neutral ones
+        // strange but true, which ones is allocated first has an advantage
+        int whichEven = params.getRandom().nextInt(2);
         int nToAllocate = params.nPlanets - params.nNeutral;
         while (planets.size() < nToAllocate) {
-            int owner = planets.size() == 0 ? Constants.playerOne : Constants.playerTwo;
+            int owner = planets.size() == whichEven ? Constants.playerOne : Constants.playerTwo;
             Planet planet = makePlanet(owner);
             planet.growthRate = params.maxGrowth;
             if (valid(planet)) planets.add(planet);
@@ -79,7 +90,10 @@ public class SpinGameState implements AbstractGameState {
 
         while (planets.size() < params.nPlanets && i++ < maxTries) {
             Planet planet = makePlanet(Constants.neutralPlayer);
-            if (valid(planet)) planets.add(planet);
+            if (valid(planet)) {
+                planet.setIndex(planets.size());
+                planets.add(planet);
+            }
         }
         // System.out.println(planets);
         return this;

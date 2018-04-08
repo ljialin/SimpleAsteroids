@@ -14,13 +14,29 @@ import spinbattle.util.MovableObject;
  */
 
 public class Transporter {
-    public Planet parent;
-    public Planet target;
+    // use ints to index the parent and the target planets
+    public int parent;
+    // use Integer to allow it to be null
+    public Integer target;
     SpinBattleParams params;
     public int ownedBy;
     public double payload = 0;
 
     public MovableObject mo;
+
+    public Transporter copy() {
+        Transporter transporter = new Transporter();
+        // just shallow copy; the planets themselves have already been deep copied?
+        transporter.parent = parent;
+        transporter.target = target;
+        transporter.params = params;
+        transporter.ownedBy = ownedBy;
+        transporter.payload = payload;
+        if (mo != null)
+            transporter.mo = mo.copy();
+        return transporter;
+    }
+
 
     public Transporter next() {
         if (mo != null) {
@@ -38,40 +54,42 @@ public class Transporter {
         return this;
     }
 
-    public Transporter setParent(Planet parent) {
+    public Transporter setParent(int parent) {
         this.parent = parent;
         return this;
     }
 
-    public Transporter setTarget(Planet target) {
+    public Transporter setParams(SpinBattleParams params) {
+        this.params = params;
+        return this;
+    }
+
+    public Transporter setTarget(int target) {
         this.target = target;
         return this;
     }
 
-    public Transporter incPayload(double payload) {
+    public Transporter incPayload(Planet source, double payload) {
         // payload may have already been set to a non-zero amount
         double diff = payload - this.payload;
         // subtract the difference of
-        if (diff > parent.shipCount) {
-            diff = parent.shipCount;
+        if (diff > source.shipCount) {
+            diff = source.shipCount;
         }
-        parent.shipCount -= diff;
+        source.shipCount -= diff;
         this.payload += diff;
         // this.payload = payload;
         return this;
     }
 
-    public Transporter launch(Vector2d destination, int playerId) {
+    public Transporter launch(Vector2d start, Vector2d destination, int playerId) {
         // set up the mover
         mo = new MovableObject();
-        mo.s = parent.position.copy();
+        mo.s = start.copy();
         mo.v = destination.copy().subtract(mo.s);
         mo.v.normalise();
-        mo.v.mul(parent.params.transitSpeed);
-
+        mo.v.mul(params.transitSpeed);
         this.ownedBy = playerId;
-
         return this;
     }
-
 }

@@ -12,10 +12,12 @@ public class SpeedTest {
     static StatSummary constructionTime = new StatSummary("Construction Time");
     static StatSummary runningTime = new StatSummary("Running Time");
 
+    static boolean copyTest = false;
+
     public static void main(String[] args) {
 
         int nSteps = 1000;
-        int nGames = 1000;
+        int nGames = 500;
 
         ElapsedTimer timer = new ElapsedTimer();
 
@@ -28,6 +30,7 @@ public class SpeedTest {
             ss.add(gameState.getScore());
             if (gameState.getScore() > 0) nWins++;
             if (Math.random() < 0.5) nRand++;
+            System.out.println(i + "\t " + gameState.getScore());
         }
         System.out.println(ss);
         System.out.println(constructionTime);
@@ -50,8 +53,10 @@ public class SpeedTest {
         t = new ElapsedTimer();
         for (int i = 0; i < nSteps; i++) {
             gameState.next(null);
-            launcher.makeTransits(gameState, Constants.playerTwo);
+            if (copyTest)
+                gameState = (SpinGameState) gameState.copy();
             launcher.makeTransits(gameState, Constants.playerOne);
+            launcher.makeTransits(gameState, Constants.playerTwo);
         }
         runningTime.add(t.elapsed());
         return gameState;

@@ -6,19 +6,21 @@ public class Collider {
     // a transit has reached its destination or
     // has collided with another transit
 
-    public boolean hasArrived(Transporter t) {
-        if (t.target != null) {
-            return t.mo.s.dist(t.target.position) < t.target.getRadius();
-        }
-        return false;
-    }
+//    public boolean hasArrived(Transporter t) {
+//        if (t.target != null) {
+//            return t.mo.s.dist(t.target.position) < t.target.getRadius();
+//        }
+//        return false;
+//    }
 
-    public Planet getPlanetInRange(Transporter t) {
+
+    public Planet getPlanetInRange(SpinGameState gameState, Transporter t) {
         if (t.target != null) {
-            double dist = t.mo.s.dist(t.target.position);
+            Planet target = gameState.planets.get(t.target);
+            double dist = t.mo.s.dist(target.position);
             // System.out.println(dist);
-            if (dist < t.target.getRadius()) {
-                return t.target;
+            if (dist < target.getRadius()) {
+                return target;
             }
         }
         return null;

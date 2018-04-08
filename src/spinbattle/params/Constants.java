@@ -10,4 +10,6 @@ public interface Constants {
     // since radius has an effect on game play
     int growthRateToRadius = 250;
     double radSep = 2;
+
+    int minTransitRadius = 7;
 }
