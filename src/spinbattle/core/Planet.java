@@ -26,6 +26,8 @@ public class Planet {
             if (shipCount <= 0) {
                 ownedBy = playerId;
                 shipCount = Math.abs(shipCount);
+                // and should make a transporter
+                transit = getTransporter();
             }
         } else {
             // must be owned by this player already, so add to the tally
@@ -34,12 +36,22 @@ public class Planet {
         return this;
     }
 
-    Planet update() {
+    public Planet update() {
         if (ownedBy != Constants.neutralPlayer) {
             shipCount += growthRate;
         }
-        if (transit != null) {
+        if (transit != null && transit.inTransit()) {
             transit.next();
+            // check to see whether it has arrived and if return the target
+            Planet destination = params.getCollider().getPlanetInRange(transit);
+
+            if (destination != null) {
+                // process the inbound
+                destination.processIncoming(transit.payload, transit.ownedBy);
+                transit.terminateJourney();
+                // transit
+                // System.out.println("Terminated Journey: " + transit.inTransit());
+            }
         }
         return this;
     }
@@ -84,7 +96,7 @@ public class Planet {
     }
 
     public boolean transitReady() {
-        return transit == null && ownedBy != Constants.neutralPlayer;
+        return getTransporter() != null && !getTransporter().inTransit();
     }
 
 
@@ -95,5 +107,13 @@ public class Planet {
         if (transit == null)
             transit = new Transporter().setParent(this);
         return transit;
+    }
+
+    public int getScore() {
+        if (ownedBy == Constants.neutralPlayer) return 0;
+        int score = 0;
+        if (ownedBy == Constants.playerOne) score = (int) shipCount;
+        if (ownedBy == Constants.playerTwo) score = (int) -shipCount;
+        return score;
     }
 }

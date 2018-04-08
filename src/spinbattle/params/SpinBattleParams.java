@@ -1,5 +1,7 @@
 package spinbattle.params;
 
+import spinbattle.core.Collider;
+
 import java.util.Random;
 
 public class SpinBattleParams {
@@ -23,10 +25,18 @@ public class SpinBattleParams {
     public int minInitialShips = 5;
     public int maxInitialShips = 20;
 
+    public int transitSpeed = 2;
+
     static Random random = new Random();
+
+    static Collider collider = new Collider();
 
     public Random getRandom() {
         return random;
+    }
+
+    public Collider getCollider() {
+        return collider;
     }
 
 }

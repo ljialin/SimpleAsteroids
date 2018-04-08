@@ -15,6 +15,7 @@ import spinbattle.util.MovableObject;
 
 public class Transporter {
     public Planet parent;
+    public Planet target;
     SpinBattleParams params;
     public int ownedBy;
     public double payload = 0;
@@ -42,6 +43,11 @@ public class Transporter {
         return this;
     }
 
+    public Transporter setTarget(Planet target) {
+        this.target = target;
+        return this;
+    }
+
     public Transporter incPayload(double payload) {
         // payload may have already been set to a non-zero amount
         double diff = payload - this.payload;
@@ -61,6 +67,7 @@ public class Transporter {
         mo.s = parent.position.copy();
         mo.v = destination.copy().subtract(mo.s);
         mo.v.normalise();
+        mo.v.mul(parent.params.transitSpeed);
 
         this.ownedBy = playerId;
 

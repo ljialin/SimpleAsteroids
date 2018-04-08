@@ -33,6 +33,8 @@ public class SpinGameState implements AbstractGameState {
         for (Planet p : planets) {
             p.update();
         }
+        nTicks++;
+        totalTicks++;
         return this;
     }
 
@@ -43,7 +45,11 @@ public class SpinGameState implements AbstractGameState {
 
     @Override
     public double getScore() {
-        return 0;
+        double score = 0;
+        for (Planet p : planets) {
+            score += p.getScore();
+        }
+        return score;
     }
 
     @Override
@@ -69,13 +75,13 @@ public class SpinGameState implements AbstractGameState {
             planet.growthRate = params.maxGrowth;
             if (valid(planet)) planets.add(planet);
         }
-        System.out.println("To allocate: " + nToAllocate + " : " + planets.size());
+        // System.out.println("To allocate: " + nToAllocate + " : " + planets.size());
 
         while (planets.size() < params.nPlanets && i++ < maxTries) {
             Planet planet = makePlanet(Constants.neutralPlayer);
             if (valid(planet)) planets.add(planet);
         }
-        System.out.println(planets);
+        // System.out.println(planets);
         return this;
     }
 
@@ -92,7 +98,7 @@ public class SpinGameState implements AbstractGameState {
         double minY = Math.min(p.position.y, params.height - p.position.y);
         // test whether planet is too close to border
         if (Math.min(minX, minY) < p.getRadius() * Constants.radSep) {
-            System.out.println("Failed border sep:" + minX +  " : " + minY);
+            // System.out.println("Failed border sep:" + minX +  " : " + minY);
             return false;
         }
 
@@ -101,7 +107,7 @@ public class SpinGameState implements AbstractGameState {
         for (Planet x : planets) {
             double sep = x.position.dist(p.position);
             if (sep < Constants.radSep * (x.getRadius() + p.getRadius())) {
-                System.out.println("Failed planet proximity: " + (int) sep);
+                // System.out.println("Failed planet proximity: " + (int) sep);
                 return false;
             }
         }

@@ -19,12 +19,13 @@ public class HeuristicLauncher implements SimplePlayerInterface {
         // for each planet, check whether the transit is available
 
         for (Planet p : gameState.planets) {
-            if (p.transitReady()) {
+            if (p.ownedBy == playerId && p.transitReady()) {
                 Transporter transit = p.getTransporter();
                 Planet destination = getTarget(gameState, p, playerId);
                 if (destination != null) {
                     transit.incPayload(destination.shipCount);
                     transit.launch(destination.position, playerId);
+                    transit.setTarget(destination);
                 }
             }
         }

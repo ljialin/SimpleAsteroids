@@ -20,6 +20,7 @@ public class ViewTest {
 
             gameState.next(null);
             launcher.makeTransits(gameState, Constants.playerOne);
+            launcher.makeTransits(gameState, Constants.playerTwo);
             view.repaint();
             Thread.sleep(20);
         }
