@@ -21,6 +21,7 @@ public class SpinGameState implements AbstractGameState {
     public SpinBattleParams params;
 
     public ArrayList<Planet> planets;
+    public ProximityMap proximityMap;
 
 
     @Override
@@ -34,6 +35,8 @@ public class SpinGameState implements AbstractGameState {
         for (Planet p : planets) {
             copy.planets.add(p.copy());
         }
+        // shallow copy the proximity map (which may even be null)
+        copy.proximityMap = proximityMap;
         return copy;
     }
 
@@ -96,6 +99,9 @@ public class SpinGameState implements AbstractGameState {
             }
         }
         // System.out.println(planets);
+        if (params.useProximityMap) {
+            proximityMap = new ProximityMap().setPlanets(this);
+        }
         return this;
     }
 
@@ -128,8 +134,5 @@ public class SpinGameState implements AbstractGameState {
         return true;
 
     }
-
     // todo - set up the planets based on the params that have been passed
-
-
 }

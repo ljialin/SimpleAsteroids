@@ -50,6 +50,7 @@ public class Transporter {
     }
 
     public Transporter terminateJourney() {
+        payload = 0;
         mo = null;
         return this;
     }

@@ -23,6 +23,10 @@ public class SpinBattleView extends JComponent {
             Color.getHSBColor(0.75f, 1, 1),
             Color.lightGray
     };
+    int scoreFontSize = 16;
+    int planetFontSize = 14;
+    DrawUtil planetDraw = new DrawUtil().setColor(Color.black).setFontSize(planetFontSize);
+    DrawUtil scoreDraw = new DrawUtil().setColor(Color.white).setFontSize(scoreFontSize);
 
     public SpinBattleView setGameState(SpinGameState gameState) {
         this.gameState = gameState;
@@ -52,14 +56,35 @@ public class SpinBattleView extends JComponent {
         paintStars(g);
         paintPlanets(g);
         paintTransits(g);
+        paintScore(g);
+    }
+
+    private void paintScore(Graphics2D g) {
+        g.setColor(Color.white);
+        int score = (int) gameState.getScore();
+        String leader = score > 0 ? "P1" : "P2";
+        score = Math.abs(score);
+        String message = String.format("%s: %d", leader, score);
+        scoreDraw.centreString(g, message, getWidth()/2, scoreFontSize);
     }
 
     private void paintPlanets(Graphics2D g) {
         for (Planet p : gameState.planets) {
             g.setColor(playerColors[p.ownedBy]);
             int rad = (int) (p.growthRate * growthRateToRadius);
-            g.fillOval((int) p.position.x-rad, (int) p.position.y - rad, 2* rad, 2* rad);
-            DrawUtil.centreString(g, "" + (int) p.shipCount, p.position.x, p.position.y);
+            int cx = (int) p.position.x, cy = (int) p.position.y;
+            g.fillOval(cx-rad, cy-rad, 2* rad, 2* rad);
+            // now show it's rotation if non-neutral
+
+            if (p.ownedBy != Constants.neutralPlayer) {
+                int xRot = cx + (int) (rad * Math.sin(p.rotation));
+                int yRot = cy + (int) (rad * Math.cos(p.rotation));
+
+                rad /= 4;
+                g.fillOval(xRot - rad, yRot - rad, rad * 2, rad * 2);
+            }
+
+            planetDraw.centreString(g, "" + (int) p.shipCount, p.position.x, p.position.y);
         }
     }
 
@@ -70,7 +95,7 @@ public class SpinBattleView extends JComponent {
                 g.setColor(playerColors[t.ownedBy]);
                 int rad = (int) (Constants.minTransitRadius + Math.sqrt(t.payload));
                 g.fillRect((int) t.mo.s.x - rad, (int) t.mo.s.y - rad, 2 * rad, 2 * rad);
-                DrawUtil.centreString(g, "" + (int) t.payload, t.mo.s.x, t.mo.s.y);
+                planetDraw.centreString(g, "" + (int) t.payload, t.mo.s.x, t.mo.s.y);
             }
         }
     }

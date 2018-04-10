@@ -30,7 +30,7 @@ public class SpeedTest {
             ss.add(gameState.getScore());
             if (gameState.getScore() > 0) nWins++;
             if (Math.random() < 0.5) nRand++;
-            System.out.println(i + "\t " + gameState.getScore());
+            // System.out.println(i + "\t " + gameState.getScore());
         }
         System.out.println(ss);
         System.out.println(constructionTime);

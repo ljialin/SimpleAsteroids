@@ -45,7 +45,7 @@ public class Planet {
                 ownedBy = playerId;
                 shipCount = Math.abs(shipCount);
                 // and should make a transporter
-                transit = getTransporter();
+                // transit = getTransporter();
             }
         } else {
             // must be owned by this player already, so add to the tally
@@ -71,6 +71,7 @@ public class Planet {
                 // System.out.println("Terminated Journey: " + transit.inTransit());
             }
         }
+        rotation += rotationRate;
         return this;
     }
 
@@ -99,6 +100,10 @@ public class Planet {
 
     public Planet setRandomGrowthRate() {
         growthRate = params.getRandom().nextDouble() * (params.maxGrowth - params.minGrowth) + params.minGrowth;
+        // also set a random rotation rate
+        rotationRate = params.getRandom().nextDouble() + 1;
+        if (params.getRandom().nextDouble() < 0.5) rotationRate = -rotationRate;
+        rotationRate *= Math.PI * 2.0 / 100;
         return this;
     }
 

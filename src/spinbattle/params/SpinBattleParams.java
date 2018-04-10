@@ -25,7 +25,9 @@ public class SpinBattleParams {
     public int minInitialShips = 5;
     public int maxInitialShips = 20;
 
-    public int transitSpeed = 2;
+    public int transitSpeed = 3;
+
+    public boolean useProximityMap = true;
 
     static Random random = new Random();
 
