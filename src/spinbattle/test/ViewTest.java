@@ -22,7 +22,7 @@ public class ViewTest {
             gameState = (SpinGameState) gameState.copy();
             launcher.makeTransits(gameState, Constants.playerOne);
             launcher.makeTransits(gameState, Constants.playerTwo);
-            view.setGameState(gameState);
+            view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
             Thread.sleep(20);
         }

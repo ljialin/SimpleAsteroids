@@ -95,6 +95,8 @@ public class SpinBattleView extends JComponent {
                 g.setColor(playerColors[t.ownedBy]);
                 int rad = (int) (Constants.minTransitRadius + Math.sqrt(t.payload));
                 g.fillRect((int) t.mo.s.x - rad, (int) t.mo.s.y - rad, 2 * rad, 2 * rad);
+                TransporterView tv = new TransporterView().setState(t.mo.s, t.mo.v, rad);
+                tv.draw(g);
                 planetDraw.centreString(g, "" + (int) t.payload, t.mo.s.x, t.mo.s.y);
             }
         }
