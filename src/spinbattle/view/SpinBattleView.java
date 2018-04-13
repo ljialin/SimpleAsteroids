@@ -84,7 +84,7 @@ public class SpinBattleView extends JComponent {
                 g.fillOval(xRot - rad, yRot - rad, rad * 2, rad * 2);
             }
 
-            String label = "" + p.index; //  + ":" + (int) p.shipCount;
+            String label = "" + (int) p.shipCount;
             planetDraw.centreString(g, label, p.position.x, p.position.y);
         }
     }
