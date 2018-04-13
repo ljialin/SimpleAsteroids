@@ -19,8 +19,8 @@ public class HumanInterfaceTest {
         SourceTargetMouseController mouseController = new SourceTargetMouseController();
         mouseController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseController);
-        int launchPeriod = 50;
-        for (int i=0; i<1000; i++) {
+        int launchPeriod = 100;
+        for (int i=0; i<5000; i++) {
             gameState.next(null);
             // launcher.makeTransits(gameState, Constants.playerOne);
             if (i % launchPeriod == 0)

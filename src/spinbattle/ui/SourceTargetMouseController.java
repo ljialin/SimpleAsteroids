@@ -53,7 +53,7 @@ public class SourceTargetMouseController extends MouseAdapter {
             // set the selectewd planet to this one, if it does not already have a ship in transit
             if (clicked != null) {
                 Planet source = gameState.planets.get(clicked);
-                if (source.transitReady()) {
+                if (source.transitReady() && source.ownedBy == playerId) {
                     planetSelected = clicked;
                 }
             }
