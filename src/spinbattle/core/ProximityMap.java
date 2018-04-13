@@ -60,6 +60,14 @@ public class ProximityMap {
         }
     }
 
+    public Integer getPlanetIndex(int x, int y) {
+        try {
+            return inRange[x][y];
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public Integer getClosestInRange(List<Planet> planets, int x, int y) {
         // will return null if nothing in range
         Vector2d probe = new Vector2d(x, y);

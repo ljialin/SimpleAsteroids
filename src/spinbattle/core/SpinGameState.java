@@ -87,7 +87,10 @@ public class SpinGameState implements AbstractGameState {
             int owner = planets.size() == whichEven ? Constants.playerOne : Constants.playerTwo;
             Planet planet = makePlanet(owner);
             planet.growthRate = params.maxGrowth;
-            if (valid(planet)) planets.add(planet);
+            if (valid(planet)) {
+                planet.setIndex(planets.size());
+                planets.add(planet);
+            }
         }
         // System.out.println("To allocate: " + nToAllocate + " : " + planets.size());
 
