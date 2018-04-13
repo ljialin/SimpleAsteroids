@@ -1,8 +1,10 @@
 package spinbattle.view;
 
+import math.Vector2d;
 import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
 import spinbattle.core.Transporter;
+import spinbattle.core.VectorField;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.util.DrawUtil;
@@ -17,12 +19,13 @@ public class SpinBattleView extends JComponent {
     SpinBattleParams params;
     SpinGameState gameState;
     Color bg = Color.black;
-    int nStars = 100;
+    int nStars = 200;
     Color[] playerColors = {
             Color.getHSBColor(0.25f, 1, 1),
             Color.getHSBColor(0.75f, 1, 1),
             Color.lightGray
     };
+    Color vectorColor = new Color(1f, 1f, 1f, 0.3f);
     int scoreFontSize = 16;
     int planetFontSize = 14;
     DrawUtil planetDraw = new DrawUtil().setColor(Color.black).setFontSize(planetFontSize);
@@ -53,6 +56,7 @@ public class SpinBattleView extends JComponent {
         Graphics2D g = (Graphics2D) go;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.fillRect(0, 0, getWidth(), getHeight());
+        paintVectorField(g);
         paintStars(g);
         paintPlanets(g);
         paintTransits(g);
@@ -102,6 +106,23 @@ public class SpinBattleView extends JComponent {
             }
         }
     }
+
+    private void paintVectorField(Graphics2D g) {
+        // System.out.println(gameState.vectorField);
+        if (gameState.vectorField == null) return;
+        VectorField vf = gameState.vectorField;
+        for (int i=0; i<vf.w; i++) {
+            for (int j=0; j<vf.h; j++) {
+                double cx = (i+0.5) * vf.cellSize, cy = (j+0.5) * vf.cellSize;
+                g.setColor(vectorColor);
+                Vector2d f = vf.vf[i][j];
+                g.drawLine((int) cx, (int) cy, (int) (f.x + cx), (int) (f.y + cy));
+            }
+        }
+        // System.out.println("Painted FV");
+    }
+
+
 
     ArrayList<Star> stars = new ArrayList();
 

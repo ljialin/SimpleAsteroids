@@ -22,6 +22,7 @@ public class SpinGameState implements AbstractGameState {
 
     public ArrayList<Planet> planets;
     public ProximityMap proximityMap;
+    public VectorField vectorField;
 
 
     @Override
@@ -37,6 +38,7 @@ public class SpinGameState implements AbstractGameState {
         }
         // shallow copy the proximity map (which may even be null)
         copy.proximityMap = proximityMap;
+        copy.vectorField = vectorField;
         return copy;
     }
 
@@ -105,6 +107,11 @@ public class SpinGameState implements AbstractGameState {
         if (params.useProximityMap) {
             proximityMap = new ProximityMap().setPlanets(this);
         }
+        if (params.useVectorField) {
+            vectorField = new VectorField().setParams(params).setField(this);
+            System.out.println("Set VF: " + vectorField);
+        }
+
         return this;
     }
 

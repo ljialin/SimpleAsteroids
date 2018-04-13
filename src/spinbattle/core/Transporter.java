@@ -38,9 +38,9 @@ public class Transporter {
     }
 
 
-    public Transporter next() {
+    public Transporter next(VectorField vf) {
         if (mo != null) {
-            mo.update();
+            mo.update(vf);
             if (!params.inBounds(mo.s)) {
                 outOfBoundsTermination();
             }

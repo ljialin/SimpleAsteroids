@@ -31,6 +31,8 @@ public class SpinBattleParams {
 
     public boolean useProximityMap = true;
 
+    public boolean useVectorField = true;
+
     static Random random = new Random();
 
     static Collider collider = new Collider();

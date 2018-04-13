@@ -59,7 +59,7 @@ public class Planet {
             shipCount += growthRate;
         }
         if (transit != null && transit.inTransit()) {
-            transit.next();
+            transit.next(gameState.vectorField);
             // check to see whether it has arrived and if return the target
             Planet destination = params.getCollider().getPlanetInRange(gameState, transit);
 
@@ -135,5 +135,9 @@ public class Planet {
         if (ownedBy == Constants.playerOne) score = (int) shipCount;
         if (ownedBy == Constants.playerTwo) score = (int) -shipCount;
         return score;
+    }
+
+    public double mass() {
+        return getRadius() * getRadius();
     }
 }

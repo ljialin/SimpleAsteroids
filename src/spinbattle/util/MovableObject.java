@@ -1,6 +1,7 @@
 package spinbattle.util;
 
 import math.Vector2d;
+import spinbattle.core.VectorField;
 
 public class MovableObject {
     public Vector2d s;
@@ -8,6 +9,7 @@ public class MovableObject {
 
     // may not need this...
     boolean isActive = false;
+    static double gConstant = 0.001;
 
     public MovableObject copy() {
         MovableObject mo = new MovableObject();
@@ -16,8 +18,13 @@ public class MovableObject {
         return mo;
     }
 
-    public MovableObject update() {
-        s.add(v);
+    public MovableObject update(VectorField vf) {
+        if (vf == null) {
+            s.add(v);
+        } else {
+            v.add(vf.getForce(s), gConstant);
+            s.add(v);
+        }
         return this;
     }
 
