@@ -7,32 +7,30 @@ import spinbattle.core.Transporter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class SourceTargetMouseController extends MouseAdapter {
-
+public class MouseSlingController extends MouseAdapter {
     Integer planetSelected;
     SpinGameState gameState;
     int playerId;
 
 
-    public SourceTargetMouseController setPlayerId(int playerId) {
+    public MouseSlingController setPlayerId(int playerId) {
         this.playerId = playerId;
         return this;
     }
 
-    public SourceTargetMouseController setGameState(SpinGameState gameState) {
+    public MouseSlingController setGameState(SpinGameState gameState) {
         this.gameState = gameState;
         return this;
     }
+
+    int shipCount = 0;
+    // boolean pressed = false;
 
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
 
-        System.out.println(e);
-        // find which one was clicked
-
         Integer clicked = gameState.proximityMap.getPlanetIndex(e.getX(), e.getY());
-        // what happens next depends on ...
 
         // System.out.println("Clicked: " + clicked);
         if (planetSelected != null) {
@@ -58,7 +56,36 @@ public class SourceTargetMouseController extends MouseAdapter {
                 }
             }
         }
-        // System.out.println("Planet selected: " + planetSelected);
     }
 
+    int nShipsPerTick = 1;
+
+    public MouseSlingController update() {
+        // this long winded code is due to the fact that
+        // the update may be operating on a different copy of the Planet
+        // and hence potentially a different Transit, so we need to identify it by its int id
+
+        // every time there is a planet selected, we need to increment its transit count
+        if (planetSelected != null) {
+            Planet source = gameState.planets.get(planetSelected);
+            Transporter transit = source.getTransporter();
+            // shift nShips per unit
+            transit.incPayload(source, nShipsPerTick);
+            // System.out.println("Incrementing: " + transit.payload);
+        }
+        return this;
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        super.mouseReleased(e);
+
+        // if we'd selected a planet, we now need to launch the transit
+        if (planetSelected != null) {
+            Planet source = gameState.planets.get(planetSelected);
+            Transporter transit = source.getTransporter();
+            transit.directionalLaunch(source.position, source.rotation, playerId);
+        }
+        // after a mouse release this is always set to null
+        planetSelected = null;
+    }
 }

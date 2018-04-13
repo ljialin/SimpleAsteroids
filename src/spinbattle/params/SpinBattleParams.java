@@ -1,7 +1,9 @@
 package spinbattle.params;
 
+import math.Vector2d;
 import spinbattle.core.Collider;
 
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 public class SpinBattleParams {
@@ -39,6 +41,12 @@ public class SpinBattleParams {
 
     public Collider getCollider() {
         return collider;
+    }
+
+    Rectangle2D bounds = new Rectangle2D.Double(0, 0, width, height);
+
+    public boolean inBounds(Vector2d s) {
+        return bounds.contains(s.x, s.y);
     }
 
 }

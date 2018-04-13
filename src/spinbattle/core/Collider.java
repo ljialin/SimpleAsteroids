@@ -17,6 +17,7 @@ public class Collider {
 
     public Planet getClosestInRange(SpinGameState gameState, Transporter t) {
         // this one does not depend on having a target, it just gets the closest one
+        if (!t.inTransit()) return null;
         Planet closest = gameState.proximityMap.getPlanet(gameState, t.mo.s);
         // if the closest one is the transporter's parent then return null
         if (closest == null) return null;

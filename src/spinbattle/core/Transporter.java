@@ -41,6 +41,9 @@ public class Transporter {
     public Transporter next() {
         if (mo != null) {
             mo.update();
+            if (!params.inBounds(mo.s)) {
+                outOfBoundsTermination();
+            }
         }
         return this;
     }
@@ -52,6 +55,13 @@ public class Transporter {
     public Transporter terminateJourney() {
         payload = 0;
         mo = null;
+        return this;
+    }
+
+    public Transporter outOfBoundsTermination() {
+        // for now just terminate the journey, but other things are possible also ...
+        System.out.println("Out of bounds");
+        terminateJourney();
         return this;
     }
 
@@ -70,7 +80,7 @@ public class Transporter {
         return this;
     }
 
-    public Transporter incPayload(Planet source, double payload) {
+    public Transporter setPayload(Planet source, double payload) {
         // payload may have already been set to a non-zero amount
         double diff = payload - this.payload;
         // subtract the difference of
@@ -83,11 +93,32 @@ public class Transporter {
         return this;
     }
 
+    public Transporter incPayload(Planet source, double diff) {
+        // payload may have already been set to a non-zero amount
+        if (diff > source.shipCount) {
+            diff = source.shipCount;
+        }
+        source.shipCount -= diff;
+        this.payload += diff;
+        return this;
+    }
+
     public Transporter launch(Vector2d start, Vector2d destination, int playerId) {
         // set up the mover
         mo = new MovableObject();
         mo.s = start.copy();
         mo.v = destination.copy().subtract(mo.s);
+        mo.v.normalise();
+        mo.v.mul(params.transitSpeed);
+        this.ownedBy = playerId;
+        return this;
+    }
+
+    public Transporter directionalLaunch(Vector2d start, double angle, int playerId) {
+        // set up the mover
+        mo = new MovableObject();
+        mo.s = start.copy();
+        mo.v = new Vector2d(Math.sin(angle), Math.cos(angle));
         mo.v.normalise();
         mo.v.mul(params.transitSpeed);
         this.ownedBy = playerId;
