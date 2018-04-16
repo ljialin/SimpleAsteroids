@@ -12,7 +12,7 @@ public class SpeedTest {
     static StatSummary constructionTime = new StatSummary("Construction Time");
     static StatSummary runningTime = new StatSummary("Running Time");
 
-    static boolean copyTest = false;
+    static boolean copyTest = true;
 
     public static void main(String[] args) {
 
@@ -39,6 +39,8 @@ public class SpeedTest {
         System.out.println();
         System.out.println("nWins for Player One: " + nWins);
         System.out.println("nHead (forcomparison) " + nRand);
+        System.out.println("Total game ticks: " + SpinGameState.totalTicks);
+        System.out.println("Total game states made: " + SpinGameState.totalInstances);
 
     }
 

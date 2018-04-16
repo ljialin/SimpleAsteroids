@@ -21,7 +21,7 @@ public class SpinBattleView extends JComponent {
     Color bg = Color.black;
     int nStars = 200;
     Color[] playerColors = {
-            Color.getHSBColor(0.25f, 1, 1),
+            Color.getHSBColor(0.17f, 1, 1),
             Color.getHSBColor(0.75f, 1, 1),
             Color.lightGray
     };
@@ -48,10 +48,15 @@ public class SpinBattleView extends JComponent {
         }
     }
 
+    public String getTitle() {
+        return gameState.nTicks + " : " + nPaints;
+    }
+
     public Dimension getPreferredSize() {
         return new Dimension(params.width, params.height);
     }
 
+    public int nPaints = 0;
     public void paintComponent(Graphics go) {
         Graphics2D g = (Graphics2D) go;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -61,6 +66,7 @@ public class SpinBattleView extends JComponent {
         paintPlanets(g);
         paintTransits(g);
         paintScore(g);
+        nPaints++;
     }
 
     private void paintScore(Graphics2D g) {

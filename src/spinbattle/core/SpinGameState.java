@@ -11,10 +11,15 @@ public class SpinGameState implements AbstractGameState {
     // this tracks all calls to the next method
     // useful for calculating overall stats
 
-    public static int totalTicks;
+    public static int totalTicks = 0;
+    public static int totalInstances = 0;
+
+    public SpinGameState() {
+        totalInstances++;
+    }
 
     // number of ticks made by this instance
-    int nTicks;
+    public int nTicks;
 
     // may set a limit on the game length
     // this will be used in the isTerminal() method
@@ -109,7 +114,7 @@ public class SpinGameState implements AbstractGameState {
         }
         if (params.useVectorField) {
             vectorField = new VectorField().setParams(params).setField(this);
-            System.out.println("Set VF: " + vectorField);
+            // System.out.println("Set VF: " + vectorField);
         }
 
         return this;

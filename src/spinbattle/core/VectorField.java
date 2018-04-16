@@ -36,7 +36,7 @@ public class VectorField {
             }
         }
 
-        System.out.println("Made vector field: " + t);
+        // System.out.println("Made vector field: " + t);
         return this;
     }
 
@@ -46,7 +46,11 @@ public class VectorField {
         Vector2d q = new Vector2d(x, y);
         for (Planet p : planets) {
             double d = q.dist(p.position);
-            double inv2 = 1 / (d * d);
+            // experiment with having zero gravity within a planet's radius
+            if (d < p.getRadius()) return new Vector2d();
+            // experiment with an inverse law
+            // double inv2 = .005 / (d * 1);
+            double inv2 = params.gravitationalConstant / (d * d);
             double m = p.mass();
             Vector2d pull = new Vector2d(p.position).subtract(q);
             f.add(pull, inv2 * m);

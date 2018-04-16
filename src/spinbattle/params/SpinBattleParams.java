@@ -24,16 +24,23 @@ public class SpinBattleParams {
     public double minGrowth = 0.05;
     public double maxGrowth = 0.15;
 
+    public double spinRatio = 0.4;
+
     public int minInitialShips = 5;
     public int maxInitialShips = 20;
 
     public int transitSpeed = 3;
 
+    // this is for a heuristic AI opponent
+    public int releasePeriod = 400;
+
     public boolean useProximityMap = true;
 
     public boolean useVectorField = true;
 
-    static Random random = new Random();
+    public double gravitationalConstant = 1.2;
+
+    public static Random random = new Random();
 
     static Collider collider = new Collider();
 

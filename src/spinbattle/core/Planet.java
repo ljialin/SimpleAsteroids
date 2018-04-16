@@ -101,7 +101,7 @@ public class Planet {
     public Planet setRandomGrowthRate() {
         growthRate = params.getRandom().nextDouble() * (params.maxGrowth - params.minGrowth) + params.minGrowth;
         // also set a random rotation rate
-        rotationRate = params.getRandom().nextDouble() + 1;
+        rotationRate = params.spinRatio * (params.getRandom().nextDouble() + 1);
         if (params.getRandom().nextDouble() < 0.5) rotationRate = -rotationRate;
         rotationRate *= Math.PI * 2.0 / 100;
         return this;

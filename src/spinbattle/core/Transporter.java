@@ -60,7 +60,7 @@ public class Transporter {
 
     public Transporter outOfBoundsTermination() {
         // for now just terminate the journey, but other things are possible also ...
-        System.out.println("Out of bounds");
+        // System.out.println("Out of bounds");
         terminateJourney();
         return this;
     }
