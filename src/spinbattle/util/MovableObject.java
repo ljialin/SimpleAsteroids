@@ -9,6 +9,8 @@ public class MovableObject {
 
     // may not need this...
     boolean isActive = false;
+
+    // should really be moved to params, or in to VectoreField
     static double gConstant = 0.001;
 
     public MovableObject copy() {
@@ -22,7 +24,7 @@ public class MovableObject {
         if (vf == null) {
             s.add(v);
         } else {
-            v.add(vf.getForce(s), gConstant);
+            v.add(vf.getForce(s), vf.getForceConstant());
             s.add(v);
         }
         return this;

@@ -50,7 +50,7 @@ public class VectorField {
             if (d < p.getRadius()) return new Vector2d();
             // experiment with an inverse law
             // double inv2 = .005 / (d * 1);
-            double inv2 = params.gravitationalConstant / (d * d);
+            double inv2 = params.gravitationalFieldConstant / (d * d);
             double m = p.mass();
             Vector2d pull = new Vector2d(p.position).subtract(q);
             f.add(pull, inv2 * m);
@@ -66,6 +66,10 @@ public class VectorField {
             e.printStackTrace();
             return new Vector2d();
         }
+    }
+
+    public double getForceConstant() {
+        return params.gravitationalForceConstant;
     }
 
 
