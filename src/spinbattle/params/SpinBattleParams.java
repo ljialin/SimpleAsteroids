@@ -43,7 +43,7 @@ public class SpinBattleParams {
     // for functional purposes
     // but adjusting both of them gives a clumsy way to control the display
     // of the field (which should really be done in the view class
-    // todo: collaps in to a single constant, and add a separate cosmetic param to control draw length of vectors
+    // todo: collapse in to a single constant, and add a separate cosmetic param to control draw length of vectors
     public double gravitationalFieldConstant = 1.2;
     public double gravitationalForceConstant = 0.001;
 

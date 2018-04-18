@@ -15,7 +15,7 @@ public class HumanSlingInterfaceTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(2);
+        SpinBattleParams.random = new Random(4);
         SpinBattleParams params = new SpinBattleParams();
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
