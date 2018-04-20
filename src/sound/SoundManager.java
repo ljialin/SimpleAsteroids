@@ -12,10 +12,12 @@ public class SoundManager {
     public static void main(String[] args) throws Exception {
 
         SoundManager sm = new SoundManager();
-        for (int i = 0; i < 25; i++) {
+        silent = false;
+        for (int i = 0; i < 1; i++) {
             sm.fire();
-            Thread.sleep(20);
+            Thread.sleep(50);
         }
+        // System.exit(0);
         Clip[] clips = {sm.bangLarge, sm.bangMedium, sm.bangSmall,
                 sm.beat1, sm.beat2, sm.extraShip, sm.saucerBig, sm.saucerSmall,
                 sm.thrust,
@@ -52,7 +54,7 @@ public class SoundManager {
     }
 
     public void play(Clip clip) {
-        clip.setFramePosition(0);
+        // clip.setFramePosition(0);
         clip.start();
     }
 
@@ -68,7 +70,7 @@ public class SoundManager {
         // fire the n-th bullet and increments the index
         if (!silent) {
             Clip clip = bullets[nBullet];
-            clip.setFramePosition(0);
+            // clip.setFramePosition(0);
             clip.start();
             nBullet = (nBullet + 1) % bullets.length;
         }
