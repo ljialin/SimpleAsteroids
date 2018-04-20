@@ -53,12 +53,13 @@ public class SpeedTest {
         constructionTime.add(t.elapsed());
 
         t = new ElapsedTimer();
-        for (int i = 0; i < nSteps; i++) {
+        for (int i = 0; i < nSteps && !gameState.isTerminal(); i++) {
             gameState.next(null);
             if (copyTest)
                 gameState = (SpinGameState) gameState.copy();
             launcher.makeTransits(gameState, Constants.playerOne);
             launcher.makeTransits(gameState, Constants.playerTwo);
+
         }
         runningTime.add(t.elapsed());
         return gameState;

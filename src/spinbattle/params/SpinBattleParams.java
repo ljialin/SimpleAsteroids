@@ -19,7 +19,7 @@ public class SpinBattleParams {
     public int maxTicks = 500;
     public int nPlanets = 20;
 
-    public int nNeutral = nPlanets - 2;
+    public int nNeutral = nPlanets - 4;
 
     public double minGrowth = 0.05;
     public double maxGrowth = 0.15;

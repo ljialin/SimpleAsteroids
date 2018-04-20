@@ -68,12 +68,35 @@ public class SpinGameState implements AbstractGameState {
         for (Planet p : planets) {
             score += p.getScore();
         }
+        // but it the game is over, add in an early completion bonus
+        if (!bothOwnPlanets()) {
+            double tot = 0;
+            for (Planet p : planets) tot += p.growthRate;
+            double bonus = tot * (params.maxTicks - nTicks);
+            // System.out.println("Awarding bonus: " + bonus);
+            score += bonus;
+        }
         return score;
     }
 
     @Override
     public boolean isTerminal() {
-        return nTicks > params.maxTicks;
+        return nTicks > params.maxTicks || !bothOwnPlanets();
+    }
+
+    // if only one player owns planets then the game is over
+    public boolean bothOwnPlanets() {
+        boolean playerOne = false;
+        boolean playerTwo = false;
+
+        for (Planet p : planets) {
+            playerOne |= p.ownedBy == Constants.playerOne;
+            playerTwo |= p.ownedBy == Constants.playerTwo;
+            if (playerOne && playerTwo) return true;
+        }
+
+        // System.out.println(playerOne + " : " + playerTwo);
+        return false;
     }
 
     public SpinGameState setParams(SpinBattleParams params) {
@@ -86,21 +109,25 @@ public class SpinGameState implements AbstractGameState {
     public SpinGameState setPlanets() {
         planets = new ArrayList<>();
         int i=0;
-        // set the neutral ones
-        // strange but true, which ones is allocated first has an advantage
         int whichEven = params.getRandom().nextInt(2);
         int nToAllocate = params.nPlanets - params.nNeutral;
         while (planets.size() < nToAllocate) {
-            int owner = planets.size() == whichEven ? Constants.playerOne : Constants.playerTwo;
+            int owner = (planets.size() % 2 == whichEven ? Constants.playerOne : Constants.playerTwo);
             Planet planet = makePlanet(owner);
+            // System.out.println("Made planet for: " + owner + " ... size: " + planets.size());
             planet.growthRate = params.maxGrowth;
             if (valid(planet)) {
                 planet.setIndex(planets.size());
                 planets.add(planet);
+                // System.out.println("Added planet for: " + owner);
+            } else {
+                // System.out.println("Failed to add planet for: " + owner);
             }
+            // System.out.println();
         }
         // System.out.println("To allocate: " + nToAllocate + " : " + planets.size());
 
+        // set the neutral ones
         while (planets.size() < params.nPlanets && i++ < maxTries) {
             Planet planet = makePlanet(Constants.neutralPlayer);
             if (valid(planet)) {

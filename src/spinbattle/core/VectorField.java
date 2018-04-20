@@ -61,7 +61,14 @@ public class VectorField {
     public Vector2d getForce(Vector2d s) {
         try {
             int x = (int) (s.x/cellSize), y = (int) (s.y/cellSize);
-            return vf[x][y];
+            Vector2d vec = vf[x][y];
+            if (vec == null) {
+                // throw new RuntimeException("Null Vector in Vector Field");
+                System.out.println("Warning: null Vector in VF");
+                return new Vector2d();
+            } else {
+                return vec;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new Vector2d();

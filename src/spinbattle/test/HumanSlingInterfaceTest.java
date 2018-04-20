@@ -15,8 +15,9 @@ public class HumanSlingInterfaceTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(4);
+        SpinBattleParams.random = new Random(6);
         SpinBattleParams params = new SpinBattleParams();
+        params.maxTicks = 5000;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
         HeuristicLauncher launcher = new HeuristicLauncher();
@@ -28,7 +29,7 @@ public class HumanSlingInterfaceTest {
         int launchPeriod = params.releasePeriod;
         waitUntilReady(view);
 
-        for (int i=0; i<=5000; i++) {
+        for (int i=0; i<=5000 && !gameState.isTerminal(); i++) {
             gameState.next(null);
             mouseSlingController.update();
             // launcher.makeTransits(gameState, Constants.playerOne);
@@ -39,6 +40,7 @@ public class HumanSlingInterfaceTest {
             frame.setTitle(title + " : " + i + " : " + view.getTitle());
             Thread.sleep(20);
         }
+        System.out.println(gameState.isTerminal());
     }
 
     static void waitUntilReady(SpinBattleView view) throws Exception {
@@ -48,5 +50,4 @@ public class HumanSlingInterfaceTest {
             Thread.sleep(50);
         }
     }
-
 }
