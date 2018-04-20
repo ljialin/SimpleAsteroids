@@ -1,6 +1,7 @@
 package spinbattle.core;
 
 import ggi.AbstractGameState;
+import spinbattle.log.BasicLogger;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 
@@ -28,7 +29,12 @@ public class SpinGameState implements AbstractGameState {
     public ArrayList<Planet> planets;
     public ProximityMap proximityMap;
     public VectorField vectorField;
+    public BasicLogger logger;
 
+    public SpinGameState setLogger(BasicLogger logger) {
+        this.logger = logger;
+        return this;
+    }
 
     @Override
     public AbstractGameState copy() {
@@ -44,6 +50,8 @@ public class SpinGameState implements AbstractGameState {
         // shallow copy the proximity map (which may even be null)
         copy.proximityMap = proximityMap;
         copy.vectorField = vectorField;
+
+        // do NOT copy the logger - this is only used in the "real" game by default
         return copy;
     }
 
