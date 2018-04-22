@@ -1,5 +1,8 @@
 package sound;
 
+import plot.VoronoiGrid;
+import utilities.JEasyFrame;
+
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
@@ -11,9 +14,10 @@ public class SoundManager {
 
     public static void main(String[] args) throws Exception {
 
+
         SoundManager sm = new SoundManager();
         silent = false;
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             sm.fire();
             Thread.sleep(50);
         }
@@ -27,6 +31,9 @@ public class SoundManager {
             sm.play(clip);
             Thread.sleep(500);
         }
+
+        new JEasyFrame(new VoronoiGrid().setRandomPoints(30), "Test");
+
     }
 
     // the sound manager class
