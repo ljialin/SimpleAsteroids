@@ -11,10 +11,14 @@ import java.io.File;
 public class SimpleTest {
     static String path = "sounds/";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Clip fire = getClip("fire");
 
-        fire.start();
+        SoundManager soundManager = new SoundManager();
+        for (int i=0; i<10; i++) {
+            soundManager.playSafe(soundManager.fire);
+            Thread.sleep(200);
+        }
 
         new JEasyFrame(new VoronoiGrid().setRandomPoints(10), "Test");
 

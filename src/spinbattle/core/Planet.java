@@ -36,7 +36,7 @@ public class Planet {
     }
 
 
-    Planet processIncoming(double incomingShips, int playerId) {
+    Planet processIncoming(double incomingShips, int playerId, SpinGameState gameState) {
         if (ownedBy != playerId) {
             // this is an invasion
             // decrement the ships, then set to id of incoming player and invert sign if it has gone negative
@@ -65,7 +65,7 @@ public class Planet {
 
             if (destination != null) {
                 // process the inbound
-                destination.processIncoming(transit.payload, transit.ownedBy);
+                destination.processIncoming(transit.payload, transit.ownedBy, gameState);
                 transit.terminateJourney();
                 // transit
                 // System.out.println("Terminated Journey: " + transit.inTransit());

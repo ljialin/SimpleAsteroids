@@ -19,7 +19,7 @@ public class SoundManager {
         silent = false;
         for (int i = 0; i < 10; i++) {
             sm.fire();
-            Thread.sleep(50);
+            Thread.sleep(500);
         }
         // System.exit(0);
         Clip[] clips = {sm.bangLarge, sm.bangMedium, sm.bangSmall,
@@ -42,15 +42,15 @@ public class SoundManager {
     static String path = "sounds/";
     Clip[] bullets = loadBullets(50);
     int nBullet = 0;
-    Clip bangLarge = getClip("bangLarge");
-    Clip bangMedium = getClip("bangMedium");
-    Clip bangSmall = getClip("bangSmall");
+    public Clip bangLarge = getClip("bangLarge");
+    public Clip bangMedium = getClip("bangMedium");
+    public Clip  bangSmall = getClip("bangSmall");
     Clip beat1 = getClip("beat1");
     Clip beat2 = getClip("beat2");
     Clip extraShip = getClip("extraShip");
     Clip fire = getClip("fire");
-    Clip saucerBig = getClip("saucerBig");
-    Clip saucerSmall = getClip("saucerSmall");
+    public Clip saucerBig = getClip("saucerBig");
+    public Clip saucerSmall = getClip("saucerSmall");
     Clip thrust = getClip("thrust");
 
     public SoundManager() {
@@ -63,6 +63,15 @@ public class SoundManager {
     public void play(Clip clip) {
         // clip.setFramePosition(0);
         clip.start();
+
+    }
+
+    public void playSafe(Clip clip) {
+        if (clip.isRunning())
+            clip.stop();   // Stop the player if it is still running
+        clip.setFramePosition(0); // rewind to the beginning
+        clip.start();     // Start playing
+
     }
 
     private Clip[] loadBullets(int n) {
@@ -77,7 +86,10 @@ public class SoundManager {
         // fire the n-th bullet and increments the index
         if (!silent) {
             Clip clip = bullets[nBullet];
-            // clip.setFramePosition(0);
+            if (clip.isRunning()) {
+                clip.stop();
+                clip.setFramePosition(0);
+            }
             clip.start();
             nBullet = (nBullet + 1) % bullets.length;
         }

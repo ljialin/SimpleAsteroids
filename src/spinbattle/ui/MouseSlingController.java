@@ -53,6 +53,7 @@ public class MouseSlingController extends MouseAdapter {
                 Planet source = gameState.planets.get(clicked);
                 if (source.transitReady() && source.ownedBy == playerId) {
                     planetSelected = clicked;
+                    gameState.notifySelection(source);
                 }
             }
         }
@@ -84,6 +85,8 @@ public class MouseSlingController extends MouseAdapter {
             Planet source = gameState.planets.get(planetSelected);
             Transporter transit = source.getTransporter();
             transit.directionalLaunch(source.position, source.rotation, playerId);
+            gameState.notifyLaunch(transit);
+
         }
         // after a mouse release this is always set to null
         planetSelected = null;

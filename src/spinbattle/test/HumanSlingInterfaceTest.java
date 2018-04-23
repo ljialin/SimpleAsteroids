@@ -1,6 +1,7 @@
 package spinbattle.test;
 
 import spinbattle.core.SpinGameState;
+import spinbattle.log.BasicLogger;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.players.HeuristicLauncher;
@@ -19,6 +20,8 @@ public class HumanSlingInterfaceTest {
         SpinBattleParams params = new SpinBattleParams();
         params.maxTicks = 5000;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
+        BasicLogger basicLogger = new BasicLogger();
+        gameState.setLogger(basicLogger);
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
         HeuristicLauncher launcher = new HeuristicLauncher();
         String title = "Spin Battle Game" ;

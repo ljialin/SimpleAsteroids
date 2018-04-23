@@ -1,6 +1,8 @@
 package spinbattle.core;
 
 import ggi.AbstractGameState;
+import spinbattle.event.LaunchEvent;
+import spinbattle.event.SelectPlanetEvent;
 import spinbattle.log.BasicLogger;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
@@ -183,6 +185,20 @@ public class SpinGameState implements AbstractGameState {
         }
         return true;
 
+    }
+
+    public void notifyLaunch(Transporter transit) {
+        if (logger != null) {
+            logger.logEvent(new LaunchEvent());
+            // System.out.println(transit);
+        }
+    }
+
+    public void notifySelection(Planet source) {
+        if (logger != null) {
+            logger.logEvent(new SelectPlanetEvent());
+            // System.out.println(source);
+        }
     }
     // todo - set up the planets based on the params that have been passed
 }
