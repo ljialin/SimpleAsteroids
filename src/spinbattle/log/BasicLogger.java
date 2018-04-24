@@ -17,6 +17,9 @@ public class BasicLogger {
         SoundManager.silent = false;
     }
 
+    // alternatively
+    static boolean audioOn = false;
+
     public static void main(String[] args) throws Exception {
         BasicLogger basicLogger = new BasicLogger();
         for (int i=0; i<10; i++) {
@@ -27,14 +30,11 @@ public class BasicLogger {
         }
     }
 
-
     static SoundManager soundManager = new SoundManager();
 
     public BasicLogger logEvent(Object event) {
         // test whether the
-
-        playSound(event);
-
+        if (audioOn) playSound(event);
         return this;
     }
 
@@ -50,5 +50,4 @@ public class BasicLogger {
         }
         return this;
     }
-
 }

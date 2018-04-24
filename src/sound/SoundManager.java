@@ -28,7 +28,7 @@ public class SoundManager {
         };
 
         for (Clip clip : clips) {
-            sm.play(clip);
+            sm.playSafe(clip);
             Thread.sleep(500);
         }
 

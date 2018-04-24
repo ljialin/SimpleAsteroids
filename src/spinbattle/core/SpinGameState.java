@@ -1,6 +1,7 @@
 package spinbattle.core;
 
 import ggi.AbstractGameState;
+import spinbattle.actuator.Actuator;
 import spinbattle.event.LaunchEvent;
 import spinbattle.event.SelectPlanetEvent;
 import spinbattle.log.BasicLogger;
@@ -32,6 +33,8 @@ public class SpinGameState implements AbstractGameState {
     public ProximityMap proximityMap;
     public VectorField vectorField;
     public BasicLogger logger;
+    static int nPlayers = 2;
+    public Actuator[] actuators = new Actuator[nPlayers];
 
     public SpinGameState setLogger(BasicLogger logger) {
         this.logger = logger;
@@ -49,6 +52,10 @@ public class SpinGameState implements AbstractGameState {
         for (Planet p : planets) {
             copy.planets.add(p.copy());
         }
+        // actuators = new Actuator[nPlayers];
+        for (int i=0; i<nPlayers; i++) {
+            if (actuators[i] != null) copy.actuators[i] = actuators[i].copy();
+        }
         // shallow copy the proximity map (which may even be null)
         copy.proximityMap = proximityMap;
         copy.vectorField = vectorField;
@@ -59,6 +66,10 @@ public class SpinGameState implements AbstractGameState {
 
     @Override
     public AbstractGameState next(int[] actions) {
+        for (int i=0; i<nPlayers; i++) {
+            if (actuators[i] != null)
+                actuators[i].actuate(actions[i], this);
+        }
         for (Planet p : planets) {
             p.update(this);
         }
@@ -69,7 +80,12 @@ public class SpinGameState implements AbstractGameState {
 
     @Override
     public int nActions() {
-        return 0;
+        // this may depend on the actuator model, which could be different for each player
+        // or could be different anyway for an asymmetric game
+
+        // for now just do something very simple ...
+        // but MUST be changed in future
+        return planets.size();
     }
 
     @Override
@@ -79,34 +95,37 @@ public class SpinGameState implements AbstractGameState {
             score += p.getScore();
         }
         // but it the game is over, add in an early completion bonus
-        if (!bothOwnPlanets()) {
+        Integer singleOwner = singleOwner();
+        if (singleOwner != null) {
             double tot = 0;
             for (Planet p : planets) tot += p.growthRate;
             double bonus = tot * (params.maxTicks - nTicks);
             // System.out.println("Awarding bonus: " + bonus);
-            score += bonus;
+            score += (singleOwner == Constants.playerOne) ? bonus : -bonus;
         }
         return score;
     }
 
     @Override
     public boolean isTerminal() {
-        return nTicks > params.maxTicks || !bothOwnPlanets();
+        return nTicks > params.maxTicks || singleOwner() != null;
     }
 
     // if only one player owns planets then the game is over
-    public boolean bothOwnPlanets() {
+    public Integer singleOwner() {
         boolean playerOne = false;
         boolean playerTwo = false;
 
         for (Planet p : planets) {
             playerOne |= p.ownedBy == Constants.playerOne;
             playerTwo |= p.ownedBy == Constants.playerTwo;
-            if (playerOne && playerTwo) return true;
+            if (playerOne && playerTwo) return null;
         }
 
         // System.out.println(playerOne + " : " + playerTwo);
-        return false;
+        if (playerOne) return Constants.playerOne;
+        if (playerTwo) return Constants.playerTwo;
+        return null;
     }
 
     public SpinGameState setParams(SpinBattleParams params) {
