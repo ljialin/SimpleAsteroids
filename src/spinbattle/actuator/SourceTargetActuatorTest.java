@@ -80,7 +80,7 @@ public class SourceTargetActuatorTest {
 
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
-        // mutator.totalRandomChaosMutation = true;
+        mutator.totalRandomChaosMutation = true;
 
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);
@@ -91,7 +91,7 @@ public class SourceTargetActuatorTest {
         // evoAlg = new SlidingMeanEDA();
 
         int nEvals = 20;
-        int seqLength = 30;
+        int seqLength = 300;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();
