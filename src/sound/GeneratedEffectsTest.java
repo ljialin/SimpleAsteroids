@@ -40,7 +40,6 @@ public class GeneratedEffectsTest {
             soundLine.open(audioFormat);
             soundLine.start();
 
-
             int len = BUFFER_SIZE;
             byte[] sampledData = new byte[BUFFER_SIZE];
 
@@ -74,7 +73,6 @@ public class GeneratedEffectsTest {
             soundLine.close();
         }
     }
-
 
     static double sampleRate = 11000;
 
