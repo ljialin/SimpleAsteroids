@@ -16,7 +16,7 @@ public class HumanSlingInterfaceTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(6);
+        SpinBattleParams.random = new Random(8);
         SpinBattleParams params = new SpinBattleParams();
         params.maxTicks = 5000;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
@@ -29,7 +29,7 @@ public class HumanSlingInterfaceTest {
         MouseSlingController mouseSlingController = new MouseSlingController();
         mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseSlingController);
-        int launchPeriod = params.releasePeriod;
+        int launchPeriod = 400; // params.releasePeriod;
         waitUntilReady(view);
 
         for (int i=0; i<=5000 && !gameState.isTerminal(); i++) {
