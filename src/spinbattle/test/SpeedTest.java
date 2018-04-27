@@ -12,11 +12,11 @@ public class SpeedTest {
     static StatSummary constructionTime = new StatSummary("Construction Time");
     static StatSummary runningTime = new StatSummary("Running Time");
 
-    static boolean copyTest = true;
+    static boolean copyTest = false;
 
     public static void main(String[] args) {
 
-        int nSteps = 1000;
+        int nSteps = 2000;
         int nGames = 500;
 
         ElapsedTimer timer = new ElapsedTimer();
@@ -32,6 +32,7 @@ public class SpeedTest {
             if (Math.random() < 0.5) nRand++;
             // System.out.println(i + "\t " + gameState.getScore());
         }
+        long elapsed = timer.elapsed();
         System.out.println(ss);
         System.out.println(constructionTime);
         System.out.println(runningTime);
@@ -42,11 +43,14 @@ public class SpeedTest {
         System.out.println("Total game ticks: " + SpinGameState.totalTicks);
         System.out.println("Total game states made: " + SpinGameState.totalInstances);
 
+        System.out.format("%.0fk ticks / s\n ", SpinGameState.totalTicks * 1.0 / elapsed);
+
     }
 
     public static SpinGameState playGame(int nSteps) {
         ElapsedTimer t = new ElapsedTimer();
         SpinBattleParams params = new SpinBattleParams();
+        params.maxTicks = nSteps;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         HeuristicLauncher launcher = new HeuristicLauncher();
 
@@ -57,8 +61,8 @@ public class SpeedTest {
             gameState.next(null);
             if (copyTest)
                 gameState = (SpinGameState) gameState.copy();
-            launcher.makeTransits(gameState, Constants.playerOne);
-            launcher.makeTransits(gameState, Constants.playerTwo);
+             launcher.makeTransits(gameState, Constants.playerOne);
+             launcher.makeTransits(gameState, Constants.playerTwo);
 
         }
         runningTime.add(t.elapsed());
