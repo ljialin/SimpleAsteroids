@@ -26,6 +26,7 @@ public class HumanSlingInterfaceTest {
         HeuristicLauncher launcher = new HeuristicLauncher();
         String title = "Spin Battle Game" ;
         JEasyFrame frame = new JEasyFrame(view, title + ": Waiting for Graphics");
+        frame.setLocation(400, 100);
         MouseSlingController mouseSlingController = new MouseSlingController();
         mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseSlingController);
@@ -40,7 +41,7 @@ public class HumanSlingInterfaceTest {
                 launcher.makeTransits(gameState, Constants.playerTwo);
             view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
-            frame.setTitle(title + " : " + i + " : " + view.getTitle());
+            frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
             Thread.sleep(20);
         }
         System.out.println(gameState.isTerminal());

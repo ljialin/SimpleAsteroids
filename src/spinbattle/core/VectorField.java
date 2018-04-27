@@ -70,7 +70,7 @@ public class VectorField {
                 return vec;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return new Vector2d();
         }
     }
