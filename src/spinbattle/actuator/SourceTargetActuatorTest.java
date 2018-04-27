@@ -16,6 +16,7 @@ import spinbattle.ui.MouseSlingController;
 import spinbattle.view.SpinBattleView;
 import utilities.JEasyFrame;
 
+import java.awt.*;
 import java.util.Random;
 
 public class SourceTargetActuatorTest {
@@ -27,6 +28,8 @@ public class SourceTargetActuatorTest {
         // params.transitSpeed *= 2;
         params.gravitationalFieldConstant *= 1;
         params.maxTicks = 5000;
+        params.width = 400;
+        params.height = 700;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
 
         BasicLogger basicLogger = new BasicLogger();
@@ -43,6 +46,7 @@ public class SourceTargetActuatorTest {
         HeuristicLauncher launcher = new HeuristicLauncher();
         String title = "Spin Battle Game" ;
         JEasyFrame frame = new JEasyFrame(view, title + ": Waiting for Graphics");
+        frame.setLocation(new Point(800, 0));
         MouseSlingController mouseSlingController = new MouseSlingController();
         mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseSlingController);
@@ -60,7 +64,7 @@ public class SourceTargetActuatorTest {
                 launcher.makeTransits(gameState, Constants.playerTwo);
             view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
-            frame.setTitle(title + " : " + i + " : " + view.getTitle());
+            frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
             Thread.sleep(20);
         }
         System.out.println(gameState.isTerminal());
@@ -91,8 +95,8 @@ public class SourceTargetActuatorTest {
 
         // evoAlg = new SlidingMeanEDA();
 
-        int nEvals = 20;
-        int seqLength = 300;
+        int nEvals = 10;
+        int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
         evoAgent.setVisual();

@@ -19,6 +19,11 @@ public class DrawUtil {
     }
 
     public DrawUtil centreString(Graphics2D g, String str, double x, double y) {
+        centreString(g, str, x, y, fg);
+        return this;
+    }
+
+    public DrawUtil centreString(Graphics2D g, String str, double x, double y, Color fg) {
         g.setFont(new Font("Monospaced", Font.BOLD, fontSize));
         Rectangle2D rect = g.getFontMetrics().getStringBounds(str, g);
         // Rectangle2D rect = g.getFontMetrics().get

@@ -106,6 +106,14 @@ public class SpinGameState implements AbstractGameState {
         return score;
     }
 
+    public double getPlayerShips(int playerId) {
+        double ships = 0;
+        for (Planet p : planets) {
+            if (p.ownedBy == playerId) ships += p.shipCount;
+        }
+        return ships;
+    }
+
     @Override
     public boolean isTerminal() {
         return nTicks > params.maxTicks || singleOwner() != null;

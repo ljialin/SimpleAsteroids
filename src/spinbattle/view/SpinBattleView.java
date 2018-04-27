@@ -22,7 +22,7 @@ public class SpinBattleView extends JComponent {
     int nStars = 200;
     Color[] playerColors = {
             Color.getHSBColor(0.17f, 1, 1),
-            Color.getHSBColor(0.75f, 1, 1),
+            Color.getHSBColor(0.50f, 1, 1),
             Color.lightGray
     };
     Color vectorColor = new Color(1f, 1f, 1f, 0.3f);
@@ -74,8 +74,17 @@ public class SpinBattleView extends JComponent {
         int score = (int) gameState.getScore();
         String leader = score > 0 ? "P1" : "P2";
         score = Math.abs(score);
-        String message = String.format("%s: %d", leader, score);
+        String message = String.format("%d (%s)", score, leader);
         scoreDraw.centreString(g, message, getWidth()/2, scoreFontSize);
+
+        String p1Message = String.format("P1: %d", (int) gameState.getPlayerShips(Constants.playerOne));
+        String p2Message = String.format("P2: %d", (int) gameState.getPlayerShips(Constants.playerTwo));
+
+        scoreDraw.centreString(g, p1Message, 50, scoreFontSize, playerColors[0]);
+
+        scoreDraw.centreString(g, p2Message, getWidth()-50, scoreFontSize, playerColors[1]);
+
+
     }
 
     private void paintPlanets(Graphics2D g) {
