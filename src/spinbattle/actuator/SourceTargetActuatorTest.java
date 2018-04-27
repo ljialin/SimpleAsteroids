@@ -30,6 +30,7 @@ public class SourceTargetActuatorTest {
         params.maxTicks = 5000;
         params.width = 400;
         params.height = 700;
+
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
 
         BasicLogger basicLogger = new BasicLogger();

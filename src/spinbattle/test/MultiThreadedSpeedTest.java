@@ -10,7 +10,7 @@ public class MultiThreadedSpeedTest extends Thread {
 
     public static void main(String[] args) throws Exception {
         ElapsedTimer t = new ElapsedTimer();
-        int nThreads = 2;
+        int nThreads = 1;
         List<MultiThreadedSpeedTest> threadList = new ArrayList<>();
         for (int i=0; i<nThreads; i++) {
             // start() is called in the constructor

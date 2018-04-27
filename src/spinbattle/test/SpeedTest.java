@@ -17,7 +17,7 @@ public class SpeedTest {
     public static void main(String[] args) {
 
         int nSteps = 2000;
-        int nGames = 500;
+        int nGames = 1000;
 
         ElapsedTimer timer = new ElapsedTimer();
 

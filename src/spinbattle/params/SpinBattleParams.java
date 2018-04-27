@@ -59,10 +59,8 @@ public class SpinBattleParams {
         return collider;
     }
 
-    Rectangle2D bounds = new Rectangle2D.Double(0, 0, width, height);
-
     public boolean inBounds(Vector2d s) {
-        return bounds.contains(s.x, s.y);
+        return s.x >= 0 && s.x <= width && s.y >= 0 && s.y <= height;
     }
 
 }

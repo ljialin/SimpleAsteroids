@@ -35,7 +35,6 @@ public class Planet {
         return planet;
     }
 
-
     Planet processIncoming(double incomingShips, int playerId, SpinGameState gameState) {
         if (ownedBy != playerId) {
             // this is an invasion
