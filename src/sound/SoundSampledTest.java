@@ -29,6 +29,7 @@ public class SoundSampledTest {
                     // Writes audio data to the mixer via this source data line.
                     soundLine.write(sampledData, 0, nBytesRead);
                 }
+                System.out.println("Read/wrote: " + nBytesRead);
             }
         } catch (UnsupportedAudioFileException ex) {
             ex.printStackTrace();

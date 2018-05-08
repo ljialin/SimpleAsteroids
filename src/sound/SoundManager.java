@@ -3,9 +3,7 @@ package sound;
 import plot.VoronoiGrid;
 import utilities.JEasyFrame;
 
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.*;
 import java.io.File;
 
 public class SoundManager {
@@ -21,7 +19,7 @@ public class SoundManager {
             sm.fire();
             Thread.sleep(500);
         }
-        // System.exit(0);
+        System.exit(0);
         Clip[] clips = {sm.bangLarge, sm.bangMedium, sm.bangSmall,
                 sm.beat1, sm.beat2, sm.extraShip, sm.saucerBig, sm.saucerSmall,
                 sm.thrust,
@@ -95,18 +93,75 @@ public class SoundManager {
         }
     }
 
+
+    static boolean noClick = true;
     public static Clip getClip(String filename) {
+        if (noClick) return getClipNoClick(filename);
         Clip clip = null;
         try {
             clip = AudioSystem.getClip();
             AudioInputStream sample =
                     AudioSystem.getAudioInputStream(new File(path + filename + ".wav"));
+            System.out.println("Frame length = " + sample.getFrameLength());
+            System.out.println("Format = " + sample.getFormat());
+
+            System.out.println("Available: " + sample.available());
+
+
+
+            // byte[] bytes = sample.readAllBytes();
+            // sample.
             clip.open(sample);
+            System.out.println("Available after reading clip: " + sample.available());
+            System.out.println();
+
+            // clip.
         } catch (Exception e) {
             e.printStackTrace();
         }
         return clip;
     }
+    public static Clip getClipNoClick(String filename) {
+        Clip clip = null;
+        try {
+            AudioInputStream sample =
+                    AudioSystem.getAudioInputStream(new File(path + filename + ".wav"));
+            System.out.println(sample.getFormat());
+            int len = sample.available();
+            if (len % 2 != 0) len--;
+            byte[] bytes = new byte[len];
+            sample.read(bytes, 0, len);
+            // byte[] bytes = sample.readAllBytes();
+            // sample.
+            // clip.open(sample);
+            System.out.println("Available after reading clip: " + sample.available());
+            System.out.println();
+
+            clip= byteClip(bytes, 2);
+            return clip;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return clip;
+    }
+
+    private static int SAMPLE_RATE = 11025;
+    private static int FRAME_SIZE = 2;
+    private static final AudioFormat FORMAT = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+            (float) SAMPLE_RATE, 8, 1, FRAME_SIZE, SAMPLE_RATE, false);
+
+
+    public static Clip byteClip(byte[] out, int frameSize) throws LineUnavailableException {
+        AudioFormat FORMAT = new AudioFormat(AudioFormat.Encoding.PCM_UNSIGNED,
+                (float) SAMPLE_RATE, 8, 1, frameSize, SAMPLE_RATE, false);
+        Clip clip = AudioSystem.getClip();
+        clip.open(FORMAT, out, 0, out.length);
+        clip.setFramePosition(0);
+        return clip;
+    }
+
+
+
 
     boolean thrusting = false;
 
