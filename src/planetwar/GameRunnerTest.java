@@ -7,6 +7,7 @@ import core.player.AbstractMultiPlayer;
 import evodef.EvoAlg;
 import ga.SimpleGA;
 import ga.SimpleRMHC;
+import ggi.GameRunner;
 import ggi.SimplePlayerInterface;
 import gvglink.PlanetWarsLinkState;
 import ntuple.SlidingMeanEDA;
@@ -70,7 +71,9 @@ public class GameRunnerTest {
         // it will report the outcomes
 
 
+
         int nGames = 20;
+        gameRunner.setGameFactory(new PlanetWarGameFactory());
         gameRunner.playGames(nGames);
 
         // now access the game logs to plot the scores

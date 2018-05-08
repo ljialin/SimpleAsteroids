@@ -16,7 +16,7 @@ public class SpeedTest {
 
     public static void main(String[] args) {
 
-        int nSteps = 2000;
+        int nSteps = 5000;
         int nGames = 1000;
 
         ElapsedTimer timer = new ElapsedTimer();
@@ -24,15 +24,18 @@ public class SpeedTest {
         StatSummary ss = new StatSummary("Game Scores");
         int nWins = 0;
         int nRand = 0;
+        StatSummary np = new StatSummary("N Planets");
 
         for (int i=0; i<nGames; i++) {
             SpinGameState gameState = playGame(nSteps);
+            np.add(gameState.planets.size());
             ss.add(gameState.getScore());
             if (gameState.getScore() > 0) nWins++;
             if (Math.random() < 0.5) nRand++;
             // System.out.println(i + "\t " + gameState.getScore());
         }
         long elapsed = timer.elapsed();
+        System.out.println(np);
         System.out.println(ss);
         System.out.println(constructionTime);
         System.out.println(runningTime);

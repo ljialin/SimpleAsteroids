@@ -5,6 +5,7 @@ import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
+import ggi.GameRunner;
 import ggi.SimplePlayerInterface;
 
 public class GameLoggerTest {
@@ -52,7 +53,9 @@ public class GameLoggerTest {
         p2 = evoAgent1;
         gameRunner.setPlayers(p1, p2);
         int nGames = 20;
+        gameRunner.setGameFactory(new PlanetWarGameFactory());
         gameRunner.playGames(nGames);
+        new GameState().defaultState();
         gameRunner.plotGameScores();
 
         // System.out.println(p1);

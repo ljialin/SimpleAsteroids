@@ -4,6 +4,7 @@ import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
+import ggi.GameRunner;
 import ggi.SimplePlayerInterface;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
@@ -50,6 +51,7 @@ public class RandomTestPlanetWars {
 
         // now run a game and return the result
 
+        gameRunner.setGameFactory(new PlanetWarGameFactory());
         gameRunner.verbose = false;
         gameRunner.reset();
         gameRunner.setPlayers(player, evoOpponent);

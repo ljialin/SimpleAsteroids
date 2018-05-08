@@ -1,6 +1,7 @@
-package planetwar;
+package ggi;
 
-import ggi.SimplePlayerInterface;
+import planetwar.GameLog;
+import planetwar.GameState;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LinePlot;
@@ -13,20 +14,21 @@ import java.util.ArrayList;
 
 public class GameRunner {
 
-    SimplePlayerInterface p1, p2;
-    int nSteps = 200;
-    StatSummary scores;
-    int p1Wins;
-    int p2Wins;
-    int nGames;
+    public SimplePlayerInterface p1, p2;
+    public int nSteps = 200;
+    public StatSummary scores;
+    public int p1Wins;
+    public int p2Wins;
+    public int nGames;
 
-    int nInitialLeaderWins;
-    static int p1Index = 0;
-    static int p2Index = 1;
-
+    public int nInitialLeaderWins;
+    public static int p1Index = 0;
+    public static int p2Index = 1;
 
     ArrayList<GameLog> gameLogs;
-    boolean verbose = true;
+    public boolean verbose = true;
+
+    AbstractGameFactory gameFactory;
 
     public GameRunner setPlayers(SimplePlayerInterface p1, SimplePlayerInterface p2) {
         this.p1 = p1;
@@ -35,8 +37,16 @@ public class GameRunner {
         return this;
     }
 
+
+
     public GameRunner setLength(int nSteps) {
         this.nSteps = nSteps;
+        reset();
+        return this;
+    }
+
+    public GameRunner setGameFactory(AbstractGameFactory gameFactory) {
+        this.gameFactory = gameFactory;
         reset();
         return this;
     }
@@ -74,10 +84,14 @@ public class GameRunner {
 
     // boolean verbose = true;
     public GameRunner playGame() {
-        GameState gameState = new GameState().defaultState();
+        System.out.println(gameFactory);
+        AbstractGameState gameState = gameFactory.newGame();
         GameLog gameLog = new GameLog();
         gameLog.addScore(gameState.getScore());
-        gameLog.setInitialGrowthRate(gameState.totalGrowthRate());
+        // this is an interesting problem to solve
+        // how to provide logging of game-specific values within
+        // a general game runner class
+        // gameLog.setInitialGrowthRate(gameState.totalGrowthRate());
         int[] actions = new int[2];
         for (int i=0; i<nSteps; i++) {
             actions[0] = p1.getAction(gameState.copy(), p1Index);
