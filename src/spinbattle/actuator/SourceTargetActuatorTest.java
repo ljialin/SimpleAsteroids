@@ -39,13 +39,13 @@ public class SourceTargetActuatorTest {
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
 
-        gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
+        // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
-        // SimplePlayerInterface player1 = getEvoAgent();
+        SimplePlayerInterface player1 = getEvoAgent();
 
-        SimplePlayerInterface player2 = getEvoAgent();
+        // SimplePlayerInterface player2 = getEvoAgent();
 
-        SimplePlayerInterface randomPlayer = new agents.dummy.RandomAgent();
+        // SimplePlayerInterface randomPlayer = new agents.dummy.RandomAgent();
 
         // but now we also need to establish a player
 
@@ -62,16 +62,16 @@ public class SourceTargetActuatorTest {
         int[] actions = new int[2];
 
         for (int i=0; i<=5000 && !gameState.isTerminal(); i++) {
-            // actions[0] = player1.getAction(gameState.copy(), 0);
-            actions[1] = player2.getAction(gameState.copy(), 1);
-            actions[0] = randomPlayer.getAction(gameState.copy(), 0);
+            actions[0] = player1.getAction(gameState.copy(), 0);
+            // actions[1] = player2.getAction(gameState.copy(), 1);
+            // actions[0] = randomPlayer.getAction(gameState.copy(), 0);
             // actions[1] = randomPlayer.getAction(gameState.copy(), 1);
             // System.out.println(i + "\t " + actions[0]);
             gameState.next(actions);
             mouseSlingController.update();
-            // launcher.makeTransits(gameState, Constants.playerOne);
-//            if (i % launchPeriod == 0)
-//                launcher.makeTransits(gameState, Constants.playerTwo);
+            launcher.makeTransits(gameState, Constants.playerOne);
+            if (i % launchPeriod == 0)
+                launcher.makeTransits(gameState, Constants.playerTwo);
             view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
             frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
