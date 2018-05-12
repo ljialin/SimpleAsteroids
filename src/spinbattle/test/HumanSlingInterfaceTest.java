@@ -18,6 +18,7 @@ public class HumanSlingInterfaceTest {
         // to always get the same initial game
         SpinBattleParams.random = new Random(8);
         SpinBattleParams params = new SpinBattleParams();
+
         params.maxTicks = 5000;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         BasicLogger basicLogger = new BasicLogger();

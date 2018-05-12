@@ -27,9 +27,18 @@ public class SourceTargetActuatorTest {
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
         params.gravitationalFieldConstant *= 1;
+
+
         params.maxTicks = 5000;
         params.width = 400;
         params.height = 700;
+
+
+
+        SpinBattleParams altParams = params.copy();
+
+        params.gravitationalFieldConstant *= 2;
+        params.transitSpeed *= 2;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
 
@@ -61,7 +70,8 @@ public class SourceTargetActuatorTest {
         waitUntilReady(view);
         int[] actions = new int[2];
 
-        for (int i=0; i<=5000 && !gameState.isTerminal(); i++) {
+        for (int i=0; !gameState.isTerminal(); i++) {
+            SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
             actions[0] = player1.getAction(gameState.copy(), 0);
             // actions[1] = player2.getAction(gameState.copy(), 1);
             // actions[0] = randomPlayer.getAction(gameState.copy(), 0);

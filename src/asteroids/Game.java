@@ -97,11 +97,9 @@ public class Game {
 
         EvoAlg evoAlg = simpleRMHC;
 
-
-
         // evoAlg = new SlidingMeanEDA();
 
-        int nEvals = 50;
+        int nEvals = 20;
         int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
