@@ -1,8 +1,11 @@
 package spinbattle.core;
 
+import logger.core.Trajectory;
 import math.Vector2d;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.util.MovableObject;
+
+import java.awt.*;
 
 /**
  *  Interesting class: we model both the ownedBy of the ships,
@@ -41,6 +44,8 @@ public class Transporter {
     public Transporter next(VectorField vf) {
         if (mo != null) {
             mo.update(vf);
+            if (trajectory != null)
+                trajectory.addPoint(mo.s.copy());
             if (!params.inBounds(mo.s)) {
                 outOfBoundsTermination();
             }
@@ -103,7 +108,12 @@ public class Transporter {
         return this;
     }
 
-    public Transporter launch(Vector2d start, Vector2d destination, int playerId) {
+    Trajectory trajectory;
+
+    static float alpha = 0.5f;
+    static int lineWidth = 3;
+
+    public Transporter launch(Vector2d start, Vector2d destination, int playerId, SpinGameState gameState) {
         // set up the mover
         mo = new MovableObject();
         mo.s = start.copy();
@@ -111,6 +121,14 @@ public class Transporter {
         mo.v.normalise();
         mo.v.mul(params.transitSpeed);
         this.ownedBy = playerId;
+        // now add a trajectory, only if needed
+        if (gameState.logger != null) {
+            trajectory = gameState.logger.getTrajectoryLogger().addTrajectory();
+            Color color = params.playerColors[playerId];
+            float[] rgb = color.getRGBColorComponents(new float[3]);
+            color = new Color(rgb[0], rgb[1], rgb[2], alpha);
+            trajectory.setColor(color).setLineWidth(lineWidth);
+        }
         return this;
     }
 

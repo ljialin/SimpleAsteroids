@@ -7,6 +7,7 @@ import evodef.DefaultMutator;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
 import ggi.SimplePlayerInterface;
+import logger.sample.DefaultLogger;
 import spinbattle.core.SpinGameState;
 import spinbattle.log.BasicLogger;
 import spinbattle.params.Constants;
@@ -37,24 +38,29 @@ public class SourceTargetActuatorTest {
 
         SpinBattleParams altParams = params.copy();
 
-        params.gravitationalFieldConstant *= 2;
-        params.transitSpeed *= 2;
+        params.gravitationalFieldConstant *= 2.0;
+        params.transitSpeed *= 1;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
 
-        BasicLogger basicLogger = new BasicLogger();
-        // gameState.setLogger(basicLogger);
+        // BasicLogger basicLogger = new BasicLogger();
+        DefaultLogger logger = new DefaultLogger();
+        gameState.setLogger(logger);
+
+        SpinGameState copy1 = ((SpinGameState) gameState.copy()).setParams(altParams);
+
+        System.out.println("Logger in copied state: " + copy1.logger);
 
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
 
-        // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
+        gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
         SimplePlayerInterface player1 = getEvoAgent();
 
         // SimplePlayerInterface player2 = getEvoAgent();
 
-        // SimplePlayerInterface randomPlayer = new agents.dummy.RandomAgent();
+        SimplePlayerInterface randomPlayer = new agents.dummy.RandomAgent();
 
         // but now we also need to establish a player
 
@@ -70,24 +76,30 @@ public class SourceTargetActuatorTest {
         waitUntilReady(view);
         int[] actions = new int[2];
 
+        int frameDelay = 20;
+
         for (int i=0; !gameState.isTerminal(); i++) {
             SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
-            actions[0] = player1.getAction(gameState.copy(), 0);
+            // actions[0] = player1.getAction(gameState.copy(), 0);
             // actions[1] = player2.getAction(gameState.copy(), 1);
             // actions[0] = randomPlayer.getAction(gameState.copy(), 0);
-            // actions[1] = randomPlayer.getAction(gameState.copy(), 1);
+            actions[1] = randomPlayer.getAction(gameState.copy(), 1);
             // System.out.println(i + "\t " + actions[0]);
             gameState.next(actions);
             mouseSlingController.update();
-            launcher.makeTransits(gameState, Constants.playerOne);
-            if (i % launchPeriod == 0)
-                launcher.makeTransits(gameState, Constants.playerTwo);
+            // launcher.makeTransits(gameState, Constants.playerOne);
+//            if (i % launchPeriod == 0)
+//                launcher.makeTransits(gameState, Constants.playerTwo);
             view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
             frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
-            Thread.sleep(20);
+            Thread.sleep(frameDelay);
         }
         System.out.println(gameState.isTerminal());
+        String trajTitle = String.format("g = %.3f, spd = %.3f", params.gravitationalFieldConstant, params.transitSpeed);
+        logger.showTrajectories(params.width, params.height, trajTitle);
+        System.out.println("nTraj: " + logger.getTrajectoryLogger().trajectories.size());
+
     }
 
     static void waitUntilReady(SpinBattleView view) throws Exception {

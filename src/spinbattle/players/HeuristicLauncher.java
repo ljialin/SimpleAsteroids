@@ -24,7 +24,7 @@ public class HeuristicLauncher implements SimplePlayerInterface {
                 Planet destination = getTarget(gameState, p, playerId);
                 if (destination != null) {
                     transit.setPayload(p, destination.shipCount);
-                    transit.launch(p.position, destination.position, playerId);
+                    transit.launch(p.position, destination.position, playerId, gameState);
                     transit.setTarget(destination.index);
                     gameState.notifyLaunch(transit);
                 }

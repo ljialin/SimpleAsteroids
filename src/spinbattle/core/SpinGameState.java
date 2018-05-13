@@ -1,6 +1,7 @@
 package spinbattle.core;
 
 import ggi.AbstractGameState;
+import logger.sample.DefaultLogger;
 import spinbattle.actuator.Actuator;
 import spinbattle.event.LaunchEvent;
 import spinbattle.event.SelectPlanetEvent;
@@ -32,11 +33,11 @@ public class SpinGameState implements AbstractGameState {
     public ArrayList<Planet> planets;
     public ProximityMap proximityMap;
     public VectorField vectorField;
-    public BasicLogger logger;
+    public DefaultLogger logger;
     static int nPlayers = 2;
     public Actuator[] actuators = new Actuator[nPlayers];
 
-    public SpinGameState setLogger(BasicLogger logger) {
+    public SpinGameState setLogger(DefaultLogger logger) {
         this.logger = logger;
         return this;
     }
@@ -216,14 +217,14 @@ public class SpinGameState implements AbstractGameState {
 
     public void notifyLaunch(Transporter transit) {
         if (logger != null) {
-            logger.logEvent(new LaunchEvent());
+            // logger.logEvent(new LaunchEvent());
             // System.out.println(transit);
         }
     }
 
     public void notifySelection(Planet source) {
         if (logger != null) {
-            logger.logEvent(new SelectPlanetEvent());
+            // logger.logEvent(new SelectPlanetEvent());
             // System.out.println(source);
         }
     }

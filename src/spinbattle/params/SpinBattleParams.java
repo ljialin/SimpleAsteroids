@@ -3,6 +3,7 @@ package spinbattle.params;
 import math.Vector2d;
 import spinbattle.core.Collider;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
@@ -37,7 +38,7 @@ public class SpinBattleParams {
     public int minInitialShips = 5;
     public int maxInitialShips = 20;
 
-    public int transitSpeed = 3;
+    public double transitSpeed = 3;
 
     // this is for a heuristic AI opponent
     public int releasePeriod = 400;
@@ -64,6 +65,8 @@ public class SpinBattleParams {
         p.releasePeriod = releasePeriod;
         p.useProximityMap = useProximityMap;
         p.useVectorField = useVectorField;
+        p.gravitationalFieldConstant = gravitationalFieldConstant;
+        p.gravitationalForceConstant = gravitationalForceConstant;
         return p;
     }
 
@@ -90,5 +93,10 @@ public class SpinBattleParams {
     public boolean inBounds(Vector2d s) {
         return s.x >= 0 && s.x <= width && s.y >= 0 && s.y <= height;
     }
+
+    public static Color[] playerColors = {
+            Color.getHSBColor(0.17f, 1, 1),
+            Color.getHSBColor(0.50f, 1, 1),
+    };
 
 }

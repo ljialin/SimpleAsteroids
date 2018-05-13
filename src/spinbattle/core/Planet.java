@@ -53,13 +53,14 @@ public class Planet {
         return this;
     }
 
+    // todo: Probably here the trajectory update and termination needs to be done
     public Planet update(SpinGameState gameState) {
         if (ownedBy != Constants.neutralPlayer) {
             shipCount += growthRate;
         }
         if (transit != null && transit.inTransit()) {
             transit.next(gameState.vectorField);
-            // check to see whether it has arrived and if return the target
+            // check to see whether it has arrived and if so return the target
             Planet destination = params.getCollider().getPlanetInRange(gameState, transit);
 
             if (destination != null) {
