@@ -2,7 +2,7 @@ package asteroids;
 
 import evogame.GameParameters;
 import math.Vector2d;
-import ggi.AbstractGameState;
+import ggi.core.AbstractGameState;
 
 import java.awt.*;
 

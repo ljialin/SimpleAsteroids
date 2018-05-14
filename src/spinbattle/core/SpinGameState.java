@@ -1,11 +1,8 @@
 package spinbattle.core;
 
-import ggi.AbstractGameState;
+import ggi.core.AbstractGameState;
 import logger.sample.DefaultLogger;
 import spinbattle.actuator.Actuator;
-import spinbattle.event.LaunchEvent;
-import spinbattle.event.SelectPlanetEvent;
-import spinbattle.log.BasicLogger;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 

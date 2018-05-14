@@ -1,8 +1,8 @@
 package planetwar;
 
 import core.player.AbstractMultiPlayer;
-import ggi.AbstractGameState;
-import ggi.SimplePlayerInterface;
+import ggi.core.AbstractGameState;
+import ggi.core.SimplePlayerInterface;
 import gvglink.PlanetWarsLinkState;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
@@ -28,5 +28,10 @@ public class GVGAIWrapper implements SimplePlayerInterface {
 
         Types.ACTIONS actions = agent.act(linkState, timer);
         return actions.ordinal();
+    }
+
+    @Override
+    public SimplePlayerInterface reset() {
+        return this;
     }
 }

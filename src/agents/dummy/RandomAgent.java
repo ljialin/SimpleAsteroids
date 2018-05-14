@@ -1,7 +1,7 @@
 package agents.dummy;
 
-import ggi.AbstractGameState;
-import ggi.SimplePlayerInterface;
+import ggi.core.AbstractGameState;
+import ggi.core.SimplePlayerInterface;
 
 import java.util.Random;
 
@@ -17,6 +17,11 @@ public class RandomAgent implements SimplePlayerInterface {
     @Override
     public int getAction(AbstractGameState gameState, int playerId) {
         return random.nextInt(gameState.nActions());
+    }
+
+    @Override
+    public SimplePlayerInterface reset() {
+        return this;
     }
 
     public String toString() {

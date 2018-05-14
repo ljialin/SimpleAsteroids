@@ -2,13 +2,10 @@ package agents.evo;
 
 import agents.dummy.DoNothingAgent;
 import evodef.PluginEvaluator;
-import ggi.AbstractGameState;
-import ggi.SimplePlayerInterface;
-import planetwar.GameState;
+import ggi.core.AbstractGameState;
+import ggi.core.SimplePlayerInterface;
 import plot.NullPlayoutPlotter;
 import plot.PlayoutPlotterInterface;
-
-import java.util.Random;
 
 public class ActionSequencer implements PluginEvaluator {
 

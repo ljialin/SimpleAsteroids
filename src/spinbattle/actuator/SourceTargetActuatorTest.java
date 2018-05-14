@@ -1,15 +1,12 @@
 package spinbattle.actuator;
 
 import agents.evo.EvoAgent;
-import asteroids.Controller;
-import asteroids.EvoAgentAdapter;
 import evodef.DefaultMutator;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
-import ggi.SimplePlayerInterface;
+import ggi.core.SimplePlayerInterface;
 import logger.sample.DefaultLogger;
 import spinbattle.core.SpinGameState;
-import spinbattle.log.BasicLogger;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.players.HeuristicLauncher;

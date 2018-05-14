@@ -1,6 +1,6 @@
 package asteroids;
 
-import ggi.SimplePlayerInterface;
+import ggi.core.SimplePlayerInterface;
 
 public class EvoAgentAdapter implements Controller {
     // this is needed because the EvoAgent returns an int and this needs to return an Action

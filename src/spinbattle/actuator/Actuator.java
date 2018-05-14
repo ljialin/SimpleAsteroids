@@ -1,6 +1,5 @@
 package spinbattle.actuator;
 
-import ggi.AbstractGameState;
 import spinbattle.core.SpinGameState;
 
 public interface Actuator {

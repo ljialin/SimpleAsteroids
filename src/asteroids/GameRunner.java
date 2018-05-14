@@ -7,7 +7,7 @@ import evogame.GameParameters;
 import ga.SimpleRMHC;
 import ntuple.NTupleBanditEA;
 import agents.evo.EvoAgent;
-import ggi.SimplePlayerInterface;
+import ggi.core.SimplePlayerInterface;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 

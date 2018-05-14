@@ -5,8 +5,8 @@ import evodef.EvoAlg;
 import evodef.RegularSearchSpace;
 import evodef.SearchSpaceUtil;
 import evodef.SimpleGameAdapter;
-import ggi.AbstractGameState;
-import ggi.SimplePlayerInterface;
+import ggi.core.AbstractGameState;
+import ggi.core.SimplePlayerInterface;
 import plot.NullPlayoutPlotter;
 import plot.PlayoutPlotter;
 import plot.PlayoutPlotterInterface;
@@ -35,6 +35,15 @@ public class EvoAgent implements SimplePlayerInterface {
     int nEvals;
 
     PlayoutPlotterInterface playoutPlotter = new NullPlayoutPlotter();
+
+    public SimplePlayerInterface reset() {
+        solution = null;
+        actionSequencer = new ActionSequencer();
+
+        // todo: find the BUG!!!
+        System.out.println("Called reset!!!!");
+        return this;
+    }
 
     public EvoAgent setEvoAlg(EvoAlg evoAlg, int nEvals) {
         this.evoAlg = evoAlg;
@@ -84,6 +93,7 @@ public class EvoAgent implements SimplePlayerInterface {
 
         simpleGameAdapter.reset();
         solution = evoAlg.runTrial(simpleGameAdapter, nEvals);
+
 
         playoutPlotter.plotPlayout();
         // System.out.println(Arrays.toString(solution) + "\t " + game.evaluate(solution));

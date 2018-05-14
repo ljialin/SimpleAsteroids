@@ -1,7 +1,6 @@
-package ggi;
+package ggi.core;
 
 import planetwar.GameLog;
-import planetwar.GameState;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LinePlot;
@@ -37,7 +36,11 @@ public class GameRunner {
         return this;
     }
 
-
+    public GameRunner setPlayersWithoutReset(SimplePlayerInterface p1, SimplePlayerInterface p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+        return this;
+    }
 
     public GameRunner setLength(int nSteps) {
         this.nSteps = nSteps;
@@ -88,12 +91,16 @@ public class GameRunner {
         AbstractGameState gameState = gameFactory.newGame();
         GameLog gameLog = new GameLog();
         gameLog.addScore(gameState.getScore());
+
+        p1.reset();
+        p2.reset();
+
         // this is an interesting problem to solve
         // how to provide logging of game-specific values within
         // a general game runner class
         // gameLog.setInitialGrowthRate(gameState.totalGrowthRate());
         int[] actions = new int[2];
-        for (int i=0; i<nSteps; i++) {
+        for (int i=0; i<nSteps && !gameState.isTerminal(); i++) {
             actions[0] = p1.getAction(gameState.copy(), p1Index);
             actions[1] = p2.getAction(gameState.copy(), p2Index);
             gameState.next(actions);
@@ -138,5 +145,4 @@ public class GameRunner {
         new JEasyFrame(lineChart, "Game Scores");
         return lineChart;
     }
-
 }
