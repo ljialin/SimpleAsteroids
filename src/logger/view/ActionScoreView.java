@@ -1,7 +1,10 @@
 package logger.view;
 
-public class ActionScoreView extends JCo{
+import javax.swing.*;
+
+public class ActionScoreView extends JComponent {
 
 
+    // may be better instead to add to a graph
 
 }

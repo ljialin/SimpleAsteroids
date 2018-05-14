@@ -27,7 +27,7 @@ public class SourceTargetActuatorTest {
         params.gravitationalFieldConstant *= 1;
 
 
-        params.maxTicks = 5000;
+        params.maxTicks = 500;
         params.width = 400;
         params.height = 700;
 
@@ -35,14 +35,14 @@ public class SourceTargetActuatorTest {
 
         SpinBattleParams altParams = params.copy();
 
-        params.gravitationalFieldConstant *= 2.0;
+        params.gravitationalFieldConstant *= 1.0;
         params.transitSpeed *= 1;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
 
         // BasicLogger basicLogger = new BasicLogger();
         DefaultLogger logger = new DefaultLogger();
-        gameState.setLogger(logger);
+        // gameState.setLogger(logger);
 
         SpinGameState copy1 = ((SpinGameState) gameState.copy()).setParams(altParams);
 
@@ -75,18 +75,20 @@ public class SourceTargetActuatorTest {
 
         int frameDelay = 20;
 
-        for (int i=0; !gameState.isTerminal(); i++) {
+        // may want to stop before the end of the game for demo purposes
+        int nTicks = 100;
+        for (int i=0; i<nTicks && !gameState.isTerminal(); i++) {
             SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
-            // actions[0] = player1.getAction(gameState.copy(), 0);
+            actions[0] = player1.getAction(gameState.copy(), 0);
             // actions[1] = player2.getAction(gameState.copy(), 1);
             // actions[0] = randomPlayer.getAction(gameState.copy(), 0);
-            actions[1] = randomPlayer.getAction(gameState.copy(), 1);
+            // actions[1] = randomPlayer.getAction(gameState.copy(), 1);
             // System.out.println(i + "\t " + actions[0]);
             gameState.next(actions);
             mouseSlingController.update();
             // launcher.makeTransits(gameState, Constants.playerOne);
-//            if (i % launchPeriod == 0)
-//                launcher.makeTransits(gameState, Constants.playerTwo);
+            if (i % launchPeriod == 0)
+                launcher.makeTransits(gameState, Constants.playerTwo);
             view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
             frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
@@ -114,7 +116,8 @@ public class SourceTargetActuatorTest {
 
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
-        mutator.totalRandomChaosMutation = true;
+        mutator.totalRandomChaosMutation = false;
+        mutator.pointProb = 5;
 
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);

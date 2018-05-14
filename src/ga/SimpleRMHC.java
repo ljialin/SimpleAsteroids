@@ -5,6 +5,7 @@ import evodef.DefaultMutator;
 import evodef.BanditLandscapeModel;
 import utilities.StatSummary;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class SimpleRMHC implements EvoAlg {
@@ -161,6 +162,7 @@ public class SimpleRMHC implements EvoAlg {
     StatSummary fitness(SolutionEvaluator evaluator, int[] sol, StatSummary ss) {
         for (int i = 0; i < nSamples; i++) {
             double fitness = evaluator.evaluate(sol);
+            // System.out.println((int) fitness + "\t " + Arrays.toString(sol));
             ss.add(fitness);
         }
         if (model != null) {
