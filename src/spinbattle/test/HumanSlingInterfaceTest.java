@@ -19,6 +19,7 @@ public class HumanSlingInterfaceTest {
         SpinBattleParams.random = new Random(8);
         SpinBattleParams params = new SpinBattleParams();
         params.maxTicks = 5000;
+        params.gravitationalFieldConstant *= -1;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         BasicLogger basicLogger = new BasicLogger();
         gameState.setLogger(basicLogger);

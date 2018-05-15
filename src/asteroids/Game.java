@@ -8,6 +8,8 @@ import agents.evo.EvoAgent;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 
+import java.awt.*;
+
 import static asteroids.Constants.*;
 
 public class Game {
@@ -66,6 +68,7 @@ public class Game {
         if (visible) {
             view = new View(gameState.copy());
             frame = new JEasyFrame(view, "Simple Asteroids");
+            frame.setLocation(600, 0);
         }
         if (visible) {
             controller = getEvoAgent(); // new KeyController();
@@ -101,11 +104,12 @@ public class Game {
 
         // evoAlg = new SlidingMeanEDA();
 
-        int nEvals = 50;
+        int nEvals = 20;
         int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
-        evoAgent.setUseShiftBuffer(true);
+        evoAgent.setUseShiftBuffer(true).setDimension(new Dimension(600, 480));
         evoAgent.setVisual();
+        // evoAgent.s
 
         return new EvoAgentAdapter().setAgent(evoAgent);
     }

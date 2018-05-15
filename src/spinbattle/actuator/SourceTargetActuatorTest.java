@@ -29,7 +29,8 @@ public class SourceTargetActuatorTest {
         params.gravitationalFieldConstant *= 1;
         params.maxTicks = 5000;
         params.width = 400;
-        params.height = 700;
+        params.height = 600;
+        // params.height = 600;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
 
@@ -106,7 +107,7 @@ public class SourceTargetActuatorTest {
         // evoAlg = new SlidingMeanEDA();
 
         int nEvals = 20;
-        int seqLength = 200;
+        int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         boolean useShiftBuffer = true;
         evoAgent.setUseShiftBuffer(useShiftBuffer);

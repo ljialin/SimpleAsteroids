@@ -22,17 +22,25 @@ public class PlayoutPlotter implements PlayoutPlotterInterface {
     double currentScore;
     StatSummary scores;
 
+    Dimension dimension = new Dimension(800, 600);
+
+    public PlayoutPlotter setDimension(Dimension dimension) {
+        this.dimension = dimension;
+        return this;
+    }
+
     /*
     just call this to initialise it at the start of a plot routine
      */
     @Override
     public PlayoutPlotter startPlot(int sequenceLength) {
-        lineChart = new LineChart().setBG(Color.gray);
+        lineChart = new LineChart(dimension).setBG(Color.gray);
         lineChart.xAxis = new LineChartAxis(new double[]{0, sequenceLength / 2, sequenceLength});
         lineChart.yAxis = new LineChartAxis(new double[]{-50, -25, 0, 25, 50});
         lineChart.setYLabel("Expected Score");
         lineChart.setXLabel("Rollout Depth");
         lineChart.plotBG = Color.white;
+
 
         frame = new JEasyFrame(lineChart, "Fitness versus depth");
         scores = new StatSummary();

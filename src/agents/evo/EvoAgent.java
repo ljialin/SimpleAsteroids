@@ -11,6 +11,8 @@ import plot.NullPlayoutPlotter;
 import plot.PlayoutPlotter;
 import plot.PlayoutPlotterInterface;
 
+import java.awt.*;
+
 /**
  *  This is a simple evolutionary planning agent
  *  that combines a game state, and evolutionary algorithm and an action sequencer -
@@ -49,8 +51,16 @@ public class EvoAgent implements SimplePlayerInterface {
         return this;
     }
 
+
+    Dimension dimension = new Dimension(800, 600);
+
+    public EvoAgent setDimension(Dimension dimension) {
+        this.dimension = dimension;
+        return this;
+    }
+
     public EvoAgent setVisual() {
-        playoutPlotter = new PlayoutPlotter();
+        playoutPlotter = new PlayoutPlotter().setDimension(dimension);
         playoutPlotter.startPlot(sequenceLength);
         return this;
     }
