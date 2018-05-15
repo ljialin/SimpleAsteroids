@@ -1,6 +1,5 @@
 package spinbattle.actuator;
 
-import ggi.AbstractGameState;
 import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
 import spinbattle.core.Transporter;
@@ -15,6 +14,11 @@ public class SourceTargetActuator implements Actuator {
 
     Integer planetSelected;
     int playerId;
+
+    public SourceTargetActuator reset() {
+        planetSelected = null;
+        return this;
+    }
 
 
     public SourceTargetActuator copy() {
@@ -36,6 +40,7 @@ public class SourceTargetActuator implements Actuator {
     public SpinGameState actuate(int action, SpinGameState gameState) {
         // if not already selected then select it
         // System.out.println(action);
+        // todo - fix the bug
         if (planetSelected == null) {
             Planet source = gameState.planets.get(action);
             if (source.transitReady() && source.ownedBy == playerId) {
@@ -45,10 +50,18 @@ public class SourceTargetActuator implements Actuator {
             Planet source = gameState.planets.get(planetSelected);
             Planet target = gameState.planets.get(action);
             Transporter transit = source.getTransporter();
+            if (transit == null) return null;
             // shift 50%
-            transit.setPayload(source, source.shipCount / 2);
-            transit.launch(source.position, target.position, playerId);
-            transit.setTarget(action);
+            try {
+                transit.setPayload(source, source.shipCount / 2);
+                transit.launch(source.position, target.position, playerId, gameState);
+                transit.setTarget(action);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Transit = " + transit);
+                System.out.println("Source  = " + source);
+                System.out.println("Target  = " + target);
+            }
             planetSelected = null;
         }
         return gameState;

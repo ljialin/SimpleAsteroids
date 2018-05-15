@@ -4,7 +4,7 @@ import agents.dummy.RandomAgent;
 import asteroids.AsteroidsGameState;
 import evogame.DefaultParams;
 import evogame.GameParameters;
-import ggi.SimplePlayerInterface;
+import ggi.core.SimplePlayerInterface;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 

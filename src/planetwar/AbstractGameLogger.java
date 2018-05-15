@@ -1,8 +1,8 @@
 package planetwar;
 
 
-import ggi.AbstractGameState;
-import ggi.SimplePlayerInterface;
+import ggi.core.AbstractGameState;
+import ggi.core.SimplePlayerInterface;
 import logger.sample.DefaultLogger;
 
 import java.util.ArrayList;
@@ -18,6 +18,8 @@ public class AbstractGameLogger implements SimplePlayerInterface {
     List<SimplePlayerInterface> shadows = new ArrayList<>();
 
     SimplePlayerInterface agent;
+
+
 
     public AbstractGameLogger setAgent(SimplePlayerInterface agent) {
         this.agent = agent;
@@ -37,6 +39,12 @@ public class AbstractGameLogger implements SimplePlayerInterface {
         defaultLogger.logScore(gameState.getScore());
         logShadowResponses(gameState, action, playerId);
         return action;
+    }
+
+    @Override
+    public SimplePlayerInterface reset() {
+        // todo may need to do some work here
+        return this;
     }
 
     private void logShadowResponses(AbstractGameState gameState, int action, int playerId) {

@@ -1,8 +1,8 @@
 package gvglink;
 
 import core.player.AbstractMultiPlayer;
-import ggi.AbstractGameState;
-import ggi.SimplePlayerInterface;
+import ggi.core.AbstractGameState;
+import ggi.core.SimplePlayerInterface;
 
 
 /**
@@ -26,7 +26,10 @@ public class GVGTwoPlayerAdapter implements SimplePlayerInterface {
         return 0;
     }
 
-
+    @Override
+    public SimplePlayerInterface reset() {
+        return this;
+    }
 
 
 }

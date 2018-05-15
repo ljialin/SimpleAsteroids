@@ -5,8 +5,8 @@ import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
-import ggi.GameRunner;
-import ggi.SimplePlayerInterface;
+import ggi.core.GameRunner;
+import ggi.core.SimplePlayerInterface;
 
 public class GameLoggerTest {
     public static void main(String[] args) {

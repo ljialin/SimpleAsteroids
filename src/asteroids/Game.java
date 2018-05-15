@@ -100,8 +100,6 @@ public class Game {
 
         EvoAlg evoAlg = simpleRMHC;
 
-
-
         // evoAlg = new SlidingMeanEDA();
 
         int nEvals = 20;

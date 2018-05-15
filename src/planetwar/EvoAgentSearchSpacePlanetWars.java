@@ -4,7 +4,7 @@ import agents.evo.EvoAgent;
 import evodef.*;
 import evodef.DefaultMutator;
 import ga.SimpleRMHC;
-import ggi.GameRunner;
+import ggi.core.GameRunner;
 import ntuple.params.BooleanParam;
 import ntuple.params.DoubleParam;
 import ntuple.params.IntegerParam;

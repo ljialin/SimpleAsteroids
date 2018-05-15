@@ -44,7 +44,7 @@ public class SourceTargetMouseController extends MouseAdapter {
                 Transporter transit = source.getTransporter();
                 // shift 50%
                 transit.setPayload(source, source.shipCount / 2);
-                transit.launch(source.position, target.position, playerId);
+                transit.launch(source.position, target.position, playerId, gameState);
                 transit.setTarget(clicked);
             }
             // now reset the selection irrespective of whether an action was launched

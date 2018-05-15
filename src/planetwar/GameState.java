@@ -1,6 +1,6 @@
 package planetwar;
 
-import ggi.AbstractGameState;
+import ggi.core.AbstractGameState;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 

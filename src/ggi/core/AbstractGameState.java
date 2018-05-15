@@ -1,4 +1,4 @@
-package ggi;
+package ggi.core;
 
 
 // for multi-player game

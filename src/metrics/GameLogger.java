@@ -1,6 +1,6 @@
 package metrics;
 
-import ggi.AbstractGameState;
+import ggi.core.AbstractGameState;
 
 
 /**

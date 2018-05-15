@@ -1,7 +1,7 @@
 package spinbattle.players;
 
-import ggi.AbstractGameState;
-import ggi.SimplePlayerInterface;
+import ggi.core.AbstractGameState;
+import ggi.core.SimplePlayerInterface;
 import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
 import spinbattle.core.Transporter;
@@ -11,6 +11,12 @@ public class HeuristicLauncher implements SimplePlayerInterface {
     public int getAction(AbstractGameState gameState, int playerId) {
         return 0;
     }
+
+    @Override
+    public SimplePlayerInterface reset() {
+        return this;
+    }
+
 
     // int shipThreshold =
 
@@ -24,7 +30,7 @@ public class HeuristicLauncher implements SimplePlayerInterface {
                 Planet destination = getTarget(gameState, p, playerId);
                 if (destination != null) {
                     transit.setPayload(p, destination.shipCount);
-                    transit.launch(p.position, destination.position, playerId);
+                    transit.launch(p.position, destination.position, playerId, gameState);
                     transit.setTarget(destination.index);
                     gameState.notifyLaunch(transit);
                 }

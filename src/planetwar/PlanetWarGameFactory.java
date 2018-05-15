@@ -1,7 +1,7 @@
 package planetwar;
 
-import ggi.AbstractGameFactory;
-import ggi.AbstractGameState;
+import ggi.core.AbstractGameFactory;
+import ggi.core.AbstractGameState;
 
 public class PlanetWarGameFactory implements AbstractGameFactory{
     @Override

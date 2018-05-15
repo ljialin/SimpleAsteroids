@@ -42,7 +42,7 @@ public class TrajectoryView extends JComponent {
 
     Dimension dimension = new Dimension(100, 100);
     ArrayList<Trajectory> trajectories = new ArrayList<>();
-    boolean commonStartPoint = true;
+    public boolean commonStartPoint = true;
 
     public TrajectoryView setDimension(Dimension dimension) {
         this.dimension = dimension;
@@ -56,9 +56,12 @@ public class TrajectoryView extends JComponent {
 
     public void paintComponent(Graphics go) {
         Graphics2D g = (Graphics2D) go;
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
-        g.translate(getWidth() / 2, getHeight() / 2);
+        if (commonStartPoint) {
+            g.translate(getWidth() / 2, getHeight() / 2);
+        }
         if (trajectories != null) {
             for (Trajectory t : trajectories) {
                 drawTrajectory(g, t);

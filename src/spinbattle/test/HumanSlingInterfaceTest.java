@@ -1,5 +1,6 @@
 package spinbattle.test;
 
+import logger.sample.DefaultLogger;
 import spinbattle.core.SpinGameState;
 import spinbattle.log.BasicLogger;
 import spinbattle.params.Constants;
@@ -18,11 +19,12 @@ public class HumanSlingInterfaceTest {
         // to always get the same initial game
         SpinBattleParams.random = new Random(8);
         SpinBattleParams params = new SpinBattleParams();
+
         params.maxTicks = 5000;
         params.gravitationalFieldConstant *= -1;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         BasicLogger basicLogger = new BasicLogger();
-        gameState.setLogger(basicLogger);
+        gameState.setLogger(new DefaultLogger());
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
         HeuristicLauncher launcher = new HeuristicLauncher();
         String title = "Spin Battle Game" ;
