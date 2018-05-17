@@ -83,6 +83,10 @@ public class Game {
         }
     }
 
+
+    public static int seqLength = 100;
+    public static int nEvals = 20;
+
     Controller getEvoAgent() {
         //
         // todo Add in the code t make this
@@ -103,7 +107,7 @@ public class Game {
         // evoAlg = new SlidingMeanEDA();
 
         int nEvals = 20;
-        int seqLength = 100;
+        // int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true).setDimension(new Dimension(600, 480));
         evoAgent.setVisual();

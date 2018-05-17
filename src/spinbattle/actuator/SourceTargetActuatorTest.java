@@ -21,16 +21,16 @@ public class SourceTargetActuatorTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(6);
+        SpinBattleParams.random = new Random(7);
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
-        params.gravitationalFieldConstant *= 1;
+        params.gravitationalFieldConstant *= 2;
 
 
-        params.maxTicks = 500;
+        params.maxTicks = 5000;
         params.width = 400;
         params.height = 600;
-        // params.height = 600;
+        params.height = 700;
 
 
 
@@ -52,7 +52,7 @@ public class SourceTargetActuatorTest {
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
 
-        gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
+        // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
         SimplePlayerInterface player1 = getEvoAgent();
 
@@ -70,14 +70,14 @@ public class SourceTargetActuatorTest {
         MouseSlingController mouseSlingController = new MouseSlingController();
         mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseSlingController);
-        int launchPeriod = 10; // params.releasePeriod;
+        int launchPeriod = 100; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
 
         int frameDelay = 20;
 
         // may want to stop before the end of the game for demo purposes
-        int nTicks = 100;
+        int nTicks = 5000;
         for (int i=0; i<nTicks && !gameState.isTerminal(); i++) {
             SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
             actions[0] = player1.getAction(gameState.copy(), 0);
@@ -97,8 +97,8 @@ public class SourceTargetActuatorTest {
         }
         System.out.println(gameState.isTerminal());
         String trajTitle = String.format("g = %.3f, spd = %.3f", params.gravitationalFieldConstant, params.transitSpeed);
-        logger.showTrajectories(params.width, params.height, trajTitle);
-        System.out.println("nTraj: " + logger.getTrajectoryLogger().trajectories.size());
+        // logger.showTrajectories(params.width, params.height, trajTitle);
+        // System.out.println("nTraj: " + logger.getTrajectoryLogger().trajectories.size());
 
     }
 
@@ -129,7 +129,7 @@ public class SourceTargetActuatorTest {
         // evoAlg = new SlidingMeanEDA();
 
         int nEvals = 20;
-        int seqLength = 100;
+        int seqLength = 300;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         boolean useShiftBuffer = true;
         evoAgent.setUseShiftBuffer(useShiftBuffer);

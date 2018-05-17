@@ -21,6 +21,9 @@ public class GameSpeedTest {
         int startLevel = 1;
         int nLives = 3;
 
+        Game.seqLength = 100;
+        Game.nEvals = 20;
+
         GameParameters params = new GameParameters().injectValues(new DefaultParams());
         AsteroidsGameState gameState = new AsteroidsGameState().setParams(params);
         gameState.initialLevel = 5;
