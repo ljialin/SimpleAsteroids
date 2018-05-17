@@ -20,7 +20,6 @@ public class TrajectoryView extends JComponent {
         double initScale = h * 2;
         double scale = 5;
 
-
         ArrayList<Trajectory> trajectories = new ArrayList<>();
         Random random = new Random();
 
@@ -37,7 +36,6 @@ public class TrajectoryView extends JComponent {
         TrajectoryView tv = new TrajectoryView();
         tv.setTrajectories(trajectories).setDimension(new Dimension(2 * w, 2 * h));
         new JEasyFrame(tv, "Trajectory Views");
-
     }
 
     Dimension dimension = new Dimension(100, 100);
@@ -67,7 +65,6 @@ public class TrajectoryView extends JComponent {
                 drawTrajectory(g, t);
             }
         }
-
     }
 
     private void drawTrajectory(Graphics2D g, Trajectory trajectory) {

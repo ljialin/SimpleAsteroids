@@ -212,7 +212,9 @@ public class Vector2d {
 
     public void normalise() {
         double mag = mag();
-        x /= mag;
-        y /= mag;
+        if (mag != 0) {
+            x /= mag;
+            y /= mag;
+        }
     }
 }

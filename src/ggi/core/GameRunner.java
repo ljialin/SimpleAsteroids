@@ -4,6 +4,7 @@ import planetwar.GameLog;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LinePlot;
+import spinbattle.view.SpinBattleView;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
@@ -85,8 +86,33 @@ public class GameRunner {
     }
 
 
-    // boolean verbose = true;
     public GameRunner playGame() {
+        playGame(p1, p2);
+        // playGame()
+        return this;
+    }
+
+    public GameRunner playBothGames() {
+        playGame(p1, p2);
+        playGame(p2, p1);
+        return this;
+    }
+
+    // boolean verbose = true;
+
+    public Integer delay = null;
+
+    private void delay() {
+        if (delay != null) {
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public GameRunner playGame(SimplePlayerInterface p1, SimplePlayerInterface p2) {
         System.out.println(gameFactory);
         AbstractGameState gameState = gameFactory.newGame();
         GameLog gameLog = new GameLog();
@@ -105,6 +131,7 @@ public class GameRunner {
             actions[1] = p2.getAction(gameState.copy(), p2Index);
             gameState.next(actions);
             gameLog.addScore(gameState.getScore());
+            delay();
         }
         scores.add(gameState.getScore());
 

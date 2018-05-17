@@ -120,6 +120,7 @@ public class Transporter {
         mo.v = destination.copy().subtract(mo.s);
         mo.v.normalise();
         mo.v.mul(params.transitSpeed);
+        System.out.println("Launching with speed: " + mo.v.mag() + " : " + params.transitSpeed);
         this.ownedBy = playerId;
         // now add a trajectory, only if needed
         if (gameState.logger != null) {

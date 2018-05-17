@@ -15,6 +15,13 @@ public class SourceTargetActuator implements Actuator {
     Integer planetSelected;
     int playerId;
 
+    boolean doNothing = false;
+
+    public SourceTargetActuator setDoNothing() {
+        doNothing = true;
+        return this;
+    }
+
     public SourceTargetActuator reset() {
         planetSelected = null;
         return this;
@@ -38,9 +45,8 @@ public class SourceTargetActuator implements Actuator {
     }
 
     public SpinGameState actuate(int action, SpinGameState gameState) {
-        // if not already selected then select it
-        // System.out.println(action);
-        // todo - fix the bug
+        if (doNothing) return gameState;
+
         if (planetSelected == null) {
             Planet source = gameState.planets.get(action);
             if (source.transitReady() && source.ownedBy == playerId) {

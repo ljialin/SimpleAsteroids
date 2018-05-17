@@ -10,6 +10,7 @@ import ggi.core.SimplePlayerInterface;
 import plot.NullPlayoutPlotter;
 import plot.PlayoutPlotter;
 import plot.PlayoutPlotterInterface;
+import spinbattle.core.SpinGameState;
 
 import java.awt.*;
 
@@ -31,10 +32,10 @@ public class EvoAgent implements SimplePlayerInterface {
     RegularSearchSpace searchSpace;
 
     // static int nActions = AsteroidsGameState.nActions;
-    int sequenceLength = 20;
+    public int sequenceLength = 20;
     public boolean useShiftBuffer = true;
-    int[] solution;
-    int nEvals;
+    public int[] solution;
+    public int nEvals;
 
     PlayoutPlotterInterface playoutPlotter = new NullPlayoutPlotter();
 
@@ -113,6 +114,8 @@ public class EvoAgent implements SimplePlayerInterface {
 
         if (!useShiftBuffer) solution = null;
 
+        SpinGameState spinGameState = (SpinGameState) gameState;
+        System.out.println("Transit speed: " + spinGameState.params.transitSpeed);
         // return first element
         return tmp;
     }

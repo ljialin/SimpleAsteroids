@@ -32,8 +32,6 @@ public class SourceTargetActuatorTest {
         params.height = 600;
         params.height = 700;
 
-
-
         SpinBattleParams altParams = params.copy();
 
         params.gravitationalFieldConstant *= 1.0;
