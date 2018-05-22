@@ -25,7 +25,7 @@ public class SourceTargetActuatorTest {
         SpinBattleParams.random = new Random(7);
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
-        params.gravitationalFieldConstant *= 2;
+        params.gravitationalFieldConstant *= 1;
 
 
         params.maxTicks = 5000;
@@ -35,7 +35,7 @@ public class SourceTargetActuatorTest {
 
         // SpinBattleParams altParams = params.copy();
 
-        params.gravitationalFieldConstant *= 0.0;
+        // params.gravitationalFieldConstant *= 1.0;
         params.transitSpeed *= 1;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
