@@ -149,4 +149,15 @@ public class Transporter {
         this.ownedBy = playerId;
         return this;
     }
+
+    public Transporter catapultLaunch(Vector2d start, Vector2d v, int playerId) {
+        // set up the mover
+        mo = new MovableObject();
+        mo.s = start.copy();
+        mo.v = v;
+        // mo.v.normalise();
+        // mo.v.mul(transitSpeed);
+        this.ownedBy = playerId;
+        return this;
+    }
 }

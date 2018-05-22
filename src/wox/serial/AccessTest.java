@@ -6,7 +6,7 @@ package wox.serial;
 
 // import jdk.internal.reflect.ReflectionFactory;
 
-import sun.reflect.ReflectionFactory;
+// import sun.reflect.ReflectionFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
