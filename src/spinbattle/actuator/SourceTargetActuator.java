@@ -45,8 +45,14 @@ public class SourceTargetActuator implements Actuator {
     }
 
     public SpinGameState actuate(int action, SpinGameState gameState) {
-        if (doNothing) return gameState;
+        if (doNothing) {
+            System.out.println("Doing nothing in actuate");
+            return gameState;
+        }
 
+        if (gameState.params.transitSpeed == 0) {
+            return gameState;
+        }
         if (planetSelected == null) {
             Planet source = gameState.planets.get(action);
             if (source.transitReady() && source.ownedBy == playerId) {
@@ -55,6 +61,11 @@ public class SourceTargetActuator implements Actuator {
         } else {
             Planet source = gameState.planets.get(planetSelected);
             Planet target = gameState.planets.get(action);
+
+            // check we're not trying to transit a planet to itself
+            if (source == target) return null;
+
+
             Transporter transit = source.getTransporter();
             if (transit == null) return null;
             // shift 50%

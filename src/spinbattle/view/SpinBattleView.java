@@ -8,14 +8,17 @@ import spinbattle.core.VectorField;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.util.DrawUtil;
+import utilities.SideStack;
 
 import static spinbattle.params.Constants.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class SpinBattleView extends JComponent {
+    static int nParticles = 10000;
     SpinBattleParams params;
     SpinGameState gameState;
     Color bg = Color.black;
@@ -30,6 +33,8 @@ public class SpinBattleView extends JComponent {
     int planetFontSize = 14;
     DrawUtil planetDraw = new DrawUtil().setColor(Color.black).setFontSize(planetFontSize);
     DrawUtil scoreDraw = new DrawUtil().setColor(Color.white).setFontSize(scoreFontSize);
+
+    SideStack<Particle> particles = new SideStack<>(nParticles);
 
     public SpinBattleView setGameState(SpinGameState gameState) {
         this.gameState = gameState;
@@ -66,7 +71,39 @@ public class SpinBattleView extends JComponent {
         paintPlanets(g);
         paintTransits(g);
         paintScore(g);
+        updateParticles();
+        paintParticles(g);
         nPaints++;
+    }
+
+    private void updateParticles() {
+        // pop all the effects
+        // System.out.println("Popping: " + gameState.logger);
+        // System.out.println("nParticles = " + particles.size());
+        if (gameState.logger != null) {
+            //
+            SideStack<ParticleEffect> effects = gameState.logger.effects;
+            while (!effects.isEmpty()) {
+                ParticleEffect effect = effects.pop();
+                effect.trigger(particles, gameState.params);
+            }
+        }
+        // now update all the particles
+        Iterator<Particle> iterator = particles.iterator();
+        while (iterator.hasNext()) {
+            Particle particle = iterator.next();
+            particle.update();
+            if (particle.isDead()) iterator.remove();
+        }
+    }
+
+    private void paintParticles(Graphics2D g) {
+        int r = 2;
+        for (Particle particle : particles) {
+            // for now just draw a white blob
+            g.setColor(Color.white);
+            g.fillOval((int) particle.mo.s.x-r, (int) particle.mo.s.y-r, 2*r, 2*r);
+        }
     }
 
     private void paintScore(Graphics2D g) {

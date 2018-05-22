@@ -40,6 +40,10 @@ public class Transporter {
         return transporter;
     }
 
+    public String toString() {
+        return String.format("%d -> %d (%.1f) >> %s", parent, target, payload, mo);
+    }
+
 
     public Transporter next(VectorField vf) {
         if (mo != null) {
@@ -49,6 +53,7 @@ public class Transporter {
             if (!params.inBounds(mo.s)) {
                 outOfBoundsTermination();
             }
+            payload -= params.transportTax;
         }
         return this;
     }
@@ -120,7 +125,8 @@ public class Transporter {
         mo.v = destination.copy().subtract(mo.s);
         mo.v.normalise();
         mo.v.mul(params.transitSpeed);
-        System.out.println("Launching with speed: " + mo.v.mag() + " : " + params.transitSpeed);
+//        System.out.println("Launching with speed: " + mo.v.mag() + " : " + params.transitSpeed);
+//        System.out.println(start + " ::: " + destination);
         this.ownedBy = playerId;
         // now add a trajectory, only if needed
         if (gameState.logger != null) {
@@ -133,13 +139,13 @@ public class Transporter {
         return this;
     }
 
-    public Transporter directionalLaunch(Vector2d start, double angle, int playerId) {
+    public Transporter directionalLaunch(Vector2d start, double angle, int playerId, double transitSpeed) {
         // set up the mover
         mo = new MovableObject();
         mo.s = start.copy();
         mo.v = new Vector2d(Math.sin(angle), Math.cos(angle));
         mo.v.normalise();
-        mo.v.mul(params.transitSpeed);
+        mo.v.mul(transitSpeed);
         this.ownedBy = playerId;
         return this;
     }

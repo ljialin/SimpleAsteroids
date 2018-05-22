@@ -4,7 +4,9 @@ import logger.core.CorrelationLogger;
 import logger.core.TrajectoryLogger;
 import logger.util.EntropyLogger;
 import logger.view.TrajectoryView;
+import spinbattle.view.ParticleEffect;
 import utilities.JEasyFrame;
+import utilities.SideStack;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,9 +16,16 @@ public class DefaultLogger {
     EntropyLogger scoreEntropy = new EntropyLogger().setName("Score Entropy");
     CorrelationLogger correlationLogger = new CorrelationLogger();
     TrajectoryLogger trajectoryLogger = new TrajectoryLogger();
+    public SideStack<ParticleEffect> effects = new SideStack<>();
 
     public DefaultLogger logAction(int action) {
         actionEntropy.log(action);
+        return this;
+    }
+
+    public DefaultLogger logEffect(ParticleEffect effect) {
+        effects.push(effect);
+        // System.out.println(effects.stackString());
         return this;
     }
 
@@ -40,7 +49,9 @@ public class DefaultLogger {
         sb.append(String.format("Action entropy: %.3f\n", actionEntropy.entropy()));
         sb.append(String.format("Score entropy: %.3f\n", scoreEntropy.entropy()));
         sb.append("\n");
-        sb.append(correlationLogger);
+        if (correlationLogger != null) {
+            sb.append(correlationLogger);
+        }
         return sb.toString();
     }
 

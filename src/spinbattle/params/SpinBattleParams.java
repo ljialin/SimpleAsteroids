@@ -43,10 +43,13 @@ public class SpinBattleParams {
     // this is for a heuristic AI opponent
     public int releasePeriod = 400;
 
+    public boolean clampZeroScore = false;
+
     public boolean useProximityMap = true;
 
     public boolean useVectorField = true;
 
+    public double transportTax = 0.0;
 
     public SpinBattleParams copy() {
         // todo a proper copy
@@ -67,6 +70,8 @@ public class SpinBattleParams {
         p.useVectorField = useVectorField;
         p.gravitationalFieldConstant = gravitationalFieldConstant;
         p.gravitationalForceConstant = gravitationalForceConstant;
+        p.clampZeroScore = clampZeroScore;
+        p.transportTax = transportTax;
         return p;
     }
 

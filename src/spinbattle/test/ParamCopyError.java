@@ -3,10 +3,17 @@ package spinbattle.test;
 import spinbattle.actuator.SourceTargetActuator;
 import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
+import spinbattle.core.Transporter;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 
+/**
+ * This was to fix a bug in the copying
+ */
+
 public class ParamCopyError {
+
+
     public static void main(String[] args) {
         // find the launch error
 
@@ -27,14 +34,19 @@ public class ParamCopyError {
 
 
         SpinBattleParams params2 = new SpinBattleParams();
-        params2.transitSpeed = 0;
+        params2.transitSpeed = 5;
         Planet source = gameState.planets.get(0);
         Planet target = gameState.planets.get(1);
 
         gameState.setParams(params2);
         // source.setParams(params2);
-        gameState.planets.get(0).getTransporter().launch(source.position, target.position, Constants.playerOne, gameState);
 
+        Transporter trans = gameState.planets.get(0).getTransporter().launch(source.position, target.position, Constants.playerOne, gameState);
+        trans.setPayload(source, 10);
+
+        for (Planet p : gameState.planets) {
+            System.out.println(p.index + "\t " + p.getTransporter());
+        }
 
     }
 }

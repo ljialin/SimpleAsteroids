@@ -26,6 +26,7 @@ public class CorrelationLogger {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        if (count == null) return "No correlations have been logged";
         for (int[] a : count) {
             sb.append(Arrays.toString(a) + "\n");
         }

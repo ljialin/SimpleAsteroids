@@ -84,7 +84,7 @@ public class MouseSlingController extends MouseAdapter {
         if (planetSelected != null) {
             Planet source = gameState.planets.get(planetSelected);
             Transporter transit = source.getTransporter();
-            transit.directionalLaunch(source.position, source.rotation, playerId);
+            transit.directionalLaunch(source.position, source.rotation, playerId, gameState.params.transitSpeed);
             gameState.notifyLaunch(transit);
 
         }

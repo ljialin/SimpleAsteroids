@@ -88,6 +88,8 @@ public class SpinGameState implements AbstractGameState {
 
     @Override
     public double getScore() {
+        if (params.clampZeroScore) return 0;
+
         double score = 0;
         for (Planet p : planets) {
             score += p.getScore();
@@ -136,6 +138,12 @@ public class SpinGameState implements AbstractGameState {
 
     public SpinGameState setParams(SpinBattleParams params) {
         this.params = params;
+        // set all the planet params also
+        if (planets != null) {
+            for (Planet p : planets) {
+                p.setParams(params);
+            }
+        }
         return this;
     }
 

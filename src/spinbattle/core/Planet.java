@@ -4,6 +4,7 @@ import levelgen.MarioReader;
 import math.Vector2d;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
+import spinbattle.view.ParticleEffect;
 
 
 public class Planet {
@@ -67,6 +68,12 @@ public class Planet {
                 // process the inbound
                 destination.processIncoming(transit.payload, transit.ownedBy, gameState);
                 transit.terminateJourney();
+                if (gameState.logger != null) {
+                    ParticleEffect effect = new ParticleEffect().setPosition(destination.position);
+                    effect.setNParticle(20);
+                    // System.out.println(effect);
+                    gameState.logger.logEffect(effect);
+                }
                 // transit
                 // System.out.println("Terminated Journey: " + transit.inTransit());
             }
@@ -77,6 +84,9 @@ public class Planet {
 
     public Planet setParams(SpinBattleParams params) {
         this.params = params;
+        if (transit != null) {
+            transit.setParams(params);
+        }
         return this;
     }
 

@@ -6,6 +6,7 @@ import evodef.EvoAlg;
 import ga.SimpleRMHC;
 import ggi.core.SimplePlayerInterface;
 import logger.sample.DefaultLogger;
+import spinbattle.core.FalseModelAdapter;
 import spinbattle.core.SpinGameState;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
@@ -32,9 +33,9 @@ public class SourceTargetActuatorTest {
         params.height = 600;
         params.height = 700;
 
-        SpinBattleParams altParams = params.copy();
+        // SpinBattleParams altParams = params.copy();
 
-        params.gravitationalFieldConstant *= 1.0;
+        params.gravitationalFieldConstant *= 0.0;
         params.transitSpeed *= 1;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
@@ -43,16 +44,16 @@ public class SourceTargetActuatorTest {
         DefaultLogger logger = new DefaultLogger();
         // gameState.setLogger(logger);
 
-        SpinGameState copy1 = ((SpinGameState) gameState.copy()).setParams(altParams);
+        // SpinGameState copy1 = ((SpinGameState) gameState.copy()).setParams(altParams);
 
-        System.out.println("Logger in copied state: " + copy1.logger);
+        // System.out.println("Logger in copied state: " + copy1.logger);
 
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
 
         // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
-        SimplePlayerInterface player1 = getEvoAgent();
+        SimplePlayerInterface evoAgent = getEvoAgent();
 
         // SimplePlayerInterface player2 = getEvoAgent();
 
@@ -65,30 +66,39 @@ public class SourceTargetActuatorTest {
         String title = "Spin Battle Game" ;
         JEasyFrame frame = new JEasyFrame(view, title + ": Waiting for Graphics");
         frame.setLocation(new Point(800, 0));
-        MouseSlingController mouseSlingController = new MouseSlingController();
-        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
-        view.addMouseListener(mouseSlingController);
+//        MouseSlingController mouseSlingController = new MouseSlingController();
+//        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
+//        view.addMouseListener(mouseSlingController);
         int launchPeriod = 100; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
 
         int frameDelay = 20;
 
+        SpinBattleParams falseParams = params.copy(); // new SpinBattleParams();
+        // params.gravitationalFieldConstant *= 0;
+        // falseParams.transitSpeed = 0.00000;
+        // falseParams.clampZeroScore = false;
+        FalseModelAdapter falsePlayer = new FalseModelAdapter().setPlayer(evoAgent).setParams(falseParams);
+
         // may want to stop before the end of the game for demo purposes
         int nTicks = 5000;
         for (int i=0; i<nTicks && !gameState.isTerminal(); i++) {
-            SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
-            actions[0] = player1.getAction(gameState.copy(), 0);
+            // SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
+            // actions[0] = evoAgent.getAction(gameState.copy(), 0);
+            actions[0] = falsePlayer.getAction(gameState.copy(), 0);
             // actions[1] = player2.getAction(gameState.copy(), 1);
             // actions[0] = randomPlayer.getAction(gameState.copy(), 0);
             // actions[1] = randomPlayer.getAction(gameState.copy(), 1);
             // System.out.println(i + "\t " + actions[0]);
             gameState.next(actions);
-            mouseSlingController.update();
+            // mouseSlingController.update();
             // launcher.makeTransits(gameState, Constants.playerOne);
             if (i % launchPeriod == 0)
                 launcher.makeTransits(gameState, Constants.playerTwo);
-            view.setGameState((SpinGameState) gameState.copy());
+            SpinGameState viewCopy = (SpinGameState) gameState.copy();
+            viewCopy.logger = gameState.logger;
+            view.setGameState(viewCopy);
             view.repaint();
             frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
             Thread.sleep(frameDelay);
@@ -110,7 +120,7 @@ public class SourceTargetActuatorTest {
 
     static SimplePlayerInterface getEvoAgent() {
         //
-        // todo Add in the code t make this
+        // todo Add in the code to make this
         int nResamples = 1;
 
         DefaultMutator mutator = new DefaultMutator(null);

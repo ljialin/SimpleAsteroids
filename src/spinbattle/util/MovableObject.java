@@ -10,9 +10,6 @@ public class MovableObject {
     // may not need this...
     boolean isActive = false;
 
-    // should really be moved to params, or in to VectoreField
-    static double gConstant = 0.001;
-
     public MovableObject copy() {
         MovableObject mo = new MovableObject();
         mo.s = s.copy();
@@ -28,6 +25,10 @@ public class MovableObject {
             s.add(v);
         }
         return this;
+    }
+
+    public String toString() {
+        return s + " :: " + v;
     }
 
 }
