@@ -10,6 +10,8 @@ import wox.serial.ObjectWriter;
 import wox.serial.SimpleWriter;
 import wox.serial.TestObject;
 
+import java.io.PrintWriter;
+
 public class WoxTest {
     public static void main(String[] args) throws Exception {
         SpinBattleParams params = new SpinBattleParams();
@@ -31,7 +33,10 @@ public class WoxTest {
         Element el = writer.write( states );
         XMLOutputter out = new XMLOutputter();
         out.setFormat(Format.getPrettyFormat());
+        PrintWriter pw = new PrintWriter("data/res/SpinBattleState.xml");
         out.output( el, System.out );
+        out.output(el, pw);
+        pw.close();
         System.out.println("");
 
 

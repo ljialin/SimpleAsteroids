@@ -22,7 +22,7 @@ public class SourceTargetActuatorTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(7);
+        SpinBattleParams.random = new Random(8);
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
         params.gravitationalFieldConstant *= 1;
