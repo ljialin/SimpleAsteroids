@@ -64,8 +64,9 @@ public class CaveView extends JComponent {
     private void paintAnchors(Graphics2D g) {
         g.setColor(Color.white);
         int index = 0;
+        Anchor currentAnchor = gameState.map.getClosestAnchor(gameState.avatar.s);
         for (Anchor a : gameState.map.anchors) {
-            if (index == gameState.nextAnchorIndex) {
+            if (a.equals(currentAnchor)) {
                 g.setColor(anchorColor);
             } else {
                 g.setColor(Color.lightGray);
