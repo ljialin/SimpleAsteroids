@@ -14,7 +14,7 @@ public class FeatureView extends JComponent {
     public static void main(String[] args) throws Exception {
         SimpleBattleState state = new SimpleBattleState();
         FeatureView fv = new FeatureView().setBattleState(state);
-        new JEasyFrame(fv, "Feature view");
+        new JEasyFrame(fv, "Feature CaveView");
 
         while(true) {
             Thread.sleep(50);
@@ -51,7 +51,7 @@ public class FeatureView extends JComponent {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
-        // the point of this class is to have an agent-centric view of the game
+        // the point of this class is to have an agent-centric CaveView of the game
         // in order to get a good q-learning agent ...
         if (state == null) return;
         SimpleShip ship1 = state.ships[0];

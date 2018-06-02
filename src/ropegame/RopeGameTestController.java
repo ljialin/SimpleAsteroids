@@ -14,7 +14,7 @@ public class RopeGameTestController {
     public static void main(String[] args) throws Exception {
 
         // make a game state
-        // make a view based on the state
+        // make a CaveView based on the state
 
         // figure out a way to update it
         // the idea is to provide a simple demo of the game

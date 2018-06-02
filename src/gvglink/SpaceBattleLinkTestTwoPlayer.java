@@ -131,10 +131,10 @@ public class SpaceBattleLinkTestTwoPlayer {
         ElapsedTimer t = new ElapsedTimer();
         BattleView view = new BattleView(linkState.state.copyState());
 //        if (showVisible)
-//            view.evoAlg = evoAlg;
+//            CaveView.evoAlg = evoAlg;
 
 
-        // set view to null to run fast with no visuals
+        // set CaveView to null to run fast with no visuals
         if (!runVisible) view = null;
 
         if (view != null) {

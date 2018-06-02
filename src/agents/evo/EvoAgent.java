@@ -113,9 +113,6 @@ public class EvoAgent implements SimplePlayerInterface {
 
         if (!useShiftBuffer) solution = null;
 
-        SpinGameState spinGameState = (SpinGameState) gameState;
-        // System.out.println("Transit speed: " + spinGameState.params.transitSpeed);
-        // return first element
         return tmp;
     }
 

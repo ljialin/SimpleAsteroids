@@ -68,7 +68,7 @@ public class SourceTargetActuatorTest {
         frame.setLocation(new Point(800, 0));
 //        MouseSlingController mouseSlingController = new MouseSlingController();
 //        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
-//        view.addMouseListener(mouseSlingController);
+//        CaveView.addMouseListener(mouseSlingController);
         int launchPeriod = 100; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
@@ -100,7 +100,7 @@ public class SourceTargetActuatorTest {
             viewCopy.logger = gameState.logger;
             view.setGameState(viewCopy);
             view.repaint();
-            frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
+            frame.setTitle(title + " : " + i); //  + " : " + CaveView.getTitle());
             Thread.sleep(frameDelay);
         }
         System.out.println(gameState.isTerminal());
@@ -113,7 +113,7 @@ public class SourceTargetActuatorTest {
     static void waitUntilReady(SpinBattleView view) throws Exception {
         int i = 0;
         while (view.nPaints == 0) {
-            // System.out.println(i++ + " : " + view.nPaints);
+            // System.out.println(i++ + " : " + CaveView.nPaints);
             Thread.sleep(50);
         }
     }

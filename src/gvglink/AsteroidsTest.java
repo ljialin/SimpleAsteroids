@@ -122,7 +122,7 @@ public class AsteroidsTest {
         ElapsedTimer t = new ElapsedTimer();
 
         View view = new View(stateObs.state);
-        // set view to null to run fast with no visuals
+        // set CaveView to null to run fast with no visuals
         view = null;
 
         JEasyFrame frame;

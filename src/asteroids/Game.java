@@ -129,7 +129,7 @@ public class Game {
             // System.out.println("3: " + gameState.ship.action);
             // System.out.println();
 
-            // update the view to show this one
+            // update the CaveView to show this one
             if (view != null) {
                 // in case the gameState has been copied
                 view.gameState = gameState.copy();

@@ -52,7 +52,7 @@ public class PlanetWarsLinkTest {
 
         PlanetWarView view = null;
         view = new PlanetWarView((GameState) state.state);
-        // JEasyFrame frame = new JEasyFrame(view, "Simple Planet Wars");
+        // JEasyFrame frame = new JEasyFrame(CaveView, "Simple Planet Wars");
 //        KeyController controller = new KeyController();
 //        frame.addKeyListener(controller);
 

@@ -304,8 +304,8 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         return x;
     }
 
-    // the level view update frequency should be tuned in order
-    // to provide an animated view of the evolutionary process
+    // the level CaveView update frequency should be tuned in order
+    // to provide an animated CaveView of the evolutionary process
     // without slowing down the evolution too much
 
     // a figure of 5,000 may be reasonable

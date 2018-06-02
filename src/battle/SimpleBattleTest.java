@@ -32,8 +32,8 @@ public class SimpleBattleTest {
         ElapsedTimer t = new ElapsedTimer();
         BattleView view = new BattleView(state);
 
-        // set view to null to run fast with no visuals
-        // view = null;
+        // set CaveView to null to run fast with no visuals
+        // CaveView = null;
 
         if (view != null) {
             new JEasyFrame(view, "Simple Battle Game");

@@ -41,7 +41,7 @@ public class HumanCatapultVersusEvoAgent {
         CatapultController catapultController = new CatapultController();
         catapultController.setGameState(gameState).setPlayerId(Constants.playerOne);
 
-        // view.addMouseListener(mouseSlingController);
+        // CaveView.addMouseListener(mouseSlingController);
         view.addMouseListener(catapultController);
         waitUntilReady(view);
 
@@ -57,7 +57,7 @@ public class HumanCatapultVersusEvoAgent {
             // launcher.makeTransits(gameState, Constants.playerOne);
             view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
-            frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
+            frame.setTitle(title + " : " + i); //  + " : " + CaveView.getTitle());
             Thread.sleep(40);
         }
         System.out.println(gameState.isTerminal());
@@ -66,7 +66,7 @@ public class HumanCatapultVersusEvoAgent {
     static void waitUntilReady(SpinBattleView view) throws Exception {
         int i = 0;
         while (view.nPaints == 0) {
-            // System.out.println(i++ + " : " + view.nPaints);
+            // System.out.println(i++ + " : " + CaveView.nPaints);
             Thread.sleep(50);
         }
     }

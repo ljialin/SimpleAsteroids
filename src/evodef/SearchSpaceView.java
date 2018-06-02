@@ -13,7 +13,7 @@ import static asteroids.Constants.size;
 /**
  * Created by Simon Lucas on 01/05/2017.
  *
- * Enables an easy way to view a search space
+ * Enables an easy way to CaveView a search space
  * Actually draws an EvoVectorSet because that has more information in it
  * i.e. the name of each parameter and its actual values
  *

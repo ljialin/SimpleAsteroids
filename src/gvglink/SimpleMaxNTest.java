@@ -99,8 +99,8 @@ public class SimpleMaxNTest {
         int nSteps = 10;
 
         ElapsedTimer t = new ElapsedTimer();
-        // set view to null to run fast with no visuals
-        // view = null;
+        // set CaveView to null to run fast with no visuals
+        // CaveView = null;
 
 
         for (int i=0; i<nSteps && !stateObs.isGameOver(); i++) {

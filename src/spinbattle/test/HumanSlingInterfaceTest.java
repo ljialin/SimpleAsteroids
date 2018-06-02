@@ -45,7 +45,7 @@ public class HumanSlingInterfaceTest {
                 launcher.makeTransits(gameState, Constants.playerTwo);
             view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
-            frame.setTitle(title + " : " + i); //  + " : " + view.getTitle());
+            frame.setTitle(title + " : " + i); //  + " : " + CaveView.getTitle());
             Thread.sleep(20);
         }
         System.out.println(gameState.isTerminal());
@@ -54,7 +54,7 @@ public class HumanSlingInterfaceTest {
     static void waitUntilReady(SpinBattleView view) throws Exception {
         int i = 0;
         while (view.nPaints == 0) {
-            // System.out.println(i++ + " : " + view.nPaints);
+            // System.out.println(i++ + " : " + CaveView.nPaints);
             Thread.sleep(50);
         }
     }
