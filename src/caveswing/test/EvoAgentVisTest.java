@@ -23,6 +23,7 @@ public class EvoAgentVisTest {
         params.maxTicks = 2000;
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
+        view.scrollView = true;
         String title = "Evo Agent Visual Test";
         JEasyFrame frame = new JEasyFrame(view, title);
         frame.setLocation(0, 450);

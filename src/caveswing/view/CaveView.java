@@ -22,6 +22,9 @@ public class CaveView extends JComponent {
     int planetFontSize = 14;
     DrawUtil scoreDraw = new DrawUtil().setColor(Color.white).setFontSize(scoreFontSize);
 
+    public boolean scrollView = true;
+    int scrollWidth = 300;
+
     public CaveView setGameState(CaveGameState gameState) {
         this.gameState = gameState;
         return this;
@@ -44,7 +47,12 @@ public class CaveView extends JComponent {
     }
 
     public Dimension getPreferredSize() {
-        return new Dimension(params.width, params.height);
+        if (scrollView) {
+            return new Dimension(scrollWidth, params.height);
+        }
+        else {
+            return new Dimension(params.width, params.height);
+        }
     }
 
     public int nPaints = 0;
@@ -53,10 +61,20 @@ public class CaveView extends JComponent {
         Graphics2D g = (Graphics2D) go;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.fillRect(0, 0, getWidth(), getHeight());
+
+        double xScroll = -gameState.avatar.s.x + scrollWidth/2;
+        if (scrollView) {
+            g.translate(xScroll, 0);
+        }
         paintStars(g);
 
         paintAnchors(g);
         paintAvatar(g);
+
+        if (scrollView) {
+            g.translate(-xScroll, 0);
+        }
+        // have to paint the score last so that it is not obscured by any game objects
         paintScore(g);
         nPaints++;
     }
