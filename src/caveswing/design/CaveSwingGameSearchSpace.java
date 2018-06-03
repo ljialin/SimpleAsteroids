@@ -13,11 +13,11 @@ import ntuple.params.Param;
 import ntuple.params.Report;
 import utilities.ElapsedTimer;
 
-public class CaveSwingGameSearchSpapce implements AnnotatedFitnessSpace {
+public class CaveSwingGameSearchSpace implements AnnotatedFitnessSpace {
 
     public static void main(String[] args) {
         ElapsedTimer timer = new ElapsedTimer();
-        CaveSwingGameSearchSpapce searchSpace = new CaveSwingGameSearchSpapce();
+        CaveSwingGameSearchSpace searchSpace = new CaveSwingGameSearchSpace();
         searchSpace.verbose = true;
         int[] point = SearchSpaceUtil.randomPoint(searchSpace);
 
@@ -69,7 +69,7 @@ public class CaveSwingGameSearchSpapce implements AnnotatedFitnessSpace {
 
     public EvolutionLogger logger;
 
-    public CaveSwingGameSearchSpapce() {
+    public CaveSwingGameSearchSpace() {
         this.logger = new EvolutionLogger();
     }
 
@@ -113,13 +113,8 @@ public class CaveSwingGameSearchSpapce implements AnnotatedFitnessSpace {
         params.meanAnchorHeight = params.height * anchorHeight[x[anchorHeightIndex]];
         params.nAnchors = nAnchors[x[nAnchorsIndex]];
 
-        // need the value from evaluating the game
-        // need an evaluation function in order to get this one done
-        // the evaluation function will take the game and return a score
-        // from having run it, possible a few times
-        // aha but then it should really be from a factory
-
-
+        // using a Game Factory enables the tester to start with a fresh copy of the
+        // game each time
         CaveGameFactory gameFactory = new CaveGameFactory().setParams(params);
         SpeedTest speedTest = new SpeedTest().setGameFactory(gameFactory);
         speedTest.setPlayer(new RandomAgent());

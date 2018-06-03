@@ -85,6 +85,7 @@ public class NTuple {
         for (IntArrayPattern key : orderedKeys) {
             StatSummary ss = ntMap.get(key);
             System.out.println(key + "\t " + ss.n() + "\t " + ss.mean() + "\t " + ss.sd());
+            // System.out.println();
         }
     }
 

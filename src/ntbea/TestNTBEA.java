@@ -9,28 +9,28 @@ import java.util.Arrays;
  * Run a simple test
  */
 
-public class BanditLandscapeEATest {
+public class TestNTBEA {
     public static void main(String[] args) {
         int nDims = 5;
         int mValues = 4;
         double noiseLevel = 1.0;
-        double kExplore = 2;
-        double epsilon = 0.5;
         boolean useTrap = true;
         // EvalMaxM is like Noisy OneMax but generalised to M values
         // instead of binary
         EvalMaxM problem = new EvalMaxM(nDims, mValues, noiseLevel).setTrap(useTrap);
 
-        NTupleBanditEA banditEA = new NTupleBanditEA().setKExplore(kExplore).setEpsilon(epsilon);
 
+        double kExplore = 2;
+        double epsilon = 0.5;
+        NTupleBanditEA banditEA = new NTupleBanditEA().setKExplore(kExplore).setEpsilon(epsilon);
         // set a particlar NTuple System as the model
         // if this is not set, then it will use a default model
         NTupleSystem model = new NTupleSystem();
         // set up a non-standard tuple pattern
         model.use1Tuple = true;
-        model.use2Tuple = false;
+        model.use2Tuple = true;
+        model.use3Tuple = false;
         model.useNTuple = true;
-
         banditEA.setModel(model);
 
         ElapsedTimer timer = new ElapsedTimer();

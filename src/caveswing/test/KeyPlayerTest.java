@@ -10,10 +10,9 @@ import utilities.JEasyFrame;
 public class KeyPlayerTest {
     public static void main(String[] args) throws Exception {
         CaveSwingParams params = new CaveSwingParams();
-
         // todo: adjust parameter setting and see how they affect game play for you
         params.maxTicks = 5000;
-        params.gravity.y = 0;
+        params.gravity.y = 0.03;
         params.gravity.x = -0.03;
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);

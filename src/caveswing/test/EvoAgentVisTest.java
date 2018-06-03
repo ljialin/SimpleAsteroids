@@ -51,7 +51,7 @@ public class EvoAgentVisTest {
 
     }
 
-    static SimplePlayerInterface getEvoAgent() {
+    public static SimplePlayerInterface getEvoAgent() {
         //
         // todo Add in the code to make this
         int nResamples = 1;
