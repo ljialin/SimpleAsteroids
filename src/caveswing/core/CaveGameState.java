@@ -100,6 +100,7 @@ public class CaveGameState implements AbstractGameState {
         double score = avatar.s.x * params.pointPerX + avatar.s.y * params.pointPerY
                 - nTicks * params.costPerTick;
         if (avatar.s.x >= params.width) score += params.successBonus;
+        if (avatar.s.y < 0 || avatar.s.y >= params.height) score-= params.failurePenalty;
         return score;
     }
 

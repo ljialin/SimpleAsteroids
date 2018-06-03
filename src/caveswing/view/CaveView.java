@@ -23,7 +23,7 @@ public class CaveView extends JComponent {
     DrawUtil scoreDraw = new DrawUtil().setColor(Color.white).setFontSize(scoreFontSize);
 
     public boolean scrollView = true;
-    int scrollWidth = 300;
+    int scrollWidth = 400;
 
     public CaveView setGameState(CaveGameState gameState) {
         this.gameState = gameState;

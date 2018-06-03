@@ -88,7 +88,7 @@ public class NTupleBanditEA implements EvoAlg {
         return this;
     }
 
-    boolean logBestYet = false;
+    public boolean logBestYet = false;
 
     @Override
     public int[] runTrial(SolutionEvaluator evaluator, int nEvals) {

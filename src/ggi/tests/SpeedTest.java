@@ -7,16 +7,34 @@ import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
 public class SpeedTest {
+
+
+
     public SimplePlayerInterface[] players;
     public AbstractGameFactory gameFactory;
-    boolean copyTest = false;
+    public boolean copyTest = false;
 
-    StatSummary runTime = new StatSummary("Run Times");
-    StatSummary gameLength = new StatSummary("Game Length");
-    StatSummary gameScores = new StatSummary("Game Scores");
+    public StatSummary runTime = new StatSummary("Run Times");
+    public StatSummary gameLength = new StatSummary("Game Length");
+    public StatSummary gameScores = new StatSummary("Game Scores");
     // StatSummary copyTime
 
     int totalTicks = 0;
+
+    public SpeedTest setPlayer(SimplePlayerInterface player) {
+        players = new SimplePlayerInterface[]{player};
+        return this;
+    }
+
+    public SpeedTest setPlayers(SimplePlayerInterface[] players) {
+        this.players = players;
+        return this;
+    }
+
+    public SpeedTest setGameFactory(AbstractGameFactory gameFactory) {
+        this.gameFactory = gameFactory;
+        return this;
+    }
 
     public SpeedTest playGames(int nGames, int maxSteps) {
         for (int i=0; i<nGames; i++) {
@@ -56,5 +74,4 @@ public class SpeedTest {
         System.out.println("Ticks per millisecond: " + (int) ticksPerMilli);
         System.out.println("Game copied each tick? " + copyTest);
     }
-
 }

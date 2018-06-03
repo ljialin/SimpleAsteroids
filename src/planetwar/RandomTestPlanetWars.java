@@ -4,7 +4,7 @@ import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
-import ggi.core.GameRunner;
+import ggi.core.GameRunnerTwoPlayer;
 import ggi.core.SimplePlayerInterface;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
@@ -34,7 +34,7 @@ public class RandomTestPlanetWars {
     public static double evaluate(SimplePlayerInterface player) {
 
 
-        GameRunner gameRunner = new GameRunner();
+        GameRunnerTwoPlayer gameRunner = new GameRunnerTwoPlayer();
 
 
         EvoAlg evoAlgOpponent = new SimpleRMHC();

@@ -1,8 +1,10 @@
 package hyperopt;
 
 import evodef.*;
-import ntuple.NTupleBanditEA;
-import ntuple.NTupleSystem;
+import ntbea.NTupleBanditEA;
+import ntbea.NTupleSystem;
+import ntbea.NTupleSystemReport;
+import ntuple.params.Report;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LineGroup;
@@ -51,7 +53,8 @@ public class HyperParamTuneRunner {
                     // annotatedFitnessSpace.logger()
 //                 ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel).printDetailedReport(new EvoAgentSearchSpaceAsteroids().getParams());
                     NTupleSystem nTupleSystem = ((NTupleSystem) ((NTupleBanditEA) evoAlg).banditLandscapeModel);
-                    nTupleSystem.printDetailedReport(annotatedFitnessSpace.getParams());
+                    new NTupleSystemReport().setModel(nTupleSystem).printDetailedReport(annotatedFitnessSpace.getParams());
+                    // nTupleSystem.printDetailedReport(annotatedFitnessSpace.getParams());
                     // new Plotter().setModel(nTupleSystem).defaultPlot().plot1Tuples();
                 }
             } catch (Exception e) {
@@ -169,9 +172,12 @@ public class HyperParamTuneRunner {
         eval.reset();
         solution = evoAlg.runTrial(eval, nEvals);
 
+
         if (verbose) {
             plotConvergence(eval.logger(), solution);
         }
+        System.out.println("Solution: ");
+        System.out.println(Report.report(eval, solution));
         System.out.println("Checking fitness");
         return runChecks(eval, solution, nChecks);
 

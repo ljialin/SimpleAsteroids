@@ -5,7 +5,7 @@ import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
-import ggi.core.GameRunner;
+import ggi.core.GameRunnerTwoPlayer;
 import ggi.core.SimplePlayerInterface;
 
 public class GameLoggerTest {
@@ -13,7 +13,7 @@ public class GameLoggerTest {
 
         System.out.println("n Actions: " + GameState.nActions);
         GameState.includeBuffersInScore = false;
-        GameRunner gameRunner = new GameRunner().setLength(50);
+        GameRunnerTwoPlayer gameRunner = new GameRunnerTwoPlayer().setLength(50);
 
         SimplePlayerInterface p1, p2;
 

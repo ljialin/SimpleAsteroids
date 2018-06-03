@@ -56,7 +56,7 @@ public class NTupleSystemReport {
             nt.printNonEmpty(params);
             System.out.println();
         }
-        System.out.format("GridModel has %d tuples.\n", nTupleSystem.tuples.size());
+        System.out.format("NTuple has %d tuples.\n", nTupleSystem.tuples.size());
     }
 
 

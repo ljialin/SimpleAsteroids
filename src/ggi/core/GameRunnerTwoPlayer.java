@@ -4,7 +4,6 @@ import planetwar.GameLog;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LinePlot;
-import spinbattle.view.SpinBattleView;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
@@ -12,7 +11,7 @@ import utilities.StatSummary;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GameRunner {
+public class GameRunnerTwoPlayer {
 
     public SimplePlayerInterface p1, p2;
     public int nSteps = 200;
@@ -30,26 +29,26 @@ public class GameRunner {
 
     AbstractGameFactory gameFactory;
 
-    public GameRunner setPlayers(SimplePlayerInterface p1, SimplePlayerInterface p2) {
+    public GameRunnerTwoPlayer setPlayers(SimplePlayerInterface p1, SimplePlayerInterface p2) {
         this.p1 = p1;
         this.p2 = p2;
         reset();
         return this;
     }
 
-    public GameRunner setPlayersWithoutReset(SimplePlayerInterface p1, SimplePlayerInterface p2) {
+    public GameRunnerTwoPlayer setPlayersWithoutReset(SimplePlayerInterface p1, SimplePlayerInterface p2) {
         this.p1 = p1;
         this.p2 = p2;
         return this;
     }
 
-    public GameRunner setLength(int nSteps) {
+    public GameRunnerTwoPlayer setLength(int nSteps) {
         this.nSteps = nSteps;
         reset();
         return this;
     }
 
-    public GameRunner setGameFactory(AbstractGameFactory gameFactory) {
+    public GameRunnerTwoPlayer setGameFactory(AbstractGameFactory gameFactory) {
         this.gameFactory = gameFactory;
         reset();
         return this;
@@ -64,7 +63,7 @@ public class GameRunner {
         gameLogs = new ArrayList<>();
     }
 
-    public GameRunner playGames(int n) {
+    public GameRunnerTwoPlayer playGames(int n) {
         // plays an additional n games without resetting the stats
         ElapsedTimer t = new ElapsedTimer();
 
@@ -86,13 +85,13 @@ public class GameRunner {
     }
 
 
-    public GameRunner playGame() {
+    public GameRunnerTwoPlayer playGame() {
         playGame(p1, p2);
         // playGame()
         return this;
     }
 
-    public GameRunner playBothGames() {
+    public GameRunnerTwoPlayer playBothGames() {
         playGame(p1, p2);
         playGame(p2, p1);
         return this;
@@ -112,7 +111,7 @@ public class GameRunner {
         }
     }
 
-    public GameRunner playGame(SimplePlayerInterface p1, SimplePlayerInterface p2) {
+    public GameRunnerTwoPlayer playGame(SimplePlayerInterface p1, SimplePlayerInterface p2) {
         System.out.println(gameFactory);
         AbstractGameState gameState = gameFactory.newGame();
         GameLog gameLog = new GameLog();

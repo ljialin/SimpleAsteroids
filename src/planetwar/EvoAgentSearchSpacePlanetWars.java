@@ -4,7 +4,7 @@ import agents.evo.EvoAgent;
 import evodef.*;
 import evodef.DefaultMutator;
 import ga.SimpleRMHC;
-import ggi.core.GameRunner;
+import ggi.core.GameRunnerTwoPlayer;
 import ntuple.params.BooleanParam;
 import ntuple.params.DoubleParam;
 import ntuple.params.IntegerParam;
@@ -110,7 +110,7 @@ public class EvoAgentSearchSpacePlanetWars implements AnnotatedFitnessSpace {
         // create a problem to evaluate this one on ...
         // this should really be set externally, but just doing it this way for now
 
-        GameRunner gameRunner = new GameRunner();
+        GameRunnerTwoPlayer gameRunner = new GameRunnerTwoPlayer();
 
         // search space will need to be set before use
         DefaultMutator mutator = new DefaultMutator(null);

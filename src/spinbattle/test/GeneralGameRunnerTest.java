@@ -4,10 +4,9 @@ import agents.dummy.DoNothingAgent;
 import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
 import ggi.agents.EvoAgentFactory;
-import ggi.core.GameRunner;
+import ggi.core.GameRunnerTwoPlayer;
 import ggi.core.SimplePlayerInterface;
 import spinbattle.core.FalseModelAdapter;
-import spinbattle.core.SpinGameState;
 import spinbattle.core.SpinGameStateFactory;
 import spinbattle.params.SpinBattleParams;
 import utilities.ElapsedTimer;
@@ -17,7 +16,7 @@ public class GeneralGameRunnerTest {
         ElapsedTimer t = new ElapsedTimer();
 
         int maxTicks = 2000;
-        GameRunner runner = new GameRunner().setLength(maxTicks);
+        GameRunnerTwoPlayer runner = new GameRunnerTwoPlayer().setLength(maxTicks);
         SimplePlayerInterface randomAgent = new RandomAgent();
         // SimplePlayerInterface p2 = new RandomAgent();
 

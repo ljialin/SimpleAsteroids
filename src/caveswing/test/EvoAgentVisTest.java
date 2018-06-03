@@ -16,17 +16,25 @@ import java.awt.*;
 
 public class EvoAgentVisTest {
 
+    static boolean showEvolution = true;
+
     public static void main(String[] args) throws Exception {
         SimplePlayerInterface player = getEvoAgent();
 
         CaveSwingParams params = new CaveSwingParams();
         params.maxTicks = 2000;
+
+        // todo: how does changing the parameter settings affect AI agent performance?
+        // todo: Can you settings that make it really tough for the AI?
+        params.gravity.y = 0.02;
+        params.gravity.x = -0.03;
+
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
         view.scrollView = true;
         String title = "Evo Agent Visual Test";
         JEasyFrame frame = new JEasyFrame(view, title);
-        frame.setLocation(0, 450);
+        if (showEvolution) frame.setLocation(0, 450);
         ViewUtil.waitUntilReady(view);
 
         while (!gameState.isTerminal()) {
@@ -37,7 +45,7 @@ public class EvoAgentVisTest {
             gameState.next(actions);
             CaveGameState viewState = (CaveGameState) gameState.copy();
             view.setGameState(viewState).repaint();
-            frame.setTitle(title + " : " + gameState.nTicks + " : " +gameState.isTerminal());
+            frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal());
             Thread.sleep(40);
         }
 
@@ -50,7 +58,7 @@ public class EvoAgentVisTest {
 
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
-        // mutator.totalRandomChaosMutation = true;
+        mutator.totalRandomChaosMutation = true;
         mutator.flipAtLeastOneValue = true;
         mutator.pointProb = 5;
 
@@ -62,12 +70,14 @@ public class EvoAgentVisTest {
 
         // evoAlg = new SlidingMeanEDA();
 
-        int nEvals = 100;
-        int seqLength = 500;
+        int nEvals = 20;
+        int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setDimension(new Dimension(800, 400));
         evoAgent.setUseShiftBuffer(true);
-        // evoAgent.setVisual();
+
+        if (showEvolution)
+            evoAgent.setVisual();
 
         return evoAgent;
     }
