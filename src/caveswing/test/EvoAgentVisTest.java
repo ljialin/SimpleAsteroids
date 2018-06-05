@@ -26,8 +26,9 @@ public class EvoAgentVisTest {
 
         // todo: how does changing the parameter settings affect AI agent performance?
         // todo: Can you settings that make it really tough for the AI?
-        params.gravity.y = 0.02;
-        params.gravity.x = -0.03;
+        params.gravity.y = 0.2;
+        params.gravity.x = -0.0;
+        params.hooke = 0.01;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
