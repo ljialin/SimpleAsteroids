@@ -87,32 +87,23 @@ public class EvoAgent implements SimplePlayerInterface {
     }
 
     public int[] getActions(AbstractGameState gameState, int playerId) {
-
         searchSpace = new RegularSearchSpace(sequenceLength, gameState.nActions());
         simpleGameAdapter = new SimpleGameAdapter().setEvaluator(actionSequencer).setSearchSpace(searchSpace);
         actionSequencer.setGameState(gameState.copy()).setPlayerId(playerId).setOpponent(opponent);
-
         actionSequencer.playoutPlotter = playoutPlotter;
         playoutPlotter.reset();
-
-
         if (solution != null) {
             solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, searchSpace);
             evoAlg.setInitialSeed(solution);
         }
-
         simpleGameAdapter.reset();
         solution = evoAlg.runTrial(simpleGameAdapter, nEvals);
 
-
         playoutPlotter.plotPlayout();
         // System.out.println(Arrays.toString(solution) + "\t " + game.evaluate(solution));
-
         int[] tmp = solution;
         // already return the first element, so now set it to 1 ...
-
         if (!useShiftBuffer) solution = null;
-
         return tmp;
     }
 

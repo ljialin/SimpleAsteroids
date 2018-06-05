@@ -52,33 +52,25 @@ public class EvoAgentVisTest {
     }
 
     public static SimplePlayerInterface getEvoAgent() {
-        //
-        // todo Add in the code to make this
         int nResamples = 1;
-
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
-        mutator.totalRandomChaosMutation = true;
+        // mutator.totalRandomChaosMutation = true;
         mutator.flipAtLeastOneValue = true;
         mutator.pointProb = 5;
-
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);
         simpleRMHC.setMutator(mutator);
-
         EvoAlg evoAlg = simpleRMHC;
-
         // evoAlg = new SlidingMeanEDA();
-
         int nEvals = 20;
         int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setDimension(new Dimension(800, 400));
         evoAgent.setUseShiftBuffer(true);
-
         if (showEvolution)
             evoAgent.setVisual();
-
         return evoAgent;
     }
+
 }
