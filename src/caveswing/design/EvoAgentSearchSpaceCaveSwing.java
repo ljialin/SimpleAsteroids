@@ -1,24 +1,32 @@
 package caveswing.design;
 
+import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
+import caveswing.core.CaveGameFactory;
+import caveswing.core.CaveSwingParams;
 import evodef.*;
 import ga.SimpleRMHC;
+import ggi.tests.SpeedTest;
 import ntuple.params.BooleanParam;
 import ntuple.params.DoubleParam;
 import ntuple.params.IntegerParam;
 import ntuple.params.Param;
+import utilities.ElapsedTimer;
 
 public class EvoAgentSearchSpaceCaveSwing implements AnnotatedFitnessSpace {
 
     public static void main(String[] args) {
         EvoAgentSearchSpaceCaveSwing searchSpace = new EvoAgentSearchSpaceCaveSwing();
-
         int[] point = SearchSpaceUtil.randomPoint(searchSpace);
 
-        System.out.println(searchSpace.report(point));
+        point = new int[]{0, 0, 0, 0, 0};
 
+        System.out.println(searchSpace.report(point));
         System.out.println();
         System.out.println("Size: " + SearchSpaceUtil.size(searchSpace));
+        ElapsedTimer timer = new ElapsedTimer();
+        System.out.println("Value: " + searchSpace.evaluate(point));
+        System.out.println(timer);
     }
 
     // todo: allow switching between Do Nothing and Random Opponent models
@@ -33,15 +41,14 @@ public class EvoAgentSearchSpaceCaveSwing implements AnnotatedFitnessSpace {
     }
 
     // todo: Use a different (longer?) range of sequence lengths
-    double[] pointMutationRate = {0.0, 1.0, 2.0, 3.0};
+    double[] pointMutationRate = {1.0, 2.0, 3.0, 10.0, 20};
     boolean[] flipAtLeastOneBit = {false, true};
     boolean[] useShiftBuffer = {false, true};
     int[] nResamples = {1, 2, 3};
     // int[] seqLength = {5, 10, 15, 20, 50};
-    int[] seqLength = {5, 10, 15, 20, 25, 30};
+    int[] seqLength = {20, 50, 100, 200, 400, 1000};
 
-
-    public static int tickBudget = 2000;
+    public static int tickBudget = 200;
 
     int[] nValues = new int[]{pointMutationRate.length, flipAtLeastOneBit.length,
             useShiftBuffer.length, nResamples.length, seqLength.length};
@@ -54,6 +61,10 @@ public class EvoAgentSearchSpaceCaveSwing implements AnnotatedFitnessSpace {
     static int seqLengthIndex = 4;
 
     // NoisySolutionEvaluator problemEvaluator;
+
+    int nGames = 1;
+    int maxSteps = 1000;
+
 
     // log the solutions found
     public EvolutionLogger logger;
@@ -103,7 +114,7 @@ public class EvoAgentSearchSpaceCaveSwing implements AnnotatedFitnessSpace {
         logger.reset();
     }
 
-
+    boolean verbose = false;
     @Override
     public double evaluate(int[] x) {
 
@@ -126,7 +137,25 @@ public class EvoAgentSearchSpaceCaveSwing implements AnnotatedFitnessSpace {
 
         // todo now run a game and return the result
         // use the evaluation code from yesterdays lab to evaluate the agent we already made
-        double value = Math.random();
+        CaveSwingParams params = new CaveSwingParams();
+        params.gravity.x = 0;
+        params.gravity.y = 0.4;
+        // params
+        params.hooke = 0.02;
+
+        CaveGameFactory gameFactory = new CaveGameFactory().setParams(params);
+        SpeedTest speedTest = new SpeedTest().setGameFactory(gameFactory);
+        speedTest.setPlayer(evoAgent);
+
+        speedTest.playGames(nGames, maxSteps);
+
+        if (verbose) {
+            System.out.println(speedTest.gameScores);
+        }
+
+        double value = speedTest.gameScores.mean();
+
+        // double value = Math.random();
         logger.log(value, x, false);
         return value;
     }

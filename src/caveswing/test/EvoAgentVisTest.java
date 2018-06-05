@@ -26,9 +26,9 @@ public class EvoAgentVisTest {
 
         // todo: how does changing the parameter settings affect AI agent performance?
         // todo: Can you settings that make it really tough for the AI?
-        params.gravity.y = 0.2;
+        params.gravity.y = 0.4;
         params.gravity.x = -0.0;
-        params.hooke = 0.01;
+        params.hooke = 0.02;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
@@ -49,7 +49,6 @@ public class EvoAgentVisTest {
             frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal());
             Thread.sleep(40);
         }
-
     }
 
     public static SimplePlayerInterface getEvoAgent() {
@@ -57,18 +56,18 @@ public class EvoAgentVisTest {
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
         // mutator.totalRandomChaosMutation = true;
-        mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 5;
+        mutator.flipAtLeastOneValue = false;
+        mutator.pointProb = 1;
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);
         simpleRMHC.setMutator(mutator);
         EvoAlg evoAlg = simpleRMHC;
         // evoAlg = new SlidingMeanEDA();
         int nEvals = 20;
-        int seqLength = 100;
+        int seqLength = 20;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setDimension(new Dimension(800, 400));
-        evoAgent.setUseShiftBuffer(true);
+        evoAgent.setUseShiftBuffer(false);
         if (showEvolution)
             evoAgent.setVisual();
         return evoAgent;

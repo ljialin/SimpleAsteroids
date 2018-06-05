@@ -1,6 +1,7 @@
 package hyperopt;
 
 import caveswing.design.CaveSwingGameSearchSpace;
+import caveswing.design.EvoAgentSearchSpaceCaveSwing;
 import evodef.AnnotatedFitnessSpace;
 import ntbea.NTupleBanditEA;
 import ntbea.NTupleSystem;
@@ -39,7 +40,7 @@ public class TuneCaveSwingAgent {
         // set to zero for fastest performance, set to 5 or 10 to learn
         // more about the convergence of the algorithm
         runner.plotChecks = 0;
-        AnnotatedFitnessSpace caveSwingSpace = new CaveSwingGameSearchSpace();
+        AnnotatedFitnessSpace caveSwingSpace = new EvoAgentSearchSpaceCaveSwing();
         // uncomment to run the skilful one
         // caveSwingSpace = new CaveSwingGameSkillSpace();
         System.out.println("Testing: " + ntbea);

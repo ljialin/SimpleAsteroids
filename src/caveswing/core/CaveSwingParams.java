@@ -7,7 +7,6 @@ import java.util.Random;
 public class CaveSwingParams {
     // duration
     public int maxTicks = 1000;
-
     // forces
     public Vector2d gravity = new Vector2d(0, 0.4);
     public double hooke = 0.02;
@@ -41,6 +40,13 @@ public class CaveSwingParams {
         params.nAnchors = nAnchors;
         params.meanAnchorHeight = meanAnchorHeight;
         params.random = random;
+
+        params.successBonus = successBonus;
+        params.failurePenalty = failurePenalty;
+        params.pointPerX = pointPerX;
+        params.pointPerY = pointPerY;
+        params.costPerTick = costPerTick;
+
         return params;
     }
 }
