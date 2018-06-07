@@ -64,6 +64,8 @@ public class GameRunnerTest {
 
         // p2 = new RandomAgent();
 
+        p1 = new RandomAgent();
+
         gameRunner.setPlayers(p1, p2);
 
         // now play a number of games and observe the outcomes

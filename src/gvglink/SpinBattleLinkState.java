@@ -4,7 +4,6 @@ import core.game.StateObservationMulti;
 import ggi.core.AbstractGameState;
 import ontology.Types;
 import spinbattle.core.SpinGameState;
-// import planetwar.GameState;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,7 +14,7 @@ import java.util.Random;
 public class SpinBattleLinkState
         extends StateObservationMulti {
 
-    static int maxTick = 500;
+    static int maxTick = 5000;
     public static int nTicks = 0;
 
     // this class is already 2-player ready
@@ -57,31 +56,35 @@ public class SpinBattleLinkState
 
     public void advance(Types.ACTIONS action) {
         if (true) throw new RuntimeException("Not meant to call this!");
-        // int[] a = new int[]{action.ordinal(), random.nextInt(actions.size())};
-        // state.next(a);
     }
 
-
+    /**
+     * This is a really messy adapter class!
+     */
     ArrayList<Types.ACTIONS> gvgActions = null;
 
-    public void advance(Types.ACTIONS[] actions) {
-
-        // System.out.println(Arrays.toString(actions));
-
-
-        gvgActions = new ArrayList<>();
-
+    ArrayList<Types.ACTIONS> getGvgActions(AbstractGameState state) {
+        if (gvgActions != null) {
+            return gvgActions;
+        }
+        ArrayList<Types.ACTIONS> actions = new ArrayList<>();
         int actionLimit = state.nActions();
 
         // static int actionLimit = new SpinGameState().nActions();
 
         for (Types.ACTIONS a : Types.ACTIONS.values()) {
-            if (gvgActions.size() < actionLimit) {
-                gvgActions.add(a);
+            if (actions.size() < actionLimit) {
+                actions.add(a);
             }
         }
         // System.out.println("nActions = " + actions.size());
 
+        gvgActions = actions;
+        return actions;
+
+    }
+
+    public void advance(Types.ACTIONS[] actions) {
 
         int[] a = new int[]{actions[0].ordinal(), actions[1].ordinal()};
         state.next(a);
@@ -110,7 +113,7 @@ public class SpinBattleLinkState
      * @return the available actions.
      */
     public ArrayList<Types.ACTIONS> getAvailableActions() {
-        return gvgActions;
+        return getGvgActions(state);
     }
 
     /**
@@ -122,13 +125,12 @@ public class SpinBattleLinkState
      * @return the available actions.
      */
     public ArrayList<Types.ACTIONS> getAvailableActions(boolean includeNIL) {
-        return gvgActions;
+        return getGvgActions(state);
     }
 
     public ArrayList<Types.ACTIONS> getAvailableActions(int playerID) {
-        return gvgActions;
+        return getGvgActions(state);
     }
-
 
     public int getNoPlayers() {
         return 2;
@@ -144,10 +146,6 @@ public class SpinBattleLinkState
         } else {
             return -getGameScore();
         }
-    }
-
-    public double getHeuristicScore() {
-        return state.getScore();
     }
 
     public int getGameTick() {
@@ -179,7 +177,7 @@ public class SpinBattleLinkState
      * @return true if the game is over.
      */
     public boolean isGameOver() {
-        return getGameTick() >= maxTick;
+        return state.isTerminal(); // getGameTick() >= maxTick;
     }
 }
 

@@ -1,9 +1,9 @@
-package planetwar;
+package spinbattle.players;
 
 import core.player.AbstractMultiPlayer;
 import ggi.core.AbstractGameState;
 import ggi.core.SimplePlayerInterface;
-import gvglink.PlanetWarsLinkState;
+import gvglink.SpinBattleLinkState;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 
@@ -21,7 +21,7 @@ public class GVGAIWrapper implements SimplePlayerInterface {
 
     @Override
     public int getAction(AbstractGameState gameState, int playerId) {
-        PlanetWarsLinkState linkState = new PlanetWarsLinkState(gameState);
+        SpinBattleLinkState linkState = new SpinBattleLinkState(gameState);
 
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
         timer.setMaxTimeMillis(thinkingTime);

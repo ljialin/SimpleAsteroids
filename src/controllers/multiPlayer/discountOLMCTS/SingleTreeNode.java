@@ -24,8 +24,8 @@ public class SingleTreeNode
     public int childIdx;
 
     public int MCTS_ITERATIONS = 100;
-    public int ROLLOUT_DEPTH = 10;
-    public double K = Math.sqrt(2);
+    public int ROLLOUT_DEPTH = 100;
+    public double K = 100; // Math.sqrt(2);
     public double REWARD_DISCOUNT = 1.00;
     public int[] NUM_ACTIONS;
     public Types.ACTIONS[][] actions;
@@ -66,7 +66,7 @@ public class SingleTreeNode
 
         int remainingLimit = 5;
         // while(remaining > 2*avgTimeTaken && remaining > remainingLimit){
-        int nIterations = 1000;
+        int nIterations = 40;
         while(numIters < nIterations){
 
             StateObservationMulti state = rootState.copy();
