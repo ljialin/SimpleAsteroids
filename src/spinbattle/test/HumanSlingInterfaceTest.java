@@ -29,6 +29,12 @@ public class HumanSlingInterfaceTest {
         params.height = 700;
         params.nPlanets = 100; // 10 + new Random().nextInt(50);
 
+        params.transportTax = 0.05;
+
+
+
+        params.radSep = 3;
+
         System.out.println("Selected n planets: " + params.nPlanets);
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
