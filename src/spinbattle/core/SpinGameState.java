@@ -153,8 +153,8 @@ public class SpinGameState implements AbstractGameState {
         planets = new ArrayList<>();
         int i=0;
         int whichEven = params.getRandom().nextInt(2);
-        int nToAllocate = params.nPlanets - params.nNeutral;
-        while (planets.size() < nToAllocate) {
+        // int nToAllocate = params.nPlanets - params.nNeutral;
+        while (planets.size() < params.nToAllocate) {
             int owner = (planets.size() % 2 == whichEven ? Constants.playerOne : Constants.playerTwo);
             Planet planet = makePlanet(owner);
             // System.out.println("Made planet for: " + owner + " ... size: " + planets.size());
@@ -202,7 +202,7 @@ public class SpinGameState implements AbstractGameState {
         double minX = Math.min(p.position.x, params.width - p.position.x);
         double minY = Math.min(p.position.y, params.height - p.position.y);
         // test whether planet is too close to border
-        if (Math.min(minX, minY) < p.getRadius() * Constants.radSep) {
+        if (Math.min(minX, minY) < p.getRadius() * params.radSep) {
             // System.out.println("Failed border sep:" + minX +  " : " + minY);
             return false;
         }
@@ -211,7 +211,7 @@ public class SpinGameState implements AbstractGameState {
 
         for (Planet x : planets) {
             double sep = x.position.dist(p.position);
-            if (sep < Constants.radSep * (x.getRadius() + p.getRadius())) {
+            if (sep < params.radSep * (x.getRadius() + p.getRadius())) {
                 // System.out.println("Failed planet proximity: " + (int) sep);
                 return false;
             }

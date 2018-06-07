@@ -17,15 +17,24 @@ public class HumanSlingInterfaceTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(8);
+        long seed = 10;
+        seed = new Random().nextLong();
+        SpinBattleParams.random = new Random(seed);
         SpinBattleParams params = new SpinBattleParams();
 
         params.maxTicks = 5000;
         params.gravitationalFieldConstant *= 1;
         params.transitSpeed *= 1;
+        params.width = 1200;
+        params.height = 700;
+        params.nPlanets = 100; // 10 + new Random().nextInt(50);
+
+        System.out.println("Selected n planets: " + params.nPlanets);
+
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
-        BasicLogger basicLogger = new BasicLogger();
-        gameState.setLogger(new DefaultLogger());
+        System.out.println("nPlanets made = " + gameState.planets.size());
+        // BasicLogger basicLogger = new BasicLogger();
+        // gameState.setLogger(new DefaultLogger());
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
         HeuristicLauncher launcher = new HeuristicLauncher();
         String title = "Spin Battle Game" ;

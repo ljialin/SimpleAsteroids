@@ -28,7 +28,9 @@ public class SpinBattleParams {
     public int maxTicks = 500;
     public int nPlanets = 20;
 
-    public int nNeutral = nPlanets - 4;
+    // public int nNeutral = nPlanets - 4;
+    // the number to allocate to each player
+    public int nToAllocate = 4;
 
     public double minGrowth = 0.05;
     public double maxGrowth = 0.15;
@@ -50,15 +52,16 @@ public class SpinBattleParams {
     public boolean useVectorField = true;
 
     public double transportTax = 0.0;
+    public double radSep = 1.5;
+
 
     public SpinBattleParams copy() {
-        // todo a proper copy
         SpinBattleParams p = new SpinBattleParams();
         p.width = width;
         p.height = height;
         p.maxTicks = maxTicks;
         p.nPlanets = nPlanets;
-        p.nNeutral = nNeutral;
+        p.nToAllocate = nToAllocate;
         p.minGrowth = minGrowth;
         p.maxGrowth = maxGrowth;
         p.spinRatio = spinRatio;
@@ -72,6 +75,7 @@ public class SpinBattleParams {
         p.gravitationalForceConstant = gravitationalForceConstant;
         p.clampZeroScore = clampZeroScore;
         p.transportTax = transportTax;
+        p.radSep = radSep;
         return p;
     }
 
