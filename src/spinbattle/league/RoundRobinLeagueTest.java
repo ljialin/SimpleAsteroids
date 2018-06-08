@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class RoundRobinLeagueTest {
 
-    static int maxTicks = 1000;
+    static int maxTicks = 2000;
     static boolean visual = true;
 
     public static void main(String[] args) {
