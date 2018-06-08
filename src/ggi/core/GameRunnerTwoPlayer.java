@@ -27,7 +27,8 @@ public class GameRunnerTwoPlayer {
     ArrayList<GameLog> gameLogs;
     public boolean verbose = true;
 
-    AbstractGameFactory gameFactory;
+    public AbstractGameFactory gameFactory;
+
 
     public GameRunnerTwoPlayer setPlayers(SimplePlayerInterface p1, SimplePlayerInterface p2) {
         this.p1 = p1;

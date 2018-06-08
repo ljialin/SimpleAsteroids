@@ -7,6 +7,7 @@ import ggi.core.GameRunnerTwoPlayer;
 import ggi.core.SimplePlayerInterface;
 import ggi.league.RoundRobinLeague;
 import spinbattle.core.SpinGameStateFactory;
+import spinbattle.view.VisualSpinGameRunner;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class RoundRobinLeagueTest {
 
     static int maxTicks = 1000;
+    static boolean visual = true;
 
     public static void main(String[] args) {
         // set up some players
@@ -30,6 +32,7 @@ public class RoundRobinLeagueTest {
         players.add(p1); players.add(p2); players.add(p3);
 
         RoundRobinLeague league = new RoundRobinLeague().setPlayers(players);
+        league.abstractVisualRunner = new VisualSpinGameRunner();
 
         SpinGameStateFactory factory = new SpinGameStateFactory();
         factory.params.maxTicks = maxTicks;

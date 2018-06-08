@@ -1,5 +1,7 @@
 package ggi.league;
 
+import ggi.core.AbstractGameState;
+import ggi.core.AbstractVisualRunner;
 import ggi.core.GameRunnerTwoPlayer;
 import ggi.core.SimplePlayerInterface;
 
@@ -15,6 +17,7 @@ public class RoundRobinLeague {
     public int nPlayers;
     public GameRunnerTwoPlayer gameRunner;
     int[][] results;
+    public AbstractVisualRunner abstractVisualRunner;
 
     public RoundRobinLeague setPlayers(ArrayList<SimplePlayerInterface> players) {
         this.players = players;
@@ -30,6 +33,12 @@ public class RoundRobinLeague {
 
                 if (i != j) {
                     System.out.println(i + " : " + j);
+                    if (abstractVisualRunner != null) {
+                        SimplePlayerInterface p1 = players.get(i);
+                        SimplePlayerInterface p2 = players.get(j);
+                        SimplePlayerInterface[] players = new SimplePlayerInterface[]{p1, p2};
+                        abstractVisualRunner.playVisualGame(gameRunner.gameFactory, players);
+                    }
 
                     gameRunner.setPlayers(players.get(i), players.get(j));
                     gameRunner.verbose = true;
