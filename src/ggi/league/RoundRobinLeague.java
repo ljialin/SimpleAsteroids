@@ -16,7 +16,7 @@ public class RoundRobinLeague {
     public ArrayList<SimplePlayerInterface> players;
     public int nPlayers;
     public GameRunnerTwoPlayer gameRunner;
-    int[][] results;
+    public int[][] results;
     public AbstractVisualRunner abstractVisualRunner;
 
     public RoundRobinLeague setPlayers(ArrayList<SimplePlayerInterface> players) {
@@ -44,8 +44,8 @@ public class RoundRobinLeague {
                     gameRunner.verbose = true;
                     gameRunner.playGames(nGames);
 
-                    results[i][j] = gameRunner.p1Wins;
-                    results[j][i] = gameRunner.p2Wins;
+                    results[i][j] += gameRunner.p1Wins;
+                    results[j][i] += gameRunner.p2Wins;
 
                     System.out.println(players.get(i));
                     System.out.println("Versus");

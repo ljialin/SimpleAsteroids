@@ -144,6 +144,12 @@ public class Planet {
         int score = 0;
         if (ownedBy == Constants.playerOne) score = (int) shipCount;
         if (ownedBy == Constants.playerTwo) score = (int) -shipCount;
+        if (params.includeTransitShipsInScore) {
+            if (transit != null) {
+                if (ownedBy == Constants.playerOne) score += (int) transit.payload;
+                if (ownedBy == Constants.playerTwo) score += (int) -transit.payload;
+            }
+        }
         return score;
     }
 

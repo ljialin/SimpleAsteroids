@@ -54,6 +54,8 @@ public class SpinBattleParams {
     public double transportTax = 0.0;
     public double radSep = 1.5;
 
+    public boolean includeTransitShipsInScore = false;
+
 
     public SpinBattleParams copy() {
         SpinBattleParams p = new SpinBattleParams();
@@ -76,6 +78,7 @@ public class SpinBattleParams {
         p.clampZeroScore = clampZeroScore;
         p.transportTax = transportTax;
         p.radSep = radSep;
+        p.includeTransitShipsInScore = includeTransitShipsInScore;
         return p;
     }
 

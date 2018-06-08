@@ -11,6 +11,10 @@ public class EvoAgentFactory {
     public boolean totalRandomMutation = false;
     public boolean useShiftBuffer = true;
 
+    public int nEvals = 20;
+    public int seqLength = 200;
+
+
     public EvoAgent getAgent() {
         //
         // todo Add in the code t make this
@@ -29,8 +33,6 @@ public class EvoAgentFactory {
 
         // evoAlg = new SlidingMeanEDA();
 
-        int nEvals = 20;
-        int seqLength = 200;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(useShiftBuffer);
         // evoAgent.setVisual();

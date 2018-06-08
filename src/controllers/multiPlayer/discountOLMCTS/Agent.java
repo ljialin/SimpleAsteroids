@@ -32,9 +32,9 @@ public class Agent extends AbstractMultiPlayer {
     {
         //get game information
 
-        no_players = so.getNoPlayers();
+        no_players = 2; // so.getNoPlayers();
         id = playerID;
-        oppID = (id + 1) % so.getNoPlayers();
+        oppID = (id + 1) % no_players; // so.getNoPlayers();
 
         //Get the actions for all players in a static array.
 

@@ -8,7 +8,9 @@ import ggi.core.AbstractVisualRunner;
 import ggi.core.SimplePlayerInterface;
 import spinbattle.core.SpinGameState;
 import spinbattle.core.SpinGameStateFactory;
+import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
+import spinbattle.test.MCTSAgentTest;
 import utilities.JEasyFrame;
 
 import javax.swing.*;
@@ -24,6 +26,7 @@ public class VisualSpinGameRunner extends Thread implements AbstractVisualRunner
         factory.params = params;
         SimplePlayerInterface p1 = new RandomAgent();
         SimplePlayerInterface p2 = new EvoAgentFactory().getAgent();
+        p2 = MCTSAgentTest.getMCTSAgent(factory.newGame(), Constants.playerTwo);
         SimplePlayerInterface[] players = new SimplePlayerInterface[]{p1, p2};
         AbstractVisualRunner avs = new VisualSpinGameRunner();
         avs.playVisualGame(factory, players);

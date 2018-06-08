@@ -9,6 +9,7 @@ import ggi.core.AbstractGameState;
 import ggi.core.GameRunnerTwoPlayer;
 import ggi.core.SimplePlayerInterface;
 import gvglink.PlanetWarsLinkState;
+import gvglink.SpinBattleLinkState;
 import spinbattle.core.SpinGameState;
 import spinbattle.core.SpinGameStateFactory;
 import spinbattle.params.SpinBattleParams;
@@ -67,9 +68,9 @@ public class MCTSAgentTest {
 
     public static GVGAIWrapper getMCTSAgent(AbstractGameState gameState, int playerId) {
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
-        PlanetWarsLinkState linkState = new PlanetWarsLinkState(gameState);
+        SpinBattleLinkState linkState = new SpinBattleLinkState(gameState);
         AbstractMultiPlayer agent =
-                new controllers.multiPlayer.discountOLMCTS.Agent(linkState.copy(), timer, playerId);
+                new controllers.multiPlayer.discountOLMCTS.Agent(linkState, timer, playerId);
         GVGAIWrapper wrapper = new GVGAIWrapper().setAgent(agent);
         return wrapper;
 
