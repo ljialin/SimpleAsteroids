@@ -65,7 +65,7 @@ public class MCTSAgentTest {
 
     }
 
-    static GVGAIWrapper getMCTSAgent(AbstractGameState gameState, int playerId) {
+    public static GVGAIWrapper getMCTSAgent(AbstractGameState gameState, int playerId) {
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
         PlanetWarsLinkState linkState = new PlanetWarsLinkState(gameState);
         AbstractMultiPlayer agent =
