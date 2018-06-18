@@ -169,6 +169,7 @@ public class GameRunnerTwoPlayer {
         // double[] scoreTics = new  double[]{-100, 0, 1000, 2000 }; // scores.max()};
 
         lineChart.yAxis = new LineChartAxis(scoreTics);
+        lineChart.autoScale();
         new JEasyFrame(lineChart, "Game Scores");
         return lineChart;
     }

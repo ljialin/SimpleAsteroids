@@ -154,6 +154,17 @@ public class LineChart extends JComponent {
     RangeMapper xMap, yMap;
     double plotLeft, plotRight, plotTop, plotBottom;
 
+    public void autoScale() {
+        yAxis.range = new StatSummary();
+        for (LinePlot lp : lines) {
+            yAxis.range.add(lp.sy);
+        }
+        for (LineGroup lg : lineGroups) {
+            for (StatSummary ss : lg.stats)
+            yAxis.range.add(ss);
+        }
+    }
+
     public void paintComponent(Graphics graphics) {
         paintComponent((Graphics2D) graphics, getSize());
     }

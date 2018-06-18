@@ -27,7 +27,7 @@ public class MCTSAgentTest {
     public static void main(String[] args) {
         ElapsedTimer t = new ElapsedTimer();
 
-        int maxTicks = 1000;
+        int maxTicks = 2000;
         GameRunnerTwoPlayer runner = new GameRunnerTwoPlayer().setLength(maxTicks);
         SimplePlayerInterface randomAgent = new RandomAgent();
         // SimplePlayerInterface p2 = new RandomAgent();
@@ -57,6 +57,7 @@ public class MCTSAgentTest {
             factory.params.getRandom().setSeed(i);
             // runner.setPlayersWithoutReset(randomAgent, evoAgent);
             runner.setPlayersWithoutReset(randomAgent, mctsAgent);
+            // runner.setPlayersWithoutReset(evoAgent, mctsAgent);
             runner.playGame();
             System.out.println(runner.p1Wins + "\t " + runner.p2Wins);
             System.out.println();

@@ -41,7 +41,7 @@ public class GeneralGameRunnerTest {
         // runner.playGames(20);
 
         // todo: while this one works
-        for (int i=0; i<10; i++) {
+        for (int i=0; i<5; i++) {
             factory.params.getRandom().setSeed(i);
 //            evoAgent2.setSequenceLength(50);
             EvoAgent evoAgent3 = evoAgentFactory.getAgent().setSequenceLength(100);
