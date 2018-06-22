@@ -52,18 +52,20 @@ public class MCTSAgentTest {
         // todo: work out why this fails
         // runner.playGames(20);
 
+        ElapsedTimer timer = new ElapsedTimer();
         // todo: while this one works
         for (int i=0; i<10; i++) {
             factory.params.getRandom().setSeed(i);
             // runner.setPlayersWithoutReset(randomAgent, evoAgent);
-            runner.setPlayersWithoutReset(randomAgent, mctsAgent);
-            // runner.setPlayersWithoutReset(evoAgent, mctsAgent);
+            // runner.setPlayersWithoutReset(randomAgent, mctsAgent);
+            runner.setPlayersWithoutReset(evoAgent, mctsAgent);
             runner.playGame();
             System.out.println(runner.p1Wins + "\t " + runner.p2Wins);
             System.out.println();
         }
         runner.plotGameScores();
         System.out.println(runner.scores);
+        System.out.println("Total time: " + timer);
 
     }
 
