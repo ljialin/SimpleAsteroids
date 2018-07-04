@@ -134,7 +134,7 @@ public class NTupleView2D extends JComponent {
         g.fill(path);
         if (ss != null) {
             float v = (float) BanditEquations.sigmoid(ss.mean()); //  Math.max(0, Math.min((float) ss.mean(), 1));
-            g.setColor(Color.getHSBColor(v, 1, 1));
+            g.setColor(Color.getHSBColor(v, 1, 0.5f));
             g.fill(path);
             String statString = String.format("%d: %.2f", ss.n(), ss.mean());
             centreString(g, cellSize / 2, cellSize / 2, statString, 15);
@@ -163,7 +163,7 @@ public class NTupleView2D extends JComponent {
         int yOff = fm.getDescent();
 
         g.setFont(font);
-        g.setColor(Color.black);
+        g.setColor(Color.white);
         // g.scale(3,3);
         g.drawString(str, x - textWidth / 2, y + yOff);
     }

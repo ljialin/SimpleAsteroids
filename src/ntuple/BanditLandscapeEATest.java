@@ -19,12 +19,12 @@ public class BanditLandscapeEATest {
         // set up a 2d grid search space
 
         int nDims = 2;
-        int mValues = 4;
+        int mValues = 5;
         double noiseLevel = 1.0;
         // EvalMaxM problem = new EvalMaxM(nDims, mValues, noiseLevel);
         Eval2DNonLinear problem = new Eval2DNonLinear(mValues, noiseLevel);
 
-        int nEvals = 200;
+        int nEvals = 300;
         NTupleView2D nTupleView2D = showView(banditEA, mValues);
         nTupleView2D.solutionEvaluator = new Eval2DNonLinear(mValues, 0);
         banditEA.view = nTupleView2D;

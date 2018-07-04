@@ -25,8 +25,8 @@ public class HumanSlingInterfaceTest {
         params.maxTicks = 5000;
         params.gravitationalFieldConstant *= 1;
         params.transitSpeed *= 1;
-        params.width = 1200;
-        params.height = 700;
+        params.width = 800;
+        params.height = 600;
         params.nPlanets = 100; // 10 + new Random().nextInt(50);
 
         params.transportTax = 0.05;

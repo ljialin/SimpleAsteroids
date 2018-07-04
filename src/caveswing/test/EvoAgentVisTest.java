@@ -21,15 +21,7 @@ public class EvoAgentVisTest {
     public static void main(String[] args) throws Exception {
         SimplePlayerInterface player = getEvoAgent();
 
-        CaveSwingParams params = new CaveSwingParams();
-        params.maxTicks = 2000;
-        params.width = 1200;
-
-        // todo: how does changing the parameter settings affect AI agent performance?
-        // todo: Can you settings that make it really tough for the AI?
-        params.gravity.y = 0.4;
-        params.gravity.x = -0.0;
-        params.hooke = 0.02;
+        CaveSwingParams params = CoolTestParams.getParams();
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
@@ -70,7 +62,7 @@ public class EvoAgentVisTest {
         int seqLength = 20;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setDimension(new Dimension(800, 300));
-        evoAgent.setUseShiftBuffer(false);
+        evoAgent.setUseShiftBuffer(true);
         if (showEvolution)
             evoAgent.setVisual();
         return evoAgent;

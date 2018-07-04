@@ -5,6 +5,7 @@ import caveswing.design.EvoAgentSearchSpaceCaveSwing;
 import evodef.AnnotatedFitnessSpace;
 import ntbea.NTupleBanditEA;
 import ntbea.NTupleSystem;
+import ntbeaplot.Plotter;
 import utilities.ElapsedTimer;
 
 // import ntuple.NTupleBanditEA;
@@ -23,7 +24,7 @@ public class TuneCaveSwingAgent {
 
         ntbea.setModel(model);
 
-        int nChecks = 50;
+        int nChecks = 10;
         int nTrials = 1;
 
         ElapsedTimer timer = new ElapsedTimer();
@@ -47,6 +48,9 @@ public class TuneCaveSwingAgent {
         runner.runTrials(ntbea, caveSwingSpace);
         System.out.println("Finished testing: " + ntbea);
         System.out.println("Time for all experiments: " + timer);
+
+
+        new Plotter().setModel(model).setAnnotatedFitnessSpace(caveSwingSpace).plot1Tuples();
     }
 
 }

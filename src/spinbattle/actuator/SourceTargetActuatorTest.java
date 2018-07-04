@@ -22,7 +22,7 @@ public class SourceTargetActuatorTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(8);
+        SpinBattleParams.random = new Random(7);
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
         params.gravitationalFieldConstant *= 1;
@@ -69,7 +69,7 @@ public class SourceTargetActuatorTest {
 //        MouseSlingController mouseSlingController = new MouseSlingController();
 //        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
 //        CaveView.addMouseListener(mouseSlingController);
-        int launchPeriod = 100; // params.releasePeriod;
+        int launchPeriod = 200; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
 
@@ -85,8 +85,8 @@ public class SourceTargetActuatorTest {
         int nTicks = 5000;
         for (int i=0; i<nTicks && !gameState.isTerminal(); i++) {
             // SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
-            // actions[0] = evoAgent.getAction(gameState.copy(), 0);
-            actions[0] = falsePlayer.getAction(gameState.copy(), 0);
+            actions[0] = evoAgent.getAction(gameState.copy(), 0);
+            // actions[0] = falsePlayer.getAction(gameState.copy(), 0);
             // actions[1] = player2.getAction(gameState.copy(), 1);
             // actions[0] = randomPlayer.getAction(gameState.copy(), 0);
             // actions[1] = randomPlayer.getAction(gameState.copy(), 1);
