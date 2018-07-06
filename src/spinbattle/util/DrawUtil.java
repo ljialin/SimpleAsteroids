@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 
 public class DrawUtil {
 
-    int fontSize = 14;
+    public int fontSize = 14;
     Color fg = Color.black;
 
     public DrawUtil setColor(Color fg) {

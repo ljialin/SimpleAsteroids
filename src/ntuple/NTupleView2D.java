@@ -53,8 +53,6 @@ public class NTupleView2D extends JComponent {
         g.setColor(bg);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-
-
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
                 int[] p = new int[]{i, j};
@@ -67,8 +65,6 @@ public class NTupleView2D extends JComponent {
                 }
 
                 drawCell(g, ss, i, j, cellString, trueVal);
-
-
 
             }
         }

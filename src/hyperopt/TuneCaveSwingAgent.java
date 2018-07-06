@@ -52,5 +52,4 @@ public class TuneCaveSwingAgent {
 
         new Plotter().setModel(model).setAnnotatedFitnessSpace(caveSwingSpace).plot1Tuples();
     }
-
 }

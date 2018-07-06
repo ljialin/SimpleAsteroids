@@ -71,6 +71,10 @@ public class Plotter {
                 LineChart lineChart = new LineChart().addLineGroup(lineGroup);
                 lineChart.setYLabel("Average Fitness");
                 lineChart.setXLabel("Parameter index");
+                // this is just a temporary fix
+                // double[] altTicks = new double[]{2, 5, 10, 20, 40, 65, 100, 150, 200};
+                // xTicks = new double[]{};
+                // if (xTicks.length == altTicks.length) xTicks = altTicks;
                 lineChart.xAxis = new LineChartAxis(xTicks);
                 lineChart.bg = Color.gray;
                 lineChart.plotBG = Color.white;
