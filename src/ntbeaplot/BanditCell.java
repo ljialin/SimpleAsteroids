@@ -24,7 +24,7 @@ public class BanditCell {
     }
 
     Color bg = Color.black; // Color.getHSBColor(0.5f, 1.0f, 1.0f);
-    Color sample = new Color(1.0f, 0.0f, 0.0f, 0.8f);
+    Color sample = new Color(1.0f, 0.0f, 0.0f, 0.95f);
     Color exploit = Color.green;
     Color explore = Color.blue;
     Color text = Color.white;

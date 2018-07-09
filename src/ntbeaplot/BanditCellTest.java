@@ -28,15 +28,15 @@ public class BanditCellTest {
         JEasyFrame frame = new JEasyFrame(bc, message + 0);
 
 
-        int nSamples = 100;
+        int nSamples = 50;
 
-        Thread.sleep(10000);
+        Thread.sleep(20000);
 
         for (int i=1; i<=nSamples; i++) {
             mab.sample();
             bc.repaint();
             frame.setTitle(message + i);
-            Thread.sleep(10000);
+            Thread.sleep(200);
         }
 
     }
