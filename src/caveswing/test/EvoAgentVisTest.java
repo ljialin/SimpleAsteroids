@@ -22,6 +22,7 @@ public class EvoAgentVisTest {
         SimplePlayerInterface player = getEvoAgent();
 
         CaveSwingParams params = CoolTestParams.getParams();
+        params.nAnchors *=2;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
@@ -62,6 +63,7 @@ public class EvoAgentVisTest {
         int seqLength = 20;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setDimension(new Dimension(800, 300));
+        // set shift buffer below
         evoAgent.setUseShiftBuffer(true);
         if (showEvolution)
             evoAgent.setVisual();
