@@ -13,7 +13,7 @@ public class RMHCMazeTest {
     // Random mutation hill climber for testing one-max
     static Random random = new Random();
 
-    static int maxEvals = 20000;
+    static int maxEvals = 200000;
 
     int[] bestYet;
 
