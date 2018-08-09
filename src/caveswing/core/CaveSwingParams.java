@@ -34,12 +34,13 @@ public class CaveSwingParams {
     public CaveSwingParams copy() {
         CaveSwingParams params = new CaveSwingParams();
         params.maxTicks = maxTicks;
-        params.gravity = gravity;
+        params.gravity = gravity.copy();
         params.hooke = hooke;
         params.width = width;
         params.nAnchors = nAnchors;
         params.meanAnchorHeight = meanAnchorHeight;
         params.random = random;
+        params.lossFactor = lossFactor;
 
         params.successBonus = successBonus;
         params.failurePenalty = failurePenalty;

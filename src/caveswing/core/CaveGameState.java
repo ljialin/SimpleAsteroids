@@ -6,7 +6,7 @@ import math.Vector2d;
 public class CaveGameState implements AbstractGameState {
 
     public Map map;
-    CaveSwingParams params;
+    public CaveSwingParams params;
 
     Actuator actuator;
 
@@ -71,7 +71,8 @@ public class CaveGameState implements AbstractGameState {
             }
             // now if there is an anchor, apply the necessary force
             if (currentAnchor != null) {
-                Vector2d tension = currentAnchor.getForce(avatar.s);
+                Vector2d tension = currentAnchor.getForce(avatar.s, params.hooke);
+                // tension.mul()
                 resultantForce.add(tension);
             }
         } else if (action == Constants.actionRelease) {

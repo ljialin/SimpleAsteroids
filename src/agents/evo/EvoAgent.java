@@ -1,6 +1,7 @@
 package agents.evo;
 
 import agents.dummy.DoNothingAgent;
+import caveswing.core.CaveGameState;
 import evodef.EvoAlg;
 import evodef.RegularSearchSpace;
 import evodef.SearchSpaceUtil;
@@ -104,6 +105,8 @@ public class EvoAgent implements SimplePlayerInterface {
         int[] tmp = solution;
         // already return the first element, so now set it to 1 ...
         if (!useShiftBuffer) solution = null;
+        CaveGameState cgs = (CaveGameState) gameState;
+        // System.out.println("Gravity check: " + cgs.params.gravity + " H: " + cgs.params.hooke);
         return tmp;
     }
 

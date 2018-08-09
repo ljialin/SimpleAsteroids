@@ -29,4 +29,14 @@ public class Anchor {
         tension.mul(hooke);
         return tension;
     }
+
+    public Vector2d getForce(Vector2d position, double hooke) {
+        // note that this is currently modelled as an elastic
+        // with zero natural length; would be easy to update this
+        // to model as a spring
+        Vector2d tension = new Vector2d(s);
+        tension.subtract(position);
+        tension.mul(hooke);
+        return tension;
+    }
 }
