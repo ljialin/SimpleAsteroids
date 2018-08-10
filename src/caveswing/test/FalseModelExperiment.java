@@ -81,7 +81,6 @@ public class FalseModelExperiment {
             }
             ss.add(gameState.getScore());
         }
-
         return ss;
     }
 
