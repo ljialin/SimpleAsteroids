@@ -185,6 +185,7 @@ public class LineChart extends JComponent {
         if (xAxis != null) {
             sx = xAxis.range;
 
+
         } else {
             sx.add(0);
             for (LinePlot line : lines) {
@@ -388,8 +389,6 @@ public class LineChart extends JComponent {
         // otherwise go ahead ...
         g.setFont(new Font("Monospaced", Font.BOLD, pointFontSize));
 
-
-
         // draw in two stages with solid font and transparent points
         for (DataPoint point : scatterPlot.points) {
             int x = (int) xMap.map(point.x);
@@ -414,10 +413,8 @@ public class LineChart extends JComponent {
         for (LineGroup lineGroup : lineGroups) {
 
             // for each line create a Path2D, then draw it
-
             // extract the data
             ArrayList<StatSummary> data = lineGroup.getLineStats();
-
 
             Path2D.Double env = new Path2D.Double();
 
@@ -500,16 +497,26 @@ public class LineChart extends JComponent {
         if (xAxis != null) {
             // draw the x ticks in
             Path2D.Double path = new Path2D.Double();
-            for (double x : xAxis.ticks) {
+
+            // if (xAxis.scaleTicks != null)
+
+            for (int i=0; i<xAxis.ticks.length; i++) {
                 g.setColor(tickColor);
 
+                double x = xAxis.ticks[i];
                 // draw the tick
                 path.moveTo(xMap.map(x), plotBottom);
                 path.lineTo(xMap.map(x), plotBottom + size.getHeight() * tickHeight);
 
                 // label it
 
-                String xLabel = String.format("%.0f", x);
+                String xLabel = xAxis.tickLabel(i); // String.format("%.0f", x);
+
+//                if (xAxis.scaleTicks != null) {
+//                    // overwrite the tick value with something different
+//                    xLabel = String.format
+//                }
+
                 g.setFont(new Font("Monospaced", Font.BOLD, fontSize));
                 Rectangle2D rect = g.getFontMetrics().getStringBounds(xLabel, g);
                 // use a drawString method for now
@@ -530,10 +537,10 @@ public class LineChart extends JComponent {
 //                g.drawString(xLabel, sx, -sy);
 //                g.scale(1, -1);
 
-
             }
             g.draw(path);
         }
+
         if (yAxis != null) {
             // draw the yLines in
             Path2D.Double path = new Path2D.Double();

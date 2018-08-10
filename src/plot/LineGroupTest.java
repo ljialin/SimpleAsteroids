@@ -25,7 +25,8 @@ public class LineGroupTest {
             // lineChart.addLine(new LinePlot().setData(data).setRandomColor());
         }
         // lineChart.set
-        lineChart.xAxis = new LineChartAxis(new double[]{0, 5, 10, 15, 20});
+        // lineChart.xAxis = new LineChartAxis(new double[]{0, 5, 10, 15, 20});
+        lineChart.xAxis = new LineChartAxis(new double[]{0, 5, 10, 15, 30});
         // lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2});
 
         new JEasyFrame(lineChart, "Line Group Test");

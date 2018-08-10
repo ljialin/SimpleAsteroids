@@ -11,7 +11,9 @@ public class LineChartAxis {
     List<String> labels;
     public StatSummary range;
     int nTicks = 0;
-    double[] ticks;
+    public double[] ticks;
+
+    public double[] scaleTicks;
 
     public LineChartAxis(double min, double max) {
         this(min, max, 0);
@@ -34,5 +36,19 @@ public class LineChartAxis {
         nTicks = ticks.length;
         range = new StatSummary();
         range.add(ticks);
+    }
+
+    public LineChartAxis setScaleTicks(double [] scaleTicks) {
+        this.scaleTicks = scaleTicks;
+        return this;
+    }
+
+    public int decPlaces = 1;
+
+    public String tickLabel(int i) {
+        String format = "%.1f";
+        double x = scaleTicks != null ? scaleTicks[i] : ticks[i];
+        String tick = String.format(format, x);
+        return tick;
     }
 }

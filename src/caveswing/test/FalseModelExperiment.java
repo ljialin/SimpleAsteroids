@@ -22,10 +22,11 @@ public class FalseModelExperiment {
 
     public static void main(String[] args) throws Exception {
         ArrayList<StatSummary> stats = new ArrayList<>();
-        int nTrials = 20;
-        double[] hooke = {0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0};
+        int nTrials = 30;
+        double[] hooke = {-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0};
         for (double h : hooke) {
-            StatSummary ss = runTrial(1.0, h, nTrials);
+            // StatSummary ss = runTrial(1.0, h, nTrials);
+            StatSummary ss = runTrial(h, 1.0, nTrials);
             System.out.println(h);
             System.out.println(ss);
             stats.add(ss);
@@ -33,11 +34,14 @@ public class FalseModelExperiment {
         LineGroup lineGroup = new LineGroup();
         lineGroup.stats = stats;
         LineChart chart = new LineChart();
+        chart.plotBG = Color.getHSBColor(0.77f, 1.0f, 1.0f);
         chart.addLineGroup(lineGroup);
+        chart.title = "Score versus false gravity factor";
+        chart.setYLabel("Average Score").setXLabel("False factor value");
         chart.yAxis = new LineChartAxis(new double[]{-5000, 0, 5000, 10000, 15000});
-        chart.xAxis = new LineChartAxis(hooke);
+        chart.xAxis = new LineChartAxis(0, hooke.length-1, hooke.length).setScaleTicks(hooke);
         // chart.autoScale();
-        new JEasyFrame(chart, "Score versus hooke");
+        new JEasyFrame(chart, "Score versus false factor");
     }
 
     public static StatSummary runTrial(double gravityFactor, double hookesLaw, int nTrials) {
