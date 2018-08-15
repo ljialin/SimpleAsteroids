@@ -37,6 +37,7 @@ public class SourceTargetActuatorTest {
 
         // params.gravitationalFieldConstant *= 1.0;
         params.transitSpeed *= 1;
+        // params.maxInitialShips *= 3;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
 
@@ -69,7 +70,7 @@ public class SourceTargetActuatorTest {
 //        MouseSlingController mouseSlingController = new MouseSlingController();
 //        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
 //        CaveView.addMouseListener(mouseSlingController);
-        int launchPeriod = 200; // params.releasePeriod;
+        int launchPeriod = 100; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
 

@@ -2,7 +2,8 @@ package hyperopt;
 
 import evodef.AnnotatedFitnessSpace;
 import evodef.EvoAlg;
-import ntuple.NTupleBanditEA;
+// import ntuple.NTupleBanditEA;
+import ntbea.*;
 import planetwar.EvoAgentSearchSpacePlanetWars;
 import planetwar.GameState;
 import utilities.ElapsedTimer;
@@ -11,14 +12,25 @@ public class TestHyperParamPlanetWars {
     public static void main(String[] args) {
         int nEvals = 288;
 
-        if (args.length==1) {
+        if (args.length == 1) {
             nEvals = Integer.parseInt(args[0]);
         }
 
         System.out.println("Optimization budget: " + nEvals);
 
-        NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(1);
-        GameState.includeBuffersInScore = true;
+        NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(2);
+
+        NTupleSystem model = new NTupleSystem();
+        // set up a non-standard tuple pattern
+        model.use1Tuple = true;
+        model.use2Tuple = true;
+        model.useNTuple = false;
+
+        ntbea.setModel(model);
+
+
+        // ntbea.getModel().s
+        GameState.includeBuffersInScore = false;
 
         EvoAgentSearchSpacePlanetWars.tickBudget = 2000;
 
@@ -30,11 +42,11 @@ public class TestHyperParamPlanetWars {
 //                new SimpleRMHC(1),
 //                new SimpleRMHC(2),
 //                new SimpleRMHC(5),
-                 ntbea,
+                ntbea,
         };
 
-        int nChecks = 100;
-        int nTrials = 100;
+        int nChecks = 30;
+        int nTrials = 10;
 
         ElapsedTimer timer = new ElapsedTimer();
 

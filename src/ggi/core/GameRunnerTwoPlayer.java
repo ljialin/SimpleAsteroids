@@ -113,7 +113,7 @@ public class GameRunnerTwoPlayer {
     }
 
     public GameRunnerTwoPlayer playGame(SimplePlayerInterface p1, SimplePlayerInterface p2) {
-        System.out.println(gameFactory);
+        // System.out.println("Game Runner Two Player: " + gameFactory);
         AbstractGameState gameState = gameFactory.newGame();
         GameLog gameLog = new GameLog();
         gameLog.addScore(gameState.getScore());

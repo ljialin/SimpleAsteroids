@@ -45,7 +45,7 @@ public class EvoAgent implements SimplePlayerInterface {
         actionSequencer = new ActionSequencer();
 
         // todo: find the BUG!!!
-        System.out.println("Called reset!!!!");
+        // System.out.println("Called reset!!!!");
         return this;
     }
 
@@ -105,7 +105,7 @@ public class EvoAgent implements SimplePlayerInterface {
         int[] tmp = solution;
         // already return the first element, so now set it to 1 ...
         if (!useShiftBuffer) solution = null;
-        CaveGameState cgs = (CaveGameState) gameState;
+        // CaveGameState cgs = (CaveGameState) gameState;
         // System.out.println("Gravity check: " + cgs.params.gravity + " H: " + cgs.params.hooke);
         return tmp;
     }

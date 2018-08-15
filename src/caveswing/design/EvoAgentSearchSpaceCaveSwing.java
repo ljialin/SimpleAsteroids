@@ -41,10 +41,10 @@ public class EvoAgentSearchSpaceCaveSwing implements AnnotatedFitnessSpace {
     }
 
     // todo: Use a different (longer?) range of sequence lengths
-    double[] pointMutationRate = {10.0};
-    boolean[] flipAtLeastOneBit = {true};
-    boolean[] useShiftBuffer = {true};
-    int[] nResamples = {1};
+    double[] pointMutationRate = {0.0, 1.0, 2.0, 3.0, 5.0, 10.0};
+    boolean[] flipAtLeastOneBit = {false, true};
+    boolean[] useShiftBuffer = {false, true};
+    int[] nResamples = {1, 2, 3};
     // int[] seqLength = {5, 10, 15, 20, 50};
     int[] seqLength = {2, 5, 10, 20, 40, 65, 100, 150, 200};
 

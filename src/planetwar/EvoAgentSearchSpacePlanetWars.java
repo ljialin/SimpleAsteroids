@@ -17,6 +17,9 @@ public class EvoAgentSearchSpacePlanetWars implements AnnotatedFitnessSpace {
 
         int[] point = SearchSpaceUtil.randomPoint(searchSpace);
 
+        double fitness = searchSpace.evaluate(point);
+        System.out.println("Fitness: " + fitness);
+
         System.out.println(searchSpace.report(point));
 
         System.out.println();
@@ -143,6 +146,7 @@ public class EvoAgentSearchSpacePlanetWars implements AnnotatedFitnessSpace {
         // now run a game and return the result
 
         gameRunner.verbose = false;
+        gameRunner.setGameFactory(new PlanetWarGameFactory());
         gameRunner.reset();
         gameRunner.setPlayers(evoAgent, evoOpponent);
         gameRunner.playGame();

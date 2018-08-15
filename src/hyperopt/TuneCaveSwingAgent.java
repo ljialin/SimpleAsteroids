@@ -20,12 +20,12 @@ public class TuneCaveSwingAgent {
         // set up a non-standard tuple pattern
         model.use1Tuple = true;
         model.use2Tuple = true;
-        model.useNTuple = true;
+        model.useNTuple = false;
 
         ntbea.setModel(model);
 
-        int nChecks = 10;
-        int nTrials = 1;
+        int nChecks = 100;
+        int nTrials = 30;
 
         ElapsedTimer timer = new ElapsedTimer();
 
@@ -50,6 +50,6 @@ public class TuneCaveSwingAgent {
         System.out.println("Time for all experiments: " + timer);
 
 
-        new Plotter().setModel(model).setAnnotatedFitnessSpace(caveSwingSpace).plot1Tuples();
+        // new Plotter().setModel(model).setAnnotatedFitnessSpace(caveSwingSpace).plot1Tuples();
     }
 }
