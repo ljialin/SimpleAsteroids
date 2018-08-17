@@ -42,10 +42,10 @@ public class HumanSlingVersusEvoAgent {
         waitUntilReady(view);
 
         SimplePlayerInterface evoAgent = new EvoAgentFactory().getAgent().setVisual();
-        SpinBattleParams falseParams = new SpinBattleParams();
-        falseParams.transitSpeed = 0;
-        falseParams.gravitationalFieldConstant = 0;
-        evoAgent = new FalseModelAdapter().setParams(falseParams).setPlayer(evoAgent);
+        // SpinBattleParams falseParams = new SpinBattleParams();
+        // falseParams.transitSpeed = 0;
+        // falseParams.gravitationalFieldConstant = 0;
+        // evoAgent = new FalseModelAdapter().setParams(falseParams).setPlayer(evoAgent);
         int[] actions = new int[2];
 
 
