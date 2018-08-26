@@ -27,7 +27,7 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 50, imageHeight = 16;
-    static int filterWidth = 2, filterHeight = 5;
+    static int filterWidth = 2, filterHeight = 16;
     static int stride = 1;
 
     static boolean useInitialSeed = false;
@@ -42,7 +42,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 2;
+        mutator.pointProb = 5;
 
         mutator.setSwap(true);
 
