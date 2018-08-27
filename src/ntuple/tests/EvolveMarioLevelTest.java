@@ -27,10 +27,12 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 50, imageHeight = 16;
-    static int filterWidth = 2, filterHeight = 16;
+    static int filterWidth = 4, filterHeight = 4;
     static int stride = 1;
 
-    static boolean useInitialSeed = false;
+    static boolean useInitialSeed = true;
+
+    static boolean useConvMutator = false;
 
 
     public static void main(String[] args) throws Exception {
@@ -42,7 +44,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 5;
+        mutator.pointProb = 1;
 
         mutator.setSwap(true);
 
@@ -73,7 +75,8 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         System.out.println("nSamples: " + convNTuple.nSamples());
 
         // set the "clever" mutation operator
-        ea.setMutator(new ConvMutator().setConvNTuple(convNTuple).setForceBorder(true));
+        if (useConvMutator)
+            ea.setMutator(new ConvMutator().setConvNTuple(convNTuple).setForceBorder(true));
 
         if (useInitialSeed) {
             ea.setInitialSeed(generateSeed(sample));

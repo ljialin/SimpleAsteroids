@@ -14,10 +14,12 @@ public class KLDivergenceTest {
             q *= fac;
         }
 
-        double[] pa = {0.0, 0.29, 0.71};
-        double[] qa = {0.1, 0.30, 0.60};
+        double[] pa = {0.0, 0.3, 0.7};
 
-        epsilon = 1e-10;
+        pa = new double[]{0.0, 0.0, 0.0, 0.0};
+        double[] qa = {0.1, 0.30, 0.60, 0.0};
+
+        epsilon = 1e-2;
 
         double pq = div(pa, qa);
         double qp = div(qa, pa);
