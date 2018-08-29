@@ -1,5 +1,6 @@
 package caveswing.view;
 
+import asteroids.Ship;
 import caveswing.core.Anchor;
 import caveswing.core.CaveGameState;
 import caveswing.core.CaveSwingParams;
@@ -8,7 +9,9 @@ import spinbattle.util.DrawUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Path2D;
 import java.util.ArrayList;
+
 
 public class CaveView extends JComponent {
     CaveSwingParams params;
@@ -24,6 +27,11 @@ public class CaveView extends JComponent {
 
     public boolean scrollView = true;
     public int scrollWidth = 600;
+
+    public ArrayList<int[]> playouts;
+
+    static Stroke stroke = new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+
 
     public CaveView setGameState(CaveGameState gameState) {
         this.gameState = gameState;
@@ -70,6 +78,7 @@ public class CaveView extends JComponent {
 
         paintAnchors(g);
         paintAvatar(g);
+        drawPlayouts(g);
 
         if (scrollView) {
             g.translate(-xScroll, 0);
@@ -115,6 +124,35 @@ public class CaveView extends JComponent {
         int score = (int) gameState.getScore();
         String message = String.format("%d", score);
         scoreDraw.centreString(g, message, getWidth()/2, scoreFontSize);
+    }
+
+    private void drawPlayouts(Graphics2D g) {
+        try {
+            g.setColor(new Color(255, 0, 128, 100));
+            if (playouts != null) {
+                for (int[] seq : playouts) {
+                    drawShipPlayout(g, (CaveGameState) gameState.copy(), seq);
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void drawShipPlayout(Graphics2D g, CaveGameState gameState, int[] seq) {
+
+        g.setStroke(stroke);
+        Path2D path = new Path2D.Double();
+        Vector2d pos = gameState.avatar.s;
+        path.moveTo(pos.x, pos.y);
+        for (int a : seq) {
+            gameState.next(new int[]{a});
+            pos = gameState.avatar.s;
+            path.lineTo(pos.x, pos.y);
+        }
+        g.draw(path);
+
     }
 
     ArrayList<Star> stars = new ArrayList();
