@@ -18,7 +18,7 @@ public class EvoAgentVisTest {
 
     static boolean showEvolution = true;
 
-    static boolean useFalseModel = false;
+    static boolean useFalseModel = true;
 
     public static void main(String[] args) throws Exception {
         EvoAgent player = getEvoAgent();
@@ -27,7 +27,7 @@ public class EvoAgentVisTest {
         params.nAnchors *=2;
 
         CaveSwingParams falseParams = params.copy();
-        falseParams.hooke *= -0.1;
+        falseParams.hooke *= 2.1;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
