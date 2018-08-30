@@ -24,7 +24,7 @@ public class FalseModelExperiment {
 
     public static void main(String[] args) throws Exception {
         ArrayList<StatSummary> stats = new ArrayList<>();
-        int nTrials = 50;
+        int nTrials = 30;
         double[] falseParam = {-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0};
         for (double h : falseParam) {
             // StatSummary ss = runTrial(1.0, h, nTrials);

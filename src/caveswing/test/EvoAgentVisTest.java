@@ -68,7 +68,7 @@ public class EvoAgentVisTest {
         int nResamples = 1;
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
-        mutator.totalRandomChaosMutation = true;
+        // mutator.totalRandomChaosMutation = true;
         mutator.flipAtLeastOneValue = true;
         mutator.pointProb = 1;
         SimpleRMHC simpleRMHC = new SimpleRMHC();
@@ -82,7 +82,7 @@ public class EvoAgentVisTest {
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setDimension(new Dimension(800, 300));
         // set shift buffer below
-        evoAgent.setUseShiftBuffer(false);
+        evoAgent.setUseShiftBuffer(true);
         if (showEvolution)
             evoAgent.setVisual();
         return evoAgent;
