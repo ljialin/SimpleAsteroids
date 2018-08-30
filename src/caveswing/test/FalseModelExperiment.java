@@ -7,8 +7,10 @@ import caveswing.util.ViewUtil;
 import caveswing.view.CaveView;
 import evodef.DefaultMutator;
 import evodef.EvoAlg;
+import ga.SimpleGA;
 import ga.SimpleRMHC;
 import ggi.core.SimplePlayerInterface;
+import ntuple.SlidingMeanEDA;
 import plot.LineChart;
 import plot.LineChartAxis;
 import plot.LineGroup;
@@ -22,7 +24,7 @@ public class FalseModelExperiment {
 
     public static void main(String[] args) throws Exception {
         ArrayList<StatSummary> stats = new ArrayList<>();
-        int nTrials = 30;
+        int nTrials = 50;
         double[] falseParam = {-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0};
         for (double h : falseParam) {
             // StatSummary ss = runTrial(1.0, h, nTrials);
@@ -36,7 +38,7 @@ public class FalseModelExperiment {
         LineChart chart = new LineChart();
         chart.plotBG = Color.getHSBColor(0.77f, 1.0f, 1.0f);
         chart.addLineGroup(lineGroup);
-        chart.title = "Score versus false Hooke factor";
+        chart.title = "Score versus false Hooke factor (SWEDA)";
         chart.setYLabel("Average Score").setXLabel("False factor value");
         chart.yAxis = new LineChartAxis(new double[]{-5000, 0, 5000, 10000, 15000});
         chart.xAxis = new LineChartAxis(0, falseParam.length-1, falseParam.length).setScaleTicks(falseParam);
@@ -88,16 +90,17 @@ public class FalseModelExperiment {
         int nResamples = 1;
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
-        // mutator.totalRandomChaosMutation = true;
+        mutator.totalRandomChaosMutation = true;
         mutator.flipAtLeastOneValue = true;
         mutator.pointProb = 5;
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);
         simpleRMHC.setMutator(mutator);
         EvoAlg evoAlg = simpleRMHC;
-        // evoAlg = new SlidingMeanEDA();
+        evoAlg = new SlidingMeanEDA();
+        // evoAlg = new SimpleGA();
         int nEvals = 20;
-        int seqLength = 20;
+        int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
         return evoAgent;

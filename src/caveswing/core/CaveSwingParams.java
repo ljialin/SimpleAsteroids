@@ -23,7 +23,7 @@ public class CaveSwingParams {
     public int failurePenalty = 1000;
     public int pointPerX = 10;
     public int pointPerY = -10;
-    public int costPerTick = 1;
+    public int costPerTick = 10;
 
     public Random random = new Random();
 

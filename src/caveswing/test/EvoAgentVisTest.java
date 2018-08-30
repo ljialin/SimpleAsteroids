@@ -8,8 +8,10 @@ import caveswing.util.ViewUtil;
 import caveswing.view.CaveView;
 import evodef.DefaultMutator;
 import evodef.EvoAlg;
+import ga.SimpleGA;
 import ga.SimpleRMHC;
 import ggi.core.SimplePlayerInterface;
+import ntuple.SlidingMeanEDA;
 import utilities.JEasyFrame;
 
 import java.awt.*;
@@ -18,7 +20,7 @@ public class EvoAgentVisTest {
 
     static boolean showEvolution = true;
 
-    static boolean useFalseModel = true;
+    static boolean useFalseModel = false;
 
     public static void main(String[] args) throws Exception {
         EvoAgent player = getEvoAgent();
@@ -74,12 +76,13 @@ public class EvoAgentVisTest {
         simpleRMHC.setMutator(mutator);
         EvoAlg evoAlg = simpleRMHC;
         // evoAlg = new SlidingMeanEDA();
+        // evoAlg = new SimpleGA();
         int nEvals = 20;
         int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setDimension(new Dimension(800, 300));
         // set shift buffer below
-        evoAgent.setUseShiftBuffer(true);
+        evoAgent.setUseShiftBuffer(false);
         if (showEvolution)
             evoAgent.setVisual();
         return evoAgent;
