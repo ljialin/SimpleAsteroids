@@ -7,13 +7,14 @@ import utilities.JEasyFrame;
 import utilities.StatSummary;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class KLDivPlot {
 
     public static void main(String[] args) {
 
         KLDivPlot div = new KLDivPlot();
-        double[] pa = {0.0, 1.0};
+        double[] pa = {1.0, 0.0};
         double[] qa = new double[2];
 
         int nPoints = 101;
@@ -25,22 +26,26 @@ public class KLDivPlot {
 
         StatSummary ss = new StatSummary();
 
+        double maxDiff = div(pa, new double[]{1-pa[0], 1-pa[1]});
+
         for (int i=0; i<nPoints; i++) {
             qa[0] = p; qa[1] = 1-p;
-            double x1 = div(pa, qa);
-            double x2 = div(qa, pa);
+            double x1 = div(pa, qa) / maxDiff;
+            double x2 = div(qa, pa) / maxDiff;
             plot1.add(x1);
             plot2.add(x2);
             p += inc;
             ss.add(x1).add(x2);
+            System.out.println(Arrays.toString(pa) + " : " + Arrays.toString(qa));
 
             // System.out.println(i + );
         }
 
         LineChart lineChart = new LineChart();
+        lineChart.plotBG = Color.getHSBColor(0.3f, 1, 1);
         lineChart.addLine(plot1).addLine(plot2);
         lineChart.setXLabel("Commonality");
-        lineChart.setYLabel("KL-Div");
+        lineChart.setYLabel("Normalised KL-Div");
 
         lineChart.xAxis = new LineChartAxis(new double[]{0, nPoints/2, nPoints-1});
         lineChart.yAxis = new LineChartAxis(new double[]{ss.min(), ss.max()});
