@@ -20,7 +20,7 @@ public class EvoAgentVisTest {
 
     static boolean showEvolution = true;
 
-    static boolean useFalseModel = false;
+    static boolean useFalseModel = true;
 
     public static void main(String[] args) throws Exception {
         EvoAgent player = getEvoAgent();
@@ -29,7 +29,7 @@ public class EvoAgentVisTest {
         params.nAnchors *=2;
 
         CaveSwingParams falseParams = params.copy();
-        falseParams.hooke *= 2.1;
+        falseParams.hooke *= 0.2;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
@@ -70,7 +70,7 @@ public class EvoAgentVisTest {
         // setting to true may give best performance
         // mutator.totalRandomChaosMutation = true;
         mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 1;
+        mutator.pointProb = 5;
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);
         simpleRMHC.setMutator(mutator);

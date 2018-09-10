@@ -24,7 +24,7 @@ public class FalseModelExperiment {
 
     public static void main(String[] args) throws Exception {
         ArrayList<StatSummary> stats = new ArrayList<>();
-        int nTrials = 30;
+        int nTrials = 20;
         double[] falseParam = {-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0};
         for (double h : falseParam) {
             // StatSummary ss = runTrial(1.0, h, nTrials);
@@ -97,7 +97,7 @@ public class FalseModelExperiment {
         simpleRMHC.setSamplingRate(nResamples);
         simpleRMHC.setMutator(mutator);
         EvoAlg evoAlg = simpleRMHC;
-        evoAlg = new SlidingMeanEDA();
+        // evoAlg = new SlidingMeanEDA();
         // evoAlg = new SimpleGA();
         int nEvals = 20;
         int seqLength = 100;

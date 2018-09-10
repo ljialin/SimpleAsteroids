@@ -13,7 +13,7 @@ public class KeyPlayerTest {
         // todo: adjust parameter setting and see how they affect game play for you
         params.maxTicks = 5000;
         params.gravity.y = 0.5;
-        params.hooke = 0.02;
+        params.hooke = 0.01;
         params.gravity.x = -0.00;
         params.width = 1200;
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
