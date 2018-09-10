@@ -29,7 +29,7 @@ public class EvoAgentVisTest {
         params.nAnchors *=2;
 
         CaveSwingParams falseParams = params.copy();
-        falseParams.hooke *= 0.4;
+        falseParams.hooke *= 0.2;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);

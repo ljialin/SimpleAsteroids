@@ -137,7 +137,7 @@ public class SourceTargetActuatorTest {
 
         // evoAlg = new SlidingMeanEDA();
 
-        int nEvals = 2;
+        int nEvals = 20;
         int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         boolean useShiftBuffer = true;
