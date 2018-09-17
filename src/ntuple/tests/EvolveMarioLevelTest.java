@@ -6,6 +6,7 @@ import evodef.EvolutionLogger;
 import evodef.SolutionEvaluator;
 import evodef.DefaultMutator;
 import ga.SimpleRMHC;
+import ga.SimplestRMHC;
 import levelgen.MarioReader;
 import ntuple.ConvNTuple;
 import ntuple.LevelView;
@@ -16,6 +17,7 @@ import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,10 +29,10 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 50, imageHeight = 16;
-    static int filterWidth = 4, filterHeight = 4;
+    static int filterWidth = 3, filterHeight = 1;
     static int stride = 1;
 
-    static boolean useInitialSeed = true;
+    static boolean useInitialSeed = false;
 
     static boolean useConvMutator = false;
 
@@ -41,12 +43,13 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         int nTrials = 1;
 
-        SimpleRMHC simpleRMHC = new SimpleRMHC();
+        SimplestRMHC simpleRMHC = new SimplestRMHC();
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 1;
+        mutator.pointProb = 0;
+        // mutator.totalRandomChaosMutation = true;
 
-        mutator.setSwap(true);
+        // mutator.setSwap(true);
 
         simpleRMHC.setMutator(mutator);
 
@@ -54,12 +57,13 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 20000;
+        int nEvals = 100000;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
             ElapsedTimer timer = new ElapsedTimer();
             results.add(evolver.runTrial(simpleRMHC, nEvals, level));
+            // System.out.println(simpleRMHC.getLogger().fa);
             System.out.println(timer);
         }
     }
@@ -67,7 +71,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     // this should really take any type of EA, but at the moment it
     // is restricted to the SimpleRMHC to allow a bespoke mutation operator
     // to be plugged in
-    public double runTrial(SimpleRMHC ea, int nEvals, int[][] sample) {
+    public double runTrial(SimplestRMHC ea, int nEvals, int[][] sample) {
         int nDims = imageWidth * imageHeight;
         int mValues = distinctValues(sample);
         System.out.println("Distinct values = " + mValues);
@@ -83,6 +87,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         }
         SolutionEvaluator evaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
 
+        EvalConvNTuple.noiseLevel = 0.00001;
 
         SolutionEvaluator trainingEvaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
 
@@ -214,6 +219,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         int end = data.size() - 2;
         System.out.println("Endpoint: " + end);
         lineChart.xAxis = new LineChartAxis(new double[]{0, mid, end});
+        lineChart.plotBG = Color.getHSBColor(0.45f, 1.0f, 1.0f);
         StatSummary ss = new StatSummary().add(data);
         lineChart.yAxis = new LineChartAxis(new double[]{ss.min(), ss.max()});
         lineChart.title = "Evolution of Fitness";

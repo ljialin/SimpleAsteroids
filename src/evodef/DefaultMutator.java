@@ -130,6 +130,14 @@ public class DefaultMutator implements Mutator {
         return rx >= cur ? rx+1 : rx;
     }
 
+    public static int diffHamming(int[] a, int[] b) {
+        int tot =0;
+        for (int i=0; i<a.length; i++) {
+            tot += a[i] == b[i] ? 0 : 1;
+        }
+        return tot;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("DefaultMutator\n");

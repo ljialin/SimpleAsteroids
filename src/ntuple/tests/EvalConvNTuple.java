@@ -39,8 +39,8 @@ public class EvalConvNTuple implements SolutionEvaluator, SearchSpace, FitnessSp
         return this;
     }
 
-    static double epsilon = 1e-60;
-    static double noiseLevel = 0.00001;
+    public static double epsilon = 1e-60;
+    public static double noiseLevel = 0.00001;
     @Override
     public double evaluate(int[] x) {
         // keep track of whether it is truly optimal
