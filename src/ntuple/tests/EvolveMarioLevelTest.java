@@ -29,12 +29,12 @@ import static levelgen.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 50, imageHeight = 16;
-    static int filterWidth = 3, filterHeight = 1;
+    static int filterWidth = 4, filterHeight = 4;
     static int stride = 1;
 
-    static boolean useInitialSeed = false;
+    static boolean useInitialSeed = true;
 
-    static boolean useConvMutator = false;
+    static boolean useConvMutator = true;
 
 
     public static void main(String[] args) throws Exception {
@@ -49,7 +49,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         mutator.pointProb = 0;
         // mutator.totalRandomChaosMutation = true;
 
-        // mutator.setSwap(true);
+        mutator.setSwap(false);
 
         simpleRMHC.setMutator(mutator);
 
@@ -57,7 +57,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 100000;
+        int nEvals = 10000;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
