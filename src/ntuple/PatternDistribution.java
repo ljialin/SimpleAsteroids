@@ -155,5 +155,4 @@ public class PatternDistribution {
         if (xyH == 0) return 0;
         return (xHy + yHx) / xyH;
     }
-
 }
