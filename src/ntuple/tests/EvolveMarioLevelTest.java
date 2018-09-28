@@ -17,6 +17,7 @@ import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 import utilities.StatSummary;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -124,7 +125,8 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         level = border(level);
         if (show) {
             LevelView levelView = new LevelView(level).setColorMap(tileColors).setCellSize(10);
-            new JEasyFrame(levelView, inputFile);
+            JScrollPane scrollPane = new JScrollPane(levelView, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            new JEasyFrame(scrollPane, inputFile);
         }
         return level;
     }

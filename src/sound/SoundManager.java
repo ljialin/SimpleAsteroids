@@ -19,7 +19,7 @@ public class SoundManager {
             sm.fire();
             Thread.sleep(500);
         }
-        System.exit(0);
+        // System.exit(0);
         Clip[] clips = {sm.bangLarge, sm.bangMedium, sm.bangSmall,
                 sm.beat1, sm.beat2, sm.extraShip, sm.saucerBig, sm.saucerSmall,
                 sm.thrust,
@@ -95,6 +95,12 @@ public class SoundManager {
 
 
     static boolean noClick = true;
+
+//    private static int SAMPLE_RATE = 48000;
+//    private static final AudioFormat FORMAT = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+//            (float) SAMPLE_RATE, 8, 1, 1, SAMPLE_RATE, false);
+
+
     public static Clip getClip(String filename) {
         if (noClick) return getClipNoClick(filename);
         Clip clip = null;
@@ -112,6 +118,7 @@ public class SoundManager {
             // byte[] bytes = sample.readAllBytes();
             // sample.
             clip.open(sample);
+
             System.out.println("Available after reading clip: " + sample.available());
             System.out.println();
 
@@ -147,13 +154,13 @@ public class SoundManager {
 
     private static int SAMPLE_RATE = 11025;
     private static int FRAME_SIZE = 2;
-    private static final AudioFormat FORMAT = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-            (float) SAMPLE_RATE, 8, 1, FRAME_SIZE, SAMPLE_RATE, false);
+//    private static final AudioFormat FORMAT = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+//            (float) SAMPLE_RATE, 8, 1, FRAME_SIZE, SAMPLE_RATE, false);
 
 
     public static Clip byteClip(byte[] out, int frameSize) throws LineUnavailableException {
         AudioFormat FORMAT = new AudioFormat(AudioFormat.Encoding.PCM_UNSIGNED,
-                (float) SAMPLE_RATE, 8, 1, frameSize, SAMPLE_RATE, false);
+                (float) SAMPLE_RATE, 8, 1, FRAME_SIZE, SAMPLE_RATE, false);
         Clip clip = AudioSystem.getClip();
         clip.open(FORMAT, out, 0, out.length);
         clip.setFramePosition(0);

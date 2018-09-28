@@ -14,7 +14,7 @@ import java.util.Random;
  * Created by simonmarklucas on 04/08/2016.
  */
 
-public class LevelView extends JComponent {
+public class LevelView extends JPanel {
 
     public static void main(String[] args) {
         int[][] randRect = randomRect(40, 25);

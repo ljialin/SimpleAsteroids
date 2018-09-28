@@ -15,7 +15,7 @@ public class SimpleTest {
         Clip fire = getClip("fire");
 
         SoundManager soundManager = new SoundManager();
-        for (int i=0; i<10; i++) {
+        for (int i=0; i<100; i++) {
             soundManager.playSafe(soundManager.fire);
             Thread.sleep(200);
         }
