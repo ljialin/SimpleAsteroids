@@ -32,9 +32,9 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static int filterWidth = 5, filterHeight = 5;
     static int stride = 1;
 
-    static boolean useInitialSeed = true;
+    static boolean useInitialSeed = false;
 
-    static boolean useConvMutator = true;
+    static boolean useConvMutator = false;
 
 
     public static void main(String[] args) throws Exception {
@@ -57,7 +57,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 10000;
+        int nEvals = 10;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
