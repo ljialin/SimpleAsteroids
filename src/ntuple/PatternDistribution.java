@@ -19,14 +19,16 @@ public class PatternDistribution {
 
         Pattern p1 = new Pattern().setPattern(new int[]{0, 1});
         Pattern p2 = new Pattern().setPattern(new int[]{1, 1});
-        Pattern p3 = new Pattern().setPattern(new int[]{1, 1});
+        Pattern p3 = new Pattern().setPattern(new int[]{3, 1});
+        Pattern p4 = new Pattern().setPattern(new int[]{1, 2});
         p.add(p1, 2);
-        p.add(p2, 5);
+        p.add(p2, 2);
         p.add(p3, 1);
 
         q.add(p1);
         q.add(p2);
         q.add(p2);
+        q.add(p4, 1);
 
         System.out.println(klDiv(p, p));
         System.out.println(klDiv(p, q));
@@ -37,6 +39,14 @@ public class PatternDistribution {
         System.out.println();
         System.out.println(klDivSymmetric(p, q));
         System.out.println(klDivSymmetric(q, p));
+
+        System.out.println();
+        System.out.println(jointEntropy(p, q));
+        System.out.println(jointEntropy(q, p));
+
+        System.out.println();
+        System.out.println(infDist(p, q));
+        System.out.println(infDist(q, q));
 
     }
 
@@ -74,6 +84,16 @@ public class PatternDistribution {
         }
     }
 
+    public double getRawProb(Pattern key) {
+        // no epsilon safety
+        StatSummary ss = statMap.get(key);
+        if (ss != null) {
+            return ss.sum() / tot;
+        } else {
+            return 0.0;
+        }
+    }
+
     public static double klDiv(double p, double q) {
         return p * (Math.log(p / q));
     }
@@ -98,4 +118,42 @@ public class PatternDistribution {
         }
         return tot;
     }
+
+    public static double jointEntropy(PatternDistribution pDis, PatternDistribution qDis) {
+        // since if one of the entries is zero, the product is zero
+        double tot = 0;
+        for (Pattern key : pDis.statMap.keySet()) {
+            double p = pDis.getRawProb(key);
+            double q = qDis.getRawProb(key);
+            // epsilon is already included in the getProb function
+            double pq = p * q;
+            if (pq > 0) {
+                tot += pq * Math.log(pq);
+            }
+        }
+        return tot;
+    }
+
+    public static double infDist(PatternDistribution pDis, PatternDistribution qDis) {
+        // since if one of the entries is zero, the product is zero
+        double xyH = 0;  // joint entropy
+        double xHy = 0;  // entropy of X given Y
+        double yHx = 0;  // entropy of Y given X
+        for (Pattern key : pDis.statMap.keySet()) {
+            double p = pDis.getRawProb(key);
+            double q = qDis.getRawProb(key);
+            // epsilon is already included in the getProb function
+            double pq = p * q;
+            if (pq > 0) {
+                // means both p and q must be non-zero
+                xyH += pq * Math.log(pq);
+                xHy += pq * Math.log(pq / q);
+                yHx += pq * Math.log(pq / p);
+            }
+        }
+        System.out.println(xyH + "\t " + xHy + "\t " + yHx);
+        if (xyH == 0) return 0;
+        return (xHy + yHx) / xyH;
+    }
+
 }
