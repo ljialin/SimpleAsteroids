@@ -126,6 +126,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         if (show) {
             LevelView levelView = new LevelView(level).setColorMap(tileColors).setCellSize(10);
             JScrollPane scrollPane = new JScrollPane(levelView, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            scrollPane.setPreferredSize(new Dimension(200,200));
             new JEasyFrame(scrollPane, inputFile);
         }
         return level;
