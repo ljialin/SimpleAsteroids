@@ -1,5 +1,6 @@
 package caveswing.test;
 
+import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
 import caveswing.core.CaveGameState;
 import caveswing.core.CaveSwingParams;
@@ -103,6 +104,7 @@ public class FalseModelExperiment {
         int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         evoAgent.setUseShiftBuffer(true);
+        // return new RandomAgent();
         return evoAgent;
     }
 

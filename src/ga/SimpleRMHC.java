@@ -106,7 +106,7 @@ public class SimpleRMHC implements EvoAlg {
                     fitBest = fitness(evaluator, bestYet, new StatSummary());
                 }
             }
-            System.out.println(fitBest.mean() + " : " + fitMut.mean() + " : " + (fitBest.mean() > fitMut.mean()) );
+            // System.out.println(fitBest.mean() + " : " + fitMut.mean() + " : " + (fitBest.mean() > fitMut.mean()) );
             if (fitMut.mean() >= fitBest.mean()) {
                 // System.out.println("Updating best");
                 bestYet = mut;
