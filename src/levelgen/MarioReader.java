@@ -34,6 +34,7 @@ public class MarioReader {
         tiles.put('[', 8);
         tiles.put(']', 9);
         tiles.put('o', 10);
+        tiles.put('-', 11);
     }
 
     public static HashMap<Integer, Color> tileColors = new HashMap();
@@ -57,6 +58,9 @@ public class MarioReader {
         tileColors.put(9, new Color(165, 42, 42));
         tileColors.put(10, Color.pink);
         tileColors.put(border, Color.cyan);
+        for (int i= 12; i<19; i++) {
+            tileColors.put(i, Color.getHSBColor((i - 11) / 10.0f, 1, 1));
+        }
     }
 
     static int targetWidth = 28;
@@ -193,10 +197,19 @@ public class MarioReader {
         return vec;
     }
 
+    static int maxNum = 0;
+
     public static int[][] readLevel(Scanner scanner) throws Exception {
         String line;
         ArrayList<String> lines = new ArrayList<>();
         int width = 0;
+
+        // will allow new tile numbers
+        for (int v : tiles.values()) {
+            maxNum = Math.max(v, maxNum);
+        }
+        maxNum++;
+
         while (scanner.hasNext()) {
             line = scanner.nextLine();
             width = line.length();
@@ -209,11 +222,20 @@ public class MarioReader {
         for (int y = 0; y < lines.size(); y++) {
             System.out.println("Processing line: " + lines.get(y));
             for (int x = 0; x < width; x++) {
-                a[y][x] = tiles.get(lines.get(y).charAt(x));
+                try {
+                    a[y][x] = tiles.get(lines.get(y).charAt(x));
+                } catch (Exception e) {
+                    tiles.put(lines.get(y).charAt(x), maxNum);
+                    a[y][x] = maxNum;
+                    maxNum++;
+                }
             }
         }
+        System.out.println(tiles);
 
         return a;
     }
+
+
 
 }

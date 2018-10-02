@@ -70,7 +70,7 @@ public class SourceTargetActuatorTest {
 //        MouseSlingController mouseSlingController = new MouseSlingController();
 //        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
 //        CaveView.addMouseListener(mouseSlingController);
-        int launchPeriod = 100; // params.releasePeriod;
+        int launchPeriod = 10; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
 
