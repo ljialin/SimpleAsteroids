@@ -34,7 +34,7 @@ public class MarioReader {
         tiles.put('[', 8);
         tiles.put(']', 9);
         tiles.put('o', 10);
-        tiles.put('-', 11);
+        // tiles.put('-', 11);
     }
 
     public static HashMap<Integer, Color> tileColors = new HashMap();
@@ -44,7 +44,7 @@ public class MarioReader {
         readIcons();
     }
 
-    public static int border = 11;
+    public static int border = 12;
     static {
         tileColors.put(0, Color.darkGray);
         tileColors.put(1, Color.yellow);
@@ -57,8 +57,8 @@ public class MarioReader {
         tileColors.put(8, new Color(178,34,34));
         tileColors.put(9, new Color(165, 42, 42));
         tileColors.put(10, Color.pink);
-        tileColors.put(border, Color.cyan);
-        for (int i= 12; i<19; i++) {
+        tileColors.put(border, Color.blue);
+        for (int i= 11; i<20; i++) {
             tileColors.put(i, Color.getHSBColor((i - 11) / 10.0f, 1, 1));
         }
     }
