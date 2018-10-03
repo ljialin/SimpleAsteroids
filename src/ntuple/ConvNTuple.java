@@ -429,9 +429,9 @@ public class ConvNTuple implements BanditLandscapeModel {
             qDis.add(pattern);
         }
         // return Math.random();
-        return PatternDistribution.klDivSymmetric(sampleDis, qDis);
+        // return PatternDistribution.klDivSymmetric(sampleDis, qDis);
         // return PatternDistribution.klDiv(sampleDis, qDis);
-        // return PatternDistribution.klDiv(qDis, sampleDis);
+        return PatternDistribution.klDiv(qDis, sampleDis);
     }
 
 //    public double getKLDivergence(int[] x, double epsilon) {
