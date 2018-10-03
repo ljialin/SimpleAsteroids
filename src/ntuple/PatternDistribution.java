@@ -2,8 +2,7 @@ package ntuple;
 
 import utilities.StatSummary;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /*
 
@@ -62,6 +61,15 @@ public class PatternDistribution {
     public PatternDistribution add(Pattern p) {
         add(p, 1);
         return this;
+    }
+
+    public ArrayList<PatternCount> getFrequencyList() {
+        ArrayList<PatternCount> list = new ArrayList<>();
+        for (Map.Entry<Pattern, StatSummary> pair : statMap.entrySet()) {
+            list.add(new PatternCount(pair.getKey(), pair.getValue().n()));
+        }
+        Collections.sort(list);
+        return list;
     }
 
     public PatternDistribution add(Pattern p, double w) {

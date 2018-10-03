@@ -13,6 +13,7 @@ import utilities.Picker;
 import utilities.StatSummary;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class ConvNTuple implements BanditLandscapeModel {
@@ -23,12 +24,13 @@ public class ConvNTuple implements BanditLandscapeModel {
 
     public static void main(String[] args) {
         int w = 20, h = 20;
-        int filterWidth = 6, filterHeight = 6;
+        int filterWidth = 3, filterHeight = 3;
         ConvNTuple convNTuple = new ConvNTuple().setImageDimensions(w, h);
         convNTuple.setFilterDimensions(filterWidth, filterHeight);
         convNTuple.setMValues(2).setStride(2);
 
         convNTuple.makeIndices();
+        convNTuple.reset();
 
         System.out.println("Address space size: " + convNTuple.addressSpaceSize());
         // System.out.println("Mean of empty summary: " + new StatSummary().mean());
@@ -36,15 +38,15 @@ public class ConvNTuple implements BanditLandscapeModel {
         // now put some random data in to it
         ElapsedTimer timer = new ElapsedTimer();
 
-        int nPoints = 100;
+        int nPoints = 1000;
         int nDims = w * h;
         Random random = new Random();
-        for (int i=0; i<nPoints; i++) {
+        for (int i = 0; i < nPoints; i++) {
             double p = random.nextDouble();
             // now make a random array with this P(x==1)
             int[] x = new int[nDims];
             int tot = 0;
-            for (int j=0; j<nDims; j++) {
+            for (int j = 0; j < nDims; j++) {
                 int z = random.nextDouble() < p ? 1 : 0;
                 x[j] = z;
                 tot += z;
@@ -59,8 +61,9 @@ public class ConvNTuple implements BanditLandscapeModel {
         convNTuple.report();
         System.out.println(timer);
 
-        // now make some random points
+        System.out.println(convNTuple.sampleDis.statMap);
 
+        // now make some random points
     }
 
     public ConvNTuple() {
@@ -68,6 +71,7 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
     boolean verbose = false;
+
     public void report(SolutionEvaluator evaluator) {
         System.out.println();
         System.out.println("Indexes used: " + sampleDis.statMap.size());
@@ -131,7 +135,6 @@ public class ConvNTuple implements BanditLandscapeModel {
     private Picker<int[]> picker;
 
 
-
     int nSamples;
     SearchSpace searchSpace;
 
@@ -175,7 +178,7 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
     public ConvNTuple setMValues(int mValues) {
-        this.mValues = mValues;
+        // this.mValues = mValues;
         return this;
     }
 
@@ -278,7 +281,23 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
 
+    public int[] flatten(int[][] a) {
+        int n = a.length * a[0].length;
+        int w = a.length;
+        if (w != this.imageWidth)
+            throw new RuntimeException("Image width not equal to Sample Width: " + w + " : " + imageWidth);
+        int[] x = new int[n];
+        for (int i = 0; i < n; i++) {
+            x[i] = a[i % w][i / w];
+        }
+        return x;
+    }
+
     boolean storeIndexArrays = true;
+
+    public void addPoint(int[][] p, double value) {
+        addPoint(flatten(p), value);
+    }
 
     @Override
     public void addPoint(int[] p, double value) {
@@ -306,7 +325,7 @@ public class ConvNTuple implements BanditLandscapeModel {
 
         for (int[] index : indices) {
             int[] values = new int[index.length];
-            for (int i=0; i<index.length; i++) {
+            for (int i = 0; i < index.length; i++) {
                 values[i] = p[index[i]];
             }
             // sampleDis.addValueArray(address(p, index), values);
@@ -396,13 +415,11 @@ public class ConvNTuple implements BanditLandscapeModel {
     }
 
     /**
-     *
      * @param x: probe image vector
      * @return quality of fit to trained distribution
      */
     // note that epsilon is the punishment for included non-observed values
     // it is the KL Divergence between the two distributions
-
     public double getKLDivergence(int[] x, double epsilon) {
         // create a new SampleDis for this image
         PatternDistribution qDis = new PatternDistribution();
