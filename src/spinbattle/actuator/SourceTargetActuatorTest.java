@@ -27,7 +27,6 @@ public class SourceTargetActuatorTest {
         // params.transitSpeed *= 2;
         params.gravitationalFieldConstant *= 1;
 
-
         params.maxTicks = 5000;
         params.width = 400;
         params.height = 600;
