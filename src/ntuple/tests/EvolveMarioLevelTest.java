@@ -29,13 +29,18 @@ import static levelgen.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 28, imageHeight = 16;
+    static int imageWidth = 40, imageHeight = 16;
     static int filterWidth = 4, filterHeight = 4;
     static int stride = 1;
 
-    static boolean useInitialSeed = false;
+    static boolean useInitialSeed = true;
 
     static boolean useConvMutator = true;
+    static String inputFile = "data/mario/levels/mario-2-1.txt";
+
+    static {
+         // inputFile = "data/zelda/multiroom/example.txt";
+    }
 
 
     public static void main(String[] args) throws Exception {
@@ -118,9 +123,6 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     }
 
     public static int[][] getAndShowLevel(boolean show) throws Exception {
-        String inputFile = "data/mario/levels/mario-2-1.txt";
-
-        // inputFile = "data/zelda/multiroom/example.txt";
 
         System.out.println("Reading: " + inputFile);
         int[][] level = flip(readLevel(new Scanner(new FileInputStream(inputFile))));
