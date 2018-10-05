@@ -125,8 +125,8 @@ public class SourceTargetActuatorTest {
 
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
-        mutator.totalRandomChaosMutation = true;
-        // mutator.pointProb = 5;
+        // mutator.totalRandomChaosMutation = true;
+        mutator.pointProb = 5;
 
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);

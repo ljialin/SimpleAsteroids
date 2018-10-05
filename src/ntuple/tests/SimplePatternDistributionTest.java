@@ -32,7 +32,7 @@ public class SimplePatternDistributionTest {
 
         // Mutator mutator = new DefaultMutator()
         Random random = new Random();
-        int nEdits = 10000;
+        int nEdits = 100;
         System.out.println("KL Div versus mutations: ");
         for (int i=0; i<nEdits; i++) {
             // just set some random entries to zero
