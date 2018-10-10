@@ -23,7 +23,7 @@ public class SourceTargetActuatorTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(15);
+        SpinBattleParams.random = new Random(19);
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
         params.gravitationalFieldConstant *= 1.0;
@@ -31,7 +31,7 @@ public class SourceTargetActuatorTest {
         params.maxTicks = 5000;
         params.width = 500;
         // params.height = 600;
-        params.height = 800;
+        params.height = 700;
 
         // SpinBattleParams altParams = params.copy();
 
@@ -139,7 +139,7 @@ public class SourceTargetActuatorTest {
         // evoAlg = new SlidingMeanEDA();
 
         int nEvals = 20;
-        int seqLength = 200;
+        int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
         boolean useShiftBuffer = true;
         evoAgent.setUseShiftBuffer(useShiftBuffer);
