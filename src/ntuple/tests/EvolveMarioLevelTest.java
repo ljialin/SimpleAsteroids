@@ -29,8 +29,8 @@ import static levelgen.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 199, imageHeight = 16;
-    static int filterWidth = 5, filterHeight = 5;
+    static int imageWidth = 50, imageHeight = 50;
+    static int filterWidth = 5, filterHeight = 16;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
@@ -39,7 +39,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static String inputFile = "data/mario/levels/mario-2-1.txt";
 
     static {
-         // inputFile = "data/zelda/multiroom/example.txt";
+         inputFile = "data/zelda/multiroom/example.txt";
     }
 
 

@@ -11,6 +11,7 @@ import spinbattle.core.SpinGameState;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.players.HeuristicLauncher;
+import spinbattle.players.TunablePriorityLauncher;
 import spinbattle.ui.MouseSlingController;
 import spinbattle.view.SpinBattleView;
 import utilities.JEasyFrame;
@@ -22,15 +23,15 @@ public class SourceTargetActuatorTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(7);
+        SpinBattleParams.random = new Random(15);
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
-        params.gravitationalFieldConstant *= 1;
+        params.gravitationalFieldConstant *= 1.0;
 
         params.maxTicks = 5000;
-        params.width = 400;
-        params.height = 600;
-        params.height = 700;
+        params.width = 500;
+        // params.height = 600;
+        params.height = 800;
 
         // SpinBattleParams altParams = params.copy();
 
@@ -63,13 +64,14 @@ public class SourceTargetActuatorTest {
 
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
         HeuristicLauncher launcher = new HeuristicLauncher();
+        // TunablePriorityLauncher launcher = new TunablePriorityLauncher();
         String title = "Spin Battle Game" ;
         JEasyFrame frame = new JEasyFrame(view, title + ": Waiting for Graphics");
         frame.setLocation(new Point(800, 0));
 //        MouseSlingController mouseSlingController = new MouseSlingController();
 //        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
 //        CaveView.addMouseListener(mouseSlingController);
-        int launchPeriod = 10; // params.releasePeriod;
+        int launchPeriod = 5; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
 
@@ -125,8 +127,8 @@ public class SourceTargetActuatorTest {
 
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
-        mutator.totalRandomChaosMutation = true;
-        // mutator.pointProb = 5;
+        // mutator.totalRandomChaosMutation = true;
+        mutator.pointProb = 10;
 
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);
@@ -145,5 +147,4 @@ public class SourceTargetActuatorTest {
 
         return evoAgent;
     }
-
 }
