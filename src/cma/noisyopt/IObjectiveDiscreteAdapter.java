@@ -17,18 +17,22 @@ public class IObjectiveDiscreteAdapter implements IObjectiveFunction {
         return this;
     }
 
+    public static boolean verbose = false;
+
     @Override
     public double valueOf(double[] x) {
 
         // set each one up
 
-        System.out.println("Evaluting: " + Arrays.toString(x));
+        // System.out.println("Evaluting: " + Arrays.toString(x));
         int[] solution = discretise(x);
-        System.out.println("Solution: " + Arrays.toString(solution));
         double fitness = fitnessSpace.evaluate(solution);
         trials.add(fitness);
 
-        System.out.println(trials);
+        if (verbose) {
+            System.out.println("Solution: " + Arrays.toString(solution));
+            System.out.println(trials);
+        }
 
         return -fitness;
     }

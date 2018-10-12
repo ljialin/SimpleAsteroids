@@ -12,7 +12,7 @@ public class CMATest {
     public static void main(String[] args) {
 
         ElapsedTimer t = new ElapsedTimer();
-        int nTrials = 100;
+        int nTrials = 5;
         StatSummary ss = new StatSummary("CMA Overall Results");
         for (int i=0; i<nTrials; i++) {
             ss.add(runTrial());
@@ -33,7 +33,7 @@ public class CMATest {
 
         IObjectiveDiscreteAdapter adapter = new IObjectiveDiscreteAdapter().setFitnessSpace(fitnessSpace);
 
-        int evals = 288;
+        int evals = 288 * 10;
         CMANoisySolver solver = new CMANoisySolver(adapter, adapter.nDimensions(), evals);
 
         double[] rawSolution = solver.run();

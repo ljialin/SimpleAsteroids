@@ -1,6 +1,7 @@
 package agents.evo;
 
 import agents.dummy.DoNothingAgent;
+import agents.dummy.RandomAgent;
 import caveswing.core.CaveGameState;
 import evodef.EvoAlg;
 import evodef.RegularSearchSpace;

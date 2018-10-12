@@ -3489,3 +3489,348 @@ best function value -1.0 at evaluation 2
 (4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1534259325412 (Tue Aug 14 17:08:45 CEST 2018)
  CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
  CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539226972089 (Thu Oct 11 11:02:52 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 3.8e-01  1: 2.6e-01 | 2.5e-01 5.4e-01   1.69   | 13.7  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 7
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539226987032 (Thu Oct 11 11:03:07 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 3.1e-01  2: 2.6e-01 | 2.3e-01 5.9e-01   1.42   | 12.6  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 1
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227000806 (Thu Oct 11 11:03:20 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 1.7e-01  2: 1.5e-01 | 1.3e-01 3.0e-01   1.63   | 10.5  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 3
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227012461 (Thu Oct 11 11:03:32 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 1.7e-01  2: 1.3e-01 | 1.0e-01 2.2e-01   1.68   | 10.2  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 2
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227023829 (Thu Oct 11 11:03:43 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,2e+00) |  0: 5.6e-01  2: 4.6e-01 | 4.1e-01 1.0e+00   1.59   | 12.7  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 5
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227037828 (Thu Oct 11 11:03:57 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 3.7e-01  2: 2.5e-01 | 2.5e-01 6.9e-01   1.67   | 12.7  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 6
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227051810 (Thu Oct 11 11:04:11 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  4: 3.2e-01  2: 2.5e-01 | 2.3e-01 5.1e-01   1.69   | 10.0  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 1
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227063208 (Thu Oct 11 11:04:23 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 3.7e-01  1: 3.3e-01 | 2.5e-01 6.4e-01   1.64   | 12.4  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 5
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227077154 (Thu Oct 11 11:04:37 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 3.1e-01  1: 2.7e-01 | 2.5e-01 5.6e-01   1.50   | 12.6  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 7
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227090927 (Thu Oct 11 11:04:50 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,2e+00) |  0: 2.2e-01  3: 1.7e-01 | 1.6e-01 3.7e-01   1.45   | 13.1  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 4
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227327609 (Thu Oct 11 11:08:47 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   56( 8),    448: -1.0000000000000000e+00 (+0e+00,2e+00) |  1: 3.2e-01  2: 2.2e-01 | 1.9e-01 6.0e-01   1.85   | 21.4  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=56,eval=448)
+best function value -1.0 at evaluation 1
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227350207 (Thu Oct 11 11:09:10 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  1: 2.9e-01  2: 2.4e-01 | 2.2e-01 4.1e-01   1.49   | 10.0  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 1
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227361763 (Thu Oct 11 11:09:21 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 3.3e-01  2: 2.7e-01 | 2.4e-01 5.2e-01   1.49   |  9.8  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 1
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227372790 (Thu Oct 11 11:09:32 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   53( 8),    424: -1.0000000000000000e+00 (+0e+00,2e+00) |  2: 2.8e-01  3: 1.4e-01 | 1.5e-01 4.2e-01   2.00   | 19.2  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=53,eval=424)
+best function value -1.0 at evaluation 4
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227393411 (Thu Oct 11 11:09:53 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  4: 1.9e-01  2: 1.5e-01 | 1.4e-01 2.9e-01   1.56   |  9.4  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 2
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227444815 (Thu Oct 11 11:10:44 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   37( 8),    296: -1.0000000000000000e+00 (+0e+00,2e+00) |  1: 3.4e-01  0: 2.7e-01 | 2.6e-01 7.1e-01   1.43   | 13.8  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=37,eval=296)
+best function value -1.0 at evaluation 2
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227460002 (Thu Oct 11 11:11:00 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   56( 8),    448: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 3.7e-01  0: 2.3e-01 | 2.2e-01 6.7e-01   1.78   | 19.8  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=56,eval=448)
+best function value -1.0 at evaluation 1
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227481423 (Thu Oct 11 11:11:21 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   97( 8),    776: -1.0000000000000000e+00 (+0e+00,2e+00) |  4: 2.7e-01  1: 2.2e-01 | 1.7e-01 1.2e+00   1.60   | 33.3  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=97,eval=776)
+best function value -1.0 at evaluation 1
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227515980 (Thu Oct 11 11:11:55 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  0: 3.0e-01  2: 2.3e-01 | 1.9e-01 4.0e-01   1.90   | 10.0  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 2
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227527255 (Thu Oct 11 11:12:07 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   71( 8),    568: -1.0000000000000000e+00 (+0e+00,2e+00) |  1: 5.0e-01  3: 4.4e-01 | 3.4e-01 1.5e+00   2.00   | 24.5  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=71,eval=568)
+best function value -1.0 at evaluation 1
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227577965 (Thu Oct 11 11:12:57 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   65( 8),    520: -1.0000000000000000e+00 (+0e+00,2e+00) |  1: 2.8e-01  3: 2.3e-01 | 2.1e-01 8.6e-01   1.47   | 22.9  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=65,eval=520)
+best function value -1.0 at evaluation 3
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227602554 (Thu Oct 11 11:13:22 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  0: 3.5e-01  1: 3.0e-01 | 2.8e-01 6.2e-01   1.33   | 10.3  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 15
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227614287 (Thu Oct 11 11:13:34 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   29( 8),    232: -1.0000000000000000e+00 (+0e+00,2e+00) |  4: 5.3e-01  2: 4.0e-01 | 3.8e-01 7.7e-01   1.52   |  9.7  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=29,eval=232)
+best function value -1.0 at evaluation 2
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227625272 (Thu Oct 11 11:13:45 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   47( 8),    376: -1.0000000000000000e+00 (+0e+00,2e+00) |  3: 3.0e-01  1: 2.5e-01 | 2.2e-01 6.4e-01   1.47   | 16.6  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=47,eval=376)
+best function value -1.0 at evaluation 2
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539227643051 (Thu Oct 11 11:14:03 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   63( 8),    504: -1.0000000000000000e+00 (+0e+00,2e+00) |  1: 3.0e-01  3: 2.6e-01 | 2.2e-01 9.0e-01   1.58   | 20.8  0.0 
+Terminated due to
+  TolFunHist: history of function value changes below stopTolFunHist=1.0E-13 (iter=63,eval=504)
+best function value -1.0 at evaluation 3
