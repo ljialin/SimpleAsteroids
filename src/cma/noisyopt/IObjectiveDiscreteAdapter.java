@@ -19,12 +19,18 @@ public class IObjectiveDiscreteAdapter implements IObjectiveFunction {
 
     public static boolean verbose = false;
 
+    int runsPerEval = 5;
+
     @Override
     public double valueOf(double[] x) {
+        StatSummary ss = new StatSummary();
+        for (int i=0; i<runsPerEval; i++) {
+            ss.add(singleEvaluation(x));
+        }
+        return ss.mean();
+    }
 
-        // set each one up
-
-        // System.out.println("Evaluting: " + Arrays.toString(x));
+    public double singleEvaluation(double[] x) {
         int[] solution = discretise(x);
         double fitness = fitnessSpace.evaluate(solution);
         trials.add(fitness);

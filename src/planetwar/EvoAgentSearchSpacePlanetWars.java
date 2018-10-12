@@ -107,6 +107,7 @@ public class EvoAgentSearchSpacePlanetWars implements AnnotatedFitnessSpace {
     }
 
 
+
     @Override
     public double evaluate(int[] x) {
 

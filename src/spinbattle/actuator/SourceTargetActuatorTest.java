@@ -122,7 +122,6 @@ public class SourceTargetActuatorTest {
 
     static SimplePlayerInterface getEvoAgent() {
         //
-        // todo Add in the code to make this
         int nResamples = 1;
 
         DefaultMutator mutator = new DefaultMutator(null);

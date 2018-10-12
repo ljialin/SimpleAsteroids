@@ -33,7 +33,7 @@ public class CMATest {
 
         IObjectiveDiscreteAdapter adapter = new IObjectiveDiscreteAdapter().setFitnessSpace(fitnessSpace);
 
-        int evals = 288 * 10;
+        int evals = 288;
         CMANoisySolver solver = new CMANoisySolver(adapter, adapter.nDimensions(), evals);
 
         double[] rawSolution = solver.run();
