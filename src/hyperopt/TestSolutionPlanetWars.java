@@ -16,10 +16,13 @@ public class TestSolutionPlanetWars {
         // int[] solution = {1, 0, 0, 0, 4};
         solution = new int[]{3, 1, 1, 0, 3};
         solution = new int[]{3, 1, 1, 0, 2};
+        // solution = new int[]{0, 0, 0, 2, 0};
         System.out.println(new EvoAgentSearchSpacePlanetWars().report(solution));
         int nChecks = 100;
         ElapsedTimer timer = new ElapsedTimer();
         new HyperParamTuneRunner().runChecks(new EvoAgentSearchSpacePlanetWars(), solution, nChecks);
         System.out.println(timer);
     }
+
+
 }
