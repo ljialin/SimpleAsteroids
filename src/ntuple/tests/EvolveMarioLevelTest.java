@@ -29,8 +29,8 @@ import static levelgen.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 50, imageHeight = 50;
-    static int filterWidth = 5, filterHeight = 16;
+    static int imageWidth = 50, imageHeight = 16;
+    static int filterWidth = 4, filterHeight = 4;
     static int stride = 1;
 
     static boolean useInitialSeed = true;
@@ -39,7 +39,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static String inputFile = "data/mario/levels/mario-2-1.txt";
 
     static {
-         inputFile = "data/zelda/multiroom/example.txt";
+         // inputFile = "data/zelda/multiroom/example.txt";
     }
 
 
@@ -52,7 +52,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         SimplestRMHC simpleRMHC = new SimplestRMHC();
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
-        mutator.pointProb = 0;
+        mutator.pointProb = 2;
         // mutator.totalRandomChaosMutation = true;
 
         mutator.setSwap(false);
@@ -63,7 +63,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 10000;
+        int nEvals = 10001;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
