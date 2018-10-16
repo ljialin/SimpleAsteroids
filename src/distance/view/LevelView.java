@@ -1,4 +1,4 @@
-package ntuple;
+package distance.view;
 
 import distance.util.MarioReader;
 import utilities.JEasyFrame;

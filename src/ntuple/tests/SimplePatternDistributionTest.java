@@ -1,8 +1,6 @@
 package ntuple.tests;
 
-import evodef.DefaultMutator;
-import evodef.Mutator;
-import levelgen.MarioReader;
+import distance.util.MarioReader;
 import ntuple.ConvNTuple;
 import ntuple.LevelView;
 import ntuple.PatternCount;
@@ -20,8 +18,10 @@ import static ntuple.tests.EvolveMarioLevelTest.getAndShowLevel;
  */
 
 public class SimplePatternDistributionTest {
+    static String inputFile1 = "data/mario/levels/mario-1-1.txt";
+
     public static void main(String[] args) throws Exception {
-        int[][] level = getAndShowLevel(true);
+        int[][] level = getAndShowLevel(true, inputFile1);
 
         ConvNTuple c1 = getConvNTuple(level);
 

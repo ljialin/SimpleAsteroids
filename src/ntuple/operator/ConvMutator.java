@@ -3,11 +3,10 @@ package ntuple.operator;
 import evodef.DefaultMutator;
 import evodef.Mutator;
 import evodef.SearchSpace;
-import levelgen.MarioReader;
+import distance.util.MarioReader;
 import ntuple.ConvNTuple;
 import ntuple.Pattern;
 import ntuple.PatternDistribution;
-import ntuple.SparseDistribution;
 import utilities.Picker;
 
 import java.util.Arrays;

@@ -1,6 +1,5 @@
 package spinbattle.core;
 
-import levelgen.MarioReader;
 import math.Vector2d;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;

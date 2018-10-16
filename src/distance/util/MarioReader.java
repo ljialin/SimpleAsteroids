@@ -1,12 +1,13 @@
-package levelgen;
+package distance.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
-import ntuple.LevelView;
+import distance.view.LevelView;
 import utilities.JEasyFrame;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -235,6 +236,37 @@ public class MarioReader {
 
         return a;
     }
+
+    public static int[][] getAndShowLevel(boolean show, String inputFile) throws Exception {
+
+        System.out.println("Reading: " + inputFile);
+        int[][] level = flip(readLevel(new Scanner(new FileInputStream(inputFile))));
+        level = border(level);
+        if (show) {
+            ntuple.LevelView levelView = new ntuple.LevelView(level).setColorMap(tileColors).setCellSize(10);
+            JScrollPane scrollPane = new JScrollPane(levelView, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            scrollPane.setPreferredSize(new Dimension(200,200));
+            new JEasyFrame(scrollPane, inputFile);
+        }
+        return level;
+    }
+
+    public static int[][] border(int[][] a) {
+        int[][] b = new int[a.length + 2][a[0].length + 2];
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b[0].length; j++) {
+                if (i == 0 || j == 0 || i == b.length - 1 || j == b[0].length - 1) {
+                    b[i][j] = MarioReader.border;
+                } else {
+                    b[i][j] = a[i - 1][j - 1];
+                }
+            }
+        }
+        // return a;
+        return b;
+    }
+
+
 
 
 

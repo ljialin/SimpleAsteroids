@@ -1,13 +1,11 @@
 package ntuple.tests;
 
-import evodef.EvoAlg;
 import evodef.EvolutionListener;
 import evodef.EvolutionLogger;
 import evodef.SolutionEvaluator;
 import evodef.DefaultMutator;
-import ga.SimpleRMHC;
 import ga.SimplestRMHC;
-import levelgen.MarioReader;
+import distance.util.MarioReader;
 import ntuple.ConvNTuple;
 import ntuple.LevelView;
 import ntuple.operator.ConvMutator;
@@ -25,7 +23,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-import static levelgen.MarioReader.*;
+import static distance.util.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
@@ -36,16 +34,13 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static boolean useInitialSeed = true;
 
     static boolean useConvMutator = true;
-    static String inputFile = "data/mario/levels/mario-2-1.txt";
-
-    static {
-         // inputFile = "data/zelda/multiroom/example.txt";
-    }
-
+    static String inputFile1 = "data/mario/levels/mario-1-1.txt";
+    static String inputFile2 = "data/mario/levels/mario-2-1.txt";
+    // static String inputFile3 = "data/mario/levels/mario-3-1.txt";
 
     public static void main(String[] args) throws Exception {
 
-        int[][] level = getAndShowLevel(true);
+        int[][] level = getAndShowLevel(true, inputFile1);
 
         int nTrials = 1;
 
@@ -122,7 +117,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         return fitness;
     }
 
-    public static int[][] getAndShowLevel(boolean show) throws Exception {
+    public static int[][] getAndShowLevel(boolean show, String inputFile) throws Exception {
 
         System.out.println("Reading: " + inputFile);
         int[][] level = flip(readLevel(new Scanner(new FileInputStream(inputFile))));

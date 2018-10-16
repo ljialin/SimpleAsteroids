@@ -4005,3 +4005,93 @@ Terminated due to
   MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
 best function value -1.0 at evaluation 128
 (4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539499277815 (Sun Oct 14 14:41:17 CST 2018)
+   36( 8),    288: -8.0000000000000000e-01 (-2e-01,8e-01) |  0: 9.0e-02  3: 4.2e-02 | 3.3e-02 7.2e-02   3.12   | 120.3  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 139
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539499402278 (Sun Oct 14 14:43:22 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -6.0000000000000000e-01 (-4e-01,2e+00) |  1: 2.1e-01  2: 9.7e-02 | 7.7e-02 1.8e-01   2.86   | 125.8  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 54
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539499532242 (Sun Oct 14 14:45:32 CST 2018)
+   36( 8),    288: -4.0000000000000000e-01 (-6e-01,8e-01) |  3: 7.5e-02  2: 5.7e-02 | 4.0e-02 8.5e-02   2.32   | 217.9  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 49
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539499753783 (Sun Oct 14 14:49:13 CST 2018)
+   36( 8),    288: -6.0000000000000000e-01 (-4e-01,6e-01) |  3: 9.5e-02  2: 5.7e-02 | 4.3e-02 9.9e-02   2.71   | 121.2  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 113
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539499878833 (Sun Oct 14 14:51:18 CST 2018)
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,8e-01) |  3: 7.5e-02  1: 5.7e-02 | 4.3e-02 8.6e-02   2.11   | 351.0  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 147
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539500233774 (Sun Oct 14 14:57:13 CST 2018)
+   36( 8),    288: -8.0000000000000000e-01 (-2e-01,8e-01) |  1: 5.5e-02  3: 3.5e-02 | 2.7e-02 5.9e-02   2.51   | 5512.1  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 16
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539505750033 (Sun Oct 14 16:29:10 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,2e+00) |  0: 7.9e-02  3: 6.5e-02 | 5.6e-02 1.0e-01   1.72   | 156.7  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 52
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539505910594 (Sun Oct 14 16:31:50 CST 2018)
+   36( 8),    288: -8.0000000000000000e-01 (-2e-01,1e+00) |  3: 1.0e-01  1: 7.9e-02 | 5.9e-02 1.2e-01   2.07   | 120.3  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 226
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539506034902 (Sun Oct 14 16:33:54 CST 2018)
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,1e+00) |  3: 3.4e-02  2: 2.6e-02 | 1.9e-02 4.2e-02   2.09   | 117.7  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 69
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539506156854 (Sun Oct 14 16:35:56 CST 2018)
+   36( 8),    288: -6.0000000000000000e-01 (-4e-01,1e+00) |  3: 2.7e-02  0: 1.8e-02 | 1.7e-02 3.1e-02   1.73   | 119.5  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 200
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539506280790 (Sun Oct 14 16:38:00 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -6.0000000000000000e-01 (-4e-01,1e+00) |  1: 2.1e-01  2: 1.5e-01 | 1.2e-01 2.1e-01   2.36   | 118.9  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 7
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539506403855 (Sun Oct 14 16:40:03 CST 2018)
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,1e+00) |  3: 9.8e-02  2: 4.9e-02 | 4.9e-02 9.5e-02   2.25   | 122.4  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 126
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539506530438 (Sun Oct 14 16:42:10 CST 2018)
+   36( 8),    288: -8.0000000000000000e-01 (-2e-01,1e+00) |  2: 2.1e-02  1: 1.7e-02 | 1.2e-02 2.7e-02   2.09   | 118.7  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 15
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539506653119 (Sun Oct 14 16:44:13 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,8e-01) |  0: 4.7e-02  3: 3.2e-02 | 2.7e-02 5.9e-02   1.93   | 117.3  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 56
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539506774427 (Sun Oct 14 16:46:14 CST 2018)
+   36( 8),    288: -1.0000000000000000e+00 (+0e+00,1e+00) |  0: 4.4e-02  2: 2.9e-02 | 2.5e-02 4.8e-02   1.94   | 118.1  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 92
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539508629079 (Sun Oct 14 17:17:09 CST 2018)
+ CMA-ES warning: flat fitness landscape, consider reformulation of fitness, step-size increased
+   36( 8),    288: -8.0000000000000000e-01 (-2e-01,8e-01) |  3: 3.8e-02  0: 3.3e-02 | 2.6e-02 5.3e-02   1.54   | 119.5  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 46
+(4,8)-CMA-ES(mu_eff=2.8), Ver="0.99.40", dimension=5, 0 diagonal iter., randomSeed=1539508752390 (Sun Oct 14 17:19:12 CST 2018)
+   36( 8),    288: -8.0000000000000000e-01 (-2e-01,6e-01) |  0: 6.3e-02  1: 3.8e-02 | 3.2e-02 6.9e-02   2.21   | 119.1  0.0 
+Terminated due to
+  MaxFunEvals: maximum number of function evaluations 288 reached (iter=36,eval=288)
+best function value -1.0 at evaluation 176
