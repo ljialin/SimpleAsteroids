@@ -22,18 +22,24 @@ public class KLDivTest {
     static String inputFile1 = "data/mario/levels/mario-1-1.txt";
     static String inputFile2 = "data/mario/levels/mario-8-1.txt";
 
+    static String inputFile3 = "data/mario/levels/mario-5-1.txt";
 
-    static int filterWidth = 10;
+
+    static int filterWidth = 5;
     static int filterHeight = 10;
     static int stride = 1;
 
 
     public static void main(String[] args) throws Exception {
+        // any more and we'd make a loop
         int[][] level1 = getAndShowLevel(true, inputFile1);
         int[][] level2 = getAndShowLevel(true, inputFile2);
+        int[][] level3 = getAndShowLevel(true, inputFile3);
 
         ConvNTuple c1 = getConvNTuple(level1, filterWidth, filterHeight, stride);
         ConvNTuple c2 = getConvNTuple(level2, filterWidth, filterHeight, stride);
+
+        ConvNTuple c3 = getConvNTuple(level3, filterWidth, filterHeight, stride);
 
         double klDiv12 = KLDiv.klDiv(c1.sampleDis, c2.sampleDis);
         double klDiv21 = KLDiv.klDiv(c2.sampleDis, c1.sampleDis);
@@ -43,8 +49,16 @@ public class KLDivTest {
         System.out.println("klDiv 2-1: " + klDiv21);
         System.out.println("klDiv Sym: " + klDiv);
 
-        System.out.println("Sanity check, should be zero: KLDiv Sym 1-1: " + KLDiv.klDiv(c1.sampleDis, c1.sampleDis));
+        System.out.println("Adding a distribution to itself");
+        c1.sampleDis.add(c1.sampleDis);
+        System.out.println("Sanity check, should be same as before: KLDiv Sym 1-2: " + KLDiv.klDiv(c1.sampleDis, c2.sampleDis));
 
+        System.out.println("Adding c3 to c1");
+        c1.sampleDis.add(c3.sampleDis);
+        System.out.println("Sanity check, should be different KLDiv Sym 1-2: " + KLDiv.klDiv(c1.sampleDis, c2.sampleDis));
+
+        System.out.println();
+        System.out.println("Sanity check, should be zero: KLDiv Sym 1-1: " + KLDiv.klDiv(c1.sampleDis, c1.sampleDis));
     }
 
     public static void printDis(ConvNTuple convNTuple) {
