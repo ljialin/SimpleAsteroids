@@ -243,9 +243,9 @@ public class MarioReader {
         int[][] level = flip(readLevel(new Scanner(new FileInputStream(inputFile))));
         level = border(level);
         if (show) {
-            ntuple.LevelView levelView = new ntuple.LevelView(level).setColorMap(tileColors).setCellSize(10);
+            ntuple.LevelView levelView = new ntuple.LevelView(level).setColorMap(tileColors).setCellSize(15);
             JScrollPane scrollPane = new JScrollPane(levelView, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            scrollPane.setPreferredSize(new Dimension(200,200));
+            scrollPane.setPreferredSize(new Dimension(500,200));
             new JEasyFrame(scrollPane, inputFile);
         }
         return level;

@@ -6,7 +6,7 @@ import distance.pattern.PatternCount;
 
 import java.util.List;
 
-import static ntuple.tests.EvolveMarioLevelTest.getAndShowLevel;
+import static distance.util.MarioReader.getAndShowLevel;
 
 
 /**
@@ -42,6 +42,8 @@ public class KLDivTest {
         System.out.println("klDiv 1-2: " + klDiv12);
         System.out.println("klDiv 2-1: " + klDiv21);
         System.out.println("klDiv Sym: " + klDiv);
+
+        System.out.println("Sanity check, should be zero: KLDiv Sym 1-1: " + KLDiv.klDiv(c1.sampleDis, c1.sampleDis));
 
     }
 
