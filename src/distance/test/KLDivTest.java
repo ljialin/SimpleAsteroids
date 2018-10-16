@@ -24,7 +24,6 @@ public class KLDivTest {
 
     static String inputFile3 = "data/mario/levels/mario-5-1.txt";
 
-
     static int filterWidth = 5;
     static int filterHeight = 10;
     static int stride = 1;
@@ -51,11 +50,11 @@ public class KLDivTest {
 
         System.out.println("Adding a distribution to itself");
         c1.sampleDis.add(c1.sampleDis);
-        System.out.println("Sanity check, should be same as before: KLDiv Sym 1-2: " + KLDiv.klDiv(c1.sampleDis, c2.sampleDis));
+        System.out.println("Sanity check, should be same as before: KLDiv Sym 1-2: " + KLDiv.klDivSymmetric(c1.sampleDis, c2.sampleDis));
 
         System.out.println("Adding c3 to c1");
         c1.sampleDis.add(c3.sampleDis);
-        System.out.println("Sanity check, should be different KLDiv Sym 1-2: " + KLDiv.klDiv(c1.sampleDis, c2.sampleDis));
+        System.out.println("Sanity check, should be different KLDiv Sym 1-2: " + KLDiv.klDivSymmetric(c1.sampleDis, c2.sampleDis));
 
         System.out.println();
         System.out.println("Sanity check, should be zero: KLDiv Sym 1-1: " + KLDiv.klDiv(c1.sampleDis, c1.sampleDis));
