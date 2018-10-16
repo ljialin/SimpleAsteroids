@@ -58,6 +58,12 @@ public class PatternDistribution {
         return this;
     }
 
+    public PatternDistribution add(PatternDistribution pd) {
+        // for (Pattern p : pd.)
+        // add(p, 1);
+        return this;
+    }
+
     public ArrayList<PatternCount> getFrequencyList() {
         ArrayList<PatternCount> list = new ArrayList<>();
         for (Map.Entry<Pattern, StatSummary> pair : statMap.entrySet()) {
