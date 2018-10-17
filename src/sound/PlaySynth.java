@@ -67,7 +67,7 @@ public class PlaySynth {
         System.out.println(x);
         LineChart lineChart = LineChart.easyPlot(x);
         lineChart.yAxis = new LineChartAxis(-128, 128, 5);
-        new JEasyFrame(lineChart, "Easy Plot Test");
+        new JEasyFrame(lineChart, "Easy Plot GVGAISimpleTest");
 
     }
 

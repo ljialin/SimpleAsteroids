@@ -60,7 +60,7 @@ public class LineChart extends JComponent {
 //        lineChart.addLine(LinePlot.randomLine());
 //        lineChart.addLine(new LinePlot().setData(y).setColor(Color.blue));
 //        lineChart.addLine(new LinePlot().setData(yy).setColor(Color.red));
-//        new JEasyFrame(lineChart, "Line Chart Test");
+//        new JEasyFrame(lineChart, "Line Chart GVGAISimpleTest");
 //        lineChart.xAxis = new LineChartAxis(new double[]{0, 20, 40, 60, 80, 100});
 //        lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2, 3});
 
@@ -69,7 +69,7 @@ public class LineChart extends JComponent {
         // lineChart.yAxis = new LineChartAxis(new double[]{-2, 0, 2});
         lineChart.xAxis = new LineChartAxis(new double[]{0, 20, 40, 60, 80, 100});
 
-        new JEasyFrame(lineChart, "Single Line Test");
+        new JEasyFrame(lineChart, "Single Line GVGAISimpleTest");
 
     }
 

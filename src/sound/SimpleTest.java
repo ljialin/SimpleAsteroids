@@ -20,7 +20,7 @@ public class SimpleTest {
             Thread.sleep(200);
         }
 
-        new JEasyFrame(new VoronoiGrid().setRandomPoints(10), "Test");
+        new JEasyFrame(new VoronoiGrid().setRandomPoints(10), "GVGAISimpleTest");
 
     }
 

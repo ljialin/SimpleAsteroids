@@ -7,6 +7,9 @@ import spinbattle.core.SpinGameState;
 import spinbattle.core.Transporter;
 
 public class HeuristicLauncher implements SimplePlayerInterface {
+
+    // todo: make this actually implement it
+
     @Override
     public int getAction(AbstractGameState gameState, int playerId) {
         return 0;

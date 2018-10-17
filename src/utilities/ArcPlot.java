@@ -21,7 +21,7 @@ public class ArcPlot extends JComponent {
     public static void main(String[] args) {
         double[] x = { 0, 0.2, 0.5, 0.3, 0.2, 0.5, 0.0, 0.8, 0.3 };
         ArcPlot ap = new ArcPlot(new Dimension(400, 400), x);
-        new JEasyFrame( ap , "Arc Plot Test");
+        new JEasyFrame( ap , "Arc Plot GVGAISimpleTest");
         ap.update( x );
     }
 

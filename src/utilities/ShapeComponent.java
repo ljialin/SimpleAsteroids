@@ -26,7 +26,7 @@ public class ShapeComponent extends JComponent {
         shapes.add(new Arc2D.Double(-100, -100, 200, 200, 60, 300, Arc2D.OPEN));
 
         ShapeComponent ap = new ShapeComponent(new Dimension(400, 400), shapes);
-        new JEasyFrame( ap , "Shapes Test");
+        new JEasyFrame( ap , "Shapes GVGAISimpleTest");
     }
 
     public ShapeComponent(Dimension d, List<Shape> shapes) {

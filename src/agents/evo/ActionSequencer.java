@@ -69,6 +69,8 @@ public class ActionSequencer implements PluginEvaluator {
         return this;
     }
 
+    static boolean exitLoopWhenGameOver = true;
+
     public ActionSequencer actVersusAgent(int[] seq, int playerId) {
         // careful, this may not be copiing the game state ...
         terminalState = initialState.copy();
@@ -80,6 +82,7 @@ public class ActionSequencer implements PluginEvaluator {
             actions[1 - playerId] = opponent.getAction(terminalState, 1-playerId);
             terminalState.next(actions);
             playoutPlotter.addScore(terminalState.getScore());
+            if (exitLoopWhenGameOver && terminalState.isTerminal()) break;
         }
         // System.out.println("Terminal score: " + terminalState.getScore());
         playoutPlotter.plotPlayout();

@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class AsteroidsTest {
 
-    // Note: these Test classes contain similar code to each other
+    // Note: these GVGAISimpleTest classes contain similar code to each other
     // but are best thought of as experimenters notebooks, where
     // by commenting in or our lines it is easy to experiment with
     // various agents
@@ -93,7 +93,7 @@ public class AsteroidsTest {
 
         // evoAlg = new SlidingMeanEDA();
 
-        DefaultMutator.totalRandomChaosMutation = true;
+        // DefaultMutator.totalRandomChaosMutation = true;
 
         Agent.useShiftBuffer = true;
 

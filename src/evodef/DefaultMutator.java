@@ -50,7 +50,7 @@ public class DefaultMutator implements Mutator {
     public double pointProb;
     static Random random = new Random();
 
-    public static boolean totalRandomChaosMutation = false;
+    public boolean totalRandomChaosMutation = false;
     public static double defaultPointProb = 1.0;
     public static boolean flipAtLeastOneValueDefault = true;
 

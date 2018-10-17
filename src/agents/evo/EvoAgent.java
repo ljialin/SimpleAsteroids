@@ -81,6 +81,7 @@ public class EvoAgent implements SimplePlayerInterface {
         return this;
     }
 
+    // default to doing nothing, but random may be better
     SimplePlayerInterface opponent = new DoNothingAgent();
 
     public EvoAgent setOpponent(SimplePlayerInterface opponent) {

@@ -150,6 +150,7 @@ public class GameRunnerTwoPlayer {
         return this;
     }
 
+    static int maxNameLen = 25;
     public LineChart plotGameScores() {
         LineChart lineChart = new LineChart();
         for (GameLog gameLog : gameLogs) {
@@ -159,8 +160,8 @@ public class GameRunnerTwoPlayer {
         lineChart.xAxis = new LineChartAxis(new double[]{0, nSteps/2, nSteps});
         lineChart.setXLabel("Game Tick");
         lineChart.setYLabel("Score");
-        String title = String.format("%s (%d) v. %s (%d)", p1.toString(), p1Wins,
-                p2.toString(), p2Wins);
+        String title = String.format("%s (%d) v. %s (%d)", shortName(p1.toString()), p1Wins,
+                shortName(p2.toString()), p2Wins);
         lineChart.setTitle(title);
         lineChart.bg = Color.gray;
         lineChart.plotBG = Color.white;
@@ -172,5 +173,10 @@ public class GameRunnerTwoPlayer {
         lineChart.autoScale();
         new JEasyFrame(lineChart, "Game Scores");
         return lineChart;
+    }
+
+    String shortName(String s) {
+        int len = Math.min(s.length(), maxNameLen);
+        return s.substring(0, len);
     }
 }

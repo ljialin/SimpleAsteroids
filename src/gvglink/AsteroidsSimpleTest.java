@@ -11,7 +11,7 @@ import utilities.StatSummary;
 
 public class AsteroidsSimpleTest {
 
-    // Note: these Test classes contain similar code to each other
+    // Note: these GVGAISimpleTest classes contain similar code to each other
     // but are best thought of as experimenters notebooks, where
     // by commenting in or our lines it is easy to experiment with
     // various agents

@@ -19,7 +19,7 @@ public class ScatterPlot {
 
     public static void main(String[] args) {
         Random random = new Random();
-        ScatterPlot scatterPlot = new ScatterPlot().setTitle("Gaussian Test");
+        ScatterPlot scatterPlot = new ScatterPlot().setTitle("Gaussian GVGAISimpleTest");
         for (int i=0; i<50; i++) {
             scatterPlot.addPoint(new DataPoint(String.format("%d",i), random.nextGaussian(), random.nextGaussian()));
         }
@@ -34,7 +34,7 @@ public class ScatterPlot {
 
         lineChart.setScatterPlot(scatterPlot);
 
-        new JEasyFrame(lineChart, "Scatter Test");
+        new JEasyFrame(lineChart, "Scatter GVGAISimpleTest");
 
 
 

@@ -441,7 +441,7 @@ public class EncodeBase64 {
 
 
   /**
-   * Test method
+   * GVGAISimpleTest method
    * @param args
    */
   public static void main (String args[]){

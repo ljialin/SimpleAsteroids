@@ -29,7 +29,7 @@ public class LineGroupTest {
         lineChart.xAxis = new LineChartAxis(new double[]{0, 5, 10, 15, 30});
         // lineChart.yAxis = new LineChartAxis(new double[]{-2, -1, 0, 1, 2});
 
-        new JEasyFrame(lineChart, "Line Group Test");
+        new JEasyFrame(lineChart, "Line Group GVGAISimpleTest");
 
 
     }

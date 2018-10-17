@@ -26,7 +26,7 @@ public class SpeedTest {
         int nRand = 0;
         StatSummary np = new StatSummary("N Planets");
 
-        for (int i=0; i<nGames; i++) {
+        for (int i = 0; i < nGames; i++) {
             SpinGameState gameState = playGame(nSteps);
             np.add(gameState.planets.size());
             ss.add(gameState.getScore());
@@ -50,6 +50,8 @@ public class SpeedTest {
 
     }
 
+    int nPlanets = 10;
+
     public static SpinGameState playGame(int nSteps) {
         ElapsedTimer t = new ElapsedTimer();
         SpinBattleParams params = new SpinBattleParams();
@@ -64,8 +66,8 @@ public class SpeedTest {
             gameState.next(null);
             if (copyTest)
                 gameState = (SpinGameState) gameState.copy();
-             launcher.makeTransits(gameState, Constants.playerOne);
-             launcher.makeTransits(gameState, Constants.playerTwo);
+            launcher.makeTransits(gameState, Constants.playerOne);
+            launcher.makeTransits(gameState, Constants.playerTwo);
 
         }
         runningTime.add(t.elapsed());

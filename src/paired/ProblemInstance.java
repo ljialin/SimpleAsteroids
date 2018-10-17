@@ -54,7 +54,7 @@ public class ProblemInstance {
         mutator.pointProb = 0.0; // 1.0; // 3 / n;
         // mutator
         DefaultMutator.flipAtLeastOneValueDefault = true;
-        DefaultMutator.totalRandomChaosMutation = false;
+        // DefaultMutator.totalRandomChaosMutation = false;
 
         for (int i = 0; i < k; i++) {
             // int[] p = SearchSpaceUtil.randomPoint(searchSpace);

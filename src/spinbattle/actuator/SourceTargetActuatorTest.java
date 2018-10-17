@@ -1,9 +1,11 @@
 package spinbattle.actuator;
 
+import agents.dummy.DoNothingAgent;
 import agents.evo.EvoAgent;
 import evodef.DefaultMutator;
 import evodef.EvoAlg;
 import ga.SimpleRMHC;
+import ggi.agents.SimpleEvoAgent;
 import ggi.core.SimplePlayerInterface;
 import logger.sample.DefaultLogger;
 import spinbattle.core.FalseModelAdapter;
@@ -23,7 +25,12 @@ public class SourceTargetActuatorTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
-        SpinBattleParams.random = new Random(19);
+        long seed = new Random().nextLong();
+        seed = -6330548296303013003L;
+        System.out.println("Setting seed to: " + seed);
+        SpinBattleParams.random = new Random(seed);
+        // SpinBattleParams.random = new Random();
+
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
         params.gravitationalFieldConstant *= 1.0;
@@ -120,7 +127,13 @@ public class SourceTargetActuatorTest {
         }
     }
 
+    static boolean useSimpleEvoAgent = true;
+
     static SimplePlayerInterface getEvoAgent() {
+
+        if (useSimpleEvoAgent) {
+            return new SimpleEvoAgent().setOpponent(new DoNothingAgent());
+        }
         //
         int nResamples = 1;
 
@@ -143,6 +156,7 @@ public class SourceTargetActuatorTest {
         boolean useShiftBuffer = true;
         evoAgent.setUseShiftBuffer(useShiftBuffer);
         evoAgent.setVisual();
+
 
         return evoAgent;
     }

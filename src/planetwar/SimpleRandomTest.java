@@ -10,7 +10,7 @@ public class SimpleRandomTest {
         GameState game = new GameState().setNPlanets(10).setRandomOwnerships().setRandomGrowthRates();
 
         PlanetWarView view = new PlanetWarView(game);
-        JEasyFrame frame = new JEasyFrame(view, "Test View");
+        JEasyFrame frame = new JEasyFrame(view, "GVGAISimpleTest View");
         KeyController controller = new KeyController();
         frame.addKeyListener(controller);
 

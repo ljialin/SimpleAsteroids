@@ -17,7 +17,7 @@ public class BarChart extends JComponent {
     public static void main(String[] args) {
         double[] x = { 0, 0.2, 0.5, -0.3, 0.2, 0.5, 0.0, 0.8, 0.3 };
         BarChart bc = new BarChart();
-        new JEasyFrame( bc , "Bar Chart Test");
+        new JEasyFrame( bc , "Bar Chart GVGAISimpleTest");
         bc.update( x );
     }
 

@@ -4,6 +4,8 @@ import core.game.StateObservation;
 import core.player.AbstractPlayer;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
+import utilities.ElapsedTimer;
+import utilities.StatSummary;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,7 +19,9 @@ import java.util.Random;
  */
 public class Agent extends AbstractPlayer {
 
-    public static int MCTS_ITERATIONS = 1000;
+    public static StatSummary ss = new StatSummary();
+
+    public static int MCTS_ITERATIONS = 20;
     public static double REWARD_DISCOUNT = 1.00;
     public int num_actions;
     public Types.ACTIONS[] actions;
@@ -42,6 +46,7 @@ public class Agent extends AbstractPlayer {
 
         //Create the player.
 
+
         mctsPlayer = getPlayer(so, elapsedTimer);
     }
 
@@ -59,6 +64,8 @@ public class Agent extends AbstractPlayer {
      */
     public Types.ACTIONS act(StateObservation stateObs, ElapsedCpuTimer elapsedTimer) {
 
+        ElapsedTimer t = new ElapsedTimer();
+
         //Set the state observation object as the new root of the tree.
         mctsPlayer.init(stateObs);
 
@@ -66,6 +73,8 @@ public class Agent extends AbstractPlayer {
         int action = mctsPlayer.run(elapsedTimer);
 
         //... and return it.
+        ss.add(t.elapsed());
+
         return actions[action];
     }
 

@@ -11,6 +11,6 @@ public class ViewTest {
         gridMouse.view = view;
 
         view.addMouseListener(gridMouse);
-        new JEasyFrame(view, "Grid Graph Test");
+        new JEasyFrame(view, "Grid Graph GVGAISimpleTest");
     }
 }

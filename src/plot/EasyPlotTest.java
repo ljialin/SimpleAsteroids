@@ -12,7 +12,7 @@ public class EasyPlotTest {
         LineChart lineChart = LineChart.easyPlot(data);
         lineChart.yAxis = new LineChartAxis(0, 1, 6);
         // lineChart.yAxis.ticks = new double[]{0, 0.1, 0.5, 1.0};
-        new JEasyFrame(lineChart, "Easy Plot Test");
+        new JEasyFrame(lineChart, "Easy Plot GVGAISimpleTest");
     }
 }
 

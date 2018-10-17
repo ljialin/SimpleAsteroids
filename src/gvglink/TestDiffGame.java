@@ -46,7 +46,7 @@ public class TestDiffGame {
         DiffGame.minscore = 0;
         StateObservationMulti stateObs = new DiffGame();
 
-        DefaultMutator.totalRandomChaosMutation = false;
+        // DefaultMutator.totalRandomChaosMutation = false;
 
         ElapsedCpuTimer timer = new ElapsedCpuTimer();
 

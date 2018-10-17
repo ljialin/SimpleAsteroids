@@ -1,5 +1,6 @@
 package ggi.agents;
 
+import agents.dummy.DoNothingAgent;
 import agents.dummy.RandomAgent;
 import evodef.*;
 import ggi.core.AbstractGameState;
@@ -9,7 +10,7 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
 
     double mutationRate = 10;
     int sequenceLength = 100;
-    int nEvals = 20;
+    int nEvals = 40;
     boolean useShiftBuffer = true;
     int[] solution;
 
@@ -28,7 +29,8 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         return this;
     }
 
-    SimplePlayerInterface opponent = new RandomAgent();
+    // SimplePlayerInterface opponent = new RandomAgent();
+    SimplePlayerInterface opponent = new DoNothingAgent();
 
     public SimpleEvoAgent setOpponent(SimplePlayerInterface opponent) {
         this.opponent = opponent;
@@ -46,15 +48,21 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         // we now need to step the model forward at random
         Mutator mutator = new DefaultMutator(searchSpace);
         ((DefaultMutator) mutator).pointProb = mutationRate;
+        ((DefaultMutator) mutator).flipAtLeastOneValue = true;
 
+        // mutator.
+
+        // double bestYet = evalSeq(gameState, solution, playerId);
         // now make the iterations
         for (int i=0; i<nEvals; i++) {
             // evaluate the current one
             int[] mut = mutator.randMut(solution);
-            // now evaluate the change in fitness
+            double curScore = evalSeq(gameState.copy(), solution, playerId);
+            double mutScore = evalSeq(gameState.copy(), mut, playerId);
+            if (mutScore >= curScore) {
+                solution = mut;
+            }
         }
-
-
 
         int[] tmp = solution;
         // nullify if not using a shift buffer
@@ -62,7 +70,16 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         return tmp;
     }
 
-    // double delta
+    double evalSeq(AbstractGameState gameState, int[] seq, int playerId) {
+        double current = gameState.getScore();
+        int[] actions = new int[2];
+        for (int action : seq) {
+            actions[playerId] = action;
+            actions[1-playerId] = opponent.getAction(gameState, 1-playerId);
+            gameState.next(actions);
+        }
+        return gameState.getScore() - current;
+    }
 
     public String toString() {
         return "SimpleEvoAgent: " + " : " + nEvals + " : " + sequenceLength;

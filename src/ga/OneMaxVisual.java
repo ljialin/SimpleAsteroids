@@ -45,7 +45,7 @@ public class OneMaxVisual {
 
     public Integer run(int nEvals) {
         view = new BitView(bestYet);
-        frame = new JEasyFrame(view, "One Max Test");
+        frame = new JEasyFrame(view, "One Max GVGAISimpleTest");
         for (int i=1; i<=nEvals; i++) {
             // randomly mutate the best yet
             int[] mut = randMut(bestYet);

@@ -30,7 +30,7 @@ public class SoundManager {
             Thread.sleep(500);
         }
 
-        new JEasyFrame(new VoronoiGrid().setRandomPoints(30), "Test");
+        new JEasyFrame(new VoronoiGrid().setRandomPoints(30), "GVGAISimpleTest");
 
     }
 

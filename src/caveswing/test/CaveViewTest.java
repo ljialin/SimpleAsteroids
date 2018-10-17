@@ -10,6 +10,6 @@ public class CaveViewTest {
         CaveSwingParams params = new CaveSwingParams();
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
-        new JEasyFrame(view, "Cave View Test");
+        new JEasyFrame(view, "Cave View GVGAISimpleTest");
     }
 }

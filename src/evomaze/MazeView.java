@@ -45,7 +45,7 @@ public class MazeView extends JComponent {
             bits[i] = random.nextInt(2);
         }
         MazeView mazeView = new MazeView(bits);
-        new JEasyFrame(mazeView, "Maze Test");
+        new JEasyFrame(mazeView, "Maze GVGAISimpleTest");
 
         MazeModel mazeModel = new MazeModel(bits);
 

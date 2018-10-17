@@ -175,7 +175,7 @@ Derandomized Evolution Strategy with Covariance Matrix Adaptation
 (CMA-ES). <I>Evolutionary Computation</I>, 11(1), pp. 1-18.
 
 <LI>[3] Hansen and Kern (2004). Evaluating the CMA Evolution
-Strategy on Multimodal Test Functions. In <I> Eighth International
+Strategy on Multimodal GVGAISimpleTest Functions. In <I> Eighth International
 Conference on Parallel Problem Solving from Nature PPSN VIII,
 Proceedings</I>, pp. 282-291, Berlin: Springer.
 </LI>
@@ -324,7 +324,7 @@ public class CMAEvolutionStrategy implements java.io.Serializable {
     		
     		/* Internal (numerical) stopping termination criteria */
 
-    		/* Test each principal axis i, whether x == x + 0.1 * sigma * rgD[i] * B[i] */
+    		/* GVGAISimpleTest each principal axis i, whether x == x + 0.1 * sigma * rgD[i] * B[i] */
     		for (int iAchse = 0; iAchse < N; ++iAchse) {
     			int iKoo;
     			int l = flgdiag ? iAchse : 0;
@@ -339,7 +339,7 @@ public class CMAEvolutionStrategy implements java.io.Serializable {
     						" in a principal axis " + iAchse + " has no effect");
     		} /* for iAchse */
 
-    		/* Test whether one component of xmean is stuck */
+    		/* GVGAISimpleTest whether one component of xmean is stuck */
     		for (int iKoo = 0; iKoo < N; ++iKoo) {
     			if (xmean[iKoo] == xmean[iKoo] + 0.2*sigma*Math.sqrt(C[iKoo][iKoo]))
     				appendMessage("NoEffectCoordinate: Mutation of size " + 
@@ -359,7 +359,7 @@ public class CMAEvolutionStrategy implements java.io.Serializable {
 
     void testAndCorrectNumerics() { // not much left here
 
-    	/* Flat Fitness, Test if function values are identical */
+    	/* Flat Fitness, GVGAISimpleTest if function values are identical */
     	if (getCountIter() > 1 || (getCountIter() == 1 && state >= 3))
     		if (fit.fitness[0].val == fit.fitness[Math.min(sp.getLambda()-1, sp.getLambda()/2+1) - 1].val) {
     			warning("flat fitness landscape, consider reformulation of fitness, step-size increased");
@@ -384,7 +384,7 @@ public class CMAEvolutionStrategy implements java.io.Serializable {
     				C[i][j] *= fac*fac;
     		}
     	}
-    } // Test...
+    } // GVGAISimpleTest...
 
     /** options that can be changed (fields can be assigned) at any time to control 
      * the running behavior

@@ -16,7 +16,7 @@ public class VoronoiGrid extends JComponent {
         // System.out.println(new VoronoiGrid().s );
 
         VoronoiGrid vg = new VoronoiGrid().setRandomPoints(20);
-        new JEasyFrame(vg, "Voronoi Test");
+        new JEasyFrame(vg, "Voronoi GVGAISimpleTest");
     }
 
     int width = 800, height = 500;

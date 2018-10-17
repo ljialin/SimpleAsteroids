@@ -14,7 +14,7 @@ public class GVGSinglePlayerAdapter implements AbstractGameState {
     // public Types.ACTIONS[] actions;
 
 
-    public GVGSinglePlayerAdapter setState(StateObservationMulti gvgState) {
+    public GVGSinglePlayerAdapter setState(StateObservation gvgState) {
         this.gvgState = gvgState;
         return this;
     }

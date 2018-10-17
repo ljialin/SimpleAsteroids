@@ -41,7 +41,7 @@ public class FalseModelTest {
         view.scrollView = true;
         view.scrollWidth = 800;
 
-        String title = "Evo Agent Visual Test";
+        String title = "Evo Agent Visual GVGAISimpleTest";
         JEasyFrame frame = new JEasyFrame(view, title);
         if (showEvolution) frame.setLocation(0, 350);
         ViewUtil.waitUntilReady(view);

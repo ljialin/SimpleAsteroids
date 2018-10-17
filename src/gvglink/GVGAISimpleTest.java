@@ -5,6 +5,7 @@ package gvglink;
  */
 
 import controllers.singlePlayer.ea.Agent;
+import controllers.singlePlayer.ea.EvoAgentWrapper;
 import core.ArcadeMachine;
 import core.competition.CompetitionParameters;
 import evodef.EvoAlg;
@@ -22,7 +23,7 @@ import java.util.Random;
  * Time: 16:29
  * This is a Java port from Tom Schaul's VGDL - https://github.com/schaul/py-vgdl
  */
-public class Test
+public class GVGAISimpleTest
 {
 
     public static void main(String[] args)
@@ -36,12 +37,16 @@ public class Test
         String doNothingController = "controllers.singlePlayer.doNothing.Agent";
         String sampleOneStepController = "controllers.singlePlayer.sampleonesteplookahead.Agent";
         String sampleMCTSController = "controllers.singlePlayer.sampleMCTS.Agent";
+        String discountMCTSController = "controllers.singlePlayer.discountOLMCTS.Agent";
         String sampleFlatMCTSController = "controllers.singlePlayer.sampleFlatMCTS.Agent";
         String sampleOLMCTSController = "controllers.singlePlayer.sampleOLMCTS.Agent";
         String sampleGAController = "controllers.singlePlayer.sampleGA.Agent";
         String sampleOLETSController = "controllers.singlePlayer.olets.Agent";
         String repeatOLETS = "controllers.singlePlayer.repeatOLETS.Agent";
         String slidingEA = "controllers.singlePlayer.ea.Agent";
+        String evoAgentWrapper = "controllers.singlePlayer.ea.EvoAgentWrapper";
+
+
 
 
 
@@ -85,7 +90,7 @@ public class Test
 //        int gameIdx = 0;  // aliens
 //        int gameIdx = 28; // dig-dug
         int gameIdx = 72; //
-        int levelIdx = 0; //level names from 0 to 4 (game_lvlN.txt).
+        int levelIdx = 3; //level names from 0 to 4 (game_lvlN.txt).
         String game = gamesPath + games[gameIdx] + ".txt";
         String level1 = gamesPath + games[gameIdx] + "_lvl" + levelIdx +".txt";
 
@@ -95,22 +100,34 @@ public class Test
         // 1. This starts a game, in a level, played by a human.
         // ArcadeMachine.playOneGame(game, level1, recordActionsFile, seed);
 
-        core.competition.CompetitionParameters.TIMER_TYPE = ElapsedCpuTimer.TimerType.WALL_TIME;
+        core.competition.CompetitionParameters.TIMER_TYPE = ElapsedCpuTimer.TimerType.CPU_TIME;
 
 
+        // CompetitionParameters.
         CompetitionParameters.LEVEL_ACTION_TIME = 10000000;  // TIME_CONSTRAINED = false;
         CompetitionParameters.LEVEL_ACTION_TIME_DISQ = 10000000;  // TIME_CONSTRAINED = false;
 
         // 2. This plays a game in a level by the controller.
 
-        ArcadeMachine.runOneGame(game, level1, visuals, slidingEA, recordActionsFile, seed, 0);
+        // ArcadeMachine.runOneGame(game, level1, visuals, sampleMCTSController, recordActionsFile, seed, 0);
+        ArcadeMachine.runOneGame(game, level1, visuals, discountMCTSController, recordActionsFile, seed, 0);
+        System.out.println();
+        System.out.println("MCTS Agent getAction timing stats");
+        System.out.println(controllers.singlePlayer.discountOLMCTS.Agent.ss);
+
+        System.out.println();
         System.out.println("\nRunning next game\n");
-        ArcadeMachine.runOneGame(game, level1, visuals, sampleMCTSController, recordActionsFile, seed, 0);
+        // ArcadeMachine.runOneGame(game, level1, visuals, slidingEA, recordActionsFile, seed, 0);
+        ArcadeMachine.runOneGame(game, level1, visuals, evoAgentWrapper, recordActionsFile, seed, 0);
 
         System.out.println(Agent.nanoTimer);
         System.out.println(Agent.milliTimer);
         System.out.println(Agent.diffTimer);
 
+
+        System.out.println();
+        System.out.println("Evo Agent getAction timing stats");
+        System.out.println(EvoAgentWrapper.ss);
 
         // ArcadeMachine.runOneGame(game, level1, visuals, sampleRandomController, recordActionsFile, seed, 0);
 

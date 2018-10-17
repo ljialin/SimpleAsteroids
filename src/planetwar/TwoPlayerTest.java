@@ -18,7 +18,7 @@ public class TwoPlayerTest {
         GameState.wrapAround = false;
 
         PlanetWarView view = new PlanetWarView(game);
-        JEasyFrame frame = new JEasyFrame(view, "Test View");
+        JEasyFrame frame = new JEasyFrame(view, "GVGAISimpleTest View");
         KeyController controller = new KeyController();
         frame.addKeyListener(controller);
 
