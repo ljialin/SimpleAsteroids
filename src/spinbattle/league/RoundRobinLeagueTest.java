@@ -26,7 +26,7 @@ public class RoundRobinLeagueTest {
     static boolean visual = true;
 
     public static void main(String[] args) {
-        int gamesPerMatch = 10;
+        int gamesPerMatch = 2;
 
         ElapsedTimer t = new ElapsedTimer();
         // set up some players
