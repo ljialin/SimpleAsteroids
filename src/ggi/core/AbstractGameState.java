@@ -21,6 +21,10 @@ public interface AbstractGameState {
 
     boolean isTerminal();
 
+    // double[] getFeatureFector();
+
+    // int[][] getScreen();
+
     // List<Object> getGameState();
 
 }
