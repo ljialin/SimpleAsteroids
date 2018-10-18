@@ -26,6 +26,8 @@ public class RoundRobinLeagueTest {
     static boolean visual = true;
 
     public static void main(String[] args) {
+        int gamesPerMatch = 10;
+
         ElapsedTimer t = new ElapsedTimer();
         // set up some players
         SpinGameStateFactory factory = new SpinGameStateFactory();
@@ -60,7 +62,6 @@ public class RoundRobinLeagueTest {
         gameRunner.setGameFactory(factory);
         league.gameRunner = gameRunner;
 
-        int gamesPerMatch = 2;
         league.playGames(gamesPerMatch);
 
         System.out.println(league);
