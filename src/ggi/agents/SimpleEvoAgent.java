@@ -2,17 +2,24 @@ package ggi.agents;
 
 import agents.dummy.DoNothingAgent;
 import agents.dummy.RandomAgent;
-import evodef.*;
 import ggi.core.AbstractGameState;
 import ggi.core.SimplePlayerInterface;
 
+import java.util.Random;
+
 public class SimpleEvoAgent implements SimplePlayerInterface {
 
-    double mutationRate = 20;
+    Random random = new Random();
+
+    // these are all the parameters that control the agend
+    boolean flipAtLeastOneValue = true;
+    double expectedMutations = 20;
     int sequenceLength = 200;
     int nEvals = 40;
     boolean useShiftBuffer = true;
     int[] solution;
+    // SimplePlayerInterface opponent = new RandomAgent();
+    SimplePlayerInterface opponent = new DoNothingAgent();
 
     public SimplePlayerInterface reset() {
         solution = null;
@@ -29,34 +36,21 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         return this;
     }
 
-    // SimplePlayerInterface opponent = new RandomAgent();
-    SimplePlayerInterface opponent = new DoNothingAgent();
-
     public SimpleEvoAgent setOpponent(SimplePlayerInterface opponent) {
         this.opponent = opponent;
         return this;
     }
 
     public int[] getActions(AbstractGameState gameState, int playerId) {
-        SearchSpace searchSpace = new RegularSearchSpace(sequenceLength, gameState.nActions());
         if (useShiftBuffer && solution != null) {
-            solution = SearchSpaceUtil.shiftLeftAndRandomAppend(solution, searchSpace);
+            solution = shiftLeftAndRandomAppend(solution, gameState.nActions());
         } else {
-            solution = SearchSpaceUtil.randomPoint(searchSpace);
+            solution = randomPoint(gameState.nActions());
         }
 
-        // we now need to step the model forward at random
-        DefaultMutator mutator = new DefaultMutator(searchSpace);
-        mutator.pointProb = mutationRate;
-        mutator.flipAtLeastOneValue = true;
-
-        // mutator.
-
-        // double bestYet = evalSeq(gameState, solution, playerId);
-        // now make the iterations
         for (int i = 0; i < nEvals; i++) {
             // evaluate the current one
-            int[] mut = mutator.randMut(solution);
+            int[] mut = mutate(solution, expectedMutations, gameState.nActions());
             double curScore = evalSeq(gameState.copy(), solution, playerId);
             double mutScore = evalSeq(gameState.copy(), mut, playerId);
             if (mutScore >= curScore) {
@@ -70,7 +64,59 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         return tmp;
     }
 
-    double evalSeq(AbstractGameState gameState, int[] seq, int playerId) {
+
+    private int[] mutate(int[] v, double expectedMutations, int nActions) {
+
+        int n = v.length;
+        int[] x = new int[n];
+        // pointwise probability of additional mutations
+        double mutProb = expectedMutations / n;
+        // choose element of vector to mutate
+        int ix = random.nextInt(n);
+        if (!flipAtLeastOneValue) {
+            // setting this to -1 means it will never match the first clause in the if statement in the loop
+            // leaving it at the randomly chosen value ensures that at least one bit (or more generally value) is always flipped
+            ix = -1;
+        }
+        // copy all the values faithfully apart from the chosen one
+        for (int i = 0; i < n; i++) {
+            if (i == ix || random.nextDouble() < mutProb) {
+                x[i] = mutateValue(v[i], nActions);
+            } else {
+                x[i] = v[i];
+            }
+        }
+        return x;
+    }
+
+    private int mutateValue(int cur, int nPossible) {
+        // the range is nPossible-1, since we
+        // selecting the current value is not allowed
+        // therefore we add 1 if the randomly chosen
+        // value is greater than or equal to the current value
+        if (nPossible <= 1) return cur;
+        int rx = random.nextInt(nPossible - 1);
+        return rx >= cur ? rx + 1 : rx;
+    }
+
+    private int[] randomPoint(int nValues) {
+        int[] p = new int[sequenceLength];
+        for (int i=0; i<p.length; i++) {
+            p[i] = random.nextInt(nValues);
+        }
+        return p;
+    }
+
+    private int[] shiftLeftAndRandomAppend(int[] v, int nActions) {
+        int[] p = new int[v.length];
+        for (int i = 0; i < p.length - 1; i++) {
+            p[i] = v[i + 1];
+        }
+        p[p.length - 1] = random.nextInt(nActions);
+        return p;
+    }
+
+    private double evalSeq(AbstractGameState gameState, int[] seq, int playerId) {
         double current = gameState.getScore();
         int[] actions = new int[2];
         for (int action : seq) {
@@ -86,12 +132,10 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
     }
 
     public String toString() {
-        return "SimpleEvoAgent: " + " : " + nEvals + " : " + sequenceLength;
+        return "SimpleEvoAgent: " + nEvals + " : " + sequenceLength;
     }
 
     public int getAction(AbstractGameState gameState, int playerId) {
         return getActions(gameState, playerId)[0];
     }
-
-
 }

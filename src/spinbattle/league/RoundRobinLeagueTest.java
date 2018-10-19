@@ -44,7 +44,10 @@ public class RoundRobinLeagueTest {
         SimplePlayerInterface p2 = f1.getAgent();
         SimplePlayerInterface p3 = new DoNothingAgent();
         SimplePlayerInterface p4 = MCTSAgentTest.getMCTSAgent(factory.newGame(), Constants.playerOne);
-        SimplePlayerInterface p5 = new SimpleEvoAgent();
+
+        SimpleEvoAgent simpleEvoAgent = new SimpleEvoAgent();
+        // simpleEvoAgent.setOpponent(new RandomAgent());
+        SimplePlayerInterface p5 = simpleEvoAgent;
 
         ArrayList<SimplePlayerInterface> players = new ArrayList<>();
         // players.add(p1);
@@ -54,7 +57,7 @@ public class RoundRobinLeagueTest {
         players.add(p5);
 
         RoundRobinLeague league = new RoundRobinLeague().setPlayers(players);
-        league.abstractVisualRunner = new VisualSpinGameRunner();
+        // league.abstractVisualRunner = new VisualSpinGameRunner();
 
         GameRunnerTwoPlayer gameRunner = new GameRunnerTwoPlayer();
         gameRunner.nSteps = maxTicks;
