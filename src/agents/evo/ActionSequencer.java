@@ -69,7 +69,7 @@ public class ActionSequencer implements PluginEvaluator {
         return this;
     }
 
-    static boolean exitLoopWhenGameOver = true;
+    static boolean exitLoopWhenGameOver = false;
 
     public ActionSequencer actVersusAgent(int[] seq, int playerId) {
         // careful, this may not be copiing the game state ...

@@ -26,7 +26,7 @@ public class RoundRobinLeagueTest {
     static boolean visual = true;
 
     public static void main(String[] args) {
-        int gamesPerMatch = 2;
+        int gamesPerMatch = 10;
 
         ElapsedTimer t = new ElapsedTimer();
         // set up some players
@@ -47,10 +47,10 @@ public class RoundRobinLeagueTest {
         SimplePlayerInterface p5 = new SimpleEvoAgent();
 
         ArrayList<SimplePlayerInterface> players = new ArrayList<>();
-        players.add(p1);
+        // players.add(p1);
         players.add(p2);
-        players.add(p3);
-        players.add(p4);
+        // players.add(p3);
+        // players.add(p4);
         players.add(p5);
 
         RoundRobinLeague league = new RoundRobinLeague().setPlayers(players);
