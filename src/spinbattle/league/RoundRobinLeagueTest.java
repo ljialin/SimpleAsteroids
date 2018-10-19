@@ -54,7 +54,7 @@ public class RoundRobinLeagueTest {
         players.add(p5);
 
         RoundRobinLeague league = new RoundRobinLeague().setPlayers(players);
-        // league.abstractVisualRunner = new VisualSpinGameRunner();
+        league.abstractVisualRunner = new VisualSpinGameRunner();
 
         GameRunnerTwoPlayer gameRunner = new GameRunnerTwoPlayer();
         gameRunner.nSteps = maxTicks;

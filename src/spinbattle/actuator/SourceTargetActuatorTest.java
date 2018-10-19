@@ -127,7 +127,7 @@ public class SourceTargetActuatorTest {
         }
     }
 
-    static boolean useSimpleEvoAgent = true;
+    static boolean useSimpleEvoAgent = false;
 
     static SimplePlayerInterface getEvoAgent() {
 
