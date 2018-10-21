@@ -15,7 +15,7 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
     boolean flipAtLeastOneValue = true;
     double expectedMutations = 20;
     int sequenceLength = 200;
-    int nEvals = 40;
+    int nEvals = 20;
     boolean useShiftBuffer = true;
     int[] solution;
     // SimplePlayerInterface opponent = new RandomAgent();
@@ -116,7 +116,20 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         return p;
     }
 
+    Double discountFactor = 0.996;
+
+
+
+
     private double evalSeq(AbstractGameState gameState, int[] seq, int playerId) {
+        if (discountFactor == null) {
+            return evalSeqNoDiscount(gameState, seq, playerId);
+        } else {
+            return evalSeqDiscounted(gameState, seq, playerId, discountFactor);
+        }
+    }
+
+    private double evalSeqNoDiscount(AbstractGameState gameState, int[] seq, int playerId) {
         double current = gameState.getScore();
         int[] actions = new int[2];
         for (int action : seq) {
@@ -125,6 +138,27 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
             gameState = gameState.next(actions);
         }
         double delta = gameState.getScore() - current;
+        if (playerId == 0)
+            return delta;
+        else
+            return -delta;
+    }
+
+    private double evalSeqDiscounted(AbstractGameState gameState, int[] seq, int playerId, double discountFactor) {
+        double currentScore = gameState.getScore();
+        double delta = 0;
+        double discount = 1;
+        int[] actions = new int[2];
+        for (int action : seq) {
+            actions[playerId] = action;
+            actions[1 - playerId] = opponent.getAction(gameState, 1 - playerId);
+            gameState = gameState.next(actions);
+            double nextScore = gameState.getScore();
+            double tickDelta = nextScore - currentScore;
+            currentScore = nextScore;
+            delta += tickDelta * discount;
+            discount *= discountFactor;
+        }
         if (playerId == 0)
             return delta;
         else
