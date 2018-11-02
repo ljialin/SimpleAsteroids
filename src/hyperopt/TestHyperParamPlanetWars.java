@@ -3,6 +3,8 @@ package hyperopt;
 import evodef.AnnotatedFitnessSpace;
 import evodef.EvoAlg;
 // import ntuple.NTupleBanditEA;
+import ga.GridSearch;
+import ga.SimpleRMHC;
 import ntbea.*;
 import planetwar.EvoAgentSearchSpacePlanetWars;
 import planetwar.GameState;
@@ -35,14 +37,14 @@ public class TestHyperParamPlanetWars {
         EvoAgentSearchSpacePlanetWars.tickBudget = 2000;
 
         EvoAlg[] evoAlgs = {
-                // new GridSearch(),
+                new GridSearch(),
                 // new CompactSlidingGA(),
                 // new SlidingMeanEDA(),
 //                new SimpleGA(),
 //                new SimpleRMHC(1),
 //                new SimpleRMHC(2),
-//                new SimpleRMHC(5),
-                ntbea,
+//                 new SimpleRMHC(10),
+                // ntbea,
         };
 
         int nChecks = 30;
