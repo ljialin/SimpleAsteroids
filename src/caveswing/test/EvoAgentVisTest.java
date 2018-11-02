@@ -20,7 +20,7 @@ public class EvoAgentVisTest {
 
     static boolean showEvolution = true;
 
-    static boolean useFalseModel = false;
+    static boolean useFalseModel = true;
 
     public static void main(String[] args) throws Exception {
         EvoAgent player = getEvoAgent();

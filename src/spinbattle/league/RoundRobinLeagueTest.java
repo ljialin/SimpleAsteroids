@@ -40,21 +40,28 @@ public class RoundRobinLeagueTest {
         f1.nEvals = 40;
 
         f1.useShiftBuffer = true;
-        SimplePlayerInterface p1 = new RandomAgent();
+        SimplePlayerInterface randomAgent = new RandomAgent();
         SimplePlayerInterface p2 = f1.getAgent();
         SimplePlayerInterface p3 = new DoNothingAgent();
         SimplePlayerInterface p4 = MCTSAgentTest.getMCTSAgent(factory.newGame(), Constants.playerOne);
 
-        SimpleEvoAgent simpleEvoAgent = new SimpleEvoAgent();
+
+        int seqLength = 100;
+        SimpleEvoAgent simpleEvoAgentDoNothingModel = new SimpleEvoAgent().setOpponent(new DoNothingAgent()).setSequenceLength(seqLength);
+        SimpleEvoAgent simpleEvoAgentRandomModel = new SimpleEvoAgent().setOpponent(new RandomAgent()).setSequenceLength(seqLength);
         // simpleEvoAgent.setOpponent(new RandomAgent());
-        SimplePlayerInterface p5 = simpleEvoAgent;
+        // SimplePlayerInterface p5 = simpleEvoAgent;
 
         ArrayList<SimplePlayerInterface> players = new ArrayList<>();
         // players.add(p1);
-        players.add(p2);
+        // players.add(p2);
         // players.add(p3);
         // players.add(p4);
-        players.add(p5);
+        // players.add(p5);
+
+        players.add(simpleEvoAgentDoNothingModel);
+        players.add(simpleEvoAgentRandomModel);
+        players.add(randomAgent);
 
         RoundRobinLeague league = new RoundRobinLeague().setPlayers(players);
         // league.abstractVisualRunner = new VisualSpinGameRunner();

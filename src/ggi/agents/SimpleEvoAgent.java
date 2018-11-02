@@ -166,7 +166,7 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
     }
 
     public String toString() {
-        return "SimpleEvoAgent: " + nEvals + " : " + sequenceLength;
+        return "SEA: " + nEvals + " : " + sequenceLength + " : " + opponent;
     }
 
     public int getAction(AbstractGameState gameState, int playerId) {

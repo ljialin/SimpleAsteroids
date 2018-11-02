@@ -4,6 +4,7 @@ import agents.dummy.DoNothingAgent;
 import agents.evo.EvoAgent;
 import evodef.DefaultMutator;
 import evodef.EvoAlg;
+import ga.SimpleGA;
 import ga.SimpleRMHC;
 import ggi.agents.SimpleEvoAgent;
 import ggi.core.SimplePlayerInterface;
@@ -149,6 +150,7 @@ public class SourceTargetActuatorTest {
         EvoAlg evoAlg = simpleRMHC;
 
         // evoAlg = new SlidingMeanEDA();
+        evoAlg = new SimpleGA();
 
         int nEvals = 20;
         int seqLength = 100;
@@ -156,7 +158,6 @@ public class SourceTargetActuatorTest {
         boolean useShiftBuffer = true;
         evoAgent.setUseShiftBuffer(useShiftBuffer);
         evoAgent.setVisual();
-
 
         return evoAgent;
     }
