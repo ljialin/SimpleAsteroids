@@ -4,6 +4,7 @@ import spinbattle.core.SpinGameState;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 import spinbattle.players.HeuristicLauncher;
+import spinbattle.players.TunablePriorityLauncher;
 import spinbattle.ui.SourceTargetMouseController;
 import spinbattle.view.SpinBattleView;
 import utilities.JEasyFrame;
@@ -14,12 +15,13 @@ public class HumanInterfaceTest {
         SpinBattleParams params = new SpinBattleParams();
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
-        HeuristicLauncher launcher = new HeuristicLauncher();
+        // HeuristicLauncher launcher = new HeuristicLauncher();
+        TunablePriorityLauncher launcher = new TunablePriorityLauncher();
         JEasyFrame frame = new JEasyFrame(view, "Spin Battle Game");
         SourceTargetMouseController mouseController = new SourceTargetMouseController();
         mouseController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseController);
-        int launchPeriod = 100;
+        int launchPeriod = 400;
         for (int i=0; i<5000; i++) {
             gameState.next(null);
             // launcher.makeTransits(gameState, Constants.playerOne);

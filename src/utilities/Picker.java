@@ -5,6 +5,7 @@ public class Picker<T> {
 
     public static void main(String[] args) {
         Picker<Integer> picker = new Picker<Integer>(Picker.MAX_FIRST);
+        System.out.println(picker.getBest());
         picker.add(2.0, 1);
         picker.add(6.0, 2);
         picker.add(1.1, 3);

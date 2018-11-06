@@ -27,7 +27,7 @@ public class SourceTargetActuatorTest {
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
         long seed = new Random().nextLong();
-        seed = -6330548296303013003L;
+        // seed = -6330548296303013003L;
         System.out.println("Setting seed to: " + seed);
         SpinBattleParams.random = new Random(seed);
         // SpinBattleParams.random = new Random();
@@ -38,8 +38,8 @@ public class SourceTargetActuatorTest {
 
         params.maxTicks = 5000;
         params.width = 500;
-        // params.height = 600;
-        params.height = 700;
+        params.height = 600;
+        // params.height = 700;
 
         // SpinBattleParams altParams = params.copy();
 
@@ -71,8 +71,8 @@ public class SourceTargetActuatorTest {
         // but now we also need to establish a player
 
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
-        HeuristicLauncher launcher = new HeuristicLauncher();
-        // TunablePriorityLauncher launcher = new TunablePriorityLauncher();
+        // HeuristicLauncher launcher = new HeuristicLauncher();
+        TunablePriorityLauncher launcher = new TunablePriorityLauncher();
         String title = "Spin Battle Game" ;
         JEasyFrame frame = new JEasyFrame(view, title + ": Waiting for Graphics");
         frame.setLocation(new Point(800, 0));

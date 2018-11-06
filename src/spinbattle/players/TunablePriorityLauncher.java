@@ -1,5 +1,6 @@
 package spinbattle.players;
 
+import agents.dummy.RandomAgent;
 import ggi.core.AbstractGameState;
 import ggi.core.SimplePlayerInterface;
 import spinbattle.core.Planet;
@@ -7,6 +8,8 @@ import spinbattle.core.SpinGameState;
 import spinbattle.core.Transporter;
 import spinbattle.params.Constants;
 import utilities.Picker;
+
+import java.util.Random;
 
 public class TunablePriorityLauncher implements SimplePlayerInterface {
     @Override
@@ -25,14 +28,20 @@ public class TunablePriorityLauncher implements SimplePlayerInterface {
 
     // try to find the best source / target pair to launch an attack
 
-    // distance factor controls preference for pairs which
-    double distanceFactor = 1;
+    // distance factor controls preference for pairs which are closer
+    double distanceFactor = 0.1;
 
     // attack factor prefers attacking an enemy as opposed to a neutral
     double attackFactor = 1;
 
     //
-    double neutralCost = 1;
+    double neutralCost = -0.1;
+
+    // make the random value this ratio of the score
+    double randomFactor = 0.1;
+
+    static Random random = new Random();
+
 
     //
     double supportSelfCost = 1;
@@ -41,14 +50,37 @@ public class TunablePriorityLauncher implements SimplePlayerInterface {
     double gainFactor = 1;
 
     private Double sourceTargetScore(Planet source, Planet target, int playerId) {
+
+        // don't own it so cannot do anything
         if (source.ownedBy != playerId) return null;
 
+        // don't send planets to the current planet
+        if (source.index == target.index) return  null;
+
+        // more extreme: never support one of our own planets
+        if (target.ownedBy == playerId) return null;
+
+        double desirability = 0;
+
         double distance = source.position.dist(target.position);
+
         if (target.ownedBy == Constants.neutralPlayer) {
+            desirability -= neutralCost * target.shipCount;
+        } else {
+            if (target.ownedBy != playerId && target.shipCount * inflationFactor < source.shipCount) {
+                desirability += target.shipCount;
+            }
 
         }
+        // can we gain ownership?
 
-        return distance * distanceFactor;
+
+        // prefer planets which are close
+        desirability -= distance * distanceFactor;
+
+        desirability *= (1 + randomFactor * random.nextDouble());
+
+        return desirability;
     }
 
     static class AttackPair {
@@ -61,43 +93,49 @@ public class TunablePriorityLauncher implements SimplePlayerInterface {
     }
 
     public TunablePriorityLauncher makeTransits(SpinGameState gameState, int playerId) {
-
         // for each planet, check whether the transit is available
-
-
-        for (Planet p : gameState.planets) {
-            if (p.ownedBy == playerId && p.transitReady()) {
+        for (Planet source : gameState.planets) {
+            if (source.ownedBy == playerId && source.transitReady()) {
 
                 // if above two conditions are met then find the
                 // best source target pair
-                Picker<AttackPair> picker = new Picker<AttackPair>();
+                Picker<AttackPair> picker = new Picker<AttackPair>(Picker.MAX_FIRST);
 
-                Transporter transit = p.getTransporter();
-                Planet destination = getTarget(gameState, p, playerId);
-                if (destination != null) {
-                    transit.setPayload(p, destination.shipCount * inflationFactor);
-                    transit.launch(p.position, destination.position, playerId, gameState);
-                    transit.setTarget(destination.index);
+                // iterate over the possible target planets
+
+                for (Planet target : gameState.planets) {
+
+                    Double pairScore = sourceTargetScore(source, target, playerId);
+                    if (pairScore != null) {
+                        picker.add(pairScore, new AttackPair(source, target));
+                    }
+                }
+
+                // now get the pair with the best Heuristic score
+                // checkling that there is one available
+
+                AttackPair ap = picker.getBest();
+
+                if (ap != null) {
+                    Transporter transit = ap.source.getTransporter();
+                    transit.setTarget(ap.target.index);
+                    transit.setPayload(ap.source, ap.target.shipCount * inflationFactor);
+                    transit.launch(ap.source.position, ap.target.position, playerId, gameState);
                     gameState.notifyLaunch(transit);
+                    if (verbose) {
+                        System.out.println(transit);
+                        System.out.println("Target ship count : paylod: " + ap.target.shipCount + " : " + transit.payload);
+                        System.out.println("Desirability: " + picker.getBestScore());
+                        System.out.println();
+                    }
                 }
             }
         }
         return this;
     }
 
-    int nAttempts = 100;
-    double inflationFactor = 1.2;
-    Planet getTarget(SpinGameState gameState, Planet source, int playerId) {
-        for (int i=0; i<nAttempts; i++) {
-            // pick a planet at Random
-            int ix = gameState.params.getRandom().nextInt(gameState.planets.size());
-            Planet p = gameState.planets.get(ix);
-            if (p.ownedBy != playerId) {
-                if (p.shipCount * inflationFactor < source.shipCount) {
-                    return p;
-                }
-            }
-        }
-        return null;
-    }
+    boolean verbose = false;
+
+    double inflationFactor = 2.0;
+
 }
