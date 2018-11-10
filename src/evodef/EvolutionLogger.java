@@ -124,5 +124,11 @@ public class EvolutionLogger {
         for (int i=0; i<x.length; i++) y[i] = x[i];
         return y;
     }
+
+    public ArrayList<Double> getFitnessArray() {
+        ArrayList<Double> fitnessArray = new ArrayList<>();
+        for (Double x : fa) fitnessArray.add(x);
+        return fitnessArray;
+    }
 }
 
