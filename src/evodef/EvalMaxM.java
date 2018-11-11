@@ -14,6 +14,8 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
     double noise = 0.0;
     static Random random = new Random();
 
+    public boolean strict = false;
+
     EvolutionLogger logger;
     int nOptimal;
 
@@ -60,6 +62,7 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
 //        if (trap && isOptimal) {
 //            tot = 0;
 //        }
+        // if (strict && )
         tot += noise * random.nextGaussian();
 
         logger.log(tot, a, isOptimal);
@@ -75,7 +78,11 @@ public class EvalMaxM implements NoisySolutionEvaluator, SearchSpace, FitnessSpa
             if (a[i] < 0 || a[i] >= m) {
                 throw new RuntimeException("Value out of bounds: " + a[i]);
             }
-            tot += a[i];
+            if (strict) {
+                if (a[i] == m-1) tot += a[i];
+            } else {
+                tot += a[i];
+            }
         }
         boolean isOptimal = isOptimal(a);
         if (trap && isOptimal) {

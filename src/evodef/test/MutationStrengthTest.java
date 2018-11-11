@@ -14,11 +14,11 @@ public class MutationStrengthTest {
 
     static int nDims = 20;
     static int mValues = 10;
-    static int nEvals = 100;
+    static int nEvals = 200;
 
     public static void main(String[] args) {
         double[] ma = new double[]{0, 1, 2, 3, 4, 5, 10, 20};
-        int nRuns = 30;
+        int nRuns = 100;
         for (double x : ma) {
             runTrials(x, nRuns);
         }
@@ -29,14 +29,16 @@ public class MutationStrengthTest {
         double pointProb = x; //  / nDims;
         LineChart lineChart = new LineChart();
         for (int i=0; i<n; i++) {
-            SolutionEvaluator eval = new EvalMaxM(nDims, mValues);
+            EvalMaxM eval = new EvalMaxM(nDims, mValues);
+            eval.strict = false;
             DefaultMutator mutator = new DefaultMutator(eval.searchSpace());
             mutator.flipAtLeastOneValue = true;
             mutator.pointProb = pointProb;
-            // mutator.totalRandomChaosMutation = true;
+            mutator.totalRandomChaosMutation = false;
             EvoAlg evoAlg = new SimpleRMHC().setMutator(mutator);
             evoAlg.runTrial(eval, nEvals);
-            LinePlot linePlot = new LinePlot().setData(evoAlg.getLogger().getFitnessArray());
+
+            LinePlot linePlot = new LinePlot().setData(maxFitnessArray(evoAlg.getLogger().getFitnessArray()));
 
             linePlot.setColor(LinePlot.randColor());
             lineChart.addLine(linePlot);
@@ -57,6 +59,16 @@ public class MutationStrengthTest {
         new JEasyFrame(lineChart, "Convergence runs");
         System.out.println(ss);
         System.out.println();
+    }
+
+    static ArrayList<Double> maxFitnessArray(ArrayList<Double> fa) {
+        ArrayList<Double> mfa = new ArrayList<>();
+        StatSummary ss = new StatSummary();
+        for (double x : fa) {
+            ss.add(x);
+            mfa.add(ss.max());
+        }
+        return mfa;
     }
 
 }
