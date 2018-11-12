@@ -4,13 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/CartPoleRepeated.py" line="9" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ffa772f8-7b5b-4b14-914a-e61f974fc9d1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/CartPoleRepeated.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GymMCTS.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gymplay.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gymplay.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ffa772f8-7b5b-4b14-914a-e61f974fc9d1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
