@@ -27,8 +27,8 @@ import static distance.util.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 50, imageHeight = 16;
-    static int filterWidth = 3, filterHeight = 16;
+    static int imageWidth = 60, imageHeight = 16;
+    static int filterWidth = 5, filterHeight = 5;
     static int stride = 1;
 
     // set true to use tile distribution from training set
@@ -36,6 +36,8 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
     // set true to use rectangular mutations from training set
     static boolean useConvMutator = true;
+
+    static boolean useBorder = true;
 
 
     static String inputFile1 = "data/mario/levels/mario-1-1.txt";
@@ -147,7 +149,10 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         return b;
     }
 
+
     public static int[][] border(int[][] a) {
+
+        if (!useBorder) return a;
         int[][] b = new int[a.length + 2][a[0].length + 2];
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[0].length; j++) {
@@ -194,6 +199,8 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         for (int x=0; x<sample.length - imageWidth; x+=gap) {
             int[] sub = flatten(subSample(sample, x, 0, imageWidth, imageHeight));
+            // int[] sub = flatten(subSample(sample, x, 0, imageWidth, sample[0].length));
+
             double fitness = solutionEvaluator.evaluate(sub);
             String label = String.format("Sample Slice Fitness: %.6f", fitness);
             LevelView.showMaze(sub, imageWidth, imageHeight, label, tileColors);
