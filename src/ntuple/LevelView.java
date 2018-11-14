@@ -21,7 +21,7 @@ public class LevelView extends JPanel {
     }
 
     int width, height;
-    int cellSize = 8;
+    int cellSize = 16;
     int[][] tiles;
 
     static Color[] colors = {

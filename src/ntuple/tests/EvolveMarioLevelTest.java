@@ -31,9 +31,13 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static int filterWidth = 4, filterHeight = 4;
     static int stride = 1;
 
+    // set true to use tile distribution from training set
     static boolean useInitialSeed = true;
 
+    // set true to use rectangular mutations from training set
     static boolean useConvMutator = true;
+
+
     static String inputFile1 = "data/mario/levels/mario-1-1.txt";
     static String inputFile2 = "data/mario/levels/mario-2-1.txt";
     // static String inputFile3 = "data/mario/levels/mario-3-1.txt";
@@ -94,6 +98,8 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
 
         double fitnessFull = trainingEvaluator.evaluate(flatten(sample));
+
+
         String labelFull = String.format("Full Width Training Sample: %.6f", fitnessFull);
 
         LevelView.showMaze(flatten(sample), sample.length, sample[0].length, labelFull, tileColors);
