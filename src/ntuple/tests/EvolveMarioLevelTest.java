@@ -28,7 +28,7 @@ import static distance.util.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 50, imageHeight = 16;
-    static int filterWidth = 4, filterHeight = 4;
+    static int filterWidth = 3, filterHeight = 16;
     static int stride = 1;
 
     // set true to use tile distribution from training set

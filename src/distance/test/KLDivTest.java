@@ -24,8 +24,8 @@ public class KLDivTest {
 
     static String inputFile3 = "data/mario/levels/mario-5-1.txt";
 
-    static int filterWidth = 5;
-    static int filterHeight = 10;
+    static int filterWidth = 4;
+    static int filterHeight = 4;
     static int stride = 1;
 
 
@@ -58,6 +58,9 @@ public class KLDivTest {
 
         System.out.println();
         System.out.println("Sanity check, should be zero: KLDiv Sym 1-1: " + KLDiv.klDiv(c1.sampleDis, c1.sampleDis));
+
+        printDis(c1);
+
     }
 
     public static void printDis(ConvNTuple convNTuple) {
