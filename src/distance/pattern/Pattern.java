@@ -3,7 +3,7 @@ package distance.pattern;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Pattern implements Comparable<Pattern> {
+public class Pattern { // implements Comparable<Pattern> {
 
     public static void main(String[] args) {
         int[] x = {0, 1, 2, 3, 3};
