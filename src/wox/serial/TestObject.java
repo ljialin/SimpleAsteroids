@@ -36,11 +36,13 @@ public class TestObject  {
     // check we can handle Class variables
     // Class myClass = TestObject.class;
 
+    static boolean makeCircular = false;
+
     public TestObject(int x) {
         this.x = x;
-        objects = new Object[]{ this };
+        if (makeCircular) objects = new Object[]{ this };
         alist = new ArrayList();
-        alist.add(this);
+        if (makeCircular) alist.add(this);
         alist.add("Hello");
         alist.add(new Integer(23));
         // alist.set(12, "Twelve");
