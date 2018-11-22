@@ -116,9 +116,8 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         return p;
     }
 
-    Double discountFactor = 0.996;
 
-
+    Double discountFactor = null;
 
 
     private double evalSeq(AbstractGameState gameState, int[] seq, int playerId) {
