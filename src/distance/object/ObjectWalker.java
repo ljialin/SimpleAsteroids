@@ -236,7 +236,7 @@ public class ObjectWalker {
         return values;
     }
 
-    
+
     public boolean isPrimitiveArray(Class c) {
         for (int i = 0; i < primitiveArrays.length; i++) {
             if (c.equals(primitiveArrays[i])) {
