@@ -38,9 +38,12 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static boolean useConvMutator = true;
 
 
-    static String inputFile1 = "data/mario/levels/mario-1-1.txt";
+    // static String inputFile1 = "data/mario/levels/mario-1-1.txt";
+    static String inputFile1 = "data/zelda/multiroom/example.txt";
     static String inputFile2 = "data/mario/levels/mario-2-1.txt";
     // static String inputFile3 = "data/mario/levels/mario-3-1.txt";
+
+
 
     public static void main(String[] args) throws Exception {
 
