@@ -39,7 +39,7 @@ public class FalseModelExperiment {
         LineChart chart = new LineChart();
         chart.plotBG = Color.getHSBColor(0.77f, 1.0f, 1.0f);
         chart.addLineGroup(lineGroup);
-        chart.title = "Score versus false Hooke factor (SWEDA)";
+        chart.title = "Score versus false Hooke factor (RMHC)";
         chart.setYLabel("Average Score").setXLabel("False factor value");
         chart.yAxis = new LineChartAxis(new double[]{-5000, 0, 5000, 10000, 15000});
         chart.xAxis = new LineChartAxis(0, falseParam.length-1, falseParam.length).setScaleTicks(falseParam);
