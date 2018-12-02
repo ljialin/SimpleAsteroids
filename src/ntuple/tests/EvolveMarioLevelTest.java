@@ -27,9 +27,9 @@ import static distance.util.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 50, imageHeight = 16;
+    static int imageWidth = 28, imageHeight = 16;
     static int filterWidth = 4, filterHeight = 4;
-    static int stride = 2;
+    static int stride = 1;
 
     // set true to use tile distribution from training set
     static boolean useInitialSeed = true;
@@ -38,8 +38,8 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static boolean useConvMutator = true;
 
 
-    // static String inputFile1 = "data/mario/levels/mario-1-1.txt";
-    static String inputFile1 = "data/zelda/multiroom/example.txt";
+    static String inputFile1 = "data/mario/levels/mario-1-1.txt";
+    // static String inputFile1 = "data/zelda/multiroom/example.txt";
     static String inputFile2 = "data/mario/levels/mario-2-1.txt";
     // static String inputFile3 = "data/mario/levels/mario-3-1.txt";
 
