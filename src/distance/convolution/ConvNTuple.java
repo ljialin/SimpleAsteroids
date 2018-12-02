@@ -175,11 +175,12 @@ public class ConvNTuple {
 
     boolean storeIndexArrays = true;
 
-    public void addPoint(int[][] p, double value) {
+    public ConvNTuple addPoint(int[][] p, double value) {
         addPoint(flatten(p), value);
+        return this;
     }
 
-    public void addPoint(int[] p, double value) {
+    public ConvNTuple addPoint(int[] p, double value) {
         // iterate over all the indices
         // calculate an address for each one
 
@@ -195,7 +196,7 @@ public class ConvNTuple {
 //        if (storeIndexArrays) {
 //            addIndexArrays(p);
 //        }
-        // return this;
+        return this;
     }
 
     public void addIndexArrays(int[] p) {
