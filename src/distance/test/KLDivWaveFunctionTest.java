@@ -104,33 +104,9 @@ public class KLDivWaveFunctionTest {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (n++ > fileLimit) break;
+            if (++n >= fileLimit) break;
         }
         return  levels;
-
-    }
-    public static void showLevels(int fileLimit) throws Exception {
-        // String inputFile = "data/mario/example.txt";
-
-        String inputDirectory = "data/mario/wfc2levels/";
-
-        // need to iterate over all the files in a directory
-
-        File file = new File(inputDirectory);
-        String[] fileList = file.list();
-
-        int n = 0;
-        for (String inputFile : fileList) {
-            try {
-                System.out.println("Reading: " + inputFile);
-                int[][] level = readLevel(new Scanner(new FileInputStream(inputDirectory + inputFile)));
-                LevelView levelView = new LevelView(flip(level)).setColorMap(tileColors).setCellSize(10);
-                new JEasyFrame(levelView, inputFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if (n++ > fileLimit) break;
-        }
 
     }
 
