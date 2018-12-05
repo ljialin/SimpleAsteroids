@@ -20,7 +20,12 @@ import java.util.Random;
 public class EvoImageTest extends JComponent {
 
     static String filepath = "data/logos/QMLogoBinary.png";
-    int scale = 4;
+    // delay per frame in ms
+    int cycleDelay = 2;
+    int scale = 2;
+    int flipsPerCycle = 20;
+    int initialDelay = 10000;
+
 
     public static void main(String[] args) throws Exception {
 
@@ -30,7 +35,8 @@ public class EvoImageTest extends JComponent {
         eit.computeDistribution();
 
         int nSteps = 10000;
-        nSteps = 0;
+        // set to zero to just show initial image
+        // nSteps = 0;
         eit.setRandomImage();
         eit.evolve(nSteps);
     }
@@ -38,6 +44,7 @@ public class EvoImageTest extends JComponent {
     public void randomWalkAway(int nSteps) throws Exception {
         JEasyFrame frame = new JEasyFrame(this, "Random test");
         ElapsedTimer elapsedTimer = new ElapsedTimer();
+        Thread.sleep(initialDelay);
         int n = 0;
         for (int i = 0; i < nSteps; i++) {
             for (int j = 0; j < flipsPerCycle; j++) {
@@ -45,17 +52,16 @@ public class EvoImageTest extends JComponent {
                 n++;
             }
             repaint();
-            Thread.sleep(1);
+            Thread.sleep(cycleDelay);
             frame.setTitle("Random walk away: " + n + " : " + nErrs);
         }
         System.out.println(elapsedTimer);
     }
 
-    int flipsPerCycle = 20;
-
     public void evolve(int nSteps) throws Exception {
         JEasyFrame frame = new JEasyFrame(this, "Random test");
         ElapsedTimer elapsedTimer = new ElapsedTimer();
+        Thread.sleep(initialDelay);
         int n = 0;
 
         for (int i = 0; i < nSteps; i++) {
@@ -65,7 +71,7 @@ public class EvoImageTest extends JComponent {
             }
             frame.setTitle("Evolving: " + n + " : " + nErrs);
             repaint();
-            Thread.sleep(1);
+            Thread.sleep(cycleDelay);
         }
         System.out.println(elapsedTimer);
     }

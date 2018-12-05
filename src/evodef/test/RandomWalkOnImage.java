@@ -9,7 +9,8 @@ public class RandomWalkOnImage {
         eit.setImage(filepath);
         eit.computeDistribution();
         int nSteps = 10000;
-        nSteps = 0;
+        // set to zero to just show initial image
+        // nSteps = 0;
         // eit.setRandomImage();
         eit.randomWalkAway(nSteps);
     }

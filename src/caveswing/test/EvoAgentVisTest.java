@@ -26,7 +26,7 @@ public class EvoAgentVisTest {
         EvoAgent player = getEvoAgent();
 
         CaveSwingParams params = CoolTestParams.getParams();
-        params.nAnchors *=2;
+        // params.nAnchors *=2;
 
         CaveSwingParams falseParams = params.copy();
         falseParams.hooke *= 0.2;
@@ -76,7 +76,7 @@ public class EvoAgentVisTest {
         simpleRMHC.setMutator(mutator);
         EvoAlg evoAlg = simpleRMHC;
         // evoAlg = new SlidingMeanEDA();
-        evoAlg = new SimpleGA();
+        // evoAlg = new SimpleGA();
         int nEvals = 20;
         int seqLength = 100;
         EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
