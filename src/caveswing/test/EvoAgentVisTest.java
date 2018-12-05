@@ -28,6 +28,15 @@ public class EvoAgentVisTest {
         CaveSwingParams params = CoolTestParams.getParams();
         // params.nAnchors *=2;
 
+        params.maxTicks = 500;
+        params.gravity.y = 0.5;
+        params.hooke = 0.01;
+        params.gravity.x = -0.00;
+        params.width = 1500;
+        params.height *= 1.5;
+
+
+
         CaveSwingParams falseParams = params.copy();
         falseParams.hooke *= 0.2;
 
@@ -41,6 +50,7 @@ public class EvoAgentVisTest {
         if (showEvolution) frame.setLocation(0, 350);
         ViewUtil.waitUntilReady(view);
 
+        gameState.setSoundEnabled(true);
         while (!gameState.isTerminal()) {
             // get the action from the player, update the game state, and show a view
 

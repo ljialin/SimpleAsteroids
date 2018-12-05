@@ -43,13 +43,17 @@ public class SoundManager {
     public Clip bangLarge = getClip("bangLarge");
     public Clip bangMedium = getClip("bangMedium");
     public Clip  bangSmall = getClip("bangSmall");
-    Clip beat1 = getClip("beat1");
-    Clip beat2 = getClip("beat2");
-    Clip extraShip = getClip("extraShip");
-    Clip fire = getClip("fire");
+    public Clip beat1 = getClip("beat1");
+    public Clip beat2 = getClip("beat2");
+    public Clip extraShip = getClip("extraShip");
+    public Clip fire = getClip("fire");
     public Clip saucerBig = getClip("saucerBig");
     public Clip saucerSmall = getClip("saucerSmall");
-    Clip thrust = getClip("thrust");
+    public Clip thrust = getClip("thrust");
+
+    public Clip success = getClip("LaserShoot116b");
+
+    public Clip attach = getClip("Jump16b");
 
     public SoundManager() {
     }
@@ -70,6 +74,10 @@ public class SoundManager {
         clip.setFramePosition(0); // rewind to the beginning
         clip.start();     // Start playing
 
+    }
+
+    public void stop(Clip clip) {
+        clip.stop();
     }
 
     private Clip[] loadBullets(int n) {

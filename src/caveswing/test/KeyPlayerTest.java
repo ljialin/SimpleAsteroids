@@ -19,16 +19,17 @@ public class KeyPlayerTest {
         params.width = 1500;
         params.height *= 1.5;
 
-
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
+        gameState.setSoundEnabled(true);
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
         view.scrollView = true;
         view.scrollWidth = 800;
 
+        // gameState.playRelease();
+
         String title = "Key Player GVGAISimpleTest";
 
         JEasyFrame frame = new JEasyFrame(view, title);
-
 
         KeyController player = new KeyController();
         frame.addKeyListener(player);

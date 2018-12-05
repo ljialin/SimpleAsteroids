@@ -2,11 +2,14 @@ package caveswing.core;
 
 import ggi.core.AbstractGameState;
 import math.Vector2d;
+import sound.SoundManager;
 
 public class CaveGameState implements AbstractGameState {
 
     public Map map;
     public CaveSwingParams params;
+
+    SoundManager soundManager = null;
 
     Actuator actuator;
 
@@ -23,12 +26,49 @@ public class CaveGameState implements AbstractGameState {
         return this;
     }
 
+    public CaveGameState setSoundEnabled(boolean setSound) {
+        if (setSound) {
+            soundManager = new SoundManager();
+        } else {
+            soundManager = null;
+        }
+        return this;
+    }
+
     public CaveGameState setup() {
         map = new Map().setup(params);
         avatar = new MovableObject();
         avatar.s = new Vector2d(params.width/10, params.height/2);
         avatar.v = new Vector2d();
         return this;
+    }
+
+    public void playRelease() {
+        if (soundManager != null) {
+            // System.out.println("Playing Bang Large");
+            soundManager.stop(soundManager.attach);
+        }
+    }
+
+    public void playAttach() {
+        if (soundManager != null) {
+            // System.out.println("Playing Bang Large");
+            soundManager.playSafe(soundManager.attach);
+        }
+    }
+
+    public void playCrash() {
+        if (soundManager != null) {
+            // System.out.println("Playing Bang Large");
+            soundManager.play(soundManager.bangLarge);
+        }
+    }
+
+    public void playWin() {
+        if (soundManager != null) {
+            // System.out.println("Playing Bang Large");
+            soundManager.play(soundManager.success);
+        }
     }
 
     @Override
@@ -74,9 +114,12 @@ public class CaveGameState implements AbstractGameState {
                 Vector2d tension = currentAnchor.getForce(avatar.s, params.hooke);
                 // tension.mul()
                 resultantForce.add(tension);
+                playAttach();
             }
         } else if (action == Constants.actionRelease) {
+
             currentAnchor = null;
+            playRelease();
         }
 
         avatar.update(resultantForce, params.lossFactor);
@@ -100,8 +143,14 @@ public class CaveGameState implements AbstractGameState {
         // add in success bonus
         double score = avatar.s.x * params.pointPerX + avatar.s.y * params.pointPerY
                 - nTicks * params.costPerTick;
-        if (avatar.s.x >= params.width) score += params.successBonus;
-        if (avatar.s.y < 0 || avatar.s.y >= params.height) score-= params.failurePenalty;
+        if (avatar.s.x >= params.width) {
+            score += params.successBonus;
+            playWin();
+        }
+        if (avatar.s.y < 0 || avatar.s.y >= params.height) {
+            score-= params.failurePenalty;
+            playCrash();
+        }
         return score;
     }
 

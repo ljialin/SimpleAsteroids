@@ -168,11 +168,14 @@ public class CaveView extends JComponent {
 
     static int zoneWidth = 200;
     static int goalRatio = 10;
+    static int borderRatio = 20;
 
     private void paintZones(Graphics2D g) {
 
         g.setColor(deadZone);
         g.fillRect(-zoneWidth, 0, zoneWidth, getHeight());
+        g.fillRect(0, 0, gameState.params.width, getHeight()/borderRatio);
+        g.fillRect(0, getHeight() - getHeight() / borderRatio, gameState.params.width, getHeight()/borderRatio);
 
         g.setColor(finishZone);
         g.fillRect(gameState.params.width, 0, zoneWidth, getHeight());
