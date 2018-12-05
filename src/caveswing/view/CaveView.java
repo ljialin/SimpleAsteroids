@@ -17,6 +17,9 @@ public class CaveView extends JComponent {
     CaveSwingParams params;
     CaveGameState gameState;
     Color bg = Color.black;
+    Color deadZone = Color.getHSBColor(0.9f, 1, 1);
+    Color goalZone = Color.getHSBColor(0.3f, 1, 1);
+    Color finishZone = Color.getHSBColor(0.7f, 1, 1);
     int nStars = 200;
     int rad = 10;
     Color anchorColor = Color.getHSBColor(0.17f, 1, 1);
@@ -75,6 +78,8 @@ public class CaveView extends JComponent {
             g.translate(xScroll, 0);
         }
         paintStars(g);
+        paintZones(g);
+
 
         paintAnchors(g);
         paintAvatar(g);
@@ -159,6 +164,23 @@ public class CaveView extends JComponent {
 
     private void paintStars(Graphics2D g) {
         for (Star star : stars) star.draw(g);
+    }
+
+    static int zoneWidth = 200;
+    static int goalRatio = 10;
+
+    private void paintZones(Graphics2D g) {
+
+        g.setColor(deadZone);
+        g.fillRect(-zoneWidth, 0, zoneWidth, getHeight());
+
+        g.setColor(finishZone);
+        g.fillRect(gameState.params.width, 0, zoneWidth, getHeight());
+
+        g.setColor(goalZone);
+        g.fillRect(gameState.params.width, 0, zoneWidth/goalRatio, getHeight()/ goalRatio);
+
+
     }
 
     class Star {
