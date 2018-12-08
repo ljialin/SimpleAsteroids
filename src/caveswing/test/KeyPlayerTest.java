@@ -20,7 +20,7 @@ public class KeyPlayerTest {
         params.height *= 1.5;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
-        gameState.setSoundEnabled(true);
+        // gameState.setSoundEnabled(true);
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
         view.scrollView = true;
         view.scrollWidth = 800;

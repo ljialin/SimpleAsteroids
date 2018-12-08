@@ -13,6 +13,9 @@ public class HumanInterfaceTest {
 
     public static void main(String[] args) throws Exception {
         SpinBattleParams params = new SpinBattleParams();
+        params.width = 1000;
+        params.height = 700;
+        params.gravitationalFieldConstant *= 0.0;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
         // HeuristicLauncher launcher = new HeuristicLauncher();

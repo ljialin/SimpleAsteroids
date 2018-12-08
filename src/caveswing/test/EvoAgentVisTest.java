@@ -50,7 +50,7 @@ public class EvoAgentVisTest {
         if (showEvolution) frame.setLocation(0, 350);
         ViewUtil.waitUntilReady(view);
 
-        gameState.setSoundEnabled(true);
+        // gameState.setSoundEnabled(true);
         while (!gameState.isTerminal()) {
             // get the action from the player, update the game state, and show a view
 

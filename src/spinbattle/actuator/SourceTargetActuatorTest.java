@@ -37,7 +37,7 @@ public class SourceTargetActuatorTest {
         params.gravitationalFieldConstant *= 1.0;
 
         params.maxTicks = 5000;
-        params.width = 400;
+        params.width = 500;
         params.height = 700;
         // params.height = 700;
 
@@ -150,7 +150,7 @@ public class SourceTargetActuatorTest {
         EvoAlg evoAlg = simpleRMHC;
 
         // evoAlg = new SlidingMeanEDA();
-        evoAlg = new SimpleGA();
+        // evoAlg = new SimpleGA();
 
         int nEvals = 20;
         int seqLength = 100;
