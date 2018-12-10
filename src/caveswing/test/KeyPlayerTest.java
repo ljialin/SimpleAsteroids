@@ -17,9 +17,9 @@ public class KeyPlayerTest {
         params.hooke = 0.01;
         params.gravity.x = -0.00;
         params.width = 2500;
-        params.height *= 2.5;
-        params.nAnchors /= 2;
-        params.meanAnchorHeight *= 5;
+        params.height *= 1.5;
+        // params.nAnchors /= 2;
+        params.meanAnchorHeight *= 2;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);

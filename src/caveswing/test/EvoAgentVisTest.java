@@ -37,7 +37,7 @@ public class EvoAgentVisTest {
 
         params.width = 2500;
         params.height *= 1.5;
-        params.nAnchors /= 2;
+        // params.nAnchors /= 2;
         params.meanAnchorHeight *= 2;
 
 
