@@ -1,11 +1,9 @@
 package hyperopt;
 
-import caveswing.design.CaveSwingGameSearchSpace;
 import caveswing.design.EvoAgentSearchSpaceCaveSwing;
 import evodef.AnnotatedFitnessSpace;
 import ntbea.NTupleBanditEA;
 import ntbea.NTupleSystem;
-import ntbeaplot.Plotter;
 import utilities.ElapsedTimer;
 
 // import ntuple.NTupleBanditEA;

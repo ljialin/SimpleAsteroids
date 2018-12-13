@@ -8,8 +8,6 @@ import utilities.StatSummary;
 
 public class SpeedTest {
 
-
-
     public SimplePlayerInterface[] players;
     public AbstractGameFactory gameFactory;
     public boolean copyTest = false;

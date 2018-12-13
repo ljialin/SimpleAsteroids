@@ -3,23 +3,22 @@ package caveswing.test;
 import caveswing.controllers.KeyController;
 import caveswing.core.CaveGameState;
 import caveswing.core.CaveSwingParams;
+import caveswing.design.CaveSwingFitnessSpace;
 import caveswing.util.ViewUtil;
 import caveswing.view.CaveView;
+import evodef.SearchSpaceUtil;
 import utilities.JEasyFrame;
 
 public class KeyPlayerTest {
     public static void main(String[] args) throws Exception {
+        boolean favourite = true;
+        favourite = false;
+
         CaveSwingParams params = new CaveSwingParams();
 
-        // todo: adjust parameter setting and see how they affect game play for you
-        params.maxTicks = 500;
-        params.gravity.y = 0.5;
-        params.hooke = 0.01;
-        params.gravity.x = -0.00;
-        params.width = 2500;
-        params.height *= 1.5;
-        // params.nAnchors /= 2;
-        params.meanAnchorHeight *= 2;
+        params = getFavouriteParams();
+
+        // params = getSearchSpaceParams();
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);
@@ -37,17 +36,56 @@ public class KeyPlayerTest {
         frame.addKeyListener(player);
         ViewUtil.waitUntilReady(view);
 
-        while (!gameState.isTerminal()) {
-            // get the action from the player, update the game state, and show a view
-            int action = player.getAction(gameState.copy(), 0);
-            // recall the action array is needed for generality for n-player games
-            int[] actions = new int[]{action};
-            gameState.next(actions);
-            CaveGameState viewState = (CaveGameState) gameState.copy();
-            view.setGameState(viewState).repaint();
-            frame.setTitle(title + " : " + gameState.nTicks + " : " +gameState.isTerminal());
-            Thread.sleep(40);
+        // play forever
+        while (true) {
+            while (!gameState.isTerminal()) {
+                // get the action from the player, update the game state, and show a view
+                int action = player.getAction(gameState.copy(), 0);
+                // recall the action array is needed for generality for n-player games
+                int[] actions = new int[]{action};
+                gameState.next(actions);
+                CaveGameState viewState = (CaveGameState) gameState.copy();
+                view.setGameState(viewState).repaint();
+                frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal());
+                Thread.sleep(40);
+            }
+            System.out.println("Final score: " + gameState.getScore());
+            Thread.sleep(2000);
+            gameState = new CaveGameState().setParams(params).setup();
         }
-        System.out.println("Final score: " + gameState.getScore());
     }
+
+
+    static CaveSwingParams getFavouriteParams() {
+        CaveSwingParams params = new CaveSwingParams();
+
+        // todo: adjust parameter setting and see how they affect game play for you
+        params.maxTicks = 500;
+        params.gravity.y = 0.5;
+        params.hooke = 0.01;
+        params.gravity.x = -0.00;
+        params.width = 2500;
+        params.height *= 1.5;
+        // params.nAnchors /= 2;
+        params.meanAnchorHeight *= 2;
+
+        return params;
+    }
+
+    static CaveSwingParams getSearchSpaceParams() {
+        CaveSwingFitnessSpace fitnessSpace = new CaveSwingFitnessSpace();
+        int[] point = SearchSpaceUtil.randomPoint(fitnessSpace);
+
+        // or choose a specific one:
+        point = new int[]{0, 6, 4, 2, 3, 4, 2, 3};
+
+        // this one is better
+        // point = new int[]{1, 5, 2, 0, 4, 1, 3, 2};
+
+        // point = new int[]{0, 6, 3, 3, 3, 3, 3, 3};
+
+        return fitnessSpace.getParams(point);
+
+    }
+
 }

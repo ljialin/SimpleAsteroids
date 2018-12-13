@@ -4,12 +4,14 @@ import agents.evo.EvoAgent;
 import caveswing.controllers.KeyController;
 import caveswing.core.CaveGameState;
 import caveswing.core.CaveSwingParams;
+import caveswing.design.CaveSwingFitnessSpace;
 import caveswing.util.ViewUtil;
 import caveswing.view.CaveView;
 import evodef.DefaultMutator;
 import evodef.EvoAlg;
 import ga.SimpleGA;
 import ga.SimpleRMHC;
+import ggi.agents.EvoAgentFactory;
 import ggi.core.SimplePlayerInterface;
 import ntuple.SlidingMeanEDA;
 import utilities.JEasyFrame;
@@ -20,10 +22,13 @@ public class EvoAgentVisTest {
 
     static boolean showEvolution = true;
 
-    static boolean useFalseModel = false;
+    static boolean useFalseModel = true;
 
     public static void main(String[] args) throws Exception {
-        EvoAgent player = getEvoAgent();
+        int nEvals = 10;
+        int seqLength = 100;
+        boolean useShiftBuffer = false;
+        EvoAgent player = getEvoAgentFromFactory(nEvals, seqLength, useShiftBuffer);
 
         CaveSwingParams params = CoolTestParams.getParams();
         // params.nAnchors *=2;
@@ -40,6 +45,11 @@ public class EvoAgentVisTest {
         // params.nAnchors /= 2;
         params.meanAnchorHeight *= 2;
 
+
+        // plug in here for evolved points or other selected points in the search space
+
+        int[] point = {0, 6, 3, 3, 3, 3, 3, 3};
+        params = new CaveSwingFitnessSpace().getParams(point);
 
         CaveSwingParams falseParams = params.copy();
         falseParams.hooke *= 0.2;
@@ -73,9 +83,26 @@ public class EvoAgentVisTest {
             if (useFalseModel) viewState.setParams(falseParams);
             view.playouts = player.evoAlg.getLogger().solutions;
             view.setGameState(viewState).repaint();
-            frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal());
+            frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal() + " : " + (int) gameState.getScore());
             Thread.sleep(50);
         }
+        System.out.println(gameState.getScore());
+    }
+
+    public static EvoAgent getEvoAgentFromFactory(int nEvals, int seqLength, boolean useShiftBuffer) {
+
+        EvoAgentFactory factory = new EvoAgentFactory();
+        factory.nEvals = nEvals;
+        factory.seqLength = seqLength;
+        factory.useShiftBuffer = useShiftBuffer;
+
+        EvoAgent evoAgent = factory.getAgent();
+        evoAgent.setDimension(new Dimension(800, 300));
+        // set shift buffer below
+        evoAgent.setUseShiftBuffer(true);
+        if (showEvolution)
+            evoAgent.setVisual();
+        return evoAgent;
     }
 
     public static EvoAgent getEvoAgent() {

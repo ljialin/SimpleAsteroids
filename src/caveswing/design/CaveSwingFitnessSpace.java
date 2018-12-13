@@ -1,10 +1,12 @@
 package caveswing.design;
 
 import agents.dummy.RandomAgent;
+import agents.evo.EvoAgent;
 import caveswing.core.CaveGameFactory;
 import caveswing.core.CaveSwingParams;
 import evodef.*;
-import ggi.core.GameRunnerTwoPlayer;
+import ggi.agents.EvoAgentFactory;
+import ggi.core.SimplePlayerInterface;
 import ggi.tests.SpeedTest;
 import math.Vector2d;
 import ntuple.params.DoubleParam;
@@ -13,22 +15,24 @@ import ntuple.params.Param;
 import ntuple.params.Report;
 import utilities.ElapsedTimer;
 
-public class CaveSwingGameSearchSpace implements AnnotatedFitnessSpace {
+public class CaveSwingFitnessSpace implements AnnotatedFitnessSpace {
 
     public static void main(String[] args) {
         ElapsedTimer timer = new ElapsedTimer();
-        CaveSwingGameSearchSpace searchSpace = new CaveSwingGameSearchSpace();
-        searchSpace.verbose = true;
-        int[] point = SearchSpaceUtil.randomPoint(searchSpace);
+        CaveSwingFitnessSpace fitnessSpace = new CaveSwingFitnessSpace();
+        fitnessSpace.verbose = true;
+        int[] point = SearchSpaceUtil.randomPoint(fitnessSpace);
 
         // or choose a specific one:
 
-        point = new int[]{1, 2, 0, 0, 0, 0};
+        // point = new int[]{1, 5, 2, 0, 4, 0, 1, 1};
 
-        System.out.println(Report.report(searchSpace, point));
+        point = new int[]{1, 5, 2, 0, 4, 1, 3, 2};
+
+        System.out.println(Report.report(fitnessSpace, point));
         System.out.println();
-        System.out.println("Size: " + SearchSpaceUtil.size(searchSpace));
-        System.out.println("Value: " + searchSpace.evaluate(point));
+        System.out.println("Size: " + SearchSpaceUtil.size(fitnessSpace));
+        System.out.println("Value: " + fitnessSpace.evaluate(point));
         System.out.println(timer);
     }
 
@@ -42,19 +46,23 @@ public class CaveSwingGameSearchSpace implements AnnotatedFitnessSpace {
                 new DoubleParam().setArray(lossFactor).setName("Loss factor"),
                 new DoubleParam().setArray(anchorHeight).setName("Anchor height"),
                 new IntegerParam().setArray(nAnchors).setName("Number of Anchors"),
+                new IntegerParam().setArray(height).setName("Height in pixels"),
+                new IntegerParam().setArray(width).setName("Width in pixels"),
         };
     }
 
     double[] xGravity = {-0.02, 0.0, 0.02};
-    double[] yGravity = {-0.02, -0.01, 0, 0.01, 0.02};
+    double[] yGravity = {-0.2, -0.1, 0, 0.1, 0.2, 0.5, 1.0};
 
     double[] hooke = {0.0, 0.005, 0.01, 0.02, 0.03};
     double[] lossFactor = {0.99, 0.999, 1.0, 1.01};
-    double[] anchorHeight = {0.2, 0.5, 0.8};
-    int[] nAnchors = {5, 10, 15};
+    double[] anchorHeight = {0.1, 0.2, 0.3, 0.4, 0.5};
+    int[] nAnchors = {5, 10, 15, 20, 25};
+    int[] height = {100, 200, 300, 400};
+    int[] width = {600, 900, 1500, 2500};
 
     int[] nValues = new int[]{xGravity.length, yGravity.length,
-            hooke.length, lossFactor.length, anchorHeight.length, nAnchors.length};
+            hooke.length, lossFactor.length, anchorHeight.length, nAnchors.length, height.length, width.length};
     int nDims = nValues.length;
 
     static int xGravityIndex = 0;
@@ -63,13 +71,15 @@ public class CaveSwingGameSearchSpace implements AnnotatedFitnessSpace {
     static int lossFactorIndex = 3;
     static int anchorHeightIndex = 4;
     static int nAnchorsIndex = 5;
+    static int heightIndex = 6;
+    static int widthIndex = 7;
 
-    int nGames = 1000;
-    int maxSteps = 1000;
+    int nGames = 1;
+    int maxSteps = 500;
 
     public EvolutionLogger logger;
 
-    public CaveSwingGameSearchSpace() {
+    public CaveSwingFitnessSpace() {
         this.logger = new EvolutionLogger();
     }
 
@@ -92,13 +102,9 @@ public class CaveSwingGameSearchSpace implements AnnotatedFitnessSpace {
         logger.reset();
     }
 
-    @Override
-    public double evaluate(int[] x) {
-
+    public CaveSwingParams getParams(int[] x) {
         // bundle extract the selected params from the solution vector
         // and inject in to the game design params
-
-        GameRunnerTwoPlayer gameRunner = new GameRunnerTwoPlayer();
 
         // set up the params
         CaveSwingParams params = new CaveSwingParams();
@@ -110,25 +116,69 @@ public class CaveSwingGameSearchSpace implements AnnotatedFitnessSpace {
 
         params.hooke = hooke[x[hookeIndex]];
         params.lossFactor = lossFactor[x[lossFactorIndex]];
-        params.meanAnchorHeight = params.height * anchorHeight[x[anchorHeightIndex]];
         params.nAnchors = nAnchors[x[nAnchorsIndex]];
+        params.height = height[x[heightIndex]];
+        params.width = width[x[widthIndex]];
 
+        // set this after the height has been set
+        params.meanAnchorHeight = params.height * anchorHeight[x[anchorHeightIndex]];
+
+        params.maxTicks = maxSteps;
+        return params;
+    }
+
+    @Override
+    public double evaluate(int[] x) {
+
+        CaveSwingParams params = getParams(x);
         // using a Game Factory enables the tester to start with a fresh copy of the
         // game each time
         CaveGameFactory gameFactory = new CaveGameFactory().setParams(params);
         SpeedTest speedTest = new SpeedTest().setGameFactory(gameFactory);
-        speedTest.setPlayer(new RandomAgent());
 
-        speedTest.playGames(nGames, maxSteps);
 
-        if (verbose) {
-            System.out.println(speedTest.gameScores);
-        }
+//        SimplePlayerInterface randPlayer = new RandomAgent();
+//        speedTest.setPlayer(randPlayer);
+//        double dumbScore = speedTest.playGames(nGames, maxSteps).gameScores.mean();
 
-        double value = speedTest.gameScores.mean();
-        // return this for now, and see what we get
+        EvoAgentFactory evoAgentFactory = new EvoAgentFactory();
+        evoAgentFactory.seqLength = 100;
+        EvoAgent evoGood = evoAgentFactory.getAgent();
+
+        // set to visual just for testing
+        // evoGood.setVisual();
+        speedTest = new SpeedTest().setGameFactory(gameFactory);
+        speedTest.setPlayer(evoGood);
+        double smartScore = speedTest.playGames(nGames, maxSteps).gameScores.mean();
+
+
+        // try a different dumb score
+
+        evoAgentFactory.useShiftBuffer = false;
+        evoAgentFactory.seqLength = 20;
+        EvoAgent evoMediocre = evoAgentFactory.getAgent();
+
+        speedTest = new SpeedTest().setGameFactory(gameFactory);
+        speedTest.setPlayer(evoMediocre);
+        double dumbScore = speedTest.playGames(nGames, maxSteps).gameScores.mean();
+
+        System.out.println((int) dumbScore + "\t " + (int) smartScore);
+
+        double value = smartScore - dumbScore;
         logger.log(value, x, false);
+
         return value;
+
+//        speedTest.playGames(nGames, maxSteps);
+//
+//        if (verbose) {
+//            System.out.println(speedTest.gameScores);
+//        }
+//
+//        double value = speedTest.gameScores.mean();
+//        // return this for now, and see what we get
+//        logger.log(value, x, false);
+//        return value;
     }
 
     @Override

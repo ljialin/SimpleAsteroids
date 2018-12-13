@@ -1,7 +1,6 @@
 package hyperopt;
 
-import caveswing.design.CaveSwingGameSearchSpace;
-import caveswing.solutions.CaveSwingGameSkillSpace;
+import caveswing.design.CaveSwingFitnessSpace;
 import evodef.AnnotatedFitnessSpace;
 // import ntuple.NTupleBanditEA;
 import ntbea.NTupleBanditEA;
@@ -13,6 +12,7 @@ public class TuneCaveSwingParams {
         int nEvals = 200;
         System.out.println("Optimization budget: " + nEvals);
         NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(5000);
+
         ntbea.logBestYet = true;
         NTupleSystem model = new NTupleSystem();
         // set up a non-standard tuple pattern
@@ -23,7 +23,7 @@ public class TuneCaveSwingParams {
         ntbea.setModel(model);
 
         int nChecks = 50;
-        int nTrials = 10;
+        int nTrials = 1;
 
         ElapsedTimer timer = new ElapsedTimer();
 
@@ -39,7 +39,7 @@ public class TuneCaveSwingParams {
         // set to zero for fastest performance, set to 5 or 10 to learn
         // more about the convergence of the algorithm
         runner.plotChecks = 0;
-        AnnotatedFitnessSpace caveSwingSpace = new CaveSwingGameSearchSpace();
+        AnnotatedFitnessSpace caveSwingSpace = new CaveSwingFitnessSpace();
         // uncomment to run the skilful one
         // caveSwingSpace = new CaveSwingGameSkillSpace();
         System.out.println("Testing: " + ntbea);

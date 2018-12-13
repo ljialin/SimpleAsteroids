@@ -7,13 +7,12 @@ import ga.SimpleRMHC;
 
 public class EvoAgentFactory {
 
-    public double mutationRate = 2;
+    public double mutationRate = 10;
     public boolean totalRandomMutation = false;
     public boolean useShiftBuffer = true;
 
     public int nEvals = 20;
     public int seqLength = 200;
-
 
     public EvoAgent getAgent() {
         //
