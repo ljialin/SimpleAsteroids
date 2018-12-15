@@ -22,7 +22,7 @@ public class EvoAgentVisTest {
 
     static boolean showEvolution = true;
 
-    static boolean useFalseModel = true;
+    static boolean useFalseModel = false;
 
     public static void main(String[] args) throws Exception {
         int nEvals = 10;

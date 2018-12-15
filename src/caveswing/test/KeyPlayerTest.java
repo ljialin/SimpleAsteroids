@@ -18,7 +18,7 @@ public class KeyPlayerTest {
 
         params = getFavouriteParams();
 
-        // params = getSearchSpaceParams();
+        params = getSearchSpaceParams();
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);
@@ -49,7 +49,7 @@ public class KeyPlayerTest {
                 frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal());
                 Thread.sleep(40);
             }
-            System.out.println("Final score: " + gameState.getScore());
+            System.out.println("Final score: " + (int) gameState.getScore());
             Thread.sleep(2000);
             gameState = new CaveGameState().setParams(params).setup();
         }
