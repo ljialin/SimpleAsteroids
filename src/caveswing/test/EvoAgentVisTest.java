@@ -25,7 +25,7 @@ public class EvoAgentVisTest {
     static boolean useFalseModel = false;
 
     public static void main(String[] args) throws Exception {
-        int nEvals = 10;
+        int nEvals = 20;
         int seqLength = 100;
         boolean useShiftBuffer = false;
         EvoAgent player = getEvoAgentFromFactory(nEvals, seqLength, useShiftBuffer);
@@ -49,7 +49,7 @@ public class EvoAgentVisTest {
         // plug in here for evolved points or other selected points in the search space
 
         int[] point = {0, 6, 3, 3, 3, 3, 3, 3};
-        params = new CaveSwingFitnessSpace().getParams(point);
+        // params = new CaveSwingFitnessSpace().getParams(point);
 
         CaveSwingParams falseParams = params.copy();
         falseParams.hooke *= 0.2;
