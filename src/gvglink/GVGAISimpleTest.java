@@ -88,8 +88,8 @@ public class GVGAISimpleTest
 
         //Game and level to play
 //        int gameIdx = 0;  // aliens
-//        int gameIdx = 28; // dig-dug
-        int gameIdx = 72; //
+        int gameIdx = 26; // dig-dug
+//        int gameIdx = 72; //
         int levelIdx = 3; //level names from 0 to 4 (game_lvlN.txt).
         String game = gamesPath + games[gameIdx] + ".txt";
         String level1 = gamesPath + games[gameIdx] + "_lvl" + levelIdx +".txt";
@@ -101,6 +101,9 @@ public class GVGAISimpleTest
         // ArcadeMachine.playOneGame(game, level1, recordActionsFile, seed);
 
         core.competition.CompetitionParameters.TIMER_TYPE = ElapsedCpuTimer.TimerType.CPU_TIME;
+        // CompetitionParameters.LEVEL_ACTION_TIME_DISQ = 1000000;
+        CompetitionParameters.ACTION_TIME_DISQ = 1000000;
+        CompetitionParameters.ACTION_TIME *= 10;
 
 
         // CompetitionParameters.
@@ -110,24 +113,42 @@ public class GVGAISimpleTest
         // 2. This plays a game in a level by the controller.
 
         // ArcadeMachine.runOneGame(game, level1, visuals, sampleMCTSController, recordActionsFile, seed, 0);
-        ArcadeMachine.runOneGame(game, level1, visuals, discountMCTSController, recordActionsFile, seed, 0);
-        System.out.println();
-        System.out.println("MCTS Agent getAction timing stats");
-        System.out.println(controllers.singlePlayer.discountOLMCTS.Agent.ss);
 
-        System.out.println();
-        System.out.println("\nRunning next game\n");
-        // ArcadeMachine.runOneGame(game, level1, visuals, slidingEA, recordActionsFile, seed, 0);
-        ArcadeMachine.runOneGame(game, level1, visuals, evoAgentWrapper, recordActionsFile, seed, 0);
+        boolean testEvo = true;
+        boolean testMCTS = true;
 
-        System.out.println(Agent.nanoTimer);
-        System.out.println(Agent.milliTimer);
-        System.out.println(Agent.diffTimer);
+        // testEvo = false;
+        // testMCTS = false;
+
+        if (testEvo) {
+            System.out.println();
+            System.out.println("\nRunning next game\n");
+            // ArcadeMachine.runOneGame(game, level1, visuals, slidingEA, recordActionsFile, seed, 0);
+            System.out.println("Running: " + evoAgentWrapper);
+
+            ArcadeMachine.runOneGame(game, level1, visuals, evoAgentWrapper, recordActionsFile, seed, 0);
+
+            System.out.println(Agent.nanoTimer);
+            System.out.println(Agent.milliTimer);
+            System.out.println(Agent.diffTimer);
+
+            System.out.println();
+            System.out.println("Evo Agent getAction timing stats");
+            System.out.println(EvoAgentWrapper.ss);
+
+        }
+        // System.exit(0);
 
 
-        System.out.println();
-        System.out.println("Evo Agent getAction timing stats");
-        System.out.println(EvoAgentWrapper.ss);
+        if (testMCTS) {
+
+            System.out.println("Running: " + discountMCTSController);
+            ArcadeMachine.runOneGame(game, level1, visuals, discountMCTSController, recordActionsFile, seed, 0);
+            System.out.println();
+            System.out.println("MCTS Agent getAction timing stats");
+            System.out.println(controllers.singlePlayer.discountOLMCTS.Agent.ss);
+
+        }
 
         // ArcadeMachine.runOneGame(game, level1, visuals, sampleRandomController, recordActionsFile, seed, 0);
 

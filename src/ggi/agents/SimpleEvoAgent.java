@@ -12,11 +12,11 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
     Random random = new Random();
 
     // these are all the parameters that control the agend
-    boolean flipAtLeastOneValue = true;
-    double expectedMutations = 20;
-    int sequenceLength = 200;
-    int nEvals = 20;
-    boolean useShiftBuffer = true;
+    public boolean flipAtLeastOneValue = true;
+    public double expectedMutations = 20;
+    public int sequenceLength = 200;
+    public int nEvals = 20;
+    public boolean useShiftBuffer = true;
     int[] solution;
     // SimplePlayerInterface opponent = new RandomAgent();
     SimplePlayerInterface opponent = new DoNothingAgent();
@@ -45,6 +45,7 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         if (useShiftBuffer && solution != null) {
             solution = shiftLeftAndRandomAppend(solution, gameState.nActions());
         } else {
+            System.out.println("New random solution with nActions = " + gameState.nActions());
             solution = randomPoint(gameState.nActions());
         }
 

@@ -12,9 +12,12 @@ import evodef.EvoAlg;
 import ga.SimpleGA;
 import ga.SimpleRMHC;
 import ggi.agents.EvoAgentFactory;
+import ggi.agents.SimpleEvoAgent;
 import ggi.core.SimplePlayerInterface;
 import ntuple.SlidingMeanEDA;
+import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
+import utilities.StatSummary;
 
 import java.awt.*;
 
@@ -29,6 +32,8 @@ public class EvoAgentVisTest {
         int seqLength = 100;
         boolean useShiftBuffer = false;
         EvoAgent player = getEvoAgentFromFactory(nEvals, seqLength, useShiftBuffer);
+
+        // player = new SimpleEvoAgent();
 
         CaveSwingParams params = CoolTestParams.getParams();
         // params.nAnchors *=2;
@@ -64,6 +69,7 @@ public class EvoAgentVisTest {
         if (showEvolution) frame.setLocation(0, 350);
         ViewUtil.waitUntilReady(view);
 
+        StatSummary actionTimes = new StatSummary("Decision time stats");
         // gameState.setSoundEnabled(true);
         while (!gameState.isTerminal()) {
             // get the action from the player, update the game state, and show a view
@@ -72,21 +78,26 @@ public class EvoAgentVisTest {
             CaveGameState falseState = (CaveGameState) gameState.copy();
             falseState.setParams(falseParams);
 
+            ElapsedTimer t = new ElapsedTimer();
             int action = useFalseModel ?
                     player.getAction(falseState, 0) :
                     player.getAction(gameState.copy(), 0);
             // recall the action array is needed for generality for n-player games
+            actionTimes.add(t.elapsed());
+
             int[] actions = new int[]{action};
             gameState.next(actions);
 
             CaveGameState viewState = ((CaveGameState) gameState.copy());
             if (useFalseModel) viewState.setParams(falseParams);
+
             view.playouts = player.evoAlg.getLogger().solutions;
             view.setGameState(viewState).repaint();
             frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal() + " : " + (int) gameState.getScore());
             Thread.sleep(50);
         }
-        System.out.println(gameState.getScore());
+        System.out.println(actionTimes);
+        System.out.println((int) gameState.getScore());
     }
 
     public static EvoAgent getEvoAgentFromFactory(int nEvals, int seqLength, boolean useShiftBuffer) {
