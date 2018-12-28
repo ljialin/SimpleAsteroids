@@ -16,7 +16,7 @@ public class GameSpeedTest {
     public static void main(String[] args) {
         ElapsedTimer timer = new ElapsedTimer();
 
-        boolean visible = true;
+        boolean visible = false;
         int nTicks = 1000;
         int startLevel = 1;
         int nLives = 3;

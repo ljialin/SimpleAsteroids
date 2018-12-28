@@ -7,6 +7,7 @@ import core.player.AbstractPlayer;
 import evodef.EvoAlg;
 import evodef.DefaultMutator;
 import ga.SimpleRMHC;
+import ggi.agents.SimpleEvoAgent;
 import ontology.Types;
 import tools.ElapsedCpuTimer;
 import utilities.ElapsedTimer;
@@ -57,14 +58,14 @@ public class AsteroidsTest {
 
         AbstractPlayer player;
 
-        controllers.singlePlayer.sampleOLMCTS.Agent olmcts =
-                new controllers.singlePlayer.sampleOLMCTS.Agent(stateObs, timer);
+//        controllers.singlePlayer.sampleOLMCTS.Agent olmcts =
+//                new controllers.singlePlayer.sampleOLMCTS.Agent(stateObs, timer);
 
         controllers.singlePlayer.discountOLMCTS.Agent discountOlmcts =
                 new controllers.singlePlayer.discountOLMCTS.Agent(stateObs, timer);
 
-        controllers.singlePlayer.nestedMC.Agent nestedMC =
-                new controllers.singlePlayer.nestedMC.Agent(stateObs, timer);
+//        controllers.singlePlayer.nestedMC.Agent nestedMC =
+//                new controllers.singlePlayer.nestedMC.Agent(stateObs, timer);
 
 
         int depth = 100;
@@ -81,6 +82,8 @@ public class AsteroidsTest {
         // player = olmcts;
 
         player = discountOlmcts;
+
+        // player = new SimpleEvoAgent();
 
         int nResamples = 1;
         EvoAlg evoAlg = new SimpleRMHC(nResamples);
@@ -131,6 +134,7 @@ public class AsteroidsTest {
 
         }
 
+        System.out.println("Testing: " + player);
         for (int i=0; i<nSteps && !stateObs.isGameOver(); i++) {
             timer = new ElapsedCpuTimer();
             timer.setMaxTimeMillis(thinkingTime);
