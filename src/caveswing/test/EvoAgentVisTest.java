@@ -27,6 +27,8 @@ public class EvoAgentVisTest {
 
     static boolean useFalseModel = false;
 
+    static int frameDelay = 500;
+
     public static void main(String[] args) throws Exception {
         int nEvals = 20;
         int seqLength = 100;
@@ -94,7 +96,7 @@ public class EvoAgentVisTest {
             view.playouts = player.evoAlg.getLogger().solutions;
             view.setGameState(viewState).repaint();
             frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal() + " : " + (int) gameState.getScore());
-            Thread.sleep(50);
+            Thread.sleep(frameDelay);
         }
         System.out.println(actionTimes);
         System.out.println((int) gameState.getScore());
