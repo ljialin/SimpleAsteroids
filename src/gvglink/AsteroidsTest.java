@@ -39,9 +39,7 @@ public class AsteroidsTest {
         }
 
         System.out.println(ss);
-
         // System.out.println(Agent.useShiftBuffer);
-
     }
 
     public static double runOnce()  throws Exception {
