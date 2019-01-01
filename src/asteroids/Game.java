@@ -5,6 +5,7 @@ import evodef.DefaultMutator;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
 import agents.evo.EvoAgent;
+import ntuple.SlidingMeanEDA;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
 
@@ -103,6 +104,8 @@ public class Game {
         simpleRMHC.setMutator(mutator);
 
         EvoAlg evoAlg = simpleRMHC;
+
+        new SlidingMeanEDA();
 
         // evoAlg = new SlidingMeanEDA();
 
