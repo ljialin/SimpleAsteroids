@@ -83,6 +83,12 @@ public class KeyPlayerTest {
 
         // point = new int[]{0, 6, 3, 3, 3, 3, 3, 3};
 
+        // point = new int[]{1, 2, 2, 1, 4, 0, 0, 3};
+        // point = new int[]{2, 1, 4, 1, 2, 0, 0, 3};
+
+
+
+
         return fitnessSpace.getParams(point);
 
     }
