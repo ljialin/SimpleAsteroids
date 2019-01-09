@@ -18,7 +18,7 @@ public class KeyPlayerTest {
 
         params = getFavouriteParams();
 
-        // params = getSearchSpaceParams();
+        params = getSearchSpaceParams();
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);
@@ -76,7 +76,9 @@ public class KeyPlayerTest {
         int[] point = SearchSpaceUtil.randomPoint(fitnessSpace);
 
         // or choose a specific one:
-        point = new int[]{0, 6, 4, 2, 3, 4, 2, 3};
+        // point = new int[]{0, 6, 4, 2, 3, 4, 2, 3};
+        point = new int[]{0, 4, 4, 0, 4, 0, 0, 3};
+
 
         // this one is better
         // point = new int[]{1, 5, 2, 0, 4, 1, 3, 2};

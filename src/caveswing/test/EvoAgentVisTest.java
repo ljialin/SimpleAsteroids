@@ -58,6 +58,8 @@ public class EvoAgentVisTest {
         int[] point = {0, 6, 3, 3, 3, 3, 3, 3};
         // params = new CaveSwingFitnessSpace().getParams(point);
 
+        point = new int[]{0, 4, 4, 0, 4, 0, 0, 3};
+
         CaveSwingParams falseParams = params.copy();
         falseParams.hooke *= 0.2;
 
