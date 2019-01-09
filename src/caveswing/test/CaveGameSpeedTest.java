@@ -12,7 +12,7 @@ public class CaveGameSpeedTest {
 //        params.gravity.x = 10.5;
         SpeedTest speedTest = new SpeedTest().setGameFactory(
                 new CaveGameFactory().setParams(params));
-        speedTest.copyTest = true;
+        speedTest.copyTest = false;
         speedTest.setPlayer(new RandomAgent());
         int nGames = 10000;
         int maxSteps = 1000;
