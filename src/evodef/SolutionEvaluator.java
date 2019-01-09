@@ -7,20 +7,22 @@ package evodef;
  *
  *
  */
+
 public interface SolutionEvaluator {
     // call reset before running
     public void reset();
     double evaluate(int[] solution);
 
-    // has the algorithm found the optimal solution?
-    boolean optimalFound();
     SearchSpace searchSpace();
     int nEvals();
 
     EvolutionLogger logger();
 
+
     // boolean epsilonGood(double epsilon);
 
+    // has the algorithm found the optimal solution?
+    boolean optimalFound();
     // return null if unknown
     public Double optimalIfKnown();
 

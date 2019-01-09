@@ -7,6 +7,7 @@ package evodef;
  *  but each dimension may have a different cardinality (i.e. a different number of possible values)
  *
  */
+
 public interface SearchSpace {
     // number of dimensions
     int nDims();
