@@ -22,7 +22,7 @@ public class RunAsteroidsDemo {
         int nLives = 3;
 
         Game.seqLength = 100;
-        Game.nEvals = 20;
+        Game.nEvals = 5;
 
         GameParameters params = new GameParameters().injectValues(new DefaultParams());
         AsteroidsGameState gameState = new AsteroidsGameState().setParams(params);

@@ -22,7 +22,7 @@ import static distance.util.MarioReader.tileColors;
 
 public class KLDivWaveFunctionTest {
 
-    static int filterWidth = 4, filterHeight = 4, stride = 1;
+    static int filterWidth = 5, filterHeight = 14, stride = 1;
 
     public static void main(String[] args) throws Exception {
 
