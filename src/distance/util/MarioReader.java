@@ -36,6 +36,8 @@ public class MarioReader {
         tiles.put(']', 9);
         tiles.put('o', 10);
         // tiles.put('-', 11);
+        // tiles.put('#', 11);
+        tiles.put('#', 12);
     }
 
     public static HashMap<Integer, Color> tileColors = new HashMap();
