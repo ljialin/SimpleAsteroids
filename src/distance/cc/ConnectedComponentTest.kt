@@ -10,19 +10,13 @@ fun main(args: Array<String>) {
     val level2 = getAndShowLevel(true, inputFile2)
 
 
+
     val c1 = ConnectedComponentAnalyser().analyseComponents(level1)
     val c2 = ConnectedComponentAnalyser().analyseComponents(level2)
 
     printSummary(c1!!)
     println()
     printSummary(c2!!)
-
-    val words = "one two three four five six seven eight nine ten".split(' ')
-    val frequenciesByFirstChar = words.groupingBy { it.first() }.eachCount()
-    println("Counting first letters:")
-    println(frequenciesByFirstChar) // {o=1, t=3, f=2, s=2, e=1, n=1}
-
-
 
     var features = c1!!.groupingBy { it.getFeatures() }.eachCount()
 

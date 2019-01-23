@@ -83,7 +83,7 @@ public class SourceTargetActuatorTest {
         waitUntilReady(view);
         int[] actions = new int[2];
 
-        int frameDelay = 200;
+        int frameDelay = 40;
 
         SpinBattleParams falseParams = params.copy(); // new SpinBattleParams();
         // params.gravitationalFieldConstant *= 0;
