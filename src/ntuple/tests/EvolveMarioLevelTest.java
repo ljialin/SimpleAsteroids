@@ -27,12 +27,12 @@ import static distance.util.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 58, imageHeight = 16;
+    static int imageWidth = 88, imageHeight = 16;
     static int filterWidth = 4, filterHeight = 4;
     static int stride = 1;
 
     // set true to use tile distribution from training set
-    static boolean useInitialSeed = true;
+    static boolean useInitialSeed = false;
 
     // set true to use rectangular mutations from training set
     static boolean useConvMutator = true;
@@ -65,7 +65,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 10001;
+        int nEvals = 20001;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
