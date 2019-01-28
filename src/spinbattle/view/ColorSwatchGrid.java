@@ -16,6 +16,7 @@ public class ColorSwatchGrid extends JComponent {
     float inc = 0.01f;
     int width = 10;
     int height = 10;
+
     public void paintComponent(Graphics g) {
         int n = width * height;
         float h = 0;
@@ -31,6 +32,7 @@ public class ColorSwatchGrid extends JComponent {
     }
 
     public Dimension getPreferredSize() {
+
         return new Dimension(cellSize * width, cellSize * height);
     }
 
