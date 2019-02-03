@@ -8,6 +8,7 @@ import ga.SimplestRMHC;
 import distance.util.MarioReader;
 import ntuple.ConvNTuple;
 import ntuple.LevelView;
+import ntuple.PatternDistribution;
 import ntuple.operator.ConvMutator;
 import plot.LineChart;
 import plot.LineChartAxis;
@@ -27,15 +28,23 @@ import static distance.util.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 88, imageHeight = 16;
+    static int imageWidth = 30, imageHeight = 16;
     static int filterWidth = 4, filterHeight = 4;
     static int stride = 1;
+
+    static int nEvals = 20001;
+
+
 
     // set true to use tile distribution from training set
     static boolean useInitialSeed = false;
 
     // set true to use rectangular mutations from training set
     static boolean useConvMutator = true;
+    static boolean forceBorderInConvMutator = true;
+
+    // decide whether or not to use a border
+    static boolean useBorder = true;
 
 
     static String inputFile1 = "data/mario/levels/mario-1-1.txt";
@@ -44,12 +53,13 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     // static String inputFile3 = "data/mario/levels/mario-3-1.txt";
 
 
-
     public static void main(String[] args) throws Exception {
 
         int[][] level = getAndShowLevel(true, inputFile1);
 
         int nTrials = 1;
+
+        ConvNTuple.w = 0.7;
 
         SimplestRMHC simpleRMHC = new SimplestRMHC();
         DefaultMutator mutator = new DefaultMutator(null);
@@ -65,7 +75,6 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
 
-        int nEvals = 20001;
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
@@ -88,7 +97,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         // set the "clever" mutation operator
         if (useConvMutator)
-            ea.setMutator(new ConvMutator().setConvNTuple(convNTuple).setForceBorder(true));
+            ea.setMutator(new ConvMutator().setConvNTuple(convNTuple).setForceBorder(forceBorderInConvMutator));
 
         if (useInitialSeed) {
             ea.setInitialSeed(generateSeed(sample));
@@ -130,11 +139,12 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         System.out.println("Reading: " + inputFile);
         int[][] level = flip(readLevel(new Scanner(new FileInputStream(inputFile))));
-        level = border(level);
+        if (useBorder)
+            level = border(level);
         if (show) {
             LevelView levelView = new LevelView(level).setColorMap(tileColors).setCellSize(12);
             JScrollPane scrollPane = new JScrollPane(levelView, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            scrollPane.setPreferredSize(new Dimension(600,200));
+            scrollPane.setPreferredSize(new Dimension(600, 200));
             new JEasyFrame(scrollPane, inputFile);
         }
         return level;
@@ -142,9 +152,9 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
     public int[][] subSample(int[][] a, int x, int y, int w, int h) {
         int[][] b = new int[w][h];
-        for (int i=0; i<w; i++) {
-            for (int j=0; j<h; j++) {
-                b[i][j] = a[x+i][y+j];
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                b[i][j] = a[x + i][y + j];
             }
         }
         return b;
@@ -191,11 +201,11 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
     private void showSamples(int[][] sample, SolutionEvaluator solutionEvaluator) {
 
-        int gap=20;
+        int gap = 20;
         System.out.println("Sample Width: " + sample.length);
 
 
-        for (int x=0; x<sample.length - imageWidth; x+=gap) {
+        for (int x = 0; x < sample.length - imageWidth; x += gap) {
             int[] sub = flatten(subSample(sample, x, 0, imageWidth, imageHeight));
             double fitness = solutionEvaluator.evaluate(sub);
             String label = String.format("Sample Slice Fitness: %.6f", fitness);

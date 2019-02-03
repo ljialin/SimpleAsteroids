@@ -414,6 +414,8 @@ public class ConvNTuple implements BanditLandscapeModel {
         return ssTot;
     }
 
+
+    public static double w = 0.5;
     /**
      * @param x: probe image vector
      * @return quality of fit to trained distribution
@@ -429,7 +431,8 @@ public class ConvNTuple implements BanditLandscapeModel {
             qDis.add(pattern);
         }
         // return Math.random();
-        return PatternDistribution.klDivSymmetric(sampleDis, qDis);
+        return PatternDistribution.klDivWeighted(sampleDis, qDis, w);
+        // return PatternDistribution.klDivSymmetric(sampleDis, qDis);
         // return PatternDistribution.klDiv(sampleDis, qDis);
         // return PatternDistribution.klDiv(qDis, sampleDis);
     }

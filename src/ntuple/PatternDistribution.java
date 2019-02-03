@@ -11,6 +11,12 @@ Based on Sparse Distribution, but for Patterns
 
 public class PatternDistribution {
 
+    // set this high in order to weight
+    // for inclusive use of patterns
+    // zero to weight against it
+    // moved this to a parameter
+    // public static double pw = 1.0;
+
     public static void main(String[] args) {
 
         PatternDistribution p = new PatternDistribution();
@@ -49,7 +55,8 @@ public class PatternDistribution {
 
     }
 
-    double epsilon = 1e1;
+    // experiment with various values
+    double epsilon = 1e-5;
 
     public HashMap<Pattern, StatSummary> statMap;
     int tot = 0;
@@ -86,6 +93,15 @@ public class PatternDistribution {
     public double getProb(Pattern key) {
         StatSummary ss = statMap.get(key);
         if (ss != null) {
+            return (epsilon + ss.sum()) / (tot * (1+epsilon));
+        } else {
+            return (epsilon / ((tot +epsilon)*(1+epsilon))) ;
+        }
+    }
+
+    public double getProbOld(Pattern key) {
+        StatSummary ss = statMap.get(key);
+        if (ss != null) {
             return epsilon + ss.sum() / tot;
         } else {
             return epsilon;
@@ -112,6 +128,10 @@ public class PatternDistribution {
 
     public static double klDivSymmetric(PatternDistribution pDis, PatternDistribution qDis) {
         return klDiv(pDis, qDis) + klDiv(qDis, pDis);
+    }
+
+    public static double klDivWeighted(PatternDistribution pDis, PatternDistribution qDis, double w) {
+        return w * klDiv(pDis, qDis) + (1-w) * klDiv(qDis, pDis);
     }
 
     public static double klDiv(PatternDistribution pDis, PatternDistribution qDis) {
