@@ -59,7 +59,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         int nTrials = 1;
 
-        ConvNTuple.w = 0.7;
+        ConvNTuple.w = 0.0;
 
         SimplestRMHC simpleRMHC = new SimplestRMHC();
         DefaultMutator mutator = new DefaultMutator(null);

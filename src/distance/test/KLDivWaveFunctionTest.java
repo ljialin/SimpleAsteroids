@@ -22,7 +22,9 @@ import static distance.util.MarioReader.tileColors;
 
 public class KLDivWaveFunctionTest {
 
-    static int filterWidth = 5, filterHeight = 14, stride = 1;
+    static int filterWidth = 4, filterHeight = 4, stride = 1;
+
+    static double weight = 1.0;
 
     public static void main(String[] args) throws Exception {
 
@@ -48,15 +50,14 @@ public class KLDivWaveFunctionTest {
             convNTuple.addPoint(level, 1);
         }
 
-
         // now measure how typical each ones is and rate it
         ArrayList<RatedLevel> intraRatings = rateLevels(convNTuple.sampleDis, levels);
 
         ArrayList<RatedLevel> sampleRatings = rateLevels(sampleCNT.sampleDis, levels);
 
-        showRatedLevls(intraRatings, "Intra class difference");
+        showRatedLevls(intraRatings, "Intra class difference, w = " + weight);
 
-        showRatedLevls(sampleRatings, "Training sample differences");
+        showRatedLevls(sampleRatings, "Training sample differences, w = " + weight);
 
         // checkPairs(ratedLevels);
     }
@@ -72,6 +73,7 @@ public class KLDivWaveFunctionTest {
         new JEasyFrame(plc, frameTitle);
     }
 
+
     static ArrayList<RatedLevel> rateLevels(PatternDistribution sampleDis, ArrayList<int[][]> levels) {
         ArrayList<RatedLevel> ratedLevels = new ArrayList<>();
         for (int[][] level : levels) {
@@ -85,7 +87,7 @@ public class KLDivWaveFunctionTest {
 
             // todo: compare also with a sample level
             // this may give best results in terms of ensuring coverage
-            double score = KLDiv.klDiv(cnt.sampleDis, sampleDis);
+            double score = KLDiv.klDivWeighted(sampleDis, cnt.sampleDis, weight);
 
             RatedLevel ratedLevel = new RatedLevel(level, score, cnt);
             ratedLevels.add(ratedLevel);

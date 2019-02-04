@@ -16,6 +16,10 @@ public class KLDiv {
         return klDiv(pDis, qDis) + klDiv(qDis, pDis);
     }
 
+    public static double klDivWeighted(PatternDistribution pDis, PatternDistribution qDis, double w) {
+        return w * klDiv(pDis, qDis) + (1-w) * klDiv(qDis, pDis);
+    }
+
     public static double klDiv(PatternDistribution pDis, PatternDistribution qDis) {
         double tot = 0;
         // iterate only over the values in p

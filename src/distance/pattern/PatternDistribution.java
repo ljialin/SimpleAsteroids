@@ -44,7 +44,8 @@ public class PatternDistribution {
         System.out.println(KLDiv.klDivSymmetric(q, p));
     }
 
-    double epsilon = 1e1;
+    // double epsilon = 1e1;
+    double epsilon = 1e-5;
 
     public HashMap<Pattern, StatSummary> statMap;
     public int tot = 0;
@@ -85,7 +86,17 @@ public class PatternDistribution {
         return this;
     }
 
+
     public double getProb(Pattern key) {
+        StatSummary ss = statMap.get(key);
+        if (ss != null) {
+            return (epsilon + ss.sum()) / (tot * (1+epsilon));
+        } else {
+            return (epsilon / ((tot +epsilon)*(1+epsilon))) ;
+        }
+    }
+
+    public double getProbOld(Pattern key) {
         StatSummary ss = statMap.get(key);
         if (ss != null) {
             return epsilon + ss.sum() / tot;
@@ -94,6 +105,16 @@ public class PatternDistribution {
         }
     }
 
+
+//    public double getProb(Pattern key) {
+//        StatSummary ss = statMap.get(key);
+//        if (ss != null) {
+//            return epsilon + ss.sum() / tot;
+//        } else {
+//            return epsilon;
+//        }
+//    }
+//
     public double getRawProb(Pattern key) {
         // no epsilon safety
         StatSummary ss = statMap.get(key);
