@@ -96,7 +96,7 @@ public class ConvMutator implements Mutator {
 //        System.out.println("Evolved: " + Arrays.toString(v1));
 //        System.out.println("Stored:  " + Arrays.toString(v2));
 //        System.out.println("Key:     " + leftKey);
-        System.out.format("%d / % d (available: %d) \n ", nExist, convNTuple.indices.size(), convNTuple.sampleDis.statMap.size() );
+//        System.out.format("%d / % d (available: %d) \n ", nExist, convNTuple.indices.size(), convNTuple.sampleDis.statMap.size() );
 //        System.out.println();
 
         // create a picker object to find the best one

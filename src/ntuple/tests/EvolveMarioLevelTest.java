@@ -19,6 +19,7 @@ import utilities.StatSummary;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -30,21 +31,30 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 30, imageHeight = 16;
     static int filterWidth = 4, filterHeight = 4;
+
+    // note: need to update this path manually to reflect filter size
+    static String outputPath = "data/mario/kldiv-4x4/";
+
+
     static int stride = 1;
 
-    static int nEvals = 20001;
+    static int nEvals = 10001;
 
 
+    static boolean showSamples = false;
+    static boolean plotData = false;
 
     // set true to use tile distribution from training set
     static boolean useInitialSeed = false;
 
     // set true to use rectangular mutations from training set
     static boolean useConvMutator = true;
+
     static boolean forceBorderInConvMutator = true;
 
     // decide whether or not to use a border
     static boolean useBorder = true;
+    static boolean writeLevels = true;
 
 
     static String inputFile1 = "data/mario/levels/mario-1-1.txt";
@@ -57,19 +67,16 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         int[][] level = getAndShowLevel(true, inputFile1);
 
-        int nTrials = 1;
+        int nTrials = 100;
 
-        ConvNTuple.w = 0.0;
+        ConvNTuple.w = 0.5;
 
-        SimplestRMHC simpleRMHC = new SimplestRMHC();
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
         mutator.pointProb = 2;
         // mutator.totalRandomChaosMutation = true;
 
         mutator.setSwap(false);
-
-        simpleRMHC.setMutator(mutator);
 
         // EvoAlg evoAlg = simpleRMHC;
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
@@ -78,17 +85,22 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         StatSummary results = new StatSummary();
         EvolveMarioLevelTest evolver = new EvolveMarioLevelTest();
         for (int i = 0; i < nTrials; i++) {
+            System.out.println("Trial: " + i+1);
             ElapsedTimer timer = new ElapsedTimer();
-            results.add(evolver.runTrial(simpleRMHC, nEvals, level));
+            SimplestRMHC simpleRMHC = new SimplestRMHC();
+            simpleRMHC.setMutator(mutator);
+            results.add(evolver.runTrial(simpleRMHC, nEvals, level, i));
             // System.out.println(simpleRMHC.getLogger().fa);
             System.out.println(timer);
+            System.out.println();
         }
+
     }
 
     // this should really take any type of EA, but at the moment it
     // is restricted to the SimpleRMHC to allow a bespoke mutation operator
     // to be plugged in
-    public double runTrial(SimplestRMHC ea, int nEvals, int[][] sample) {
+    public double runTrial(SimplestRMHC ea, int nEvals, int[][] sample, int trial) {
         int nDims = imageWidth * imageHeight;
         int mValues = distinctValues(sample);
         System.out.println("Distinct values = " + mValues);
@@ -108,27 +120,42 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         SolutionEvaluator trainingEvaluator = new EvalConvNTuple(nDims, mValues).setConvNTuple(convNTuple);
 
-
         double fitnessFull = trainingEvaluator.evaluate(flatten(sample));
-
 
         String labelFull = String.format("Full Width Training Sample: %.6f", fitnessFull);
 
-        LevelView.showMaze(flatten(sample), sample.length, sample[0].length, labelFull, tileColors);
-        showSamples(sample, trainingEvaluator);
-
+        if (showSamples) {
+            LevelView.showMaze(flatten(sample), sample.length, sample[0].length, labelFull, tileColors);
+            showSamples(sample, trainingEvaluator);
+        }
         evaluator.logger().setListener(this);
         int[] solution = ea.runTrial(evaluator, nEvals);
+
+
+        if (writeLevels) {
+            String path = String.format("%slevel%d.txt",outputPath, trial);
+            System.out.println("writing to: " + path);
+            int[][] level = LevelView.toRect(solution,imageWidth,imageHeight);
+            if (useBorder)
+                level = removeBorder(level);
+            // MarioReader.writeLevel(level, new PrintWriter(System.out));
+            MarioReader.writeLevelToFile(level, path );
+        }
+
 
         // can set entire solution to the most likely individual
         // solution = setAll(solution, 2);
 
         double fitness = evaluator.evaluate(solution);
         String label = String.format("Fitness: %.6f", fitness);
+        System.out.format("Trial %d, fitness = %.4f", trial, fitness );
 
         // solution = flatten(toRect())
-        plotData(evaluator.logger().fa);
+        if (plotData) plotData(evaluator.logger().fa);
+
+
         LevelView.showMaze(solution, imageWidth, imageHeight, label, tileColors);
+
 
         // showSamples(sample, evaluator);
 

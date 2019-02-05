@@ -18,6 +18,9 @@ public class LevelView extends JPanel {
     public static void main(String[] args) {
         int[][] randRect = randomRect(40, 25);
         showMaze(randRect, "Random GVGAISimpleTest of LevelView");
+
+
+
     }
 
     int width, height;

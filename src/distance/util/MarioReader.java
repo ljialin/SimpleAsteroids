@@ -14,10 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class MarioReader {
 
@@ -79,7 +76,6 @@ public class MarioReader {
     }
 
     public static void readIcons() {
-
         for (int i=0; i<=10; i++) {
             try {
                 String filename = String.format("sprites/mario/encoding_%d.png", i);
@@ -87,7 +83,6 @@ public class MarioReader {
                 BufferedImage img = ImageIO.read(new File(filename));
                 icons.put(i, img);
             } catch (Exception ex) {
-
                 // System.out.println(ex);
             }
         }
@@ -268,4 +263,39 @@ public class MarioReader {
         return b;
     }
 
+    public static int[][] removeBorder(int[][] a) {
+        int[][] b = new int[a.length - 2][a[0].length - 2];
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b[0].length; j++) {
+                    b[i][j] = a[i + 1][j + 1];
+            }
+        }
+        // return a;
+        return b;
+    }
+
+    public static void writeLevel(int[][] flipped, PrintWriter pw) {
+        HashMap<Integer,Character> rev = new HashMap<>();
+        for (Character c : tiles.keySet()) rev.put(tiles.get(c), c);
+        int[][] a = flip(flipped);
+        for (int[] aa : a) {
+            StringBuffer sb = new StringBuffer();
+            for (int x:aa) {
+                sb.append(rev.get(x));
+            }
+            pw.println(sb.toString());
+        }
+        pw.flush();
+    }
+
+
+
+    public static void writeLevelToFile(int[][] a, String path) {
+        try {
+            PrintWriter pw = new PrintWriter(new FileWriter(path));
+            writeLevel(a, pw);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

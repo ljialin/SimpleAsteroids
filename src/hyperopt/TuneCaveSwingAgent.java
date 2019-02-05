@@ -18,12 +18,12 @@ public class TuneCaveSwingAgent {
         // set up a non-standard tuple pattern
         model.use1Tuple = true;
         model.use2Tuple = true;
-        model.useNTuple = false;
+        model.useNTuple = true;
 
         ntbea.setModel(model);
 
         int nChecks = 100;
-        int nTrials = 30;
+        int nTrials = 10;
 
         ElapsedTimer timer = new ElapsedTimer();
 

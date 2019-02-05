@@ -22,13 +22,14 @@ import static distance.util.MarioReader.tileColors;
 
 public class KLDivWaveFunctionTest {
 
-    static int filterWidth = 2, filterHeight = 2, stride = 1;
+    static int filterWidth = 4, filterHeight = 4, stride = 1;
 
-    static double weight = 0.0;
+    static double weight = 0.5;
 
     public static void main(String[] args) throws Exception {
 
-        String inputDirectory = "data/mario/wfc2levels/";
+        // String inputDirectory = "data/mario/wfc2levels/";
+        String inputDirectory = "data/mario/kldiv-4x4/";
         // inputDirectory = "data/zelda/singleroom/";
         String marioSample = "data/mario/levels/mario-1-1.txt";
         ConvNTuple sampleCNT = getSampleDistribution(marioSample);
