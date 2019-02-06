@@ -21,12 +21,14 @@ public class EvolvePatternTest {
 
     public static void main(String[] args) {
 
-        int nTrials = 1;
+        ConvNTuple.w = 0.6;
+
+        int nTrials = 3;
         SimpleRMHC evoAlg = new SimpleRMHC();
-        evoAlg.setMutator(new ConvMutator());
+        // evoAlg.setMutator(new ConvMutator());
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
-        int nEvals = 50000;
+        int nEvals = 100000;
         StatSummary results = new StatSummary();
         EvolvePatternTest ept = new EvolvePatternTest();
         for (int i=0; i<nTrials; i++) {
@@ -50,7 +52,7 @@ public class EvolvePatternTest {
         System.out.println(label);
         System.out.println(Arrays.toString(solution));
         LevelView.showMaze(solution, imageWidth, imageHeight, label);
-        new JEasyFrame(LineChart.easyPlot(evaluator.logger().fa), "Evolution of Fitness");
+        // new JEasyFrame(LineChart.easyPlot(evaluator.logger().fa), "Evolution of Fitness");
         return fitness;
     }
 
