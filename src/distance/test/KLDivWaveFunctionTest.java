@@ -29,7 +29,7 @@ public class KLDivWaveFunctionTest {
     public static void main(String[] args) throws Exception {
 
         // String inputDirectory = "data/mario/wfc2levels/";
-        String inputDirectory = "data/mario/kldiv-4x4/";
+        String inputDirectory = "data/mario/kldiv-2x2/";
         // inputDirectory = "data/zelda/singleroom/";
         String marioSample = "data/mario/levels/mario-1-1.txt";
         ConvNTuple sampleCNT = getSampleDistribution(marioSample);

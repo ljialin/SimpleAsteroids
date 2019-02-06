@@ -30,10 +30,10 @@ import static distance.util.MarioReader.*;
 public class EvolveMarioLevelTest implements EvolutionListener {
 
     static int imageWidth = 30, imageHeight = 16;
-    static int filterWidth = 4, filterHeight = 4;
+    static int filterWidth = 3, filterHeight = 3;
 
     // note: need to update this path manually to reflect filter size
-    static String outputPath = "data/mario/kldiv-4x4/";
+    static String outputPath = "data/mario/kldiv-3x3/";
 
 
     static int stride = 1;
@@ -148,7 +148,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         double fitness = evaluator.evaluate(solution);
         String label = String.format("Fitness: %.6f", fitness);
-        System.out.format("Trial %d, fitness = %.4f", trial, fitness );
+        System.out.format("Trial %d, fitness = %.4f\n", trial, fitness );
 
         // solution = flatten(toRect())
         if (plotData) plotData(evaluator.logger().fa);
