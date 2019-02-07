@@ -25,14 +25,14 @@ public class EvoAgentVisTest {
 
     static boolean showEvolution = true;
 
-    static boolean useFalseModel = false;
+    static boolean useFalseModel = true;
 
     static int frameDelay = 50;
 
     public static void main(String[] args) throws Exception {
         int nEvals = 20;
         int seqLength = 100;
-        boolean useShiftBuffer = false;
+        boolean useShiftBuffer = true;
         EvoAgent player = getEvoAgentFromFactory(nEvals, seqLength, useShiftBuffer);
 
         // player = new SimpleEvoAgent();
