@@ -29,8 +29,8 @@ import static distance.util.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 30, imageHeight = 16;
-    static int filterWidth = 2, filterHeight = 2;
+    static int imageWidth = 30, imageHeight = 30;
+    static int filterWidth = 3, filterHeight = 3;
 
     // note: need to update this path manually to reflect filter size
     static String outputPath = "data/mario/kldiv-3x3/";
@@ -48,7 +48,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static boolean useInitialSeed = false;
 
     // set true to use rectangular mutations from training set
-    static boolean useConvMutator = false;
+    static boolean useConvMutator = true;
 
     static boolean forceBorderInConvMutator = true;
 
@@ -68,9 +68,9 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         int[][] level = getAndShowLevel(true, inputFile1);
 
-        int nTrials = 10;
+        int nTrials = 5;
 
-        ConvNTuple.w = 0.5;
+        ConvNTuple.w = 0.7;
 
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
