@@ -69,7 +69,7 @@ public class PatternDistribution {
     public ArrayList<PatternCount> getFrequencyList() {
         ArrayList<PatternCount> list = new ArrayList<>();
         for (Map.Entry<Pattern, StatSummary> pair : statMap.entrySet()) {
-            list.add(new PatternCount(pair.getKey(), pair.getValue().n()));
+            list.add(new PatternCount(pair.getKey(), -pair.getValue().n()));
         }
         Collections.sort(list);
         return list;

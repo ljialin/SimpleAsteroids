@@ -62,6 +62,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static String inputFile2 = "data/mario/levels/mario-2-1.txt";
     // static String inputFile3 = "data/mario/levels/mario-3-1.txt";
 
+    ArrayList<Double> evoTrace;
 
     public static void main(String[] args) throws Exception {
 
@@ -147,9 +148,11 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         // solution = setAll(solution, 2);
 
         double fitness = evaluator.evaluate(solution);
-        String label = String.format("Fitness: %.6f", fitness);
+        String label = String.format("Fitness: %.6f, evals = %d, filter = (%d,%d)",
+                fitness, nEvals, filterWidth, filterHeight);
         System.out.format("Trial %d, fitness = %.4f\n", trial, fitness );
 
+        evoTrace = evaluator.logger().fa;
         // solution = flatten(toRect())
         if (plotData) plotData(evaluator.logger().fa);
 

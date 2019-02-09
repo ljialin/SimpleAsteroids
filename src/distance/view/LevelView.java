@@ -73,6 +73,7 @@ public class LevelView extends JPanel {
         width = tiles.length;
         height = tiles[0].length;
         iconMap = MarioReader.icons;
+        // System.out.println("Level view: " + width + " : " + height);
 
     }
 

@@ -3,10 +3,16 @@ package distance.test;
 import distance.convolution.ConvNTuple;
 import distance.kl.KLDiv;
 import distance.pattern.PatternCount;
+import distance.util.MarioReader;
+import distance.view.LevelView;
+import utilities.JEasyFrame;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 import static distance.util.MarioReader.getAndShowLevel;
+import static distance.util.MarioReader.tileColors;
 
 
 /**
@@ -24,8 +30,8 @@ public class KLDivTest {
 
     static String inputFile3 = "data/mario/levels/mario-5-1.txt";
 
-    static int filterWidth = 4;
-    static int filterHeight = 4;
+    static int filterWidth = 2;
+    static int filterHeight = 2;
     static int stride = 1;
 
 
@@ -61,6 +67,8 @@ public class KLDivTest {
 
         printDis(c1);
 
+        showTilePatterns(c1);
+
     }
 
     public static void printDis(ConvNTuple convNTuple) {
@@ -70,6 +78,25 @@ public class KLDivTest {
             System.out.println(pc);
         }
         System.out.println();
+    }
+
+    public static void showTilePatterns(ConvNTuple convNTuple) {
+        System.out.println();
+        List<PatternCount> patterns = convNTuple.sampleDis.getFrequencyList();
+
+        JComponent jc = new JPanel();
+        jc.setLayout(new FlowLayout());
+
+        for (PatternCount pc : patterns) {
+            // System.out.println(pc);
+            int[][] rect = LevelView.toRect(pc.pattern.v, filterWidth, filterHeight);
+            rect = MarioReader.flip(rect);
+            LevelView lv = new LevelView(rect).setColorMap(tileColors).setCellSize(10);
+            jc.add(lv);
+        }
+
+        new JEasyFrame(jc, "Tile Patterns");
+        System.out.println("n distinct patterms = " + patterns.size());
 
     }
 

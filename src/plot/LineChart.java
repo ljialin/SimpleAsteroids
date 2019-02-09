@@ -17,9 +17,9 @@ import java.util.List;
 public class LineChart extends JComponent {
 
     Dimension d;
-    Color fg = Color.white;
-    public Color bg = Color.black; // new Color( 200, 200, 255 );
-    public Color plotBG = Color.yellow;
+    Color fg = Color.black;
+    public Color bg = Color.gray; // new Color( 200, 200, 255 );
+    public Color plotBG = Color.white;
     public Color tickColor = new Color(200, 200, 200, 200);
     public Color envelopeColor = new Color(128, 128, 128, 200);
 
@@ -240,7 +240,7 @@ public class LineChart extends JComponent {
         g.setColor(plotBG);
         g.fill(plotRegion);
         g.setStroke(new BasicStroke(2));
-        g.setColor(Color.white);
+        g.setColor(fg);
         g.draw(plotRegion);
         // System.out.println(plotRegion);
 
@@ -297,7 +297,6 @@ public class LineChart extends JComponent {
         g.setColor(Color.black);
         g.draw(rect);
 
-
         top -= gap/2;
         for (LineGroup lineGroup : lineGroups) {
             Path2D path = new Path2D.Double();
@@ -314,13 +313,11 @@ public class LineChart extends JComponent {
             if (lineGroup.name != null) {
                 Rectangle2D stringRect = g.getFontMetrics().getStringBounds(lineGroup.name, g);
 
-                g.setColor(bg);
+                g.setColor(fg);
                 drawInvertedString(g, lineGroup.name, xStart - stringRect.getWidth() - gap/5,  top + gap/2 - stringRect.getCenterY());            }
         }
         // Rectangle2D rect = new Rectangle2D.Double()
     }
-
-
 
     // these label functions were done in a hurry and
     // could be greatly simplified with some generic

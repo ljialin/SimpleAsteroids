@@ -11,7 +11,8 @@ public class LineGroupTest {
         int nPoints = 20;
         LineGroup lineGroup = new LineGroup().setColor(Color.blue).setName("Rand Sine");
         LineChart lineChart = new LineChart().addLineGroup(lineGroup);
-        lineChart.setBG(Color.green);
+        lineChart.setBG(Color.white);
+        lineChart.fg = Color.black;
         // lineChart.
 
         for (int i=0; i<nTrials; i++) {
