@@ -25,7 +25,7 @@ public class EvoAgentVisTest {
 
     static boolean showEvolution = true;
 
-    static boolean useFalseModel = true;
+    static boolean useFalseModel = false;
 
     static int frameDelay = 50;
 
@@ -61,6 +61,7 @@ public class EvoAgentVisTest {
         point = new int[]{0, 4, 4, 0, 4, 0, 0, 3};
 
         CaveSwingParams falseParams = params.copy();
+
         falseParams.hooke *= 0.2;
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();

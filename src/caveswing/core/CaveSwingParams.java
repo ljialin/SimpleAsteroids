@@ -11,6 +11,7 @@ public class CaveSwingParams {
     public Vector2d gravity = new Vector2d(0, 0.4);
     public double hooke = 0.02;
     public double lossFactor = 0.9999;
+    // public double lossFactor = 1.1;
 
     // game map params
     public int width = 800;

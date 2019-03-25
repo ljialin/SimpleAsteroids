@@ -18,7 +18,7 @@ public class KeyPlayerTest {
 
         params = getFavouriteParams();
 
-        params = getSearchSpaceParams();
+        // params = getSearchSpaceParams();
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);
@@ -60,13 +60,15 @@ public class KeyPlayerTest {
 
         // todo: adjust parameter setting and see how they affect game play for you
         params.maxTicks = 500;
-        params.gravity.y = 0.5;
+        params.gravity.y = 0.8;
         params.hooke = 0.01;
         params.gravity.x = -0.00;
         params.width = 2500;
         params.height *= 1.5;
         // params.nAnchors /= 2;
         params.meanAnchorHeight *= 2;
+
+        params.hooke *= 2;
 
         return params;
     }
@@ -79,6 +81,17 @@ public class KeyPlayerTest {
         // point = new int[]{0, 6, 4, 2, 3, 4, 2, 3};
         point = new int[]{0, 4, 4, 0, 4, 0, 0, 3};
 
+
+        point = new int[]{2, 0, 4, 1, 3, 0, 0, 2};
+        point = new int[]{2, 5, 4, 2, 1, 2, 0, 3};
+
+
+        point = new int[]{2, 4, 3, 2, 3, 0, 0, 3};
+
+
+
+
+        // point = new int[]{1, 2, 1, 1, 4, 2, 3, 2};
 
         // this one is better
         // point = new int[]{1, 5, 2, 0, 4, 1, 3, 2};
