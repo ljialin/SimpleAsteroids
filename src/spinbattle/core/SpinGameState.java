@@ -7,6 +7,7 @@ import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SpinGameState implements AbstractGameState {
 
@@ -64,6 +65,7 @@ public class SpinGameState implements AbstractGameState {
 
     @Override
     public AbstractGameState next(int[] actions) {
+        // System.out.println(Arrays.toString(actions));
         for (int i=0; i<nPlayers; i++) {
             if (actuators[i] != null)
                 actuators[i].actuate(actions[i], this);

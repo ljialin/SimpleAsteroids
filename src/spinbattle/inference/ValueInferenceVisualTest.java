@@ -1,33 +1,33 @@
-package spinbattle.actuator;
+package spinbattle.inference;
 
 import agents.dummy.DoNothingAgent;
 import agents.evo.EvoAgent;
 import evodef.DefaultMutator;
 import evodef.EvoAlg;
-import ga.SimpleGA;
 import ga.SimpleRMHC;
 import ggi.agents.SimpleEvoAgent;
 import ggi.core.SimplePlayerInterface;
 import logger.sample.DefaultLogger;
+import spinbattle.actuator.SourceTargetActuator;
 import spinbattle.core.FalseModelAdapter;
+import spinbattle.core.Planet;
 import spinbattle.core.SpinGameState;
 import spinbattle.params.Constants;
 import spinbattle.params.SpinBattleParams;
-import spinbattle.players.HeuristicLauncher;
 import spinbattle.players.TunablePriorityLauncher;
-import spinbattle.ui.MouseSlingController;
 import spinbattle.view.SpinBattleView;
 import utilities.JEasyFrame;
 
 import java.awt.*;
 import java.util.Random;
 
-public class SourceTargetActuatorTest {
+public class ValueInferenceVisualTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
         long seed = new Random().nextLong();
         // seed = -6330548296303013003L;
+        seed = 10;
         System.out.println("Setting seed to: " + seed);
         SpinBattleParams.random = new Random(seed);
         // SpinBattleParams.random = new Random();
@@ -39,7 +39,7 @@ public class SourceTargetActuatorTest {
         params.maxTicks = 5000;
         params.width = 700;
         params.height = 400;
-        params.nPlanets = 10;
+        params.nPlanets = 8;
         // params.height = 700;
 
         // SpinBattleParams altParams = params.copy();
@@ -49,6 +49,11 @@ public class SourceTargetActuatorTest {
         // params.maxInitialShips *= 3;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
+        System.out.println(gameState.planets);
+
+        Planet test = gameState.planets.get(5);
+        test.ownedBy = 1;
+        test.shipCount = 100;
 
         // BasicLogger basicLogger = new BasicLogger();
         DefaultLogger logger = new DefaultLogger();
@@ -61,11 +66,14 @@ public class SourceTargetActuatorTest {
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
 
-        // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
+        gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
         SimplePlayerInterface evoAgent = getEvoAgent();
 
-        // SimplePlayerInterface player2 = getEvoAgent();
+        SimpleEvoAgent player2 = new SimpleEvoAgent();
+        player2.sequenceLength = 200;
+        player2.nEvals = 10;
+
 
         SimplePlayerInterface randomPlayer = new agents.dummy.RandomAgent();
         // evoAgent = randomPlayer;
@@ -73,41 +81,23 @@ public class SourceTargetActuatorTest {
         // but now we also need to establish a player
 
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
-        // HeuristicLauncher launcher = new HeuristicLauncher();
-        TunablePriorityLauncher launcher = new TunablePriorityLauncher();
         String title = "Spin Battle Game" ;
         JEasyFrame frame = new JEasyFrame(view, title + ": Waiting for Graphics");
         frame.setLocation(new Point(800, 0));
 //        MouseSlingController mouseSlingController = new MouseSlingController();
 //        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
 //        CaveView.addMouseListener(mouseSlingController);
-        int launchPeriod = 5; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
-
-        int frameDelay = 40;
-
-        SpinBattleParams falseParams = params.copy(); // new SpinBattleParams();
-        // params.gravitationalFieldConstant *= 0;
-        // falseParams.transitSpeed = 0.00000;
-        // falseParams.clampZeroScore = false;
-        FalseModelAdapter falsePlayer = new FalseModelAdapter().setPlayer(evoAgent).setParams(falseParams);
+        int frameDelay = 400;
 
         // may want to stop before the end of the game for demo purposes
         int nTicks = 5000;
         for (int i=0; i<nTicks && !gameState.isTerminal(); i++) {
-            // SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
             actions[0] = evoAgent.getAction(gameState.copy(), 0);
-            // actions[0] = falsePlayer.getAction(gameState.copy(), 0);
-            // actions[1] = player2.getAction(gameState.copy(), 1);
-            // actions[0] = randomPlayer.getAction(gameState.copy(), 0);
+            actions[1] = player2.getAction(gameState.copy(), 1);
             // actions[1] = randomPlayer.getAction(gameState.copy(), 1);
-            // System.out.println(i + "\t " + actions[0]);
             gameState.next(actions);
-            // mouseSlingController.update();
-            // launcher.makeTransits(gameState, Constants.playerOne);
-            if (i % launchPeriod == 0)
-                launcher.makeTransits(gameState, Constants.playerTwo);
             SpinGameState viewCopy = (SpinGameState) gameState.copy();
             viewCopy.logger = gameState.logger;
             view.setGameState(viewCopy);
@@ -119,6 +109,7 @@ public class SourceTargetActuatorTest {
         String trajTitle = String.format("g = %.3f, spd = %.3f", params.gravitationalFieldConstant, params.transitSpeed);
         // logger.showTrajectories(params.width, params.height, trajTitle);
         // System.out.println("nTraj: " + logger.getTrajectoryLogger().trajectories.size());
+
     }
 
     static void waitUntilReady(SpinBattleView view) throws Exception {
