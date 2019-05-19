@@ -38,8 +38,8 @@ public class SourceTargetActuatorTest {
 
         params.maxTicks = 5000;
         params.width = 700;
-        params.height = 400;
-        params.nPlanets = 10;
+        params.height = 700;
+        params.nPlanets = 20;
         // params.height = 700;
 
         // SpinBattleParams altParams = params.copy();
