@@ -18,7 +18,7 @@ public class KeyPlayerTest {
 
         params = getFavouriteParams();
 
-        // params = getSearchSpaceParams();
+        params = getSearchSpaceParams();
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);
@@ -89,6 +89,8 @@ public class KeyPlayerTest {
 
 
         point = new int[]{2, 4, 3, 2, 3, 0, 0, 3};
+
+        point = new int[]{2, 2, 4, 0, 4, 0, 2, 3};
 
 
 

@@ -23,7 +23,7 @@ public class TuneCaveSwingAgent {
         ntbea.setModel(model);
 
         int nChecks = 100;
-        int nTrials = 10;
+        int nTrials = 1;
 
         ElapsedTimer timer = new ElapsedTimer();
 
