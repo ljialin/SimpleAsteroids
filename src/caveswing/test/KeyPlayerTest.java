@@ -81,16 +81,16 @@ public class KeyPlayerTest {
 
         // or choose a specific one:
         // point = new int[]{0, 6, 4, 2, 3, 4, 2, 3};
-        point = new int[]{0, 4, 4, 0, 4, 0, 0, 3};
+        // point = new int[]{0, 4, 4, 0, 4, 0, 0, 3};
 
 
-        point = new int[]{2, 0, 4, 1, 3, 0, 0, 2};
-        point = new int[]{2, 5, 4, 2, 1, 2, 0, 3};
+        // point = new int[]{2, 0, 4, 1, 3, 0, 0, 2};
+        // point = new int[]{2, 5, 4, 2, 1, 2, 0, 3};
 
 
-        point = new int[]{2, 4, 3, 2, 3, 0, 0, 3};
+        // point = new int[]{2, 4, 3, 2, 3, 0, 0, 3};
 
-        point = new int[]{2, 2, 4, 0, 4, 0, 2, 3};
+        // point = new int[]{2, 2, 4, 0, 4, 0, 2, 3};
 
 
 
@@ -98,7 +98,7 @@ public class KeyPlayerTest {
         // point = new int[]{1, 2, 1, 1, 4, 2, 3, 2};
 
         // this one is better
-        // point = new int[]{1, 5, 2, 0, 4, 1, 3, 2};
+        point = new int[]{1, 5, 2, 0, 4, 1, 3, 2};
 
         // point = new int[]{0, 6, 3, 3, 3, 3, 3, 3};
 

@@ -15,6 +15,7 @@ import plot.PlayoutPlotterInterface;
 import spinbattle.core.SpinGameState;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  *  This is a simple evolutionary planning agent
@@ -103,12 +104,14 @@ public class EvoAgent implements SimplePlayerInterface {
         solution = evoAlg.runTrial(simpleGameAdapter, nEvals);
 
         playoutPlotter.plotPlayout();
+        // System.out.println(">> " + simpleGameAdapter.evaluate(solution) + "\t " + Arrays.toString(solution));
         // System.out.println(Arrays.toString(solution) + "\t " + game.evaluate(solution));
         int[] tmp = solution;
         // already return the first element, so now set it to 1 ...
         if (!useShiftBuffer) solution = null;
         // CaveGameState cgs = (CaveGameState) gameState;
         // System.out.println("Gravity check: " + cgs.params.gravity + " H: " + cgs.params.hooke);
+        System.out.println();
         return tmp;
     }
 

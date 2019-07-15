@@ -97,6 +97,4 @@ public class VoronoiGrid extends JComponent {
     }
 
 
-
-
 }
