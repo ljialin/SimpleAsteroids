@@ -29,11 +29,11 @@ import static distance.util.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 30, imageHeight = 30;
-    static int filterWidth = 3, filterHeight = 3;
+    static int imageWidth = 50, imageHeight = 18;
+    static int filterWidth = 4, filterHeight = 4;
 
     // note: need to update this path manually to reflect filter size
-    static String outputPath = "data/mario/kldiv-3x3/";
+    static String outputPath = "data/mario/kldiv-4x4/";
 
 
     static int stride = 1;
@@ -42,7 +42,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
 
     static boolean showSamples = false;
-    static boolean plotData = false;
+    static boolean plotData = true;
 
     // set true to use tile distribution from training set
     static boolean useInitialSeed = false;
@@ -70,7 +70,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         int nTrials = 5;
 
-        ConvNTuple.w = 0.7;
+        ConvNTuple.w = 0.5;
 
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
