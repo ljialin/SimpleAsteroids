@@ -67,7 +67,6 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
 
 
     private int[] mutate(int[] v, double expectedMutations, int nActions) {
-
         int n = v.length;
         int[] x = new int[n];
         // pointwise probability of additional mutations
