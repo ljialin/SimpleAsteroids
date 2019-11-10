@@ -34,12 +34,14 @@ public class SourceTargetActuatorTest {
 
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
-        params.gravitationalFieldConstant *= 1.0;
+        params.gravitationalFieldConstant *= 2.0;
 
-        params.maxTicks = 5000;
-        params.width = 800;
+        // params.maxTicks = 300;
+        params.width = 600;
         params.height = 700;
-        params.nPlanets = 20;
+        params.nPlanets = 10;
+        params.transitSpeed *= 2.0;
+        params.nPlanets = 30;
         // params.height = 700;
 
         // SpinBattleParams altParams = params.copy();
@@ -60,6 +62,8 @@ public class SourceTargetActuatorTest {
 
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
+
+        gameState.actuators[0] = new HeuristicController().setPlayerId(0);
 
         // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
@@ -113,6 +117,7 @@ public class SourceTargetActuatorTest {
             view.setGameState(viewCopy);
             view.repaint();
             frame.setTitle(title + " : " + i); //  + " : " + CaveView.getTitle());
+            System.out.println(gameState.actuators[0]);
             Thread.sleep(frameDelay);
         }
         System.out.println(gameState.isTerminal());

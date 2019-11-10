@@ -24,8 +24,8 @@ public class HumanInterfaceTest {
         SourceTargetMouseController mouseController = new SourceTargetMouseController();
         mouseController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseController);
-        int launchPeriod = 400;
-        for (int i=0; i<5000; i++) {
+        int launchPeriod = 4;
+        for (int i=0; i<5000 && !gameState.isTerminal(); i++) {
             gameState.next(null);
             // launcher.makeTransits(gameState, Constants.playerOne);
             if (i % launchPeriod == 0)
@@ -34,6 +34,8 @@ public class HumanInterfaceTest {
             view.repaint();
             Thread.sleep(20);
         }
+        System.out.println(gameState.isTerminal());
+        System.out.println(gameState.params.maxTicks);
     }
 
 }

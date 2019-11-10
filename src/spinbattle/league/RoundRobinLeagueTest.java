@@ -10,6 +10,7 @@ import ggi.core.SimplePlayerInterface;
 import ggi.league.RoundRobinLeague;
 import spinbattle.core.SpinGameStateFactory;
 import spinbattle.params.Constants;
+import spinbattle.players.TunablePriorityLauncher;
 import spinbattle.test.MCTSAgentTest;
 import spinbattle.view.VisualSpinGameRunner;
 import utilities.ElapsedTimer;
@@ -51,6 +52,7 @@ public class RoundRobinLeagueTest {
         SimpleEvoAgent simpleEvoAgentRandomModel = new SimpleEvoAgent().setOpponent(new RandomAgent()).setSequenceLength(seqLength);
         // simpleEvoAgent.setOpponent(new RandomAgent());
         // SimplePlayerInterface p5 = simpleEvoAgent;
+        SimplePlayerInterface p6 = new TunablePriorityLauncher();
 
         ArrayList<SimplePlayerInterface> players = new ArrayList<>();
         // players.add(p1);
@@ -62,6 +64,7 @@ public class RoundRobinLeagueTest {
         players.add(simpleEvoAgentDoNothingModel);
         players.add(simpleEvoAgentRandomModel);
         players.add(randomAgent);
+        players.add(p6);
 
         RoundRobinLeague league = new RoundRobinLeague().setPlayers(players);
         // league.abstractVisualRunner = new VisualSpinGameRunner();

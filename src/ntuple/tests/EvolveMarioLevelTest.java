@@ -29,7 +29,7 @@ import static distance.util.MarioReader.*;
 
 public class EvolveMarioLevelTest implements EvolutionListener {
 
-    static int imageWidth = 50, imageHeight = 18;
+    static int imageWidth = 40, imageHeight = 18;
     static int filterWidth = 4, filterHeight = 4;
 
     // note: need to update this path manually to reflect filter size
@@ -39,7 +39,6 @@ public class EvolveMarioLevelTest implements EvolutionListener {
     static int stride = 1;
 
     static int nEvals = 10001;
-
 
     static boolean showSamples = false;
     static boolean plotData = true;
@@ -70,7 +69,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         int nTrials = 5;
 
-        ConvNTuple.w = 0.5;
+        ConvNTuple.w = 0.6;
 
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;

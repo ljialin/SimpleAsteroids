@@ -21,7 +21,6 @@ public class SpinBattleParams {
         System.out.println(alt.inBounds(new Vector2d(150, 150)));
     }
 
-
     // of the arena
     public int width=700, height=400;
 
