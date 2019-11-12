@@ -12,7 +12,7 @@ object TuneCaveSwingParams {
     fun main(args: Array<String>) {
         val nEvals = 200
         println("Optimization budget: $nEvals")
-        val ntbea = NTupleBanditEA().setKExplore(2.0)
+        val ntbea = NTupleBanditEA().setKExplore(0.5)
 
         ntbea.logBestYet = true
         val model = NTupleSystem()
