@@ -55,7 +55,6 @@ public class SpinBattleParams {
 
     public boolean includeTransitShipsInScore = false;
 
-
     public SpinBattleParams copy() {
         SpinBattleParams p = new SpinBattleParams();
         p.width = width;

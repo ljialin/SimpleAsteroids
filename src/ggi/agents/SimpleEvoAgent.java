@@ -45,7 +45,7 @@ public class SimpleEvoAgent implements SimplePlayerInterface {
         if (useShiftBuffer && solution != null) {
             solution = shiftLeftAndRandomAppend(solution, gameState.nActions());
         } else {
-            System.out.println("New random solution with nActions = " + gameState.nActions());
+            // System.out.println("New random solution with nActions = " + gameState.nActions());
             solution = randomPoint(gameState.nActions());
         }
 

@@ -4,6 +4,7 @@ import evodef.*;
 import ntbea.NTupleBanditEA;
 import ntbea.NTupleSystem;
 import ntbea.NTupleSystemReport;
+import ntuple.params.Param;
 import ntuple.params.Report;
 import plot.LineChart;
 import plot.LineChartAxis;
@@ -178,6 +179,13 @@ public class HyperParamTuneRunner {
         }
         System.out.println("Solution: ");
         System.out.println(Report.report(eval, solution));
+        // eval.
+        int p = 0;
+        for (int i : solution) {
+            Param param = eval.getParams()[p];
+            System.out.println(param.getName() + "\t " + param.getValue(i) );
+            p++;
+        }
         System.out.println("Checking fitness");
         return runChecks(eval, solution, nChecks);
 

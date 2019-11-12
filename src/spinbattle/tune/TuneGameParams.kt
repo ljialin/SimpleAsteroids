@@ -12,7 +12,7 @@ object TuneCaveSwingParams {
     fun main(args: Array<String>) {
         val nEvals = 200
         println("Optimization budget: $nEvals")
-        val ntbea = NTupleBanditEA().setKExplore(500.0)
+        val ntbea = NTupleBanditEA().setKExplore(2.0)
 
         ntbea.logBestYet = true
         val model = NTupleSystem()
@@ -42,12 +42,10 @@ object TuneCaveSwingParams {
         runner.plotChecks = 0
 
         val spinBattleSpace = SpinBattleFitnessSpace()
-        // uncomment to run the skilful one
-        // caveSwingSpace = new CaveSwingGameSkillSpace();
         println("Testing: $ntbea")
         runner.runTrials( ntbea, spinBattleSpace )
         println("Finished testing: $ntbea")
-        println("Time for all experiments: $timer")
+        println("Time for all experiments: ${(timer.elapsed() / 1000).toInt()} seconds")
     }
 }
 

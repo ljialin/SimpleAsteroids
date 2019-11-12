@@ -115,7 +115,8 @@ class SpinBattleFitnessSpace : AnnotatedFitnessSpace {
             i++
         }
 
-        val value = -gameState.score
+        // modify this depending on which player we're trying to make win...
+        val value = Math.signum(gameState.score)
         logger.log(value, x, false)
 //        println("i=${logger.nEvals()}, \t Score = $value")
         return value
