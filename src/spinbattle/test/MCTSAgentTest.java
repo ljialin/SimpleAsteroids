@@ -66,7 +66,6 @@ public class MCTSAgentTest {
         runner.plotGameScores();
         System.out.println(runner.scores);
         System.out.println("Total time: " + timer);
-
     }
 
     public static GVGAIWrapper getMCTSAgent(AbstractGameState gameState, int playerId) {
@@ -76,7 +75,6 @@ public class MCTSAgentTest {
                 new controllers.multiPlayer.discountOLMCTS.Agent(linkState, timer, playerId);
         GVGAIWrapper wrapper = new GVGAIWrapper().setAgent(agent);
         return wrapper;
-
     }
 
 }
