@@ -25,14 +25,13 @@ class SpinBattleFitnessSpace : AnnotatedFitnessSpace {
 
     internal var verbose = false
 
-    internal var gravity = doubleArrayOf(0.0, 1.0, 2.0)
+    val gravity = doubleArrayOf(0.0, 1.0, 2.0)
+    val nPlanets = intArrayOf(6, 10, 20)
+    val height = intArrayOf(400, 600, 800)
+    val width = intArrayOf(300, 600, 900)
+    val transitSpeed = doubleArrayOf(0.5, 1.0, 2.0)
 
-    internal var nPlanets = intArrayOf(6, 10, 20)
 
-    internal var height = intArrayOf(400, 600, 800)
-    internal var width = intArrayOf(300, 600, 900)
-
-    internal var transitSpeed = doubleArrayOf(0.5, 1.0, 2.0)
 
     internal var nValues = intArrayOf(gravity.size, nPlanets.size, height.size, width.size, transitSpeed.size)
     internal var nDims = nValues.size
