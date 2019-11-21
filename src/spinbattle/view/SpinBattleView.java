@@ -21,7 +21,7 @@ public class SpinBattleView extends JComponent {
     static int nParticles = 10000;
     SpinBattleParams params;
     SpinGameState gameState;
-    Color bg = Color.black;
+    Color bg = new Color(200, 230, 230); // Color.lightGray; // Color.black;
     int nStars = 200;
     Color[] playerColors = {
             Color.getHSBColor(0.17f, 1, 1),
@@ -65,6 +65,7 @@ public class SpinBattleView extends JComponent {
     public void paintComponent(Graphics go) {
         Graphics2D g = (Graphics2D) go;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setColor(bg);
         g.fillRect(0, 0, getWidth(), getHeight());
         paintVectorField(g);
         paintStars(g);
