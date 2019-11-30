@@ -27,7 +27,7 @@ public class SourceTargetActuatorTest {
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
         long seed = new Random().nextLong();
-        // seed = -6330548296303013003L;
+        seed = -6330548296303013003L;
         System.out.println("Setting seed to: " + seed);
         SpinBattleParams.random = new Random(seed);
         // SpinBattleParams.random = new Random();

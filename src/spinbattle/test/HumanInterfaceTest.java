@@ -16,15 +16,17 @@ public class HumanInterfaceTest {
         params.width = 1000;
         params.height = 700;
         params.gravitationalFieldConstant *= 2.0;
+        params.nPlanets = 40;
+        params.maxTicks = 5000;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
-        // HeuristicLauncher launcher = new HeuristicLauncher();
-        TunablePriorityLauncher launcher = new TunablePriorityLauncher();
+        HeuristicLauncher launcher = new HeuristicLauncher();
+        // TunablePriorityLauncher launcher = new TunablePriorityLauncher();
         JEasyFrame frame = new JEasyFrame(view, "Spin Battle Game");
         SourceTargetMouseController mouseController = new SourceTargetMouseController();
         mouseController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseController);
-        int launchPeriod = 4;
+        int launchPeriod = 400;
         for (int i=0; i<5000 && !gameState.isTerminal(); i++) {
             gameState.next(null);
             // launcher.makeTransits(gameState, Constants.playerOne);
