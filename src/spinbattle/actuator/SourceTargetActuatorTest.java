@@ -34,20 +34,20 @@ public class SourceTargetActuatorTest {
 
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
-        params.gravitationalFieldConstant *= 0.0;
+//         params.gravitationalFieldConstant *= 1.0;
 
         // params.maxTicks = 300;
         params.width = 600;
         params.height = 600;
-        params.nPlanets = 10;
-        params.transitSpeed *= 1.0;
-        params.nPlanets = 20;
+//        params.nPlanets = 10;
+//        params.transitSpeed *= 1.0;
+        // params.nPlanets = 12;
         // params.height = 700;
 
         // SpinBattleParams altParams = params.copy();
 
         // params.gravitationalFieldConstant *= 1.0;
-        params.transitSpeed *= 1;
+        // params.transitSpeed *= 2;
         // params.maxInitialShips *= 3;
 
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
@@ -63,7 +63,7 @@ public class SourceTargetActuatorTest {
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
 
-        gameState.actuators[0] = new HeuristicController().setPlayerId(0);
+        gameState.actuators[1] = new HeuristicController().setPlayerId(1);
 
         // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
@@ -147,14 +147,13 @@ public class SourceTargetActuatorTest {
         DefaultMutator mutator = new DefaultMutator(null);
         // setting to true may give best performance
         // mutator.totalRandomChaosMutation = true;
-        mutator.pointProb = 10;
+        mutator.pointProb = 30;
 
         SimpleRMHC simpleRMHC = new SimpleRMHC();
         simpleRMHC.setSamplingRate(nResamples);
         simpleRMHC.setMutator(mutator);
 
         EvoAlg evoAlg = simpleRMHC;
-
         // evoAlg = new SlidingMeanEDA();
         // evoAlg = new SimpleGA();
 
@@ -164,7 +163,6 @@ public class SourceTargetActuatorTest {
         boolean useShiftBuffer = true;
         evoAgent.setUseShiftBuffer(useShiftBuffer);
         evoAgent.setVisual();
-
         return evoAgent;
     }
 }

@@ -21,7 +21,7 @@ public class SpinBattleView extends JComponent {
     static int nParticles = 10000;
     SpinBattleParams params;
     SpinGameState gameState;
-    Color bg = new Color(200, 230, 230); // Color.lightGray; // Color.black;
+    Color bg =             Color.getHSBColor(0.87f, 1, 0.15F); // new Color(200, 230, 230); // Color.lightGray; // Color.black;
     int nStars = 200;
     Color[] playerColors = {
             Color.getHSBColor(0.17f, 1, 1),

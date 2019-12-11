@@ -21,7 +21,7 @@ public class RunAsteroidsDemo {
         int startLevel = 1;
         int nLives = 3;
 
-        Game.seqLength = 10;
+        Game.seqLength = 100;
         Game.nEvals = 20;
 
         GameParameters params = new GameParameters().injectValues(new DefaultParams());

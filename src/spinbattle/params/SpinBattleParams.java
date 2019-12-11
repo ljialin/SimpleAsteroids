@@ -24,7 +24,7 @@ public class SpinBattleParams {
     // of the arena
     public int width=700, height=400;
 
-    public int maxTicks = 500;
+    public int maxTicks = 5000;
     public int nPlanets = 20;
 
     // public int nNeutral = nPlanets - 4;
