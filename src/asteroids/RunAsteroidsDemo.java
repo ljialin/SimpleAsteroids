@@ -10,7 +10,6 @@ public class RunAsteroidsDemo {
     // the ship is not turning to avoid collisions
     // at all, depsite the fact that the collisions
     // are costly
-
     // why could that be?
 
     public static void main(String[] args) {

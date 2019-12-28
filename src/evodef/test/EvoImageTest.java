@@ -24,7 +24,7 @@ public class EvoImageTest extends JComponent {
     int cycleDelay = 2;
     int scale = 2;
     int flipsPerCycle = 20;
-    int initialDelay = 10000;
+    int initialDelay = 100;
 
 
     public static void main(String[] args) throws Exception {
