@@ -1,6 +1,7 @@
 package spinbattle.actuator;
 
 import agents.dummy.DoNothingAgent;
+import agents.dummy.RandomAgent;
 import agents.evo.EvoAgent;
 import evodef.DefaultMutator;
 import evodef.EvoAlg;
@@ -20,7 +21,7 @@ import utilities.JEasyFrame;
 import java.awt.*;
 import java.util.Random;
 
-public class SourceTargetActuatorTest {
+public class PolicyEvoAgentTest {
 
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
@@ -61,61 +62,43 @@ public class SourceTargetActuatorTest {
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
 
-        gameState.actuators[1] = new HeuristicActuator().setPlayerId(1);
+        gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
+
+        // gameState.actuators[1] = new HeuristicActuator().setPlayerId(1);
+
+
 
         // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
-        SimplePlayerInterface evoAgent = getEvoAgent();
+        SimplePlayerInterface evoAgent = new PolicyEvoAgent();
 
-        // SimplePlayerInterface player2 = getEvoAgent();
+        SimplePlayerInterface player2 = new PolicyEvoAgent();
 
-        SimplePlayerInterface randomPlayer = new agents.dummy.RandomAgent();
-        // evoAgent = randomPlayer;
+        player2 = new agents.dummy.RandomAgent();
 
-        // but now we also need to establish a player
+        // SimplePlayerInterface randomPlayer = new agents.dummy.RandomAgent();
 
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
-        // HeuristicLauncher launcher = new HeuristicLauncher();
-        TunablePriorityLauncher launcher = new TunablePriorityLauncher();
         String title = "Spin Battle Game" ;
         JEasyFrame frame = new JEasyFrame(view, title + ": Waiting for Graphics");
         frame.setLocation(new Point(800, 0));
-//        MouseSlingController mouseSlingController = new MouseSlingController();
-//        mouseSlingController.setGameState(gameState).setPlayerId(Constants.playerOne);
-//        CaveView.addMouseListener(mouseSlingController);
         int launchPeriod = 5; // params.releasePeriod;
         waitUntilReady(view);
         int[] actions = new int[2];
 
         int frameDelay = 40;
 
-        SpinBattleParams falseParams = params.copy(); // new SpinBattleParams();
-        // params.gravitationalFieldConstant *= 0;
-        // falseParams.transitSpeed = 0.00000;
-        // falseParams.clampZeroScore = false;
-        FalseModelAdapter falsePlayer = new FalseModelAdapter().setPlayer(evoAgent).setParams(falseParams);
-
         // may want to stop before the end of the game for demo purposes
-        int nTicks = 5000;
+        int nTicks = 1;
         for (int i=0; i<nTicks && !gameState.isTerminal(); i++) {
-            // SpinGameState copy = ((SpinGameState) gameState.copy()).setParams(altParams);
             actions[0] = evoAgent.getAction(gameState.copy(), 0);
-            // actions[0] = falsePlayer.getAction(gameState.copy(), 0);
-            // actions[1] = player2.getAction(gameState.copy(), 1);
-            // actions[0] = randomPlayer.getAction(gameState.copy(), 0);
-            // actions[1] = randomPlayer.getAction(gameState.copy(), 1);
-            // System.out.println(i + "\t " + actions[0]);
+            actions[1] = player2.getAction(gameState.copy(), 1);
             gameState.next(actions);
-            // mouseSlingController.update();
-            // launcher.makeTransits(gameState, Constants.playerOne);
-            if (i % launchPeriod == 0)
-                launcher.makeTransits(gameState, Constants.playerTwo);
             SpinGameState viewCopy = (SpinGameState) gameState.copy();
             viewCopy.logger = gameState.logger;
             view.setGameState(viewCopy);
             view.repaint();
             frame.setTitle(title + " : " + i); //  + " : " + CaveView.getTitle());
-            System.out.println(gameState.actuators[0]);
             Thread.sleep(frameDelay);
         }
         System.out.println(gameState.isTerminal());
@@ -135,37 +118,4 @@ public class SourceTargetActuatorTest {
     static boolean usePolicyEvoAgent = true;
     static boolean useSimpleEvoAgent = true;
 
-    static SimplePlayerInterface getEvoAgent() {
-
-        if (usePolicyEvoAgent) {
-            return new PolicyEvoAgent();
-        }
-
-        if (useSimpleEvoAgent) {
-            return new SimpleEvoAgent().setOpponent(new DoNothingAgent());
-        }
-        //
-        int nResamples = 1;
-
-        DefaultMutator mutator = new DefaultMutator(null);
-        // setting to true may give best performance
-        // mutator.totalRandomChaosMutation = true;
-        mutator.pointProb = 30;
-
-        SimpleRMHC simpleRMHC = new SimpleRMHC();
-        simpleRMHC.setSamplingRate(nResamples);
-        simpleRMHC.setMutator(mutator);
-
-        EvoAlg evoAlg = simpleRMHC;
-        // evoAlg = new SlidingMeanEDA();
-        // evoAlg = new SimpleGA();
-
-        int nEvals = 20;
-        int seqLength = 100;
-        EvoAgent evoAgent = new EvoAgent().setEvoAlg(evoAlg, nEvals).setSequenceLength(seqLength);
-        boolean useShiftBuffer = true;
-        evoAgent.setUseShiftBuffer(useShiftBuffer);
-        evoAgent.setVisual();
-        return evoAgent;
-    }
 }

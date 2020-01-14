@@ -1,7 +1,6 @@
 package spinbattle.tune
 
 import ggi.agents.SimpleEvoAgent
-import spinbattle.actuator.HeuristicController
 import spinbattle.actuator.SourceTargetActuator
 import spinbattle.core.SpinGameState
 import spinbattle.params.Constants

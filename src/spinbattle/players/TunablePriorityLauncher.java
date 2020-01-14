@@ -25,7 +25,6 @@ public class TunablePriorityLauncher implements SimplePlayerInterface {
 
 
     // int shipThreshold =
-
     // try to find the best source / target pair to launch an attack
 
     // distance factor controls preference for pairs which are closer
@@ -41,7 +40,6 @@ public class TunablePriorityLauncher implements SimplePlayerInterface {
     double randomFactor = 0.1;
 
     static Random random = new Random();
-
 
     //
     double supportSelfCost = 1;

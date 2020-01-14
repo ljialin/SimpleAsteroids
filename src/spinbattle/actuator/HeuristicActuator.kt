@@ -5,7 +5,7 @@ import spinbattle.core.SpinGameState
 import spinbattle.params.Constants
 import utilities.StatSummary
 
-class HeuristicController : Actuator {
+class HeuristicActuator : Actuator {
 
     internal var planetSelected: Int? = null
     internal var playerId: Int = 0
@@ -18,24 +18,24 @@ class HeuristicController : Actuator {
 
     internal var doNothing = false
 
-    fun setDoNothing(): HeuristicController {
+    fun setDoNothing(): HeuristicActuator {
         doNothing = true
         return this
     }
 
-    fun reset(): HeuristicController {
+    fun reset(): HeuristicActuator {
         planetSelected = null
         return this
     }
 
-    override fun copy(): HeuristicController {
-        val copy = HeuristicController()
+    override fun copy(): HeuristicActuator {
+        val copy = HeuristicActuator()
         copy.playerId = playerId
         copy.planetSelected = planetSelected
         return copy
     }
 
-    fun setPlayerId(playerId: Int): HeuristicController {
+    fun setPlayerId(playerId: Int): HeuristicActuator {
         this.playerId = playerId
         return this
     }
@@ -44,6 +44,7 @@ class HeuristicController : Actuator {
         return maxActions
     }
 
+    val verbose = true
 
     override fun actuate(action: Int, gameState: SpinGameState): SpinGameState? {
         if (doNothing) {
@@ -60,6 +61,7 @@ class HeuristicController : Actuator {
 
         val actions = ArrayList<PlanetPair>()
         val h = Heuristic()
+
         for (source in gameState.planets) {
             // only consider if this player owns it, and it is ready for transit
             if (source.ownedBy == playerId && source.transitReady()) {
@@ -73,16 +75,25 @@ class HeuristicController : Actuator {
 
         // now sort them in to order
         actions.sortByDescending { t -> t.score }
+
+        if (verbose) {
+            // then print out the actions
+            for (pp in actions) {
+                println(pp)
+            }
+        }
+
         stats.add(actions.size)
 
         if (action < actions.size) {
             // take the action
             with (actions.get(action)) {
+                // get the transit if available, otherwise return the game state without taking any action
                 val transit = source.getTransporter() ?: return gameState
                 // shift 50%
                 // println("Took action: " + this)
                 try {
-                    transit.setPayload(source, source.shipCount / 2)
+                    transit.setPayload(source, source.shipCount * ratio)
                     transit.launch(source.position, target.position, playerId, gameState)
                     transit.setTarget(action)
                 } catch (e: Exception) {
@@ -103,7 +114,7 @@ class HeuristicController : Actuator {
     }
 }
 
-data class PlanetPair(var source: Planet, var target: Planet) {
+data class PlanetPair(var source: Planet, var target: Planet, var ratio: Double = 0.5) {
     var score: Double = 0.0
     var shipsToSend = 0
 }
@@ -111,8 +122,9 @@ data class PlanetPair(var source: Planet, var target: Planet) {
 class Heuristic (
         var distanceWeight: Double = 1.0,
         var invadeNeutral: Double = 1.0,
-        var invadeEnemy: Double = 1.0
-
+        var invadeEnemy: Double = 2.0,
+        var planetSizeFactor: Double = 1.0,
+        var pairDistanceFactor: Double = 0.01
 ){
 
     fun score(pp: PlanetPair) : Double {
@@ -121,8 +133,14 @@ class Heuristic (
         //
         if (pp.target.ownedBy == Constants.neutralPlayer) {
             // rate the strength of the action
+            score += invadeEnemy
+        } else if (pp.target.ownedBy != pp.source.ownedBy) {
+            // this is an enemy planet: how much do we want to invade enemies
+            score += invadeEnemy
         }
 
+        // knock off the distance factor - time would be wasted in transit
+        score -= pairDistanceFactor * pp.source.position.dist(pp.target.position)
         return score
     }
 }

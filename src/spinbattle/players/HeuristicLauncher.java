@@ -9,7 +9,6 @@ import spinbattle.core.Transporter;
 public class HeuristicLauncher implements SimplePlayerInterface {
 
     // todo: make this actually implement it
-
     @Override
     public int getAction(AbstractGameState gameState, int playerId) {
         return 0;
@@ -19,8 +18,6 @@ public class HeuristicLauncher implements SimplePlayerInterface {
     public SimplePlayerInterface reset() {
         return this;
     }
-
-
     // int shipThreshold =
 
     public HeuristicLauncher makeTransits(SpinGameState gameState, int playerId) {

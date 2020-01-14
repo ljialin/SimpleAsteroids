@@ -109,8 +109,6 @@ public class KeyPlayerTest {
         // point = new int[]{2, 1, 4, 1, 2, 0, 0, 3};
 
 
-
-
         return fitnessSpace.getParams(point);
 
     }
