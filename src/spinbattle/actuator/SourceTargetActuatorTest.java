@@ -39,7 +39,7 @@ public class SourceTargetActuatorTest {
         params.height = 800;
 //        params.nPlanets = 10;
 //        params.transitSpeed *= 1.0;
-        // params.nPlanets = 12;
+        params.nPlanets = 12;
         // params.height = 700;
 
         // SpinBattleParams altParams = params.copy();
@@ -61,9 +61,9 @@ public class SourceTargetActuatorTest {
         // set up the actuator
         gameState.actuators[0] = new SourceTargetActuator().setPlayerId(0);
 
-        gameState.actuators[1] = new HeuristicActuator().setPlayerId(1);
+        // gameState.actuators[1] = new HeuristicActuator().setPlayerId(1);
 
-        // gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
+        gameState.actuators[1] = new SourceTargetActuator().setPlayerId(1);
 
         SimplePlayerInterface evoAgent = getEvoAgent();
 
@@ -132,8 +132,8 @@ public class SourceTargetActuatorTest {
         }
     }
 
-    static boolean usePolicyEvoAgent = true;
-    static boolean useSimpleEvoAgent = true;
+    static boolean usePolicyEvoAgent = false;
+    static boolean useSimpleEvoAgent = false;
 
     static SimplePlayerInterface getEvoAgent() {
 
