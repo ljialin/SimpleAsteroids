@@ -18,7 +18,7 @@ public class KeyPlayerTest {
 
         params = getFavouriteParams();
 
-        params = getSearchSpaceParams();
+        // params = getSearchSpaceParams();
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);

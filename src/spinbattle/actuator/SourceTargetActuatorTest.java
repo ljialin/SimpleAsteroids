@@ -32,7 +32,7 @@ public class SourceTargetActuatorTest {
 
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
-        //         params.gravitationalFieldConstant *= 1.0;
+        params.gravitationalFieldConstant *= 0.0;
 
         // params.maxTicks = 300;
         params.width = 500;
