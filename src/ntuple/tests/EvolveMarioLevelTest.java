@@ -274,7 +274,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
         lineChart.yAxis = new LineChartAxis(new double[]{ss.min(), ss.max()});
         lineChart.title = "Evolution of Fitness";
         lineChart.setXLabel("Iterations").setYLabel("Fitness");
-        new JEasyFrame(lineChart, "KL-Based PCG");
+        new JEasyFrame(lineChart, "JSD Tile Pattern PCG");
     }
 
     private int distinctValues(int[][] a) {
@@ -324,7 +324,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         // now check the klDiv
 
-        System.out.println("Divergence = " + convNTuple.getKLDivergence(x, 1e-20));
+        System.out.println("Divergence = " + convNTuple.getKLDivergence(x));
 
 //        // now add some random noise
 //

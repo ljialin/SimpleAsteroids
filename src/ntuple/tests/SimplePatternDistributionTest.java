@@ -36,7 +36,7 @@ public class SimplePatternDistributionTest {
         System.out.println("KL Div versus mutations: ");
         for (int i=0; i<nEdits; i++) {
             // just set some random entries to zero
-            System.out.println(i + "\t " + c1.getKLDivergence(mutated, 0.0000000001));
+            System.out.println(i + "\t " + c1.getKLDivergence(mutated));
             int ix = random.nextInt(mutated.length);
             mutated[ix] = 0;
         }

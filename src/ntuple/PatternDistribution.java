@@ -79,6 +79,15 @@ public class PatternDistribution {
         return list;
     }
 
+
+    public PatternDistribution add(PatternDistribution pd) {
+        for (Map.Entry<Pattern, StatSummary> pair : pd.statMap.entrySet()) {
+            add(pair.getKey(), pair.getValue().sum());
+        }
+        return this;
+    }
+
+
     public PatternDistribution add(Pattern p, double w) {
         StatSummary ss = statMap.get(p);
         if (ss == null) {

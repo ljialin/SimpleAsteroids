@@ -416,13 +416,15 @@ public class ConvNTuple implements BanditLandscapeModel {
 
 
     public static double w = 0.5;
+    public static boolean useJSD = true;
     /**
      * @param x: probe image vector
      * @return quality of fit to trained distribution
      */
     // note that epsilon is the punishment for included non-observed values
     // it is the KL Divergence between the two distributions
-    public double getKLDivergence(int[] x, double epsilon) {
+
+    public double getKLDivergence(int[] x) {
         // create a new SampleDis for this image
         PatternDistribution qDis = new PatternDistribution();
         for (int[] index : indices) {
@@ -430,6 +432,9 @@ public class ConvNTuple implements BanditLandscapeModel {
             Pattern pattern = new Pattern().setPattern(x, index);
             qDis.add(pattern);
         }
+
+        if (useJSD) return new JSD().div(sampleDis, qDis, w);
+
         // return Math.random();
         return PatternDistribution.klDivWeighted(sampleDis, qDis, w);
         // return PatternDistribution.klDivSymmetric(sampleDis, qDis);

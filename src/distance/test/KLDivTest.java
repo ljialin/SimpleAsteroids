@@ -1,6 +1,7 @@
 package distance.test;
 
 import distance.convolution.ConvNTuple;
+import distance.kl.JSD;
 import distance.kl.KLDiv;
 import distance.pattern.PatternCount;
 import distance.util.MarioReader;
@@ -30,8 +31,8 @@ public class KLDivTest {
 
     static String inputFile3 = "data/mario/levels/mario-5-1.txt";
 
-    static int filterWidth = 2;
-    static int filterHeight = 2;
+    static int filterWidth = 4;
+    static int filterHeight = 4;
     static int stride = 1;
 
 
@@ -54,6 +55,9 @@ public class KLDivTest {
         System.out.println("klDiv 2-1: " + klDiv21);
         System.out.println("klDiv Sym: " + klDiv);
 
+        System.out.println("JSD 1-2: " + new JSD().div(c1.sampleDis, c2.sampleDis, 0.5));
+        System.out.println("JSD 2-1: " + new JSD().div(c2.sampleDis, c1.sampleDis, 0.5));
+
         System.out.println("Adding a distribution to itself");
         c1.sampleDis.add(c1.sampleDis);
         System.out.println("Sanity check, should be same as before: KLDiv Sym 1-2: " + KLDiv.klDivSymmetric(c1.sampleDis, c2.sampleDis));
@@ -65,9 +69,9 @@ public class KLDivTest {
         System.out.println();
         System.out.println("Sanity check, should be zero: KLDiv Sym 1-1: " + KLDiv.klDiv(c1.sampleDis, c1.sampleDis));
 
-        printDis(c1);
+        // printDis(c1);
 
-        showTilePatterns(c1);
+        // showTilePatterns(c1);
 
     }
 

@@ -59,7 +59,7 @@ public class PatternGenTest {
 //            System.out.println("Mean:   \t " + convNTuple.getMeanEstimate(test));
 //            System.out.println("Explore:   \t " + convNTuple.getExplorationEstimate(test));
 //            System.out.println("Stats:\t " + convNTuple.getNoveltyStats(test));
-            System.out.println("pFit:\t " + convNTuple.getKLDivergence(test, epsilon));
+            System.out.println("pFit:\t " + convNTuple.getKLDivergence(test));
             System.out.println();
         }
     }

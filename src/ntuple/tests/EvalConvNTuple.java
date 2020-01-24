@@ -39,12 +39,12 @@ public class EvalConvNTuple implements SolutionEvaluator, SearchSpace, FitnessSp
         return this;
     }
 
-    public static double epsilon = 1e-60;
+    // public static double epsilon = 1e-60;
     public static double noiseLevel = 0.00001;
     @Override
     public double evaluate(int[] x) {
         // keep track of whether it is truly optimal
-        double fitness = -convNTuple.getKLDivergence(x, epsilon);
+        double fitness = -convNTuple.getKLDivergence(x);
         boolean isOptimal = fitness == 0;
         logger.log(fitness, x, isOptimal);
         return fitness + noiseLevel * random.nextGaussian();

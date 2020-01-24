@@ -208,7 +208,7 @@ public class ConvMutator implements Mutator {
 //        }
 
         if (verbose) {
-            System.out.format("Fitness changed from %.3f to %.3f\n\n", convNTuple.getKLDivergence(x, 0), convNTuple.getKLDivergence(y, 0));
+            System.out.format("Fitness changed from %.3f to %.3f\n\n", convNTuple.getKLDivergence(x), convNTuple.getKLDivergence(y));
         }
         return y;
 
