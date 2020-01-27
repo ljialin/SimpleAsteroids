@@ -74,7 +74,6 @@ public class KLDivWaveFunctionTest {
         new JEasyFrame(plc, frameTitle);
     }
 
-
     static ArrayList<RatedLevel> rateLevels(PatternDistribution sampleDis, ArrayList<int[][]> levels) {
         ArrayList<RatedLevel> ratedLevels = new ArrayList<>();
         for (int[][] level : levels) {
@@ -95,8 +94,6 @@ public class KLDivWaveFunctionTest {
         }
 
         Collections.sort(ratedLevels);
-
-
         return ratedLevels;
     }
 
@@ -124,9 +121,14 @@ public class KLDivWaveFunctionTest {
             setLayout(new FlowLayout());
         }
 
+
+
 //        public void add(PairView pairView) {
 //            add(pairView);
 //        }
+
+
+
     }
 
     static class PairView extends JComponent {

@@ -30,6 +30,6 @@ public class KLDiv {
             // epsilon is already included in the getProb function
             tot += p * Math.log(p/q);
         }
-        return tot;
+        return tot / Math.log(2);
     }
 }

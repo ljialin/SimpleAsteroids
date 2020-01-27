@@ -31,6 +31,8 @@ public class LevelView extends JPanel {
     HashMap<Integer,Color> colorMap;
     HashMap<Integer,BufferedImage> iconMap;
 
+
+
     public LevelView setColorMap(HashMap<Integer, Color> colorMap) {
         this.colorMap = colorMap;
         return this;
@@ -92,8 +94,16 @@ public class LevelView extends JPanel {
 
     // setting the icons to Mario is just a quick hack for now
     public static void showMaze(int[][] tiles, String title) {
+        showMaze(tiles, title, false);
+    }
+
+    // setting the icons to Mario is just a quick hack for now
+    public static void showMaze(int[][] tiles, String title, boolean useIconMap) {
         LevelView levelView = new LevelView(tiles).setColorMap(MarioReader.tileColors);
-        levelView.iconMap = MarioReader.icons;
+        if (useIconMap)
+            levelView.iconMap = MarioReader.icons;
+        else
+            levelView.iconMap = null;
         new JEasyFrame(levelView, title);
     }
 

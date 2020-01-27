@@ -5,6 +5,7 @@ package distance.convolution;
 // it actually uses a standard N-Tuple, but via a convolutional expansion of the input
 
 
+import distance.kl.JSD;
 import distance.kl.KLDiv;
 import distance.pattern.Pattern;
 import distance.pattern.PatternDistribution;
@@ -27,9 +28,9 @@ public class ConvNTuple {
 
     public int filterWidth, filterHeight;
 
-    int stride;
+    int stride=1;
 
-    int mValues; // number of values possible in each image pixel / tile
+    // int mValues; // number of values possible in each image pixel / tile
 
     public PatternDistribution sampleDis;
 
@@ -73,17 +74,17 @@ public class ConvNTuple {
         return this;
     }
 
-    public double address(int[] image, int[] index) {
-        // System.out.println(image.length);
-        double prod = 1;
-        double addr = 0;
-        for (int i : index) { //  i<tuple.length; i++) {
-            // System.out.println(i);
-            addr += prod * image[i];
-            prod *= mValues;
-        }
-        return addr;
-    }
+//    public double address(int[] image, int[] index) {
+//        // System.out.println(image.length);
+//        double prod = 1;
+//        double addr = 0;
+//        for (int i : index) { //  i<tuple.length; i++) {
+//            // System.out.println(i);
+//            addr += prod * image[i];
+//            prod *= mValues;
+//        }
+//        return addr;
+//    }
 
     public ArrayList<int[]> indices;
 
@@ -151,14 +152,14 @@ public class ConvNTuple {
         return this;
     }
 
-    public double addressSpaceSize() {
-        // return SearchSpaceUtil.size(searchSpace);
-        double size = 1;
-        for (int i = 0; i < filterWidth * filterHeight; i++) {
-            size *= mValues;
-        }
-        return size;
-    }
+//    public double addressSpaceSize() {
+//        // return SearchSpaceUtil.size(searchSpace);
+//        double size = 1;
+//        for (int i = 0; i < filterWidth * filterHeight; i++) {
+//            size *= mValues;
+//        }
+//        return size;
+//    }
 
 
     public int[] flatten(int[][] a) {
@@ -173,11 +174,25 @@ public class ConvNTuple {
         return x;
     }
 
+    public static int[] forceFlatten(int[][] a) {
+        int n = a.length * a[0].length;
+        int w = a.length;
+        int[] x = new int[n];
+        for (int i = 0; i < n; i++) {
+            x[i] = a[i % w][i / w];
+        }
+        return x;
+    }
+
     boolean storeIndexArrays = true;
 
     public ConvNTuple addPoint(int[][] p, double value) {
         addPoint(flatten(p), value);
         return this;
+    }
+
+    public double getKLDivergence(int[][] p) {
+        return getKLDivergence(flatten(p), 1e-5);
     }
 
     public ConvNTuple addPoint(int[] p, double value) {
@@ -234,19 +249,19 @@ public class ConvNTuple {
 
     public boolean useWeightedMean = false;
 
-    public StatSummary getNoveltyStats(int[] x) {
-        StatSummary ssTot = new StatSummary();
-        for (int[] index : indices) {
-            double address = address(x, index);
-            StatSummary ss = sampleDis.statMap.get(address);
-            if (ss != null) {
-                ssTot.add(ss.n());
-            } else {
-                ssTot.add(0);
-            }
-        }
-        return ssTot;
-    }
+//    public StatSummary getNoveltyStats(int[] x) {
+//        StatSummary ssTot = new StatSummary();
+//        for (int[] index : indices) {
+//            double address = address(x, index);
+//            StatSummary ss = sampleDis.statMap.get(address);
+//            if (ss != null) {
+//                ssTot.add(ss.n());
+//            } else {
+//                ssTot.add(0);
+//            }
+//        }
+//        return ssTot;
+//    }
 
     /**
      * @param x: probe image vector
@@ -266,6 +281,21 @@ public class ConvNTuple {
         return KLDiv.klDivSymmetric(sampleDis, qDis);
         // return PatternDistribution.klDiv(sampleDis, qDis);
         // return PatternDistribution.klDiv(qDis, sampleDis);
+    }
+
+    public double getJSD(int[][] x) {
+        return getJSD(flatten(x));
+    }
+
+    public double getJSD(int[] x) {
+        // create a new SampleDis for this image
+        PatternDistribution qDis = new PatternDistribution();
+        for (int[] index : indices) {
+            // double address = address(x, index);
+            Pattern pattern = new Pattern().setPattern(x, index);
+            qDis.add(pattern);
+        }
+        return new JSD().div(qDis, sampleDis, 0.5);
     }
 
     double k = 2.0;

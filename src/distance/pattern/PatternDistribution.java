@@ -1,5 +1,6 @@
 package distance.pattern;
 
+import distance.kl.JSD;
 import distance.kl.KLDiv;
 import utilities.StatSummary;
 
@@ -24,13 +25,22 @@ public class PatternDistribution {
         Pattern p2 = new Pattern().setPattern(new int[]{1, 1});
         Pattern p3 = new Pattern().setPattern(new int[]{3, 1});
         Pattern p4 = new Pattern().setPattern(new int[]{1, 2});
-        p.add(p1, 2);
-        p.add(p2, 2);
-        p.add(p3, 1);
 
-        q.add(p1);
-        q.add(p2);
-        q.add(p2);
+        Pattern p5 = new Pattern().setPattern(new int[]{3, 3});
+        Pattern p6 = new Pattern().setPattern(new int[]{3, 4});
+
+
+
+        p.add(p1, 1);
+        p.add(p2, 1);
+        p.add(p3, 1);
+        p.add(p5, 1);
+        p.add(p6, 1);
+
+
+//        q.add(p1);
+//        q.add(p2);
+//        q.add(p2);
         q.add(p4, 1);
 
         System.out.println(KLDiv.klDiv(p, p));
@@ -42,6 +52,24 @@ public class PatternDistribution {
         System.out.println();
         System.out.println(KLDiv.klDivSymmetric(p, q));
         System.out.println(KLDiv.klDivSymmetric(q, p));
+
+
+        System.out.println();
+        System.out.println("p:");
+        p.printReport();
+
+        System.out.println("q:");
+        q.printReport();
+
+
+        System.out.println();
+        System.out.println("w:");
+        PatternDistribution w = new PatternDistribution();
+        w.add(p);
+        w.add(q);
+        w.printReport();
+        System.out.println();
+        System.out.println("JSD: " + new JSD().div( p, q, 0.5  ));
     }
 
     // double epsilon = 1e1;
@@ -61,7 +89,8 @@ public class PatternDistribution {
 
     public PatternDistribution add(PatternDistribution pd) {
         for (Map.Entry<Pattern, StatSummary> pair : pd.statMap.entrySet()) {
-            add(pair.getKey(), pair.getValue().sum());
+            // add(pair.getKey(), pair.getValue().sum());
+            add(pair.getKey(), pair.getValue().n());
         }
         return this;
     }
@@ -92,7 +121,7 @@ public class PatternDistribution {
         if (ss != null) {
             return (epsilon + ss.sum()) / (tot * (1+epsilon));
         } else {
-            return (epsilon / ((tot +epsilon)*(1+epsilon))) ;
+            return (epsilon / ((tot + epsilon)*(1+epsilon))) ;
         }
     }
 
@@ -123,6 +152,19 @@ public class PatternDistribution {
         } else {
             return 0.0;
         }
+    }
+
+    public void printReport() {
+        ArrayList<PatternCount> fl = getFrequencyList();
+        double rawSum = 0.0;
+        double safeSum = 0.0;
+        for (PatternCount pc : fl) {
+            System.out.println(pc + "\t " + getProb(pc.pattern) + "\t " + getRawProb(pc.pattern));
+            rawSum += getRawProb(pc.pattern);
+            safeSum += getProb(pc.pattern);
+        }
+        System.out.println("Safe sum = " + safeSum);
+        System.out.println("Raw sum = " + rawSum);
     }
 
 }
