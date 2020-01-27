@@ -26,72 +26,19 @@ val filterHeight = 3
 
 fun main(args: Array<String>) {
 
-    val gson = Gson()
-    // val file = "data/zelda/singleroom/ZeldaDungeonFixedAll.json"
     val file = "data/zelda/singleroom/ZeldaAllDungeonsNoDoors3TileTypes.json"
+    // val file = "data/zelda/singleroom/ZeldaDungeonFixedAll.json"
 
-
-
-    println(ArrayList<Integer>().javaClass)
-
-    val arrayLists = gson.fromJson(FileReader(file), ArrayList<ArrayList<ArrayList<Int>>>().javaClass)
-
-    println(arrayLists.size)
-
-
-    val a1 = intArrayOf(1, 2)
-    val a2 = intArrayOf(1, 2)
-    val aa1 = Array<IntArray>(1) { a1 }
-    val aa2 = Array(1) { a2 }
-
-    val flatSet = HashSet<IntArray>()
-    // flatSet.has
-    flatSet.add(a1)
-    flatSet.add(a2)
-    println("Flatset size: ${flatSet.size}")
-
-    println(Arrays.hashCode(aa1))
-    println(Arrays.hashCode(aa2))
-
-    val levels = ArrayList<Array<IntArray>>()
-    for (raw in arrayLists)
-        levels.add(toLevelArray(raw))
-
-    if (useReducedTileset)
-        for (aa in levels) useReducedTileset(aa, zeldaHash)
-
-
-    // val levelSet = HashSet<Array<IntArray>>()
-    val codeSet = HashSet<Int>()
-    val levelSet = HashSet<Level>()
-    val levelObjects = ArrayList<Level>()
-    for (t in levels) {
-        levelSet.add(Level(t))
-        codeSet.add(Level(t).hashCode())
-        levelObjects.add(Level(t))
-    }
-    println("Level object hashset size = ${levelSet.size}")
-
-//    println(codeSet.size)
-//
-//    println(zeldaHash.get(0))
-
+    val levelObjects = readLevels(file)
     calcDistances(levelObjects)
-
     calcDivergences(levelObjects)
-
-
     // val sortedList = list.sortedWith(compareBy(Person::age, Person::name))
     Collections.sort(levelObjects)
-
-    val levelObjectsSorted = levelObjects.sortedBy{t -> t.div}
-
+    val levelObjectsSorted = levelObjects.sortedBy{t -> t.ss.mean()}
 
     for (level in levelObjectsSorted) {
        //  LevelView.showMaze(level.aa, level.toString())
     }
-
-
 
     var ix = 0
     for (lo in levelObjectsSorted) {
@@ -114,12 +61,32 @@ fun main(args: Array<String>) {
         val rlv = RatedLevelView(ratedLevel.aa, title)
         plc.add(rlv)
     }
-    JEasyFrame(plc, "Rate Zelda Levels")
+    JEasyFrame(plc, String.format("JSD Rated Training Levels: (%d x %d), w = %.2f", filterWidth, filterHeight, ConvNTuple().jsdWeight) )
 
 
 }
 
-fun calcDivergences(levels: ArrayList<Level>) {
+fun readLevels(filename: String) : ArrayList<Level> {
+    val gson = Gson()
+
+    val arrayLists = gson.fromJson(FileReader(filename), ArrayList<ArrayList<ArrayList<Int>>>().javaClass)
+
+    val levels = ArrayList<Array<IntArray>>()
+
+    for (raw in arrayLists)
+        levels.add(toLevelArray(raw))
+
+    val levelObjects = ArrayList<Level>()
+    for (t in levels) {
+        levelObjects.add(Level(t))
+    }
+
+    return levelObjects
+
+
+}
+
+fun calcDivergences(levels: ArrayList<Level>) : ConvNTuple {
     val convNTuple = ConvNTuple()
     convNTuple.imageWidth=levels[0].aa.size
     convNTuple.imageHeight=levels[0].aa[0].size
@@ -145,6 +112,7 @@ fun calcDivergences(levels: ArrayList<Level>) {
     }
 
     convNTuple.sampleDis.printReport()
+    return convNTuple
 
 }
 

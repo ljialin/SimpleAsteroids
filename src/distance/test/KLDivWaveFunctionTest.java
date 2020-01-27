@@ -53,11 +53,8 @@ public class KLDivWaveFunctionTest {
 
         // now measure how typical each ones is and rate it
         ArrayList<RatedLevel> intraRatings = rateLevels(convNTuple.sampleDis, levels);
-
         ArrayList<RatedLevel> sampleRatings = rateLevels(sampleCNT.sampleDis, levels);
-
         showRatedLevls(intraRatings, "Intra class difference, w = " + weight);
-
         showRatedLevls(sampleRatings, "Training sample differences, w = " + weight);
 
         // checkPairs(ratedLevels);

@@ -295,8 +295,10 @@ public class ConvNTuple {
             Pattern pattern = new Pattern().setPattern(x, index);
             qDis.add(pattern);
         }
-        return new JSD().div(qDis, sampleDis, 0.5);
+        return new JSD().div(qDis, sampleDis, jsdWeight);
     }
+
+    public double jsdWeight = 0.5;
 
     double k = 2.0;
 
