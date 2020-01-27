@@ -15,8 +15,8 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 
 val useReducedTileset = false
-val filterWidth = 2
-val filterHeight = 2
+val filterWidth = 3
+val filterHeight = 3
 
 // val div = JSD()::div
 

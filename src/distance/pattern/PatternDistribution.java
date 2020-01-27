@@ -29,14 +29,11 @@ public class PatternDistribution {
         Pattern p5 = new Pattern().setPattern(new int[]{3, 3});
         Pattern p6 = new Pattern().setPattern(new int[]{3, 4});
 
-
-
         p.add(p1, 1);
         p.add(p2, 1);
         p.add(p3, 1);
         p.add(p5, 1);
         p.add(p6, 1);
-
 
 //        q.add(p1);
 //        q.add(p2);
@@ -53,7 +50,6 @@ public class PatternDistribution {
         System.out.println(KLDiv.klDivSymmetric(p, q));
         System.out.println(KLDiv.klDivSymmetric(q, p));
 
-
         System.out.println();
         System.out.println("p:");
         p.printReport();
@@ -61,22 +57,21 @@ public class PatternDistribution {
         System.out.println("q:");
         q.printReport();
 
-
         System.out.println();
         System.out.println("w:");
         PatternDistribution w = new PatternDistribution();
-        w.add(p);
-        w.add(q);
+        w.mixIn(p, 0.5);
+        w.mixIn(q, 0.5);
         w.printReport();
         System.out.println();
-        System.out.println("JSD: " + new JSD().div( p, q, 0.5  ));
+        System.out.println("JSD: " + new JSD().div( p, q, 0.9  ));
     }
 
     // double epsilon = 1e1;
-    double epsilon = 1e-5;
+    double epsilon = 1e-10;
 
     public HashMap<Pattern, StatSummary> statMap;
-    public int tot = 0;
+    public double tot = 0;
 
     public PatternDistribution() {
         statMap = new HashMap<>();
@@ -89,8 +84,8 @@ public class PatternDistribution {
 
     public PatternDistribution add(PatternDistribution pd) {
         for (Map.Entry<Pattern, StatSummary> pair : pd.statMap.entrySet()) {
-            // add(pair.getKey(), pair.getValue().sum());
-            add(pair.getKey(), pair.getValue().n());
+            add(pair.getKey(), pair.getValue().sum());
+            // add(pair.getKey(), pair.getValue().n());
         }
         return this;
     }
@@ -115,6 +110,14 @@ public class PatternDistribution {
         return this;
     }
 
+    public PatternDistribution mixIn(PatternDistribution a, double w) {
+        // assumes current set is normalised to sum to one or is empty
+        for (Pattern key : a.statMap.keySet()) {
+            add( key, a.getProb(key) * w);
+            // System.out.println(String.format("%s, \t stored prob %.2f, retreived: %.2f", key.toString(), a.getProb(key) * w, getProb(key)));
+        }
+        return this;
+    }
 
     public double getProb(Pattern key) {
         StatSummary ss = statMap.get(key);
@@ -165,6 +168,7 @@ public class PatternDistribution {
         }
         System.out.println("Safe sum = " + safeSum);
         System.out.println("Raw sum = " + rawSum);
+        System.out.println("Tot = " + tot);
     }
 
 }

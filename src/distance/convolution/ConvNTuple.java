@@ -232,7 +232,7 @@ public class ConvNTuple {
     }
 
     public int nEntries() {
-        return sampleDis.tot; // .keySet().size();
+        return (int) sampleDis.tot;
     }
 
 //    public StatSummary getStatsForceCreate(double address) {
