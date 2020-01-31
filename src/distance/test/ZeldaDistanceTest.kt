@@ -27,6 +27,8 @@ val filterHeight = 3
 fun main(args: Array<String>) {
 
     val file = "data/zelda/singleroom/ZeldaAllDungeonsNoDoors3TileTypes.json"
+    // val file = "data/zelda/singleroom/gen2output.json"
+
     // val file = "data/zelda/singleroom/ZeldaDungeonFixedAll.json"
 
     val levelObjects = readLevels(file)
