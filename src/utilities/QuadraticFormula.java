@@ -10,7 +10,7 @@ public class QuadraticFormula {
         // QuadraticFormula qf = new QuadraticFormula(1, -5, 1);
         // QuadraticFormula qf = new QuadraticFormula(-3, 12, -11);
         // QuadraticFormula qf = new QuadraticFormula(3, -52, 160);
-        QuadraticFormula qf = new QuadraticFormula(4.9, -0.7, -1.175);
+        QuadraticFormula qf = new QuadraticFormula(-4.9, 49, -44.1);
 
 
 
