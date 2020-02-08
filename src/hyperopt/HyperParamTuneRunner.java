@@ -32,6 +32,8 @@ public class HyperParamTuneRunner {
     public LineChart lineChart = new LineChart();
     // lineChart.
 
+    public ArrayList<int[]> solutions = new ArrayList<>();
+
     public HyperParamTuneRunner setLineChart(LineChart lineChart) {
         this.lineChart = lineChart;
         return this;
@@ -173,6 +175,7 @@ public class HyperParamTuneRunner {
         eval.reset();
         solution = evoAlg.runTrial(eval, nEvals);
 
+        solutions.add(solution);
 
         if (verbose) {
             plotConvergence(eval.logger(), solution);
@@ -187,9 +190,14 @@ public class HyperParamTuneRunner {
             p++;
         }
         System.out.println("Checking fitness");
+
+
+
         return runChecks(eval, solution, nChecks);
 
     }
+
+    public static boolean runEvolvedGame = true;
 
     public double runChecks(AnnotatedFitnessSpace eval, int[] solution, int nChecks) {
         ElapsedTimer timer = new ElapsedTimer();

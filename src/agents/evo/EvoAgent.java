@@ -111,7 +111,7 @@ public class EvoAgent implements SimplePlayerInterface {
         if (!useShiftBuffer) solution = null;
         // CaveGameState cgs = (CaveGameState) gameState;
         // System.out.println("Gravity check: " + cgs.params.gravity + " H: " + cgs.params.hooke);
-        System.out.println();
+        // System.out.println();
         return tmp;
     }
 

@@ -6,6 +6,7 @@ import distance.kl.JSD
 import distance.kl.KLDiv
 import distance.test.KLDivWaveFunctionTest.PairListComponent
 import distance.test.KLDivWaveFunctionTest.RatedLevelView
+import ntuple.LevelView
 import utilities.JEasyFrame
 import utilities.StatSummary
 import utilities.Stats
@@ -27,7 +28,7 @@ val filterHeight = 3
 fun main(args: Array<String>) {
 
     val file = "data/zelda/singleroom/ZeldaAllDungeonsNoDoors3TileTypes.json"
-    // val file = "data/zelda/singleroom/gen2output.json"
+    val evolvedFile = "data/zelda/singleroom/gen2output.json"
 
     // val file = "data/zelda/singleroom/ZeldaDungeonFixedAll.json"
 
@@ -37,6 +38,23 @@ fun main(args: Array<String>) {
     // val sortedList = list.sortedWith(compareBy(Person::age, Person::name))
     Collections.sort(levelObjects)
     val levelObjectsSorted = levelObjects.sortedBy{t -> t.ss.mean()}
+
+
+    val evolvedLevels = readLevels(evolvedFile)
+
+    // now look at the inter-object distances, between a set of evolved levels and the training set
+
+    for (evo in evolvedLevels) {
+        val ss = StatSummary("Distances")
+        for (level in levelObjectsSorted) {
+            val d = levelDist(level, evo)
+            println("Distance: $d")
+            ss.add(d)
+        }
+        LevelView.showMaze(evo.aa, "${ss.mean()}")
+        println(ss)
+    }
+
 
     for (level in levelObjectsSorted) {
        //  LevelView.showMaze(level.aa, level.toString())

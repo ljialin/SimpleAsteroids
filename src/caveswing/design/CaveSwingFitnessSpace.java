@@ -145,6 +145,8 @@ public class CaveSwingFitnessSpace implements AnnotatedFitnessSpace {
         evoAgentFactory.seqLength = 100;
         EvoAgent evoGood = evoAgentFactory.getAgent();
 
+
+
         // set to visual just for testing
         // evoGood.setVisual();
         speedTest = new SpeedTest().setGameFactory(gameFactory);

@@ -18,7 +18,7 @@ public class KeyPlayerTest {
 
         params = getFavouriteParams();
 
-        // params = getSearchSpaceParams();
+        params = getSearchSpaceParams();
 
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);
@@ -103,7 +103,8 @@ public class KeyPlayerTest {
         point = new int[]{0, 6, 3, 3, 3, 3, 3, 3};
 
 
-        point = new int[]{2, 6, 3, 3, 3, 0, 2, 3};
+        // this is one of my favourite examples - hard but fast and fun!
+        point = new int[]{0, 6, 4, 3, 3, 0, 1, 3};
 
         // point = new int[]{1, 2, 2, 1, 4, 0, 0, 3};
         // point = new int[]{2, 1, 4, 1, 2, 0, 0, 3};
