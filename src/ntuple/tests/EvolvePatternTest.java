@@ -28,7 +28,7 @@ public class EvolvePatternTest {
         // evoAlg.setMutator(new ConvMutator());
         // evoAlg = new SlidingMeanEDA().setHistoryLength(30);
         // evoAlg = new CompactSlidingGA();
-        int nEvals = 100000;
+        int nEvals = 10000;
         StatSummary results = new StatSummary();
         EvolvePatternTest ept = new EvolvePatternTest();
         for (int i=0; i<nTrials; i++) {
@@ -58,10 +58,10 @@ public class EvolvePatternTest {
 
     public static ConvNTuple getTrainedConvNTuple() {
         int w = 4, h = 4;
-        int filterWidth = 2, filterHeight = 2;
+        int filterWidth = 3, filterHeight = 3;
         ConvNTuple convNTuple = new ConvNTuple().setImageDimensions(w, h);
         convNTuple.setFilterDimensions(filterWidth, filterHeight);
-        convNTuple.setMValues(3).setStride(1);
+        convNTuple.setMValues(4).setStride(1);
 
         convNTuple.makeWrapAroundIndices();
         convNTuple.reset();
@@ -76,11 +76,17 @@ public class EvolvePatternTest {
         // https://adamsmith.as/papers/wfc_is_constraint_solving_in_the_wild.pdf
 
         int[] x = {
-                0,0,0,0,
-                0,1,1,1,
-                0,1,2,1,
-                0,1,1,1,
+                0,0,2,0,0,
+                0,0,2,1,1,
+                1,1,2,1,1,
+                0,0,1,0,0,
         };
+//        int[] x = {
+//                0,0,0,0,
+//                0,1,1,1,
+//                0,1,2,1,
+//                0,1,1,1,
+//        };
         convNTuple.addPoint(x, 1);
 
         // now iterate over all the values in there

@@ -26,7 +26,7 @@ fun main(args: Array<String>) {
 
     val sample = levelObjects[2]
 
-    val useOneLevel = false
+    val useOneLevel = true
 
     if (useOneLevel) {
         levelObjects.clear()

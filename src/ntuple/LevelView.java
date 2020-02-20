@@ -28,7 +28,7 @@ public class LevelView extends JPanel {
     int[][] tiles;
 
     static Color[] colors = {
-            Color.white, Color.black, Color.red,
+            Color.white, Color.black, Color.red, Color.blue
     };
 
     HashMap<Integer,Color> colorMap;
