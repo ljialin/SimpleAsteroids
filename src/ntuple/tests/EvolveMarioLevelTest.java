@@ -68,7 +68,7 @@ public class EvolveMarioLevelTest implements EvolutionListener {
 
         int nTrials = 5;
 
-        ConvNTuple.w = 0.6;
+        ConvNTuple.w = 0.5;
 
         DefaultMutator mutator = new DefaultMutator(null);
         mutator.flipAtLeastOneValue = true;
