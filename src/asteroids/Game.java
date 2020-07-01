@@ -2,6 +2,7 @@ package asteroids;
 
 import evodef.EvoAlg;
 import evodef.DefaultMutator;
+import evogame.DefaultParams;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
 import agents.evo.EvoAgent;
@@ -82,6 +83,19 @@ public class Game {
         if (controller instanceof KeyController) {
             frame.addKeyListener((KeyController) controller);
         }
+    }
+
+    public Game() {
+        GameParameters params = new GameParameters().injectValues(new DefaultParams());
+        gameState = new AsteroidsGameState().setParams(params);
+        gameState.initialLevel = 5;
+        // gameState.setParams(new GameParameters());
+        gameState.initForwardModel();
+        view = new View(gameState.copy());
+        frame = new JEasyFrame(view, "Simple Asteroids");
+        frame.setLocation(600, 0);
+        controller = new KeyController();
+        frame.addKeyListener((KeyController) controller);
     }
 
 
