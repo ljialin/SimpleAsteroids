@@ -1,11 +1,13 @@
 package asteroids;
 
+import agents.simple.SimpleEvoAgent;
 import evodef.EvoAlg;
 import evodef.DefaultMutator;
 import evogame.DefaultParams;
 import evogame.GameParameters;
 import ga.SimpleRMHC;
 import agents.evo.EvoAgent;
+import ggi.core.SimplePlayerInterface;
 import ntuple.SlidingMeanEDA;
 import utilities.ElapsedTimer;
 import utilities.JEasyFrame;
@@ -74,6 +76,7 @@ public class Game {
         }
         if (visible) {
             controller = getEvoAgent(); // new KeyController();
+            // controller = getSimpleEvoAgent();
             // controller = new KeyController();
         } else {
             controller = new RotateAndShoot();
@@ -101,6 +104,12 @@ public class Game {
 
     public static int seqLength = 20;
     public static int nEvals = 100;
+
+    Controller getSimpleEvoAgent() {
+        showPlayouts = false;
+        SimplePlayerInterface agent = new SimpleEvoAgent();
+        return new EvoAgentAdapter().setAgent(agent);
+    }
 
     Controller getEvoAgent() {
         //
