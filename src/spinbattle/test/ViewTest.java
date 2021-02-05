@@ -21,7 +21,7 @@ public class ViewTest {
             launcher.makeTransits(gameState, Constants.playerTwo);
             view.setGameState((SpinGameState) gameState.copy());
             view.repaint();
-            Thread.sleep(20);
+            Thread.sleep(50);
         }
     }
 }

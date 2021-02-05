@@ -6,6 +6,7 @@ import evodef.SolutionEvaluator;
 import graph.Graph;
 import graph.GraphBuilder;
 import graph.ShortestPath;
+import graph.Vertex;
 import utilities.ElapsedTimer;
 import utilities.StatSummary;
 
@@ -18,9 +19,9 @@ import static evomaze.Constants.*;
  */
 public class ShortestPathTest implements SolutionEvaluator, SearchSpace {
     public static void main(String[] args) {
-        int n = 16;
+        int n = 225;
 
-        int nReps = 5;
+        int nReps = 30;
 
         StatSummary ssTimes = new StatSummary();
         StatSummary ssResults = new StatSummary();
@@ -43,8 +44,9 @@ public class ShortestPathTest implements SolutionEvaluator, SearchSpace {
     public static Integer runOnce(int n) {
         int[] bits = new int[n];
         Random random = new Random();
+        double pOne = 0.3;
         for (int i=0; i<n; i++) {
-            // bits[i] = random.nextInt(2);
+            bits[i] = (random.nextDouble() < pOne) ? 1 : 0;
         }
 
         return new ShortestPathTest().findShortestPath(bits);
@@ -60,11 +62,12 @@ public class ShortestPathTest implements SolutionEvaluator, SearchSpace {
 
         // System.out.println("Finding shortest path:");
 
-        // Vertex from = new Vertex(0, 0);
-        // Vertex to = new Vertex(5, 5);
+//        Vertex from = new Vertex(0, 0);
+//        Vertex to = new Vertex(5, 5);
 
         ShortestPath shortestPath = new ShortestPath();
         Integer result = shortestPath.runShortestPath(graph, from, to);
+        // System.out.println("Result = " + result);
 
         // shortestPath.printTrace(from, to);
 

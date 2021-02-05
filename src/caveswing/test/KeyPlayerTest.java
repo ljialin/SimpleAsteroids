@@ -16,10 +16,11 @@ public class KeyPlayerTest {
 
         CaveSwingParams params = new CaveSwingParams();
 
-        params = getFavouriteParams();
+        // params = getFavouriteParams();
 
-        params = getSearchSpaceParams();
+        // params = getSearchSpaceParams();
 
+        params = getCoolParams();
         CaveGameState gameState = new CaveGameState().setParams(params).setup();
         // gameState.setSoundEnabled(true);
         CaveView view = new CaveView().setGameState(gameState).setParams(params);
@@ -47,7 +48,7 @@ public class KeyPlayerTest {
                 CaveGameState viewState = (CaveGameState) gameState.copy();
                 view.setGameState(viewState).repaint();
                 frame.setTitle(title + " : " + gameState.nTicks + " : " + gameState.isTerminal());
-                Thread.sleep(40);
+                Thread.sleep(25);
             }
             System.out.println("Final score: " + (int) gameState.getScore());
             Thread.sleep(2000);
@@ -60,17 +61,36 @@ public class KeyPlayerTest {
 
         // todo: adjust parameter setting and see how they affect game play for you
         params.maxTicks = 500;
-        params.gravity.y = 1.2;
+        params.gravity.y = 1.0;
         params.hooke = 0.01;
         params.gravity.x = -0.00;
         params.width = 2500;
         params.height *= 1.8;
-        params.nAnchors = 8;
+        params.nAnchors = 1;
         // params.nAnchors /= 2;
         params.meanAnchorHeight *= 2;
         params.costPerTick *= 50;
 
         params.hooke *= 2;
+
+        return params;
+    }
+
+    static CaveSwingParams getCoolParams() {
+        CaveSwingParams params = CoolTestParams.getParams();
+        // params.nAnchors *=2;
+
+        params.maxTicks = 500;
+        params.gravity.y = 0.5;
+        params.hooke = 0.01;
+        params.gravity.x = -0.00;
+        // params.width = 1500;
+        // params.height *= 1.5;
+
+        params.width = 2500;
+        params.height *= 1.5;
+        // params.nAnchors /= 2;
+        params.meanAnchorHeight *= 2;
 
         return params;
     }
@@ -100,15 +120,17 @@ public class KeyPlayerTest {
         // this one is better
         point = new int[]{1, 5, 2, 0, 4, 1, 3, 2};
 
-        point = new int[]{0, 6, 3, 3, 3, 3, 3, 3};
+        // point = new int[]{0, 6, 3, 3, 3, 3, 3, 3};
 
 
         // this is one of my favourite examples - hard but fast and fun!
-        point = new int[]{0, 6, 4, 3, 3, 0, 1, 3};
+        // point = new int[]{0, 6, 4, 3, 3, 0, 1, 3};
 
         // point = new int[]{1, 2, 2, 1, 4, 0, 0, 3};
         // point = new int[]{2, 1, 4, 1, 2, 0, 0, 3};
 
+
+        point = new int[]{1, 6, 0, 2, 2, 2, 3, 0};
 
         return fitnessSpace.getParams(point);
 

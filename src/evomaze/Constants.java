@@ -7,7 +7,7 @@ import graph.Vertex;
  */
 public interface Constants {
     Vertex from = new Vertex(0, 0);
-    Vertex to = new Vertex(5, 5);
+    Vertex to = new Vertex(14, 14);
 
 
     int nBits = (to.x + 1) * (to.x + 1);

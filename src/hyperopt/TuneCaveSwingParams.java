@@ -19,7 +19,7 @@ public class TuneCaveSwingParams {
     public static void main(String[] args) throws Exception {
         int nEvals = 200;
         System.out.println("Optimization budget: " + nEvals);
-        NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(5000);
+        NTupleBanditEA ntbea = new NTupleBanditEA().setKExplore(50000);
 
         ntbea.logBestYet = true;
         NTupleSystem model = new NTupleSystem();

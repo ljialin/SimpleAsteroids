@@ -52,14 +52,15 @@ public class CaveSwingFitnessSpace implements AnnotatedFitnessSpace {
     }
 
     double[] xGravity = {-0.02, 0.0, 0.02};
-    double[] yGravity = {-0.2, -0.1, 0, 0.1, 0.2, 0.5, 1.0};
+    double[] yGravity = {-0.2, -0.1, 0, 0.1, 0.2, 0.5, 1.0, 2.0};
 
-    double[] hooke = {0.0, 0.005, 0.01, 0.02, 0.03};
-    double[] lossFactor = {0.99, 0.999, 1.0, 1.01};
+    double[] hooke = {0.0, 0.005, 0.01, 0.02, 0.03, 0.05};
+    double[] lossFactor = {0.8, 0.99, 0.999, 1.0, 1.01};
     double[] anchorHeight = {0.1, 0.2, 0.3, 0.4, 0.5};
     int[] nAnchors = {5, 10, 15, 20, 25};
     int[] height = {100, 200, 300, 400};
     int[] width = {600, 900, 1500, 2500};
+    // int[] width = {2500};
 
     int[] nValues = new int[]{xGravity.length, yGravity.length,
             hooke.length, lossFactor.length, anchorHeight.length, nAnchors.length, height.length, width.length};

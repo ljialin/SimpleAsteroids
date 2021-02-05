@@ -10,19 +10,18 @@ public class QuadraticFormula {
         // QuadraticFormula qf = new QuadraticFormula(1, -5, 1);
         // QuadraticFormula qf = new QuadraticFormula(-3, 12, -11);
         // QuadraticFormula qf = new QuadraticFormula(3, -52, 160);
-        QuadraticFormula qf = new QuadraticFormula(-4.9, 49, -44.1);
-
+        QuadraticFormula qf = new QuadraticFormula(64.0, 52, 34);
 
 
         System.out.println(qf.root1());
         System.out.println(qf.root2());
         System.out.println();
 
-        // this example is a solution to a problem posted on Brilliant.com
-        for (double x : new double[]{0.2, 4.8}) {
-            System.out.println(x * x + 1 / (x * x));
-        }
-        System.out.println();
+//        // this example is a solution to a problem posted on Brilliant.com
+//        for (double x : new double[]{0.2, 4.8}) {
+//            System.out.println(x * x + 1 / (x * x));
+//        }
+//        System.out.println();
 
     }
 

@@ -3,6 +3,7 @@ package caveswing.core;
 import ggi.core.AbstractGameState;
 import math.Vector2d;
 import sound.SoundManager;
+import utilities.StatSummary;
 
 public class CaveGameState implements AbstractGameState {
 
@@ -35,11 +36,14 @@ public class CaveGameState implements AbstractGameState {
         return this;
     }
 
+    StatSummary yStats = new StatSummary();
+
     public CaveGameState setup() {
         map = new Map().setup(params);
         avatar = new MovableObject();
         avatar.s = new Vector2d(params.width/10, params.height/2);
         avatar.v = new Vector2d();
+        yStats = new StatSummary();
         return this;
     }
 

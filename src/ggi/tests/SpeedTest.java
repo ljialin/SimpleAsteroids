@@ -41,6 +41,7 @@ public class SpeedTest {
         return this;
     }
 
+    public AbstractGameState prevGame = null;
     public SpeedTest playGame(int maxSteps) {
         AbstractGameState gameState = gameFactory.newGame();
         int nSteps = 0;
@@ -60,6 +61,7 @@ public class SpeedTest {
         gameLength.add(nSteps);
         gameScores.add(gameState.getScore());
 
+        prevGame = gameState;
         return this;
     }
 

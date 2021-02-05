@@ -25,21 +25,21 @@ public class SourceTargetActuatorTest {
     public static void main(String[] args) throws Exception {
         // to always get the same initial game
         long seed = new Random().nextLong();
-        seed = -6330548296303013003L;
+        // seed = -6330548296303013003L;
         System.out.println("Setting seed to: " + seed);
         SpinBattleParams.random = new Random(seed);
         // SpinBattleParams.random = new Random();
 
         SpinBattleParams params = new SpinBattleParams();
         // params.transitSpeed *= 2;
-        params.gravitationalFieldConstant *= 0.0;
+        // params.gravitationalFieldConstant *= 0.0;
 
         // params.maxTicks = 300;
         params.width = 500;
         params.height = 800;
 //        params.nPlanets = 10;
 //        params.transitSpeed *= 1.0;
-        params.nPlanets = 12;
+        params.nPlanets = 20;
         // params.height = 700;
 
         // SpinBattleParams altParams = params.copy();
