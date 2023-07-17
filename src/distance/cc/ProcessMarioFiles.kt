@@ -19,7 +19,7 @@ data class LevelDescriptor (
     }
 }
 
-fun main(args: Array<String>) {
+fun main() {
     val path = "data/mario/levels/"
     val file = File(path)
     val levelList = ArrayList<LevelDescriptor>()

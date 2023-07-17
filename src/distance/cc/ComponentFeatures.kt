@@ -47,7 +47,7 @@ data class ComponentSummary(
 
 }
 
-fun main(args: Array<String>) {
+fun main() {
     val cs = ComponentSummary(10)
     for (i in 1 until 10)
         cs.add(i, i)

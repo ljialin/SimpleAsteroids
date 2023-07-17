@@ -2,7 +2,7 @@ package distance.kl
 
 import java.util.*
 
-fun main(args: Array<String>) {
+fun main() {
     val p = doubleArrayOf(0.0, 0.5, 0.5)
     val q = doubleArrayOf(0.5, 0.5, 0.0)
     println(jsDiv(p,q))

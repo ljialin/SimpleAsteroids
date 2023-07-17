@@ -17,7 +17,7 @@ import java.awt.Color
 import java.util.*
 import kotlin.test.assertTrue
 
-fun main(args: Array<String>) {
+fun main() {
 
     val file = "data/zelda/singleroom/ZeldaAllDungeonsNoDoors3TileTypes.json"
     // val file = "data/zelda/singleroom/ZeldaDungeonFixedAll.json"

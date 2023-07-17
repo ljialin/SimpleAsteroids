@@ -2,7 +2,7 @@ package distance.cc
 
 import distance.util.MarioReader.getAndShowLevel
 
-fun main(args: Array<String>) {
+fun main() {
     var inputFile1 = "data/mario/levels/mario-1-1.txt"
     var inputFile2 = "data/mario/levels/mario-3-1.txt"
 

@@ -3,7 +3,7 @@ package distance.kl
 import distance.pattern.Pattern
 import distance.pattern.PatternDistribution
 
-fun main(args: Array<String>) {
+fun main() {
 
     val p = PatternDistribution()
     val q = PatternDistribution()

@@ -9,7 +9,7 @@ import java.awt.geom.Path2D
 import java.awt.geom.Rectangle2D
 import javax.swing.JComponent
 
-fun main(args: Array<String>) {
+fun main() {
     val frame = JEasyFrame(AmbiguousStructureArt(12), "Art Test")
 }
 

@@ -25,7 +25,7 @@ val filterHeight = 3
 
 
 
-fun main(args: Array<String>) {
+fun main() {
 
     val file = "data/zelda/singleroom/ZeldaAllDungeonsNoDoors3TileTypes.json"
     val evolvedFile = "data/zelda/singleroom/gen2output.json"

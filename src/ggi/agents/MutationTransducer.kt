@@ -3,7 +3,7 @@ package ggi.agents
 
 import java.util.*
 
-fun main(args: Array<String>) {
+fun main() {
     val range = 3
     val n = 20
     val mt = MutationTransducer(repeatProb = 0.5)

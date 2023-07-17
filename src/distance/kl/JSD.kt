@@ -2,7 +2,7 @@ package distance.kl
 
 import distance.pattern.PatternDistribution
 
-fun main(args: Array<String>) {
+fun main() {
 
 }
 

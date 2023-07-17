@@ -12,7 +12,7 @@ import java.awt.Point
 import java.util.*
 
 
-fun main(args: Array<String>) {
+fun main() {
     // to always get the same initial game
     val seed = Random().nextLong()
     // seed = -6330548296303013003L;

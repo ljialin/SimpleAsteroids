@@ -27,7 +27,7 @@ public class EvoAgentVisTest {
 
     static boolean useFalseModel = false;
 
-    static int frameDelay = 25;
+    static int frameDelay = 20;
 
     public static void main(String[] args) throws Exception {
         int nEvals = 20;
