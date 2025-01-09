@@ -27,6 +27,7 @@ public class HumanInterfaceTest {
         SourceTargetMouseController mouseController = new SourceTargetMouseController();
         mouseController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseController);
+        // setting larger values for the launchPeriod will disadvantage the AI
         int launchPeriod = 10;
         for (int i=0; i<50000 && !gameState.isTerminal(); i++) {
             gameState.next(null);
