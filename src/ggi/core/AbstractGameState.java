@@ -5,6 +5,7 @@ package ggi.core;
 
 public interface AbstractGameState {
 
+
     AbstractGameState copy();
 
     // the ith entry of the actions array is the action for the ith player

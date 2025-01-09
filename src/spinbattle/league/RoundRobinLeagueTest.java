@@ -52,19 +52,19 @@ public class RoundRobinLeagueTest {
         SimpleEvoAgent simpleEvoAgentRandomModel = new SimpleEvoAgent().setOpponent(new RandomAgent()).setSequenceLength(seqLength);
         // simpleEvoAgent.setOpponent(new RandomAgent());
         // SimplePlayerInterface p5 = simpleEvoAgent;
-        SimplePlayerInterface p6 = new TunablePriorityLauncher();
+//        SimplePlayerInterface p6 = new TunablePriorityLauncher();
 
         ArrayList<SimplePlayerInterface> players = new ArrayList<>();
-        // players.add(p1);
-        // players.add(p2);
-        // players.add(p3);
-        // players.add(p4);
-        // players.add(p5);
+//         players.add(p1);
+         players.add(p2);
+         players.add(p3);
+         players.add(p4);
+//         players.add(p5);
 
         players.add(simpleEvoAgentDoNothingModel);
         players.add(simpleEvoAgentRandomModel);
         players.add(randomAgent);
-        players.add(p6);
+//        players.add(p6);
 
         RoundRobinLeague league = new RoundRobinLeague().setPlayers(players);
         // league.abstractVisualRunner = new VisualSpinGameRunner();

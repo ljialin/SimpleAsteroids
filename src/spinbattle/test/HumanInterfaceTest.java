@@ -13,10 +13,11 @@ public class HumanInterfaceTest {
 
     public static void main(String[] args) throws Exception {
         SpinBattleParams params = new SpinBattleParams();
+        params.gravitationalFieldConstant = 0.0;
         params.width = 1000;
         params.height = 700;
         params.gravitationalFieldConstant *= 2.0;
-        params.nPlanets = 40;
+        params.nPlanets = 20;
         params.maxTicks = 5000;
         SpinGameState gameState = new SpinGameState().setParams(params).setPlanets();
         SpinBattleView view = new SpinBattleView().setParams(params).setGameState(gameState);
@@ -26,7 +27,7 @@ public class HumanInterfaceTest {
         SourceTargetMouseController mouseController = new SourceTargetMouseController();
         mouseController.setGameState(gameState).setPlayerId(Constants.playerOne);
         view.addMouseListener(mouseController);
-        int launchPeriod = 400;
+        int launchPeriod = 10;
         for (int i=0; i<50000 && !gameState.isTerminal(); i++) {
             gameState.next(null);
             // launcher.makeTransits(gameState, Constants.playerOne);

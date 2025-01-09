@@ -6,8 +6,7 @@ import spinbattle.core.Transporter;
 
 
 /**
- *
- *  Class for an AI controller.  This
+ * Class for an AI controller.  This
  */
 
 public class SourceTargetActuator implements Actuator {

@@ -77,20 +77,7 @@ public class KeyPlayerTest {
     }
 
     static CaveSwingParams getCoolParams() {
-        CaveSwingParams params = CoolTestParams.getParams();
-        // params.nAnchors *=2;
-
-        params.maxTicks = 500;
-        params.gravity.y = 0.5;
-        params.hooke = 0.01;
-        params.gravity.x = -0.00;
-        // params.width = 1500;
-        // params.height *= 1.5;
-
-        params.width = 2500;
-        params.height *= 1.5;
-        // params.nAnchors /= 2;
-        params.meanAnchorHeight *= 2;
+        CaveSwingParams params = CoolTestParams.getDemoParams();
 
         return params;
     }

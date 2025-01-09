@@ -37,20 +37,20 @@ public class EvoAgentVisTest {
 
         // player = new SimpleEvoAgent();
 
-        CaveSwingParams params = CoolTestParams.getParams();
+        CaveSwingParams params = CoolTestParams.getDemoParams();
         // params.nAnchors *=2;
 
-        params.maxTicks = 500;
-        params.gravity.y = 0.5;
-        params.hooke = 0.01;
-        params.gravity.x = -0.00;
-        // params.width = 1500;
-        // params.height *= 1.5;
-
-        params.width = 2500;
-        params.height *= 1.5;
-        // params.nAnchors /= 2;
-        params.meanAnchorHeight *= 2;
+//        params.maxTicks = 500;
+//        params.gravity.y = 0.5;
+//        params.hooke = 0.01;
+//        params.gravity.x = -0.00;
+//        // params.width = 1500;
+//        // params.height *= 1.5;
+//
+//        params.width = 2500;
+//        params.height *= 1.5;
+//        // params.nAnchors /= 2;
+//        params.meanAnchorHeight *= 2;
 
 
         // plug in here for evolved points or other selected points in the search space
